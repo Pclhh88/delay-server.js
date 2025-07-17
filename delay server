@@ -1,0 +1,22 @@
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+app.post('/delay', async (req, res) => {
+  const { message, delayMinutes, webhookUrl } = req.body;
+
+  // Antwort direkt an Client
+  res.status(200).send({ status: 'Scheduled' });
+
+  // Verzögerung starten
+  setTimeout(async () => {
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    });
+  }, delayMinutes * 60 * 1000);
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Delay server running on ${PORT}`));
