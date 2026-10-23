@@ -1,0 +1,134 @@
+{
+ "q1_jeep_photo": {
+  "path": "assets/proxies/q1_jeep_photo.png",
+  "design_scale": 1.0227272727272727,
+  "license": "reference_proxy",
+  "source": "Mosaik aus Referenzframes 0/20/45/72 (Foto laut Einblendung: Wikimedia Commons, Darkone, CC BY-SA 2.5)",
+  "replace_with": "Originalfoto von Wikimedia Commons (Darkone, CC BY-SA 2.5) mit Namensnennung"
+ },
+ "q1_backdrop": {
+  "path": "assets/proxies/q1_backdrop.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Hintergrundplatte aus Referenzframes 0/84",
+  "replace_with": "prozeduraler Studio-Verlauf (radial_bg)"
+ },
+ "s3_jeep_grey": {
+  "path": "assets/proxies/s3_jeep_grey.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 99-127, Untertitel herausgerechnet",
+  "replace_with": "lizenziertes Foto eines grauen Mercedes G (Wolf) als Freisteller"
+ },
+ "s3_jeep_camo": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/s3_jeep_camo.png",
+  "source": "Referenzframes 184-186",
+  "replace_with": "Foto des Jeeps in Flecktarn, gleiche Perspektive"
+ },
+ "s3_paint_reveal_map": {
+  "path": "assets/proxies/s3_paint_reveal_map.png",
+  "design_scale": 2.25,
+  "license": "derived_measurement",
+  "source": "gemessene Übermal-Reihenfolge (0 = früh, 1 = spät)"
+ },
+ "s3_jeep_painted": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/s3_jeep_painted.png",
+  "source": "Referenzframes 170-183",
+  "replace_with": "grau mit aufgemalten Tarnflecken (Bild-Edit)"
+ },
+ "s3_bob": {
+  "path": "assets/proxies/s3_bob.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframe 176",
+  "replace_with": "eigene Zeichnung im Rage-Comic-Stil (Maler mit Afro, Pinsel) oder lizenziertes Meme"
+ },
+ "bush_back": {
+  "design_scale": 1.875,
+  "license": "reference_proxy",
+  "path": "assets/proxies/bush_back.png",
+  "source": "Referenzframes 205/216",
+  "replace_with": "eigener Cartoon-Busch (Vektor), gleiche Silhouette"
+ },
+ "bush_front": {
+  "design_scale": 1.875,
+  "license": "reference_proxy",
+  "path": "assets/proxies/bush_front.png",
+  "source": "Referenzframe 205",
+  "replace_with": "Teil des eigenen Cartoon-Buschs, der vor dem Jeep liegt"
+ },
+ "pillager_idle": {
+  "path": "assets/proxies/pillager_idle.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes [222, 226, 232, 218]",
+  "replace_with": "eigene Voxel-/Pixel-Figur (kein Minecraft-Asset: Markenrecht Mojang/Microsoft)"
+ },
+ "pillager_torch": {
+  "path": "assets/proxies/pillager_torch.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes [245, 268, 276, 280, 260]",
+  "replace_with": "eigene Voxel-/Pixel-Figur (kein Minecraft-Asset: Markenrecht Mojang/Microsoft)"
+ },
+ "plate_y": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/plate_y.png",
+  "design_scale": 2.25,
+  "source": "Referenzframes 362/380/470 (Foto laut Einblendung: Wikimedia Commons, Thorsten S., CC3)",
+  "replace_with": "Wikimedia-Foto mit Namensnennung oder selbst gerendertes Kennzeichen (FE-Schrift)"
+ },
+ "plate_x": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/plate_x.png",
+  "design_scale": 2.25,
+  "source": "Referenzframes 512/515",
+  "replace_with": "Foto/Render eines X-Kennzeichens (NATO)"
+ },
+ "plate_tuev": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/plate_tuev.png",
+  "design_scale": 2.25,
+  "source": "Referenzframes 560/575",
+  "replace_with": "Foto Kennzeichen mit TÜV-Plakette"
+ },
+ "drake_bw": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/drake_bw.png",
+  "source": "Referenzframes [415, 422, 430, 440]",
+  "replace_with": "Drake-Meme mit Bundeswehr-Shirt: lizenzierte Meme-Vorlage oder eigene Zeichnung im selben Gestus"
+ },
+ "drake_nato": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/drake_nato.png",
+  "source": "Referenzframes [528, 536, 540]",
+  "replace_with": "Drake-Meme mit NATO-Shirt: lizenzierte Meme-Vorlage oder eigene Zeichnung im selben Gestus"
+ },
+ "germany_map": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/germany_map.png",
+  "source": "Referenzframes [482, 490, 496]",
+  "replace_with": "eigene Vektorgrafik (Umriss gemeinfrei)"
+ },
+ "blinded_cat": {
+  "path": "assets/proxies/blinded_cat.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframe 354",
+  "replace_with": "Foto einer weissen Katze (lizenziert), stark ueberbelichtet"
+ },
+ "torch_light_216": {
+  "path": "assets/proxies/torch_light_216.png",
+  "design_scale": 2.25,
+  "license": "derived_measurement",
+  "source": "Lichtkarte aus Differenz Frame 260 vs. 230",
+  "replace_with": "prozeduraler Lichtkegel (light_cone) mit diesen Parametern"
+ }
+}

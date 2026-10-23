@@ -1,0 +1,535 @@
+{
+ "source": "burned-in captions of the reference, read frame by frame (start frame = first frame the word is visible)",
+ "fps": 30,
+ "words": [
+  {
+   "text": "BUNDESWEHR-",
+   "start": 0.03333,
+   "end": 0.73333,
+   "frame_start": 1,
+   "frame_end": 22
+  },
+  {
+   "text": "KENNZEICHEN",
+   "start": 0.73333,
+   "end": 1.4,
+   "frame_start": 22,
+   "frame_end": 42
+  },
+  {
+   "text": "REFLEKTIEREN",
+   "start": 1.4,
+   "end": 2.36667,
+   "frame_start": 42,
+   "frame_end": 71
+  },
+  {
+   "text": "NICHT.",
+   "start": 2.36667,
+   "end": 2.73333,
+   "frame_start": 71,
+   "frame_end": 82
+  },
+  {
+   "text": "WÄRE",
+   "start": 2.73333,
+   "end": 2.9,
+   "frame_start": 82,
+   "frame_end": 87
+  },
+  {
+   "text": "JA",
+   "start": 2.9,
+   "end": 2.96667,
+   "frame_start": 87,
+   "frame_end": 89
+  },
+  {
+   "text": "AUCH",
+   "start": 2.96667,
+   "end": 3.06667,
+   "frame_start": 89,
+   "frame_end": 92
+  },
+  {
+   "text": "DUMM,",
+   "start": 3.06667,
+   "end": 3.23333,
+   "frame_start": 92,
+   "frame_end": 97
+  },
+  {
+   "text": "WENN",
+   "start": 3.23333,
+   "end": 3.4,
+   "frame_start": 97,
+   "frame_end": 102
+  },
+  {
+   "text": "DU",
+   "start": 3.4,
+   "end": 3.5,
+   "frame_start": 102,
+   "frame_end": 105
+  },
+  {
+   "text": "DAS",
+   "start": 3.5,
+   "end": 3.6,
+   "frame_start": 105,
+   "frame_end": 108
+  },
+  {
+   "text": "GANZE",
+   "start": 3.6,
+   "end": 3.83333,
+   "frame_start": 108,
+   "frame_end": 115
+  },
+  {
+   "text": "FAHRZEUG",
+   "start": 3.83333,
+   "end": 4.2,
+   "frame_start": 115,
+   "frame_end": 126
+  },
+  {
+   "text": "IN",
+   "start": 4.2,
+   "end": 4.33333,
+   "frame_start": 126,
+   "frame_end": 130
+  },
+  {
+   "text": "JOHN-CENA-LACKIERUNG",
+   "start": 4.33333,
+   "end": 5.4,
+   "frame_start": 130,
+   "frame_end": 162
+  },
+  {
+   "text": "ANMALST,",
+   "start": 5.4,
+   "end": 5.93333,
+   "frame_start": 162,
+   "frame_end": 178
+  },
+  {
+   "text": "DAMIT",
+   "start": 5.93333,
+   "end": 6.13333,
+   "frame_start": 178,
+   "frame_end": 184
+  },
+  {
+   "text": "ES",
+   "start": 6.13333,
+   "end": 6.26667,
+   "frame_start": 184,
+   "frame_end": 188
+  },
+  {
+   "text": "UNSICHTBAR",
+   "start": 6.26667,
+   "end": 6.63333,
+   "frame_start": 188,
+   "frame_end": 199,
+   "size": "big"
+  },
+  {
+   "text": "WIRD,",
+   "start": 6.63333,
+   "end": 6.93333,
+   "frame_start": 199,
+   "frame_end": 208
+  },
+  {
+   "text": "ABER",
+   "start": 6.93333,
+   "end": 7.06667,
+   "frame_start": 208,
+   "frame_end": 212
+  },
+  {
+   "text": "DER",
+   "start": 7.06667,
+   "end": 7.23333,
+   "frame_start": 212,
+   "frame_end": 217
+  },
+  {
+   "text": "FEIND",
+   "start": 7.23333,
+   "end": 7.46667,
+   "frame_start": 217,
+   "frame_end": 224
+  },
+  {
+   "text": "EINFACH",
+   "start": 7.46667,
+   "end": 7.66667,
+   "frame_start": 224,
+   "frame_end": 230
+  },
+  {
+   "text": "NUR",
+   "start": 7.66667,
+   "end": 7.8,
+   "frame_start": 230,
+   "frame_end": 234
+  },
+  {
+   "text": "NE",
+   "start": 7.8,
+   "end": 7.96667,
+   "frame_start": 234,
+   "frame_end": 239
+  },
+  {
+   "text": "HANDYTASCHENLAMPE",
+   "start": 7.96667,
+   "end": 8.83333,
+   "frame_start": 239,
+   "frame_end": 265
+  },
+  {
+   "text": "BRAUCHT",
+   "start": 8.83333,
+   "end": 9.13333,
+   "frame_start": 265,
+   "frame_end": 274
+  },
+  {
+   "text": "UND",
+   "start": 9.13333,
+   "end": 9.23333,
+   "frame_start": 274,
+   "frame_end": 277
+  },
+  {
+   "text": "IHM",
+   "start": 9.23333,
+   "end": 9.4,
+   "frame_start": 277,
+   "frame_end": 282
+  },
+  {
+   "text": "DAS",
+   "start": 9.4,
+   "end": 9.53333,
+   "frame_start": 282,
+   "frame_end": 286
+  },
+  {
+   "text": "KENNZEICHEN",
+   "start": 9.53333,
+   "end": 10.0,
+   "frame_start": 286,
+   "frame_end": 300
+  },
+  {
+   "text": "DIREKT",
+   "start": 10.0,
+   "end": 10.26667,
+   "frame_start": 300,
+   "frame_end": 308
+  },
+  {
+   "text": "ENTGEGENFLASHT.",
+   "start": 10.26667,
+   "end": 11.16667,
+   "frame_start": 308,
+   "frame_end": 335,
+   "size": "medium"
+  },
+  {
+   "text": "DANN",
+   "start": 11.46667,
+   "end": 11.6,
+   "frame_start": 344,
+   "frame_end": 348
+  },
+  {
+   "text": "KÖNNTE",
+   "start": 11.6,
+   "end": 11.76667,
+   "frame_start": 348,
+   "frame_end": 353
+  },
+  {
+   "text": "ER",
+   "start": 11.76667,
+   "end": 11.86667,
+   "frame_start": 353,
+   "frame_end": 356
+  },
+  {
+   "text": "JA",
+   "start": 11.86667,
+   "end": 11.93333,
+   "frame_start": 356,
+   "frame_end": 358
+  },
+  {
+   "text": "SEHEN,",
+   "start": 11.93333,
+   "end": 12.06667,
+   "frame_start": 358,
+   "frame_end": 362
+  },
+  {
+   "text": "DASS",
+   "start": 12.06667,
+   "end": 12.23333,
+   "frame_start": 362,
+   "frame_end": 367
+  },
+  {
+   "text": "ES",
+   "start": 12.23333,
+   "end": 12.36667,
+   "frame_start": 367,
+   "frame_end": 371
+  },
+  {
+   "text": "MIT",
+   "start": 12.36667,
+   "end": 12.5,
+   "frame_start": 371,
+   "frame_end": 375
+  },
+  {
+   "text": "Y",
+   "start": 12.5,
+   "end": 12.93333,
+   "frame_start": 375,
+   "frame_end": 388
+  },
+  {
+   "text": "BEGINNT,",
+   "start": 12.93333,
+   "end": 13.23333,
+   "frame_start": 388,
+   "frame_end": 397
+  },
+  {
+   "text": "WAS",
+   "start": 13.23333,
+   "end": 13.36667,
+   "frame_start": 397,
+   "frame_end": 401
+  },
+  {
+   "text": "SICH",
+   "start": 13.36667,
+   "end": 13.46667,
+   "frame_start": 401,
+   "frame_end": 404
+  },
+  {
+   "text": "DIE",
+   "start": 13.46667,
+   "end": 13.56667,
+   "frame_start": 404,
+   "frame_end": 407
+  },
+  {
+   "text": "BUNDESWEHR",
+   "start": 13.56667,
+   "end": 13.96667,
+   "frame_start": 407,
+   "frame_end": 419
+  },
+  {
+   "text": "EINFACH",
+   "start": 13.96667,
+   "end": 14.2,
+   "frame_start": 419,
+   "frame_end": 426
+  },
+  {
+   "text": "AUSGESUCHT",
+   "start": 14.2,
+   "end": 14.56667,
+   "frame_start": 426,
+   "frame_end": 437
+  },
+  {
+   "text": "HAT,",
+   "start": 14.56667,
+   "end": 14.76667,
+   "frame_start": 437,
+   "frame_end": 443
+  },
+  {
+   "text": "WEIL",
+   "start": 14.76667,
+   "end": 14.93333,
+   "frame_start": 443,
+   "frame_end": 448
+  },
+  {
+   "text": "KEINE",
+   "start": 14.93333,
+   "end": 15.16667,
+   "frame_start": 448,
+   "frame_end": 455,
+   "size": "big"
+  },
+  {
+   "text": "STADT",
+   "start": 15.16667,
+   "end": 15.4,
+   "frame_start": 455,
+   "frame_end": 462
+  },
+  {
+   "text": "DEUTSCHLAND",
+   "start": 15.4,
+   "end": 15.5,
+   "frame_start": 462,
+   "frame_end": 465
+  },
+  {
+   "text": "IN",
+   "start": 15.5,
+   "end": 15.86667,
+   "frame_start": 465,
+   "frame_end": 476
+  },
+  {
+   "text": "DAMIT",
+   "start": 15.86667,
+   "end": 16.2,
+   "frame_start": 476,
+   "frame_end": 486
+  },
+  {
+   "text": "ANFÄNGT.",
+   "start": 16.2,
+   "end": 16.63333,
+   "frame_start": 486,
+   "frame_end": 499
+  },
+  {
+   "text": "UND",
+   "start": 16.63333,
+   "end": 16.8,
+   "frame_start": 499,
+   "frame_end": 504
+  },
+  {
+   "text": "DAS",
+   "start": 16.8,
+   "end": 16.96667,
+   "frame_start": 504,
+   "frame_end": 509
+  },
+  {
+   "text": "X",
+   "start": 16.96667,
+   "end": 17.13333,
+   "frame_start": 509,
+   "frame_end": 514
+  },
+  {
+   "text": "HAT",
+   "start": 17.13333,
+   "end": 17.26667,
+   "frame_start": 514,
+   "frame_end": 518
+  },
+  {
+   "text": "DANN",
+   "start": 17.26667,
+   "end": 17.36667,
+   "frame_start": 518,
+   "frame_end": 521
+  },
+  {
+   "text": "DIE",
+   "start": 17.36667,
+   "end": 17.5,
+   "frame_start": 521,
+   "frame_end": 525
+  },
+  {
+   "text": "NATO",
+   "start": 17.5,
+   "end": 17.76667,
+   "frame_start": 525,
+   "frame_end": 533,
+   "size": "big"
+  },
+  {
+   "text": "BEKOMMEN.",
+   "start": 17.76667,
+   "end": 18.2,
+   "frame_start": 533,
+   "frame_end": 546
+  },
+  {
+   "text": "EINE",
+   "start": 18.2,
+   "end": 18.36667,
+   "frame_start": 546,
+   "frame_end": 551
+  },
+  {
+   "text": "TÜV-PLAKETTE",
+   "start": 18.36667,
+   "end": 19.03333,
+   "frame_start": 551,
+   "frame_end": 571
+  },
+  {
+   "text": "WÜRDE",
+   "start": 19.03333,
+   "end": 19.2,
+   "frame_start": 571,
+   "frame_end": 576
+  },
+  {
+   "text": "ER",
+   "start": 19.2,
+   "end": 19.36667,
+   "frame_start": 576,
+   "frame_end": 581
+  },
+  {
+   "text": "NICHT",
+   "start": 19.36667,
+   "end": 19.6,
+   "frame_start": 581,
+   "frame_end": 588
+  },
+  {
+   "text": "SEHEN,",
+   "start": 19.6,
+   "end": 19.93333,
+   "frame_start": 588,
+   "frame_end": 598
+  },
+  {
+   "text": "SONDERN",
+   "start": 19.93333,
+   "end": 20.23333,
+   "frame_start": 598,
+   "frame_end": 607
+  },
+  {
+   "text": "NE",
+   "start": 20.23333,
+   "end": 20.4,
+   "frame_start": 607,
+   "frame_end": 612
+  },
+  {
+   "text": "SIEGELPLAKETTE",
+   "start": 20.4,
+   "end": 21.0,
+   "frame_start": 612,
+   "frame_end": 630
+  }
+ ]
+}
