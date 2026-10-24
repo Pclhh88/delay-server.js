@@ -201,7 +201,19 @@ def ev_hum(dur=1.4):
     return _stereo(_norm(x * _env(len(t), 0.08, None, 0.3), 0.6), width=0.5, seed=21)
 
 
+def whine(f0, f1, dur):
+    """E-motor whine gliding from f0 to f1 Hz (rising or falling pitch you can hear)."""
+    t = _t(dur)
+    f = f0 * (f1 / f0) ** (t / dur)
+    ph = np.cumsum(f) / SR
+    x = np.sin(2 * np.pi * ph) + 0.35 * np.sin(4 * np.pi * ph) + 0.15 * (np.mod(ph, 1) - 0.5)
+    return _stereo(_norm(x * _env(len(t), 0.03, None, 0.08), 0.6))
+
+
 PRESETS = {
+    "whine_up": lambda: whine(300, 950, 1.0),
+    "whine_down": lambda: whine(750, 330, 0.45),
+    "whine_up_short": lambda: whine(330, 1000, 0.55),
     "beep_reverse": beep_reverse,
     "ev_hum": ev_hum,
     "impact_low": impact_low,

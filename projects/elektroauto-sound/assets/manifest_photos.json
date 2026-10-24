@@ -104,6 +104,27 @@
   "source": "assets/photos_src/bobbycar_mann.jpg",
   "note": "Mann auf Bobbycar"
  },
+ "photo_zele": {
+  "path": "assets/png/photo_zele.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/zagato_zele.jpg",
+  "note": "Zagato Zele (altes E-Auto)"
+ },
+ "photo_mercedes_card": {
+  "path": "assets/png/photo_mercedes_card.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing (Mercedes press image)",
+  "source": "assets/photos_src/mercedes_wallbox.jpg",
+  "note": "Mercedes an der Wallbox, als Fotokarte"
+ },
+ "photo_mercedes": {
+  "path": "assets/png/photo_mercedes.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing (Mercedes press image)",
+  "source": "assets/photos_src/mercedes_wallbox.jpg",
+  "note": "Mercedes, freigestellt"
+ },
  "photo_tars": {
   "path": "assets/png/photo_tars.png",
   "design_scale": 1.0,
