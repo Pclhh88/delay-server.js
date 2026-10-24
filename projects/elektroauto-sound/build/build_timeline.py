@@ -220,31 +220,35 @@ CAR_S = 0.9            # ecar 1000 px asset -> 900 design px
 
 
 def scene_hook():
-    """0 - 'Wäre': Elektroautos dürfen NICHT leise sein."""
+    """0 - 'Wäre': Elektroautos dürfen NICHT leise sein. Minimal: the car, a punch zoom on
+    NICHT and a zoom to the rear bumper (where the tailpipe would be) on 'leise'."""
     t_end = W("Wäre")
     t_n, t_l = W("nicht"), W("leise")
-    car = img("photo_car", 0, t_end, [{"t": 0, "x": 395, "y": 1330, "scale": 0.78},
-                                 {"t": t_end, "scale": 0.86}])
-    cam = camera(0, t_end, [car], punch(t_n, (395, 1330), 1.0, 1.1, t_end), pivot=(395, 1330))
-    # the car faces left: the (missing) tailpipe would sit at the rear bumper, bottom right
-    a = arrow((783, 1560), 180, t_l, snap(t_end - 3 * FR))
+    piv = (540, 1350)
+    car = img("photo_car", 0, t_end, [{"t": 0, "x": piv[0], "y": piv[1], "scale": 0.95}])
+    rear = (413, 247)              # rear bumper relative to the car centre (design px at scale 0.95)
+    s2 = 1.7
+    keys = punch(t_n, piv, 1.0, 1.2) + [
+        {"t": snap(t_l - FR), "x": piv[0], "y": piv[1], "scale": 1.2},
+        {"t": snap(t_l + 3 * FR), "x": round(700 - s2 * rear[0]), "y": round(1420 - s2 * rear[1]),
+         "scale": s2, "ease": "out3"}]
+    cam = camera(0, t_end, [car], keys, pivot=piv)
     sfx("ev_hum", 0.0, -14)
     sfx("impact_low", t_n, -4)
     sfx("buzzer", t_n, -13)
     sfx("swoosh", t_l, -12)
-    return [cam, a, red_flash(t_n)]
+    return [cam, red_flash(t_n)]
 
 
 def scene_dumm():
     """'Wäre ja auch dumm, wenn du dir für 50.000 Euro ein Auto fürs Klima kaufst'"""
     t0, t_end = W("Wäre"), W("und", 1)
     t_d, t_50, t_a, t_k = W("dumm"), W("50.000"), W("Auto", 1), W("Klima")
-    ch = [pop("face-with-spiral-eyes", t_d, t_50, 540, 520, 0.6),
+    ch = [pop("face-with-spiral-eyes", t_d, t_50, 540, 1350, 0.75),
           pop("photo_geldmann2", t_50, t_a, 540, 1400, 0.78),
           text("50.000 €", t_50, t_k, 540, 540, size=150),
           pop("photo_car", t_a, t_end, 540, 1400, CAR_S, out=False),
-          pop("globe-showing-europe-africa", t_k, t_end, 540, 520, 0.55, out=False),
-          pop("green-heart", snap(t_k + 4 * FR), t_end, 690, 420, 0.4, out=False)]
+          pop("globe-showing-europe-africa", t_k, t_end, 540, 520, 0.55, out=False)]
     for t in (t_d, t_50, t_a, t_k):
         sfx("pop", t, -11)
     sfx("swoosh", t0, -12)
@@ -291,13 +295,12 @@ def scene_parking():
         {"t": snap(t_s), "x": hood[0], "y": hood[1], "rot": 8, "ease": "in"},
         {"t": snap(t_s + 3 * FR), "x": hood[0], "y": hood[1] + 20, "rot": 0}]
     oma = img("photo_oma_portrait", t_p, t_end, oma_keys)
-    cart = pop("shopping-cart", snap(t0 + 3 * FR), t_end, 120, 1520, 0.4, out=False)
     scream = pop("face-screaming-in-fear", t_b, t_m, 560, 1120, 0.22)
     hit = pop("collision", t_m, snap(t_m + 10 * FR), 430, 1300, 0.55)
     boom = pop("collision", t_s, snap(t_s + 12 * FR), hood[0] + 80, hood[1] + 90, 0.5)
     pause_t = snap(W("sitzt") + 0.32)
     cam = camera(t0, t_end, [*ground(t0, t_end), pop("p_sign", snap(t0 + 3 * FR), t_end, 960, 1080, 0.75,
-                                                       out=False), cart, car, mute, oma, scream, hit, boom])
+                                                       out=False), car, mute, oma, scream, hit, boom])
     # zoom on the Oma on the bonnet during the pause
     cam["pivot"] = [hood[0], hood[1]]
     cam["keys"] = [{"t": t0, "x": hood[0] + 1080, "y": hood[1], "scale": 1.0},
@@ -359,15 +362,12 @@ def scene_speed():
     zone = text("0–20 KM/H", t_20, t_r, 540, 520, size=130, fill=(31, 179, 91))
     rev_car = img("photo_car", t_r, t_end, [{"t": t_r, "x": 540, "y": 1400, "scale": CAR_S},
                                         {"t": t_end, "x": 760, "y": 1400, "ease": "inout"}])
-    waves = pop("waves", snap(t_r + 3 * FR), t_end, 1000, 1400, 0.45, out=False)
-    rtxt = text("R", t_r, t_end, 540, 520, size=220, fill=(255, 255, 255))
-    rtxt["style"]["stroke"] = [27, 30, 39]
     sfx("swoosh", t0, -12)
     sfx("pop", t0, -12)
     sfx("chirp_up", t_a, -14)
     sfx("pop", t_20, -10)
     sfx("beep_reverse", t_r, -14)
-    return [camera(t0, t_end, tl + [zone, rev_car, waves, rtxt], push_in(t0))]
+    return [camera(t0, t_end, tl + [zone, rev_car], push_in(t0))]
 
 
 def scene_tyres():
@@ -476,12 +476,12 @@ def scene_rules():
     t_h, t_a, t_k, t_n, t_v, t_m = W("Hersteller"), W("Auto", 3), W("klingen"), W("nicht", 4), \
         W("Vogelgezwitscher"), W("Musik", 1)
     ch = [pop("photo_oma_dj", t_h, t_a, 540, 1420, 0.62),
-          pop("photo_car", t_a, t_end, 540, 1440, 0.8, out=False),
-          pop("check-mark-button", t_k, t_end, 870, 1170, 0.5, out=False),
-          pop("photo_schuhschnabel", t_v, t_end, 290, 520, 0.4, out=False),
-          pop("ban", snap(t_v + 10 * FR), t_end, 290, 520, 0.6, out=False),
-          pop("photo_geige", t_m, t_end, 790, 520, 0.42, out=False),
-          pop("ban", snap(t_m + 6 * FR), t_end, 790, 520, 0.6, out=False)]
+          pop("photo_car", t_a, t_v, 540, 1440, 0.8),
+          pop("check-mark-button", t_k, t_v, 870, 1170, 0.5),
+          pop("photo_schuhschnabel", t_v, t_m, 540, 1390, 0.7),
+          pop("ban", snap(t_v + 10 * FR), t_m, 540, 1390, 1.05),
+          pop("photo_geige", t_m, t_end, 540, 1390, 0.8, out=False),
+          pop("ban", snap(t_m + 6 * FR), t_end, 540, 1390, 1.1, out=False)]
     for t in (t_h, t_a, t_k, t_v, t_m):
         sfx("pop", t, -11)
     sfx("swoosh", t0, -12)
@@ -496,15 +496,11 @@ def scene_zimmer():
     für „Interstellar" und „König der Löwen" gemacht hat.'"""
     t0, t_end = W("BMW"), W("Bei", 2)
     t_hz, t_mu, t_i, t_kg = W("Hans"), W("Musik", 2), W("Interstellar"), W("König")
-    ch = [pop("photo_feiger_loewe", t_kg, t_end, 720, 1240, 0.38, out=False),
-          pop("photo_car", t0, t_end, 540, 1470, 0.8, out=False),
-          pop("man-in-tuxedo", t_hz, t_end, 540, 560, 0.6, out=False),
-          pop("violin", t_mu, t_end, 170, 1180, 0.42, out=False),
-          pop("trumpet", snap(t_mu + 2 * FR), t_end, 150, 1720, 0.36, out=False),
-          pop("drum", snap(t_mu + 4 * FR), t_end, 960, 1730, 0.3, out=False),
-          pop("photo_tars", t_i, t_end, 170, 470, 0.32, out=False),
-]
-    cam = camera(t0, t_end, ch, push_in(t0) + punch(t_hz, (540, 960), 1.0, 1.08))
+    ch = [pop("photo_car", t0, t_hz, 540, 1420, 0.85),
+          pop("man-in-tuxedo", t_hz, t_i, 540, 1380, 0.85),
+          pop("photo_tars", t_i, t_kg, 540, 1400, 0.5),
+          pop("photo_feiger_loewe", t_kg, t_end, 540, 1400, 0.75, out=False)]
+    cam = camera(t0, t_end, ch, push_in(t0))
     sfx("swoosh", t0, -12)
     sfx("impact_low", t_hz, -6)
     sfx("magic_glide", t_mu, -16)
