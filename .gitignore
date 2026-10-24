@@ -6,3 +6,5 @@ projects/*/output/compare_frames/
 models/
 projects/*/output/*.wav
 projects/*/build/_svg/
+projects/*/output/part_*
+projects/*/output/parts.txt
