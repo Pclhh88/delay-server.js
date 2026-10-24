@@ -183,7 +183,27 @@ def wasted(dur=1.6):
     return _stereo(_norm(burst * 0.8 + boom * 0.7, 0.9), width=1.0, seed=13)
 
 
+def beep_reverse(dur=1.2):
+    """Reversing beeper: three 1.1 kHz beeps."""
+    t = _t(dur)
+    gate = (np.mod(t, 0.4) < 0.2).astype(float)
+    x = np.sin(2 * np.pi * 1100 * t) * gate
+    return _stereo(_norm(_lowpass(x, 6000) * _env(len(t), 0.003, None, 0.02), 0.5))
+
+
+def ev_hum(dur=1.4):
+    """Synthetic e-car drive sound: two detuned saws gliding up an octave."""
+    t = _t(dur)
+    f = 180 * 2 ** (t / dur)
+    ph = np.cumsum(f) / SR
+    x = (np.mod(ph, 1) - 0.5) + 0.6 * (np.mod(ph * 1.503, 1) - 0.5)
+    x = _lowpass(x, 900 + 1800 * t / dur)
+    return _stereo(_norm(x * _env(len(t), 0.08, None, 0.3), 0.6), width=0.5, seed=21)
+
+
 PRESETS = {
+    "beep_reverse": beep_reverse,
+    "ev_hum": ev_hum,
     "impact_low": impact_low,
     "swoosh": swoosh,
     "swoosh_down": lambda: swoosh(up=False, seed=7),

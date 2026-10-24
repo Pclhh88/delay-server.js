@@ -1,0 +1,306 @@
+{
+ "old-woman": {
+  "path": "assets/png/old-woman.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/old-woman.svg"
+ },
+ "face-screaming-in-fear": {
+  "path": "assets/png/face-screaming-in-fear.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/face-screaming-in-fear.svg"
+ },
+ "shopping-cart": {
+  "path": "assets/png/shopping-cart.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/shopping-cart.svg"
+ },
+ "muted-speaker": {
+  "path": "assets/png/muted-speaker.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/muted-speaker.svg"
+ },
+ "loudspeaker": {
+  "path": "assets/png/loudspeaker.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/loudspeaker.svg"
+ },
+ "money-bag": {
+  "path": "assets/png/money-bag.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/money-bag.svg"
+ },
+ "globe-showing-europe-africa": {
+  "path": "assets/png/globe-showing-europe-africa.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/globe-showing-europe-africa.svg"
+ },
+ "green-heart": {
+  "path": "assets/png/green-heart.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/green-heart.svg"
+ },
+ "exploding-head": {
+  "path": "assets/png/exploding-head.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/exploding-head.svg"
+ },
+ "musical-note": {
+  "path": "assets/png/musical-note.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/musical-note.svg"
+ },
+ "musical-notes": {
+  "path": "assets/png/musical-notes.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/musical-notes.svg"
+ },
+ "child": {
+  "path": "assets/png/child.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/child.svg"
+ },
+ "control-knobs": {
+  "path": "assets/png/control-knobs.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/control-knobs.svg"
+ },
+ "check-mark-button": {
+  "path": "assets/png/check-mark-button.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/check-mark-button.svg"
+ },
+ "bird": {
+  "path": "assets/png/bird.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/bird.svg"
+ },
+ "prohibited": {
+  "path": "assets/png/prohibited.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/prohibited.svg"
+ },
+ "man-in-tuxedo": {
+  "path": "assets/png/man-in-tuxedo.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/man-in-tuxedo.svg"
+ },
+ "ringed-planet": {
+  "path": "assets/png/ringed-planet.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/ringed-planet.svg"
+ },
+ "lion": {
+  "path": "assets/png/lion.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/lion.svg"
+ },
+ "violin": {
+  "path": "assets/png/violin.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/violin.svg"
+ },
+ "trumpet": {
+  "path": "assets/png/trumpet.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/trumpet.svg"
+ },
+ "drum": {
+  "path": "assets/png/drum.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/drum.svg"
+ },
+ "fuel-pump": {
+  "path": "assets/png/fuel-pump.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/fuel-pump.svg"
+ },
+ "electric-plug": {
+  "path": "assets/png/electric-plug.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/electric-plug.svg"
+ },
+ "dashing-away": {
+  "path": "assets/png/dashing-away.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/dashing-away.svg"
+ },
+ "ear": {
+  "path": "assets/png/ear.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/ear.svg"
+ },
+ "ninja": {
+  "path": "assets/png/ninja.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/ninja.svg"
+ },
+ "collision": {
+  "path": "assets/png/collision.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/collision.svg"
+ },
+ "eyes": {
+  "path": "assets/png/eyes.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/eyes.svg"
+ },
+ "automobile": {
+  "path": "assets/png/automobile.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/automobile.svg"
+ },
+ "anger-symbol": {
+  "path": "assets/png/anger-symbol.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/anger-symbol.svg"
+ },
+ "euro-banknote": {
+  "path": "assets/png/euro-banknote.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/euro-banknote.svg"
+ },
+ "face-with-spiral-eyes": {
+  "path": "assets/png/face-with-spiral-eyes.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/face-with-spiral-eyes.svg"
+ },
+ "speaker-high-volume": {
+  "path": "assets/png/speaker-high-volume.png",
+  "design_scale": 1.0,
+  "license": "MIT (Microsoft Fluent Emoji)",
+  "source": "assets/src/speaker-high-volume.svg"
+ },
+ "ecar": {
+  "path": "assets/png/ecar.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py); contains Fluent Emoji (MIT)"
+ },
+ "eu_flag": {
+  "path": "assets/png/eu_flag.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "cal_2021": {
+  "path": "assets/png/cal_2021.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "cal_old": {
+  "path": "assets/png/cal_old.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "tacho": {
+  "path": "assets/png/tacho.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "needle": {
+  "path": "assets/png/needle.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "meter_off": {
+  "path": "assets/png/meter_off.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "meter_on": {
+  "path": "assets/png/meter_on.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "tyre": {
+  "path": "assets/png/tyre.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "waves": {
+  "path": "assets/png/waves.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "waves_red": {
+  "path": "assets/png/waves_red.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "bobbycar": {
+  "path": "assets/png/bobbycar.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "bubble": {
+  "path": "assets/png/bubble.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "graph": {
+  "path": "assets/png/graph.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "curve": {
+  "path": "assets/png/curve.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "p_sign": {
+  "path": "assets/png/p_sign.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py); contains Fluent Emoji (MIT)"
+ },
+ "hybrid": {
+  "path": "assets/png/hybrid.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py); contains Fluent Emoji (MIT)"
+ },
+ "ban": {
+  "path": "assets/png/ban.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "ramp_x": {
+  "path": "assets/png/ramp_x.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
+ "ramp_y": {
+  "path": "assets/png/ramp_y.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ }
+}

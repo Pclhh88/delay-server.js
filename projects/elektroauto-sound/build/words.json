@@ -1,0 +1,1180 @@
+{
+ "duration": 61.394,
+ "tempo": 1.3,
+ "source": "audio/voice_take1.mp3",
+ "words": [
+  {
+   "text": "Elektroautos",
+   "start": 0.14,
+   "end": 0.86
+  },
+  {
+   "text": "dürfen",
+   "start": 0.86,
+   "end": 1.1
+  },
+  {
+   "text": "nicht",
+   "start": 1.1,
+   "end": 1.26
+  },
+  {
+   "text": "leise",
+   "start": 1.26,
+   "end": 1.5
+  },
+  {
+   "text": "sein.",
+   "start": 1.5,
+   "end": 1.74
+  },
+  {
+   "text": "Wäre",
+   "start": 1.74,
+   "end": 1.98
+  },
+  {
+   "text": "ja",
+   "start": 1.98,
+   "end": 2.14
+  },
+  {
+   "text": "auch",
+   "start": 2.14,
+   "end": 2.22
+  },
+  {
+   "text": "dumm,",
+   "start": 2.22,
+   "end": 2.46
+  },
+  {
+   "text": "wenn",
+   "start": 2.46,
+   "end": 2.62
+  },
+  {
+   "text": "du",
+   "start": 2.62,
+   "end": 2.7
+  },
+  {
+   "text": "dir",
+   "start": 2.7,
+   "end": 2.86
+  },
+  {
+   "text": "für",
+   "start": 2.86,
+   "end": 3.02
+  },
+  {
+   "text": "50.000",
+   "start": 3.02,
+   "end": 3.58
+  },
+  {
+   "text": "Euro",
+   "start": 3.58,
+   "end": 3.9
+  },
+  {
+   "text": "ein",
+   "start": 3.9,
+   "end": 3.98
+  },
+  {
+   "text": "Auto",
+   "start": 3.98,
+   "end": 4.22
+  },
+  {
+   "text": "fürs",
+   "start": 4.22,
+   "end": 4.46
+  },
+  {
+   "text": "Klima",
+   "start": 4.46,
+   "end": 4.78
+  },
+  {
+   "text": "kaufst",
+   "start": 4.78,
+   "end": 5.18
+  },
+  {
+   "text": "und",
+   "start": 5.18,
+   "end": 5.26
+  },
+  {
+   "text": "dann",
+   "start": 5.26,
+   "end": 5.42
+  },
+  {
+   "text": "auf",
+   "start": 5.42,
+   "end": 5.5
+  },
+  {
+   "text": "dem",
+   "start": 5.5,
+   "end": 5.66
+  },
+  {
+   "text": "Aldi-Parkplatz",
+   "start": 5.66,
+   "end": 6.46
+  },
+  {
+   "text": "lautlos",
+   "start": 6.46,
+   "end": 6.78
+  },
+  {
+   "text": "an",
+   "start": 6.78,
+   "end": 6.86
+  },
+  {
+   "text": "eine",
+   "start": 6.86,
+   "end": 7.02
+  },
+  {
+   "text": "Oma",
+   "start": 7.02,
+   "end": 7.34
+  },
+  {
+   "text": "ranrollst,",
+   "start": 7.34,
+   "end": 7.82
+  },
+  {
+   "text": "die",
+   "start": 7.82,
+   "end": 7.9
+  },
+  {
+   "text": "dich",
+   "start": 7.9,
+   "end": 8.06
+  },
+  {
+   "text": "erst",
+   "start": 8.06,
+   "end": 8.22
+  },
+  {
+   "text": "bemerkt,",
+   "start": 8.22,
+   "end": 8.54
+  },
+  {
+   "text": "wenn",
+   "start": 8.54,
+   "end": 8.62
+  },
+  {
+   "text": "sie",
+   "start": 8.62,
+   "end": 8.78
+  },
+  {
+   "text": "auf",
+   "start": 8.78,
+   "end": 8.86
+  },
+  {
+   "text": "deiner",
+   "start": 8.86,
+   "end": 9.02
+  },
+  {
+   "text": "Motorhaube",
+   "start": 9.02,
+   "end": 9.58
+  },
+  {
+   "text": "sitzt.",
+   "start": 9.58,
+   "end": 9.9,
+   "pause_after": 0.3
+  },
+  {
+   "text": "Deshalb",
+   "start": 10.2,
+   "end": 10.44
+  },
+  {
+   "text": "muss",
+   "start": 10.44,
+   "end": 10.68
+  },
+  {
+   "text": "seit",
+   "start": 10.68,
+   "end": 10.84
+  },
+  {
+   "text": "Juli",
+   "start": 10.84,
+   "end": 11.16
+  },
+  {
+   "text": "2021",
+   "start": 11.16,
+   "end": 12.2
+  },
+  {
+   "text": "jedes",
+   "start": 12.2,
+   "end": 12.44
+  },
+  {
+   "text": "neue",
+   "start": 12.44,
+   "end": 12.68
+  },
+  {
+   "text": "E-Auto",
+   "start": 12.68,
+   "end": 13.24
+  },
+  {
+   "text": "in",
+   "start": 13.24,
+   "end": 13.4
+  },
+  {
+   "text": "der",
+   "start": 13.4,
+   "end": 13.48
+  },
+  {
+   "text": "EU",
+   "start": 13.48,
+   "end": 13.8
+  },
+  {
+   "text": "künstlich",
+   "start": 13.8,
+   "end": 14.2
+  },
+  {
+   "text": "Lärm",
+   "start": 14.2,
+   "end": 14.52
+  },
+  {
+   "text": "machen,",
+   "start": 14.52,
+   "end": 14.76
+  },
+  {
+   "text": "und",
+   "start": 14.76,
+   "end": 14.92
+  },
+  {
+   "text": "zwar",
+   "start": 14.92,
+   "end": 15.16
+  },
+  {
+   "text": "vom",
+   "start": 15.16,
+   "end": 15.32
+  },
+  {
+   "text": "Anfahren",
+   "start": 15.32,
+   "end": 15.8
+  },
+  {
+   "text": "bis",
+   "start": 15.8,
+   "end": 16.04
+  },
+  {
+   "text": "Tempo",
+   "start": 16.04,
+   "end": 16.44
+  },
+  {
+   "text": "20",
+   "start": 16.44,
+   "end": 16.76
+  },
+  {
+   "text": "und",
+   "start": 16.76,
+   "end": 16.92
+  },
+  {
+   "text": "beim",
+   "start": 16.92,
+   "end": 17.16
+  },
+  {
+   "text": "Rückwärtsfahren.",
+   "start": 17.16,
+   "end": 17.88
+  },
+  {
+   "text": "Darüber",
+   "start": 17.88,
+   "end": 18.28
+  },
+  {
+   "text": "nicht",
+   "start": 18.28,
+   "end": 18.44
+  },
+  {
+   "text": "mehr,",
+   "start": 18.44,
+   "end": 18.68
+  },
+  {
+   "text": "weil",
+   "start": 18.68,
+   "end": 18.84
+  },
+  {
+   "text": "dann",
+   "start": 18.84,
+   "end": 19.0
+  },
+  {
+   "text": "sowieso",
+   "start": 19.0,
+   "end": 19.32
+  },
+  {
+   "text": "die",
+   "start": 19.32,
+   "end": 19.4
+  },
+  {
+   "text": "Reifen",
+   "start": 19.4,
+   "end": 19.8
+  },
+  {
+   "text": "lauter",
+   "start": 19.8,
+   "end": 20.12
+  },
+  {
+   "text": "sind",
+   "start": 20.12,
+   "end": 20.28
+  },
+  {
+   "text": "als",
+   "start": 20.28,
+   "end": 20.44
+  },
+  {
+   "text": "der",
+   "start": 20.44,
+   "end": 20.52
+  },
+  {
+   "text": "Motor.",
+   "start": 20.52,
+   "end": 20.84
+  },
+  {
+   "text": "Bei",
+   "start": 20.84,
+   "end": 21.0
+  },
+  {
+   "text": "Tempo",
+   "start": 21.0,
+   "end": 21.4
+  },
+  {
+   "text": "20",
+   "start": 21.4,
+   "end": 21.72
+  },
+  {
+   "text": "müssen",
+   "start": 21.72,
+   "end": 21.96
+  },
+  {
+   "text": "es",
+   "start": 21.96,
+   "end": 22.12
+  },
+  {
+   "text": "mindestens",
+   "start": 22.12,
+   "end": 22.52
+  },
+  {
+   "text": "56",
+   "start": 22.52,
+   "end": 23.08
+  },
+  {
+   "text": "Dezibel",
+   "start": 23.08,
+   "end": 23.56
+  },
+  {
+   "text": "sein,",
+   "start": 23.56,
+   "end": 23.772
+  },
+  {
+   "text": "aber",
+   "start": 23.848,
+   "end": 24.088
+  },
+  {
+   "text": "nicht",
+   "start": 24.088,
+   "end": 24.248
+  },
+  {
+   "text": "mehr",
+   "start": 24.248,
+   "end": 24.408
+  },
+  {
+   "text": "als",
+   "start": 24.408,
+   "end": 24.568
+  },
+  {
+   "text": "75,",
+   "start": 24.568,
+   "end": 25.208
+  },
+  {
+   "text": "sonst",
+   "start": 25.208,
+   "end": 25.448
+  },
+  {
+   "text": "wäre",
+   "start": 25.448,
+   "end": 25.608
+  },
+  {
+   "text": "es",
+   "start": 25.608,
+   "end": 25.688
+  },
+  {
+   "text": "ja",
+   "start": 25.688,
+   "end": 25.768
+  },
+  {
+   "text": "wieder",
+   "start": 25.768,
+   "end": 25.928
+  },
+  {
+   "text": "Lärm.",
+   "start": 25.928,
+   "end": 26.328,
+   "pause_after": 0.15
+  },
+  {
+   "text": "Und",
+   "start": 26.478,
+   "end": 26.558
+  },
+  {
+   "text": "der",
+   "start": 26.558,
+   "end": 26.638
+  },
+  {
+   "text": "Ton",
+   "start": 26.638,
+   "end": 26.878
+  },
+  {
+   "text": "muss",
+   "start": 26.878,
+   "end": 27.038
+  },
+  {
+   "text": "mit",
+   "start": 27.038,
+   "end": 27.118
+  },
+  {
+   "text": "der",
+   "start": 27.118,
+   "end": 27.198
+  },
+  {
+   "text": "Geschwindigkeit",
+   "start": 27.198,
+   "end": 27.758
+  },
+  {
+   "text": "höher",
+   "start": 27.758,
+   "end": 28.078
+  },
+  {
+   "text": "werden,",
+   "start": 28.078,
+   "end": 28.318
+  },
+  {
+   "text": "damit",
+   "start": 28.318,
+   "end": 28.478
+  },
+  {
+   "text": "du",
+   "start": 28.478,
+   "end": 28.558
+  },
+  {
+   "text": "hörst,",
+   "start": 28.558,
+   "end": 28.878
+  },
+  {
+   "text": "ob",
+   "start": 28.878,
+   "end": 29.038
+  },
+  {
+   "text": "das",
+   "start": 29.038,
+   "end": 29.118
+  },
+  {
+   "text": "Auto",
+   "start": 29.118,
+   "end": 29.358
+  },
+  {
+   "text": "bremst",
+   "start": 29.358,
+   "end": 29.838
+  },
+  {
+   "text": "oder",
+   "start": 29.838,
+   "end": 29.998
+  },
+  {
+   "text": "Gas",
+   "start": 29.998,
+   "end": 30.238
+  },
+  {
+   "text": "gibt,",
+   "start": 30.238,
+   "end": 30.558
+  },
+  {
+   "text": "also",
+   "start": 30.558,
+   "end": 30.718
+  },
+  {
+   "text": "quasi",
+   "start": 30.718,
+   "end": 31.038
+  },
+  {
+   "text": "wie",
+   "start": 31.038,
+   "end": 31.118
+  },
+  {
+   "text": "du",
+   "start": 31.118,
+   "end": 31.278
+  },
+  {
+   "text": "früher",
+   "start": 31.278,
+   "end": 31.518
+  },
+  {
+   "text": "auf",
+   "start": 31.518,
+   "end": 31.598
+  },
+  {
+   "text": "dem",
+   "start": 31.598,
+   "end": 31.678
+  },
+  {
+   "text": "Bobbycar",
+   "start": 31.678,
+   "end": 32.318
+  },
+  {
+   "text": "immer",
+   "start": 32.318,
+   "end": 32.478
+  },
+  {
+   "text": "höher",
+   "start": 32.478,
+   "end": 32.878
+  },
+  {
+   "text": "„Brrrmmm\"",
+   "start": 32.878,
+   "end": 33.438
+  },
+  {
+   "text": "gemacht",
+   "start": 33.438,
+   "end": 33.678
+  },
+  {
+   "text": "hast,",
+   "start": 33.678,
+   "end": 33.918
+  },
+  {
+   "text": "je",
+   "start": 33.918,
+   "end": 34.078
+  },
+  {
+   "text": "schneller",
+   "start": 34.078,
+   "end": 34.398
+  },
+  {
+   "text": "du",
+   "start": 34.398,
+   "end": 34.478
+  },
+  {
+   "text": "warst.",
+   "start": 34.478,
+   "end": 34.798
+  },
+  {
+   "text": "Wie",
+   "start": 34.798,
+   "end": 35.038
+  },
+  {
+   "text": "das",
+   "start": 35.038,
+   "end": 35.118
+  },
+  {
+   "text": "klingt,",
+   "start": 35.118,
+   "end": 35.518
+  },
+  {
+   "text": "dürfen",
+   "start": 35.518,
+   "end": 35.758
+  },
+  {
+   "text": "sich",
+   "start": 35.758,
+   "end": 35.838
+  },
+  {
+   "text": "die",
+   "start": 35.838,
+   "end": 35.918
+  },
+  {
+   "text": "Hersteller",
+   "start": 35.918,
+   "end": 36.478
+  },
+  {
+   "text": "selbst",
+   "start": 36.478,
+   "end": 36.718
+  },
+  {
+   "text": "ausdenken,",
+   "start": 36.718,
+   "end": 37.198
+  },
+  {
+   "text": "es",
+   "start": 37.198,
+   "end": 37.278
+  },
+  {
+   "text": "soll",
+   "start": 37.278,
+   "end": 37.438
+  },
+  {
+   "text": "aber",
+   "start": 37.438,
+   "end": 37.598
+  },
+  {
+   "text": "nach",
+   "start": 37.598,
+   "end": 37.758
+  },
+  {
+   "text": "einem",
+   "start": 37.758,
+   "end": 37.918
+  },
+  {
+   "text": "Auto",
+   "start": 37.918,
+   "end": 38.158
+  },
+  {
+   "text": "klingen",
+   "start": 38.158,
+   "end": 38.478
+  },
+  {
+   "text": "und",
+   "start": 38.478,
+   "end": 38.638
+  },
+  {
+   "text": "nicht",
+   "start": 38.638,
+   "end": 38.718
+  },
+  {
+   "text": "nach",
+   "start": 38.718,
+   "end": 38.878
+  },
+  {
+   "text": "Vogelgezwitscher",
+   "start": 38.878,
+   "end": 39.838
+  },
+  {
+   "text": "oder",
+   "start": 39.838,
+   "end": 39.918
+  },
+  {
+   "text": "Musik.",
+   "start": 39.918,
+   "end": 40.318,
+   "pause_after": 0.1
+  },
+  {
+   "text": "BMW",
+   "start": 40.418,
+   "end": 40.898
+  },
+  {
+   "text": "hat",
+   "start": 40.898,
+   "end": 41.058
+  },
+  {
+   "text": "sich",
+   "start": 41.058,
+   "end": 41.138
+  },
+  {
+   "text": "dafür",
+   "start": 41.138,
+   "end": 41.378
+  },
+  {
+   "text": "trotzdem",
+   "start": 41.378,
+   "end": 41.698
+  },
+  {
+   "text": "einfach",
+   "start": 41.698,
+   "end": 41.938
+  },
+  {
+   "text": "Hans",
+   "start": 41.938,
+   "end": 42.338
+  },
+  {
+   "text": "Zimmer",
+   "start": 42.338,
+   "end": 42.738
+  },
+  {
+   "text": "geholt,",
+   "start": 42.738,
+   "end": 43.138
+  },
+  {
+   "text": "also",
+   "start": 43.138,
+   "end": 43.378
+  },
+  {
+   "text": "den",
+   "start": 43.378,
+   "end": 43.538
+  },
+  {
+   "text": "Typen,",
+   "start": 43.538,
+   "end": 43.778
+  },
+  {
+   "text": "der",
+   "start": 43.778,
+   "end": 43.938
+  },
+  {
+   "text": "die",
+   "start": 43.938,
+   "end": 44.018
+  },
+  {
+   "text": "Musik",
+   "start": 44.018,
+   "end": 44.258
+  },
+  {
+   "text": "für",
+   "start": 44.258,
+   "end": 44.418
+  },
+  {
+   "text": "„Interstellar\"",
+   "start": 44.418,
+   "end": 45.058
+  },
+  {
+   "text": "und",
+   "start": 45.058,
+   "end": 45.218
+  },
+  {
+   "text": "„König",
+   "start": 45.218,
+   "end": 45.458
+  },
+  {
+   "text": "der",
+   "start": 45.458,
+   "end": 45.618
+  },
+  {
+   "text": "Löwen\"",
+   "start": 45.618,
+   "end": 45.938
+  },
+  {
+   "text": "gemacht",
+   "start": 45.938,
+   "end": 46.178
+  },
+  {
+   "text": "hat.",
+   "start": 46.178,
+   "end": 46.338
+  },
+  {
+   "text": "Bei",
+   "start": 46.338,
+   "end": 46.498
+  },
+  {
+   "text": "Hybriden",
+   "start": 46.498,
+   "end": 46.978
+  },
+  {
+   "text": "wird",
+   "start": 46.978,
+   "end": 47.138
+  },
+  {
+   "text": "es",
+   "start": 47.138,
+   "end": 47.218
+  },
+  {
+   "text": "dann",
+   "start": 47.218,
+   "end": 47.378
+  },
+  {
+   "text": "absurd,",
+   "start": 47.378,
+   "end": 47.778
+  },
+  {
+   "text": "denn",
+   "start": 47.778,
+   "end": 47.938
+  },
+  {
+   "text": "wenn",
+   "start": 47.938,
+   "end": 48.098
+  },
+  {
+   "text": "da",
+   "start": 48.098,
+   "end": 48.258
+  },
+  {
+   "text": "der",
+   "start": 48.258,
+   "end": 48.338
+  },
+  {
+   "text": "Benziner",
+   "start": 48.338,
+   "end": 48.898
+  },
+  {
+   "text": "schon",
+   "start": 48.898,
+   "end": 49.058
+  },
+  {
+   "text": "läuft,",
+   "start": 49.058,
+   "end": 49.378
+  },
+  {
+   "text": "darf",
+   "start": 49.378,
+   "end": 49.618
+  },
+  {
+   "text": "das",
+   "start": 49.618,
+   "end": 49.698
+  },
+  {
+   "text": "System",
+   "start": 49.698,
+   "end": 50.018
+  },
+  {
+   "text": "keinen",
+   "start": 50.018,
+   "end": 50.258
+  },
+  {
+   "text": "Extra-Ton",
+   "start": 50.258,
+   "end": 50.818
+  },
+  {
+   "text": "machen,",
+   "start": 50.818,
+   "end": 51.042
+  },
+  {
+   "text": "sonst",
+   "start": 51.138,
+   "end": 51.378
+  },
+  {
+   "text": "würde",
+   "start": 51.378,
+   "end": 51.618
+  },
+  {
+   "text": "das",
+   "start": 51.618,
+   "end": 51.698
+  },
+  {
+   "text": "Auto",
+   "start": 51.698,
+   "end": 51.858
+  },
+  {
+   "text": "ja",
+   "start": 51.858,
+   "end": 52.018
+  },
+  {
+   "text": "doppelt",
+   "start": 52.018,
+   "end": 52.258
+  },
+  {
+   "text": "brummen.",
+   "start": 52.258,
+   "end": 52.658
+  },
+  {
+   "text": "Und",
+   "start": 52.658,
+   "end": 52.818
+  },
+  {
+   "text": "ältere",
+   "start": 52.818,
+   "end": 53.218
+  },
+  {
+   "text": "E-Autos",
+   "start": 53.218,
+   "end": 53.778
+  },
+  {
+   "text": "von",
+   "start": 53.778,
+   "end": 53.938
+  },
+  {
+   "text": "vor",
+   "start": 53.938,
+   "end": 54.178
+  },
+  {
+   "text": "2021",
+   "start": 54.178,
+   "end": 55.218
+  },
+  {
+   "text": "dürfen",
+   "start": 55.218,
+   "end": 55.458
+  },
+  {
+   "text": "übrigens",
+   "start": 55.458,
+   "end": 55.858
+  },
+  {
+   "text": "weiterhin",
+   "start": 55.858,
+   "end": 56.338
+  },
+  {
+   "text": "komplett",
+   "start": 56.338,
+   "end": 56.578
+  },
+  {
+   "text": "lautlos",
+   "start": 56.578,
+   "end": 57.138
+  },
+  {
+   "text": "fahren,",
+   "start": 57.138,
+   "end": 57.378
+  },
+  {
+   "text": "also",
+   "start": 57.378,
+   "end": 57.538
+  },
+  {
+   "text": "wenn",
+   "start": 57.538,
+   "end": 57.698
+  },
+  {
+   "text": "du",
+   "start": 57.698,
+   "end": 57.778
+  },
+  {
+   "text": "auf",
+   "start": 57.778,
+   "end": 57.938
+  },
+  {
+   "text": "dem",
+   "start": 57.938,
+   "end": 58.018
+  },
+  {
+   "text": "Parkplatz",
+   "start": 58.018,
+   "end": 58.498
+  },
+  {
+   "text": "gar",
+   "start": 58.498,
+   "end": 58.658
+  },
+  {
+   "text": "nichts",
+   "start": 58.658,
+   "end": 58.818
+  },
+  {
+   "text": "hörst,",
+   "start": 58.818,
+   "end": 59.218
+  },
+  {
+   "text": "heißt",
+   "start": 59.218,
+   "end": 59.458
+  },
+  {
+   "text": "das",
+   "start": 59.458,
+   "end": 59.618
+  },
+  {
+   "text": "nicht,",
+   "start": 59.618,
+   "end": 59.778
+  },
+  {
+   "text": "dass",
+   "start": 59.778,
+   "end": 59.938
+  },
+  {
+   "text": "da",
+   "start": 59.938,
+   "end": 60.098
+  },
+  {
+   "text": "nichts",
+   "start": 60.098,
+   "end": 60.338
+  },
+  {
+   "text": "kommt,",
+   "start": 60.338,
+   "end": 60.578
+  },
+  {
+   "text": "denn",
+   "start": 60.578,
+   "end": 61.03
+  },
+  {
+   "text": "…",
+   "start": 61.03,
+   "end": 61.044
+  }
+ ]
+}
