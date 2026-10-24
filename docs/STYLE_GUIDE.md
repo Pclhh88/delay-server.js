@@ -49,3 +49,29 @@ Pixelangaben beziehen sich auf die Referenz (480×854); ×2,25 = Design-Einheite
 * Impact auf Punch-Zoom der Kernaussage, Pop für erscheinende Objekte, Swoosh/Whoosh auf
   Szenen- und Push-Übergänge, Glissando + Glocken für „Magie/Malen", Blitz + Fiepton für
   Blendung, Buzzer auf roten Flash.
+
+## Abgleich mit Referenz 2 („Burj Khalifa", 63,8 s)
+
+Ausgewertet (nicht nachgebaut): `projects/burj-khalifa/analysis/`. Ergebnis, was **fest** zum Stil
+gehört (in beiden Videos gleich) und was **pro Thema wechselt**:
+
+| Merkmal | Bundeswehr | Burj Khalifa | Regel |
+|---|---|---|---|
+| Format | 9:16, 30 fps, 50,5 s | 9:16, 30 fps, 63,8 s | fest; Länge 50–65 s |
+| Sprechtempo | 3,5 Wörter/s | 3,8 Wörter/s | fest: 3,5–3,8 Wörter/s |
+| Untertitel | 1 Wort, Versalien, Bildmitte | identisch (Mitte y≈430 px) | fest |
+| Streifen-Hintergrund | ja | ja, **identisch** (gleiche Farben, Neigung, Scroll; Median-Abweichung 1/255) | fest |
+| Quellen | [Q1]–[Q9] + vertikale Zeile rechts | [Q1]–[Q11] + Zeile rechts | fest |
+| Einstieg | Behauptung „… reflektieren nicht." | Behauptung „… hat keinen Haupteingang." | fest: verblüffende Negativ-Behauptung, ≤ 2,7 s |
+| Zweiter Satz | „Wäre ja auch dumm, wenn …" | „Klingt erst mal dumm, aber wenn du …" | fest: „dumm"-Brücke + du-Szenario |
+| Ende | „…, denn …" (Abbruch) | „Überlegt euch mal …" (Abbruch) | fest: offenes Ende mitten im Satz |
+| Roter Blockpfeil | ja | ja (auf Spitze/Fuß) | fest |
+| Roter Flash bei Verneinung | KEINE / NICHT SEHEN | NICHT MAL … ÖFFNEN KANNST | fest |
+| Voxel-Figur (Minecraft-Stil) | Gegner + Prüfer | Bewohner mit Kopftuch | wiederkehrend, Rolle wechselt |
+| Memes | Bob Ross, Drake, Katze, Schwitzmann, Wasted | Meme-Gesicht auf Auto, SpongeBob | wechselt pro Thema |
+| Erklär-Grafiken | Karte, StVO-Seite, Kreuzung | Turm-Querschnitt mit Farbetagen + Beschriftung | wechselt; flache, bunte Info-Grafik |
+| Vergleich aus dem Alltag | Panzer braucht TÜV | Aufzug = „vom ICE in den Regio umsteigen" | fest: deutscher Alltagsvergleich |
+| Schnitte (harte) | 32 in 50,5 s | 30 in 63,8 s | fest: neues Bild-Ereignis alle 1–2 s, oft ohne harten Schnitt (Zoom/Push) |
+| Soundeffekte | ~7 pro 10 s | ~8 pro 10 s | fest: 7–8 Effekte pro 10 s |
+| Lautheit | −16,2 dB | −14,4 dB | Stimme dominant, Effekte ~15 dB leiser |
+| Zahlen im Untertitel | Ziffern | kurze Zahlen als Wort (ZEHN), große als Ziffern | Regel: ≤ 12 als Wort, sonst Ziffern |
