@@ -1,0 +1,393 @@
+{
+ "q1_jeep_photo": {
+  "path": "assets/proxies/q1_jeep_photo.png",
+  "design_scale": 1.0227272727272727,
+  "license": "reference_proxy",
+  "source": "Mosaik aus Referenzframes 0/20/45/72 (Foto laut Einblendung: Wikimedia Commons, Darkone, CC BY-SA 2.5)",
+  "replace_with": "Originalfoto von Wikimedia Commons (Darkone, CC BY-SA 2.5) mit Namensnennung"
+ },
+ "q1_backdrop": {
+  "path": "assets/proxies/q1_backdrop.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Hintergrundplatte aus Referenzframes 0/84",
+  "replace_with": "prozeduraler Studio-Verlauf (radial_bg)"
+ },
+ "s3_jeep_grey": {
+  "path": "assets/proxies/s3_jeep_grey.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 99-127, Untertitel herausgerechnet",
+  "replace_with": "lizenziertes Foto eines grauen Mercedes G (Wolf) als Freisteller"
+ },
+ "s3_jeep_camo": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/s3_jeep_camo.png",
+  "source": "Referenzframes 184-186",
+  "replace_with": "Foto des Jeeps in Flecktarn, gleiche Perspektive"
+ },
+ "s3_paint_reveal_map": {
+  "path": "assets/proxies/s3_paint_reveal_map.png",
+  "design_scale": 2.25,
+  "license": "derived_measurement",
+  "source": "gemessene Übermal-Reihenfolge (0 = früh, 1 = spät)"
+ },
+ "s3_jeep_painted": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/s3_jeep_painted.png",
+  "source": "Referenzframes 170-183",
+  "replace_with": "grau mit aufgemalten Tarnflecken (Bild-Edit)"
+ },
+ "s3_bob": {
+  "path": "assets/proxies/s3_bob.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframe 176",
+  "replace_with": "eigene Zeichnung im Rage-Comic-Stil (Maler mit Afro, Pinsel) oder lizenziertes Meme"
+ },
+ "bush_back": {
+  "design_scale": 1.875,
+  "license": "reference_proxy",
+  "path": "assets/proxies/bush_back.png",
+  "source": "Referenzframes 205/216",
+  "replace_with": "eigener Cartoon-Busch (Vektor), gleiche Silhouette"
+ },
+ "bush_front": {
+  "design_scale": 1.875,
+  "license": "reference_proxy",
+  "path": "assets/proxies/bush_front.png",
+  "source": "Referenzframe 205",
+  "replace_with": "Teil des eigenen Cartoon-Buschs, der vor dem Jeep liegt"
+ },
+ "pillager_idle": {
+  "path": "assets/proxies/pillager_idle.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes [222, 226, 232, 218]",
+  "replace_with": "eigene Voxel-/Pixel-Figur (kein Minecraft-Asset: Markenrecht Mojang/Microsoft)"
+ },
+ "pillager_torch": {
+  "path": "assets/proxies/pillager_torch.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes [245, 268, 276, 280, 260]",
+  "replace_with": "eigene Voxel-/Pixel-Figur (kein Minecraft-Asset: Markenrecht Mojang/Microsoft)"
+ },
+ "plate_y": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/plate_y.png",
+  "design_scale": 2.25,
+  "source": "Referenzframes 362/380/470 (Foto laut Einblendung: Wikimedia Commons, Thorsten S., CC3)",
+  "replace_with": "Wikimedia-Foto mit Namensnennung oder selbst gerendertes Kennzeichen (FE-Schrift)"
+ },
+ "plate_x": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/plate_x.png",
+  "design_scale": 2.25,
+  "source": "Referenzframes 512/515",
+  "replace_with": "Foto/Render eines X-Kennzeichens (NATO)"
+ },
+ "plate_tuev": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/plate_tuev.png",
+  "design_scale": 2.25,
+  "source": "Referenzframes 560/575",
+  "replace_with": "Foto Kennzeichen mit TÜV-Plakette"
+ },
+ "drake_bw": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/drake_bw.png",
+  "source": "Referenzframes [415, 422, 430, 440]",
+  "replace_with": "Drake-Meme mit Bundeswehr-Shirt: lizenzierte Meme-Vorlage oder eigene Zeichnung im selben Gestus"
+ },
+ "drake_nato": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/drake_nato.png",
+  "source": "Referenzframes [528, 536, 540]",
+  "replace_with": "Drake-Meme mit NATO-Shirt: lizenzierte Meme-Vorlage oder eigene Zeichnung im selben Gestus"
+ },
+ "germany_map": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/germany_map.png",
+  "source": "Referenzframes [482, 490, 496]",
+  "replace_with": "eigene Vektorgrafik (Umriss gemeinfrei)"
+ },
+ "blinded_cat": {
+  "path": "assets/proxies/blinded_cat.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframe 354",
+  "replace_with": "Foto einer weissen Katze (lizenziert), stark ueberbelichtet"
+ },
+ "torch_light_216": {
+  "path": "assets/proxies/torch_light_216.png",
+  "design_scale": 2.25,
+  "license": "derived_measurement",
+  "source": "Lichtkarte aus Differenz Frame 260 vs. 230",
+  "replace_with": "prozeduraler Lichtkegel (light_cone) mit diesen Parametern"
+ },
+ "plate_close_tuev": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/plate_close_tuev.png",
+  "source": "Referenzframes 603-607",
+  "replace_with": "Nahaufnahme Kennzeichen mit TÜV-Plakette (Foto)"
+ },
+ "plate_close_seal": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/plate_close_seal.png",
+  "source": "Referenzframes 615-630",
+  "replace_with": "Nahaufnahme Bundeswehr-Kennzeichen mit Siegelplakette (Foto)"
+ },
+ "street_truck1": {
+  "path": "assets/proxies/street_truck1.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 729-749 (gestitcht)",
+  "replace_with": "Freisteller-Foto eines Bundeswehrfahrzeugs (Seitenansicht)"
+ },
+ "street_crane": {
+  "path": "assets/proxies/street_crane.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 751-773 (gestitcht)",
+  "replace_with": "Freisteller-Foto eines Bundeswehrfahrzeugs (Seitenansicht)"
+ },
+ "street_truck3": {
+  "path": "assets/proxies/street_truck3.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 773-793 (gestitcht)",
+  "replace_with": "Freisteller-Foto eines Bundeswehrfahrzeugs (Seitenansicht)"
+ },
+ "street_tank_street": {
+  "path": "assets/proxies/street_tank_street.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 811-876 (gestitcht)",
+  "replace_with": "Freisteller-Foto eines Bundeswehrfahrzeugs (Seitenansicht)"
+ },
+ "villager_idle": {
+  "path": "assets/proxies/villager_idle.png",
+  "design_scale": 0.8780830471433032,
+  "license": "reference_proxy",
+  "source": "Referenzframes [680, 896, 908, 912, 893]",
+  "replace_with": "eigene Voxel-Figur mit rotem Barett (kein Minecraft-Asset)"
+ },
+ "villager_seal": {
+  "path": "assets/proxies/villager_seal.png",
+  "design_scale": 0.8780830471433032,
+  "license": "reference_proxy",
+  "source": "Referenzframes [705, 712, 718]",
+  "replace_with": "eigene Voxel-Figur mit rotem Barett (kein Minecraft-Asset)"
+ },
+ "house_world": {
+  "path": "assets/proxies/house_world.png",
+  "design_scale": 0.8780830471433032,
+  "license": "reference_proxy",
+  "source": "Mosaik Referenzframes 650/660/700/905/885",
+  "replace_with": "eigene Illustration: Haus mit Bundeswehr-Schild, Strasse, Himmel"
+ },
+ "seal_coin": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/seal_coin.png",
+  "source": "Referenzframe 833",
+  "replace_with": "eigene Grafik: graues Dienstsiegel (Bundesadler gemeinfrei)"
+ },
+ "seal_stamp": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/seal_stamp.png",
+  "source": "Referenzframe 845",
+  "replace_with": "eigene Grafik: Stempelabdruck Dienstsiegel"
+ },
+ "sweat_meme": {
+  "path": "assets/proxies/sweat_meme/{i:03d}.png",
+  "frames": 50,
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 924-973, Freisteller pro Frame, Rottönung herausgerechnet",
+  "replace_with": "eigene Animation: schwitzender Mann wischt sich die Stirn (Cartoon)"
+ },
+ "leo_tank": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/leo_tank.png",
+  "design_scale": 2.25,
+  "source": "Referenzframes 1010-1026",
+  "replace_with": "Foto Leopard 2 (frei lizenziert, z. B. Wikimedia Commons, Sonaz CC3 mit Nennung)"
+ },
+ "leo_world": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/leo_world.png",
+  "design_scale": 2.25,
+  "source": "Referenzframes 1032-1054",
+  "replace_with": "eigene Illustration: Himmel, Hügel, Strasse"
+ },
+ "leo_cannon_hr": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/leo_cannon_hr.png",
+  "design_scale": 0.5232558139534884,
+  "source": "Mosaik Referenzframes 1058-1095",
+  "replace_with": "hochaufgelöstes Panzerfoto"
+ },
+ "ce_mark": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/ce_mark.png",
+  "design_scale": 2.25,
+  "source": "Referenzframe 1080",
+  "replace_with": "CE-Zeichen als Vektorgrafik (gemeinfrei)"
+ },
+ "wasted_text": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/wasted_text.png",
+  "source": "Referenzframe 1114",
+  "replace_with": "eigener Schriftzug im GTA-Stil (freie Schrift, z. B. Pricedown-Alternative)"
+ },
+ "stvo_page": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/stvo_page.png",
+  "source": "Median Referenzframes 1143-1189",
+  "replace_with": "eigener Screenshot von gesetze-im-internet.de (§ 35 StVO, amtliches Werk)"
+ },
+ "stvo_page_marked": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/stvo_page_marked.png",
+  "source": "Median Referenzframes 1143-1189",
+  "replace_with": "eigener Screenshot von gesetze-im-internet.de (§ 35 StVO, amtliches Werk)"
+ },
+ "wipe_lr_112_363": {
+  "path": "assets/proxies/wipe_lr_112_363.png",
+  "design_scale": 2.25,
+  "license": "derived_measurement",
+  "source": "lineare Wischmaske"
+ },
+ "street2_bg": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/street2_bg.png",
+  "source": "Referenzframe 1345",
+  "replace_with": "eigene Illustration: Bürgersteig, Strasse, Wiese (Seitenansicht)"
+ },
+ "street2_clouds": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/street2_clouds.png",
+  "source": "Referenzframes 1218-1336 (gestitcht)",
+  "replace_with": "eigene Cartoon-Wolken"
+ },
+ "tank_side": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/tank_side.png",
+  "source": "Referenzframes 1226-1302",
+  "replace_with": "Freisteller Leopard 2 Seitenansicht (frei lizenziertes Foto)"
+ },
+ "traffic_light": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/traffic_light.png",
+  "source": "Referenzframe 1305",
+  "replace_with": "eigene Grafik: Ampel"
+ },
+ "traffic_light_flat": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/traffic_light_flat.png",
+  "source": "Referenzframe 1345",
+  "replace_with": "eigene Grafik: Ampel"
+ },
+ "stop_sign": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/stop_sign.png",
+  "source": "Referenzframe 1287",
+  "replace_with": "Stoppschild als Vektorgrafik (amtliches Zeichen, gemeinfrei)"
+ },
+ "street2_sky": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/street2_sky.png",
+  "source": "Referenzframes 1218-1351 (gestitcht)",
+  "replace_with": "eigener Himmel mit Cartoon-Wolken"
+ },
+ "crossing_bg": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/crossing_bg.png",
+  "source": "Referenzframes 1352/1390",
+  "replace_with": "eigene Draufsicht: Strasse mit Mittelinseln und Bäumen"
+ },
+ "tank_top": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/tank_top.png",
+  "source": "Referenzframes 1376-1389",
+  "replace_with": "eigene Draufsicht-Grafik eines Panzers"
+ },
+ "cyclist": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/cyclist.png",
+  "source": "Referenzframe 1386",
+  "replace_with": "eigene Grafik: Radfahrer von oben/schräg"
+ },
+ "blitzer_bg": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/blitzer_bg.png",
+  "source": "Referenzframe 1440",
+  "replace_with": "eigene Illustration: Strasse + Blitzersäule (Seitenansicht)"
+ },
+ "blitzer_close": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/blitzer_close.png",
+  "source": "Referenzframes 1395-1415",
+  "replace_with": "Nahaufnahme der eigenen Blitzersäule"
+ },
+ "jeep_pass": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/jeep_pass.png",
+  "source": "Referenzframe 1432 (Blitz herausgerechnet)",
+  "replace_with": "Freisteller Mercedes G (Wolf) Seitenansicht"
+ },
+ "final_jeep": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/final_jeep.png",
+  "source": "Referenzframes 1490-1510",
+  "replace_with": "Foto Mercedes G (Wolf) im Studio (Darkone, CC2.5 mit Nennung)"
+ },
+ "road_blur_bg": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/road_blur_bg.png",
+  "source": "Referenzframe 1461",
+  "replace_with": "eigene Strassen-Illustration, weichgezeichnet"
+ },
+ "tank_side_far": {
+  "path": "assets/proxies/tank_side_far.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 1321-1338 (gestitcht)",
+  "replace_with": "Freisteller Leopard 2 Seitenansicht"
+ },
+ "photo_card": {
+  "path": "assets/proxies/photo_card.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 1470-1480",
+  "replace_with": "Foto Mercedes G (Wolf), weisser Rahmen"
+ }
+}

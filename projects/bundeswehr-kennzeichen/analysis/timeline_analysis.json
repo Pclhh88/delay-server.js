@@ -1,0 +1,587 @@
+{
+ "reference": "references/Bundeswehr-Kennzeichen.mp4",
+ "format": {
+  "width": 480,
+  "height": 854,
+  "fps": 30,
+  "duration": 50.5,
+  "audio": "AAC 44.1 kHz stereo"
+ },
+ "scope": "0-20 s detailliert analysiert (Auftrag 1); 20-50.5 s nur Transkript (ASR)",
+ "methods": {
+  "cuts": "Frame-Differenz + SIFT-Ähnlichkeitstransformationen",
+  "captions": "eingebrannte Untertitel Frame für Frame gelesen und per Maske verifiziert",
+  "audio": "Trennung Stimme/Rest mit UVR-MDX-NET-Voc_FT (sherpa-onnx), Onsets per Spektralfluss, Spektrogramme",
+  "transcript": "Whisper small (sherpa-onnx) + Untertitel als Referenz"
+ },
+ "global_style": {
+  "captions": "ein Wort pro Einblendung, Versalien, weiss mit dunkler Kontur + Schatten, Bildmitte (y=50%), Betonungswörter 1.5x",
+  "background": "Pastellverlauf (oben pfirsich, unten hellblau) mit schrägen Streifen, scrollt konstant 1.3 px/Frame (480p)",
+  "source_marking": "[Qn] oben links (fällt in 10 Frames ein) + vertikale Quellenangabe am rechten Rand",
+  "cut_rhythm": "neues visuelles Ereignis ca. alle 0.5-1.5 s; Zooms als 2.5-Frame-Punch-Zooms ohne Ease"
+ },
+ "scenes": [
+  {
+   "id": "s01_hook",
+   "frames": [
+    0,
+    85
+   ],
+   "source_label": "[Q1]",
+   "text": "Bundeswehr-Kennzeichen reflektieren nicht.",
+   "background": "dunkler Studio-Hintergrund (radialer Verlauf, statisch)",
+   "visuals": [
+    {
+     "element": "Foto Mercedes G (Wolf) in Flecktarn, Freisteller",
+     "type": "photo",
+     "source_credit": "Wikimedia Commons, Darkone, CC2.5"
+    },
+    {
+     "element": "roter Blockpfeil",
+     "type": "graphic",
+     "points_at": "Kennzeichen"
+    }
+   ],
+   "motion": [
+    {
+     "frames": [
+      3,
+      5
+     ],
+     "what": "Punch-Zoom 0.53 -> 1.0 (2.5 Frames, linear) auf Fahrzeug",
+     "on_word": "BUNDESWEHR-"
+    },
+    {
+     "frames": [
+      42,
+      45
+     ],
+     "what": "Punch-Zoom 1.0 -> 1.52 Richtung Kennzeichen + Pfeil fliegt entlang seiner Achse ein (43-45)",
+     "on_word": "REFLEKTIEREN"
+    },
+    {
+     "frames": [
+      69,
+      72
+     ],
+     "what": "Punch-Zoom 1.52 -> 2.19 auf Kennzeichen, Pfeil dreht von 69 auf 136 Grad",
+     "on_word": "NICHT."
+    },
+    {
+     "frames": [
+      83,
+      85
+     ],
+     "what": "Jeep fliegt nach rechts raus, neue Szene schiebt sich mit weisser Kante von links rein"
+    }
+   ],
+   "gag": null,
+   "sfx": [
+    {
+     "t": 2.35,
+     "what": "tiefer Impact (250-350 Hz, 1.1 s)",
+     "on": "NICHT. (Punch-Zoom)"
+    },
+    {
+     "t": 2.86,
+     "what": "Swoosh (Szenenwechsel)"
+    }
+   ],
+   "start": 0.0,
+   "end": 2.833
+  },
+  {
+   "id": "s02_waere_dumm",
+   "frames": [
+    85,
+    97
+   ],
+   "text": "Wäre ja auch dumm,",
+   "background": "Pastell-Verlauf mit schrägen, scrollenden Streifen",
+   "visuals": [
+    {
+     "element": "Kanal-Logo (Senderlogo, 2x2 Kacheln)",
+     "type": "brand",
+     "note": "Pop-in ab Frame 93"
+    }
+   ],
+   "motion": [],
+   "gag": null,
+   "start": 2.833,
+   "end": 3.233
+  },
+  {
+   "id": "s03_paint",
+   "frames": [
+    97,
+    186
+   ],
+   "text": "wenn du das ganze Fahrzeug in John-Cena-Lackierung anmalst, damit es",
+   "visuals": [
+    {
+     "element": "grauer Mercedes G, Freisteller",
+     "type": "photo",
+     "source_credit": "Darkone CC2.5 (bearbeitet)"
+    },
+    {
+     "element": "Bob-Ross-Rage-Comic (Maler mit Afro + Pinsel)",
+     "type": "meme"
+    },
+    {
+     "element": "Jeep in Flecktarn",
+     "type": "photo"
+    }
+   ],
+   "motion": [
+    {
+     "frames": [
+      97,
+      103
+     ],
+     "what": "Pop-in mit Überschwinger: Skala 0.15, 0.45, 1.24, 1.37, 1.28, 1.15, 1.0"
+    },
+    {
+     "frames": [
+      130,
+      135
+     ],
+     "what": "Bob fliegt von links ein (65 px/Frame)"
+    },
+    {
+     "frames": [
+      135,
+      165
+     ],
+     "what": "Bob malt: Zickzack links<->rechts (35 px/Frame), sinkt dabei ab"
+    },
+    {
+     "frames": [
+      126,
+      171
+     ],
+     "what": "Jeep wird von oben nach unten pinselweise getarnt (gemessene Reveal-Karte)"
+    },
+    {
+     "frames": [
+      165,
+      169
+     ],
+     "what": "Bob gleitet nach unten links in Ruheposition"
+    },
+    {
+     "frames": [
+      184,
+      185
+     ],
+     "what": "Bob verlässt Bild nach unten, harter Wechsel auf echtes Tarnfoto"
+    }
+   ],
+   "gag": {
+    "setup": "John-Cena-Lackierung (John Cena = 'you can't see me')",
+    "punch": "Bob Ross malt den Jeep an",
+    "timing": "Meme erscheint 0.13 s nach Beginn des Wortes 'JOHN-CENA-LACKIERUNG'"
+   },
+   "sfx": [
+    {
+     "t": 3.31,
+     "what": "Pop (Jeep erscheint)"
+    },
+    {
+     "t": 4.3,
+     "what": "Glissando 1400->1100 Hz + Glockenakkord (Bob)"
+    }
+   ],
+   "start": 3.233,
+   "end": 6.2
+  },
+  {
+   "id": "s04_bush",
+   "frames": [
+    186,
+    214
+   ],
+   "text": "unsichtbar wird, aber der",
+   "visuals": [
+    {
+     "element": "Cartoon-Busch (hinterer + vorderer Teil)",
+     "type": "illustration"
+    },
+    {
+     "element": "Jeep (grün getönt)",
+     "type": "photo"
+    }
+   ],
+   "motion": [
+    {
+     "frames": [
+      185,
+      193
+     ],
+     "what": "Busch schiebt sich linear von rechts rein (54 px/Frame), Jeep rückt 7 px/Frame nach rechts"
+    },
+    {
+     "frames": [
+      189,
+      195
+     ],
+     "what": "Jeep färbt sich zum Buschgrün (Tönung 0 -> 0.55)",
+     "on_word": "UNSICHTBAR"
+    }
+   ],
+   "gag": {
+    "setup": "unsichtbar",
+    "punch": "Jeep verschwindet im Busch (halb)"
+   },
+   "start": 6.2,
+   "end": 7.133
+  },
+  {
+   "id": "s05_minecraft",
+   "frames": [
+    214,
+    283
+   ],
+   "source_label": "[Q2]",
+   "text": "Feind einfach nur 'ne Handytaschenlampe braucht und ihm das",
+   "visuals": [
+    {
+     "element": "Minecraft-Pillager (2 Posen)",
+     "type": "meme/game"
+    },
+    {
+     "element": "Himmel + Wiese (Flächen)",
+     "type": "graphic"
+    },
+    {
+     "element": "Lichtkegel der Handylampe",
+     "type": "light"
+    }
+   ],
+   "motion": [
+    {
+     "frames": [
+      214,
+      216
+     ],
+     "what": "Zoom-out (3 Frames) vom Busch auf die Welt, Skala 1 -> 0.527"
+    },
+    {
+     "frames": [
+      237,
+      239
+     ],
+     "what": "Posenwechsel + Lichtkegel an",
+     "on_word": "HANDYTASCHENLAMPE (2 Frames vor Wortbeginn)"
+    }
+   ],
+   "gag": {
+    "setup": "der Feind",
+    "punch": "Minecraft-Pillager mit Handylampe"
+   },
+   "start": 7.133,
+   "end": 9.433
+  },
+  {
+   "id": "s06_flash",
+   "frames": [
+    283,
+    317
+   ],
+   "text": "Kennzeichen direkt entgegenflasht.",
+   "motion": [
+    {
+     "frames": [
+      283,
+      285
+     ],
+     "what": "Zoom-in auf Busch (Skala 0.527 -> 1.17)",
+     "on_word": "KENNZEICHEN"
+    },
+    {
+     "frames": [
+      312,
+      318
+     ],
+     "what": "Glint am Kennzeichen, weisse Scheibe wächst (r 18,39,28,47,114,250 px) bis Weissblende",
+     "on_word": "ENTGEGENFLASHT."
+    }
+   ],
+   "sfx": [
+    {
+     "t": 10.8,
+     "what": "Blitz-Rauschen"
+    },
+    {
+     "t": 11.07,
+     "what": "Fiepton 6.4 + 3.5 kHz bis 12.5 s"
+    }
+   ],
+   "start": 9.433,
+   "end": 10.567
+  },
+  {
+   "id": "s07_blinded",
+   "frames": [
+    317,
+    355
+   ],
+   "text": "(Pause) Dann könnte er",
+   "visuals": [
+    {
+     "element": "überbelichtete weisse Katze, nur Augen sichtbar",
+     "type": "meme"
+    }
+   ],
+   "motion": [
+    {
+     "frames": [
+      320,
+      354
+     ],
+     "what": "Katze taucht linear aus dem Weiss auf (Deckkraft 0.03 -> 1)"
+    }
+   ],
+   "gag": {
+    "setup": "entgegenflasht",
+    "punch": "geblendete Katze",
+    "timing": "0.3 s Sprechpause (335-343) ohne Untertitel"
+   },
+   "start": 10.567,
+   "end": 11.833
+  },
+  {
+   "id": "s08_plate_y",
+   "frames": [
+    355,
+    465
+   ],
+   "source_label": "[Q3]",
+   "text": "ja sehen, dass es mit Y beginnt, was sich die Bundeswehr einfach ausgesucht hat, weil keine Stadt",
+   "visuals": [
+    {
+     "element": "Kennzeichen Y-751 957 (Foto)",
+     "type": "photo",
+     "source_credit": "Wikimedia Commons, Thorsten S., CC3"
+    },
+    {
+     "element": "roter Pfeil auf 'Y'",
+     "type": "graphic"
+    },
+    {
+     "element": "Drake-Meme (zustimmend) mit Bundeswehr-Shirt",
+     "type": "meme"
+    },
+    {
+     "element": "roter Flash",
+     "type": "overlay"
+    }
+   ],
+   "motion": [
+    {
+     "frames": [
+      371,
+      373
+     ],
+     "what": "Punch-Zoom 0.45 -> 1.0 auf 'Y-7'",
+     "on_word": "MIT"
+    },
+    {
+     "frames": [
+      371,
+      373
+     ],
+     "what": "Pfeil fliegt entlang Achse ein; 400-401 wieder raus"
+    },
+    {
+     "frames": [
+      408,
+      410
+     ],
+     "what": "Drake schiesst von unten hoch",
+     "on_word": "BUNDESWEHR (1 Frame danach)"
+    },
+    {
+     "frames": [
+      446,
+      461
+     ],
+     "what": "roter Flash RGB(168,40,45), max 82%",
+     "on_word": "KEINE"
+    },
+    {
+     "frames": [
+      456,
+      461
+     ],
+     "what": "Rückzoom auf Vollansicht oben (Skala 0.43), Drake taucht ab"
+    }
+   ],
+   "gag": {
+    "setup": "Bundeswehr hat sich Y ausgesucht",
+    "punch": "Drake approves (Shirt umgefärbt)"
+   },
+   "sfx": [
+    {
+     "t": 14.87,
+     "what": "Fehler-Buzzer",
+     "on": "KEINE"
+    }
+   ],
+   "start": 11.833,
+   "end": 15.5
+  },
+  {
+   "id": "s09_map",
+   "frames": [
+    465,
+    504
+   ],
+   "text": "in Deutschland damit anfängt.",
+   "visuals": [
+    {
+     "element": "Deutschlandkarte in Flaggenfarben",
+     "type": "graphic"
+    }
+   ],
+   "motion": [
+    {
+     "frames": [
+      465,
+      467
+     ],
+     "what": "Karte schnellt von unten hoch (Skala 0.79)"
+    },
+    {
+     "frames": [
+      476,
+      479
+     ],
+     "what": "Karte wächst auf 1.0",
+     "on_word": "DAMIT"
+    },
+    {
+     "frames": [
+      500,
+      502
+     ],
+     "what": "Karte fällt nach unten raus"
+    }
+   ],
+   "anomaly": "Untertitel 'DEUTSCHLAND' erscheint vor 'IN' (Frames 462-464) - Fehler im Original, 1:1 übernommen",
+   "start": 15.5,
+   "end": 16.8
+  },
+  {
+   "id": "s10_plate_x",
+   "frames": [
+    504,
+    545
+   ],
+   "source_label": "[Q4]",
+   "text": "Und das X hat dann die NATO bekommen.",
+   "visuals": [
+    {
+     "element": "Kennzeichen X-75.. (Foto)",
+     "type": "photo"
+    },
+    {
+     "element": "Drake-Meme mit NATO-Shirt",
+     "type": "meme",
+     "source_credit": "Sangjinhwa, gemeinfrei"
+    }
+   ],
+   "motion": [
+    {
+     "frames": [
+      504,
+      508
+     ],
+     "what": "Push: Y raus nach links (-195 px/Frame), X rein von rechts (Ease-out)",
+     "on_word": "DAS/X"
+    },
+    {
+     "frames": [
+      522,
+      523
+     ],
+     "what": "Drake Pop (Skala 0.59 -> 1)",
+     "on_word": "NATO (3 Frames vorher)"
+    },
+    {
+     "frames": [
+      543,
+      545
+     ],
+     "what": "X raus nach rechts, TÜV-Schild rein von links"
+    }
+   ],
+   "sfx": [
+    {
+     "t": 16.96,
+     "what": "Whoosh"
+    },
+    {
+     "t": 18.19,
+     "what": "Whoosh"
+    }
+   ],
+   "start": 16.8,
+   "end": 18.167
+  },
+  {
+   "id": "s11_tuev",
+   "frames": [
+    545,
+    600
+   ],
+   "source_label": "[Q5]",
+   "text": "Eine TÜV-Plakette würde er nicht sehen, sondern",
+   "visuals": [
+    {
+     "element": "Kennzeichen mit TÜV-Plakette (Foto/Edit)",
+     "type": "photo"
+    },
+    {
+     "element": "roter Pfeil auf Plakette",
+     "type": "graphic"
+    },
+    {
+     "element": "roter Flash",
+     "type": "overlay"
+    }
+   ],
+   "motion": [
+    {
+     "frames": [
+      549,
+      552
+     ],
+     "what": "Zoom auf Plakette (0.42 -> 1.0)",
+     "on_word": "TÜV-PLAKETTE"
+    },
+    {
+     "frames": [
+      582,
+      598
+     ],
+     "what": "roter Flash",
+     "on_word": "NICHT SEHEN"
+    }
+   ],
+   "sfx": [
+    {
+     "t": 19.42,
+     "what": "Fehler-Buzzer",
+     "on": "NICHT SEHEN"
+    }
+   ],
+   "start": 18.167,
+   "end": 20.0
+  }
+ ],
+ "uncertain": [
+  "genaue Art des tonalen Effekts 4.75-6.4 s (vermutlich Musik-Sting/Glockenakkord)",
+  "leises Bett unter der Stimme (Musik?) nicht sicher bestimmbar (-35..-45 dB nach Trennung, evtl. Restanteile)",
+  "Bodenfläche der Studio-Szene skaliert im Original nicht konsistent mit dem Fahrzeug"
+ ]
+}
