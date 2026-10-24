@@ -455,12 +455,13 @@ def wipe_in(frame_start, frame_end, from_x_ref):
 
 def build():
     import timeline_part2 as P2
-    words = P2.fix_part1_words(CAPTIONS["words"]) + P2.caption_words2()
+    import timeline_part3 as P3
+    words = P3.fix_part2_words(P2.fix_part1_words(CAPTIONS["words"]) + P2.caption_words2()) + P3.caption_words3()
     cap_style = dict(STYLE["caption"])
     cap_style["sizes"] = dict(cap_style["sizes"], huge=128)
     tl = {
         "meta": {"title": "Bundeswehr-Kennzeichen (Rekonstruktion)", "fps": FPS, "width": 1080,
-                 "height": 1920, "duration": 40.0, "reference": "references/Bundeswehr-Kennzeichen.mp4"},
+                 "height": 1920, "duration": 50.5, "reference": "references/Bundeswehr-Kennzeichen.mp4"},
         "assets": json.load(open(os.path.join(PROJ, "assets", "manifest.json"), encoding="utf-8")),
         "layers": [
             {"id": "bg_stripes", "type": "stripes_bg", **STYLE["stripes_bg"]},
@@ -471,9 +472,10 @@ def build():
             logo_placeholder(F(92), F(193)),
             *scene_plates(),
             *P2.layers_part2(),
+            *P3.layers_part3(),
         ],
         "captions": {"style": cap_style, "words": words},
-        "audio": AUDIO + P2.AUDIO2,
+        "audio": AUDIO + P2.AUDIO2 + P3.AUDIO3,
     }
     out = os.path.join(PROJ, "reconstruction", "timeline.json")
     with open(out, "w", encoding="utf-8") as f:

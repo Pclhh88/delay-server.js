@@ -2,7 +2,7 @@
 
 Ziel: ein Produktionssystem für YouTube Shorts im Stil des Referenzvideos
 `references/Bundeswehr-Kennzeichen.mp4`. Zuerst wird das Referenzvideo
-rekonstruiert (aktueller Stand: **0–40 s**), danach wird daraus ein Template
+rekonstruiert (Stand: **komplett, 0–50,5 s**), danach wird daraus ein Template
 abgeleitet (Phase 4) und ein Themen-Workflow gebaut (Phase 5).
 
 ```

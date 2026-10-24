@@ -8,18 +8,18 @@ Wiederverwendbares Produktionssystem für YouTube Shorts im Stil von
 Phasen: 1 Analyse → 2 Rekonstruktion → 3 Abgleich → 4 Template → 5 „Neues Video über: …".
 
 ## Stand
-* Phasen 1–3 für **0–40 s erledigt** (0–20 s vom Nutzer gut befunden), siehe
-  `projects/bundeswehr-kennzeichen/README.md`. Nicht neu nachbauen. Offen: 40–50,5 s.
-* Messungen/Assets: `reconstruction/build_proxies.py` (0–20 s), `build_part2.py` (20–40 s);
-  Timeline: `build_timeline.py` + `timeline_part2.py` → `timeline.json`.
+* Phasen 1–3 **komplett erledigt** (ganzes Video, 0–50,5 s), siehe
+  `projects/bundeswehr-kennzeichen/README.md`. Nicht neu nachbauen.
+* Messungen/Assets: `reconstruction/build_proxies.py` (0–20 s), `build_part2.py` (20–40 s),
+  `build_part3.py` (40–50,5 s); Timeline: `build_timeline.py` + `timeline_part2.py` +
+  `timeline_part3.py` → `timeline.json`.
 * Code: `shortsfactory/` (Renderer, Audio, Analyse-Tools). Doku: `docs/ARCHITECTURE.md`,
   Stilregeln: `docs/STYLE_GUIDE.md`.
 * 17 Bild-Assets + Stimme sind Referenz-Platzhalter (aus dem Original geschnitten),
   nicht veröffentlichen – siehe `projects/bundeswehr-kennzeichen/assets/manifest.json`.
 
 ## Offene Entscheidungen (beim Nutzer nachfragen)
-* Nächster Schritt: 40–50,5 s nachbauen, dann Template herauslösen (Phase 4) und
-  Themen-Workflow (Phase 5).
+* Nächster Schritt: Template herauslösen (Phase 4) und Themen-Workflow (Phase 5).
 * Stimme für neue Themen: eigene Aufnahme des Nutzers oder TTS-Dienst (hier keiner eingerichtet).
 * Bildquellen: freie Fotos / eigene Grafiken; bekannte Memes (Drake, Minecraft) rechtlich heikel.
 

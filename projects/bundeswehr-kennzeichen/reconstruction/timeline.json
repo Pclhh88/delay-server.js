@@ -4,7 +4,7 @@
   "fps": 30,
   "width": 1080,
   "height": 1920,
-  "duration": 40.0,
+  "duration": 50.5,
   "reference": "references/Bundeswehr-Kennzeichen.mp4"
  },
  "assets": {
@@ -279,6 +279,125 @@
    "design_scale": 2.25,
    "license": "derived_measurement",
    "source": "lineare Wischmaske"
+  },
+  "street2_bg": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/street2_bg.png",
+   "source": "Referenzframe 1345",
+   "replace_with": "eigene Illustration: Bürgersteig, Strasse, Wiese (Seitenansicht)"
+  },
+  "street2_clouds": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/street2_clouds.png",
+   "source": "Referenzframes 1218-1336 (gestitcht)",
+   "replace_with": "eigene Cartoon-Wolken"
+  },
+  "tank_side": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/tank_side.png",
+   "source": "Referenzframes 1226-1302",
+   "replace_with": "Freisteller Leopard 2 Seitenansicht (frei lizenziertes Foto)"
+  },
+  "traffic_light": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/traffic_light.png",
+   "source": "Referenzframe 1305",
+   "replace_with": "eigene Grafik: Ampel"
+  },
+  "traffic_light_flat": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/traffic_light_flat.png",
+   "source": "Referenzframe 1345",
+   "replace_with": "eigene Grafik: Ampel"
+  },
+  "stop_sign": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/stop_sign.png",
+   "source": "Referenzframe 1287",
+   "replace_with": "Stoppschild als Vektorgrafik (amtliches Zeichen, gemeinfrei)"
+  },
+  "street2_sky": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/street2_sky.png",
+   "source": "Referenzframes 1218-1351 (gestitcht)",
+   "replace_with": "eigener Himmel mit Cartoon-Wolken"
+  },
+  "crossing_bg": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/crossing_bg.png",
+   "source": "Referenzframes 1352/1390",
+   "replace_with": "eigene Draufsicht: Strasse mit Mittelinseln und Bäumen"
+  },
+  "tank_top": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/tank_top.png",
+   "source": "Referenzframes 1376-1389",
+   "replace_with": "eigene Draufsicht-Grafik eines Panzers"
+  },
+  "cyclist": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/cyclist.png",
+   "source": "Referenzframe 1386",
+   "replace_with": "eigene Grafik: Radfahrer von oben/schräg"
+  },
+  "blitzer_bg": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/blitzer_bg.png",
+   "source": "Referenzframe 1440",
+   "replace_with": "eigene Illustration: Strasse + Blitzersäule (Seitenansicht)"
+  },
+  "blitzer_close": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/blitzer_close.png",
+   "source": "Referenzframes 1395-1415",
+   "replace_with": "Nahaufnahme der eigenen Blitzersäule"
+  },
+  "jeep_pass": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/jeep_pass.png",
+   "source": "Referenzframe 1432 (Blitz herausgerechnet)",
+   "replace_with": "Freisteller Mercedes G (Wolf) Seitenansicht"
+  },
+  "final_jeep": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/final_jeep.png",
+   "source": "Referenzframes 1490-1510",
+   "replace_with": "Foto Mercedes G (Wolf) im Studio (Darkone, CC2.5 mit Nennung)"
+  },
+  "road_blur_bg": {
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "path": "assets/proxies/road_blur_bg.png",
+   "source": "Referenzframe 1461",
+   "replace_with": "eigene Strassen-Illustration, weichgezeichnet"
+  },
+  "tank_side_far": {
+   "path": "assets/proxies/tank_side_far.png",
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "source": "Referenzframes 1321-1338 (gestitcht)",
+   "replace_with": "Freisteller Leopard 2 Seitenansicht"
+  },
+  "photo_card": {
+   "path": "assets/proxies/photo_card.png",
+   "design_scale": 2.25,
+   "license": "reference_proxy",
+   "source": "Referenzframes 1470-1480",
+   "replace_with": "Foto Mercedes G (Wolf), weisser Rahmen"
   }
  },
  "layers": [
@@ -6990,7 +7109,7 @@
    "type": "text",
    "text": "[Q8]",
    "start": 39.66667,
-   "end": 43.33333,
+   "end": 45.06667,
    "size": 43,
    "style": {
     "font": "league-spartan-400",
@@ -7003,6 +7122,1176 @@
    "keys": [
     {
      "t": 39.66667,
+     "x": 138.4,
+     "y": 120.6,
+     "opacity": 0.9
+    }
+   ]
+  },
+  {
+   "id": "street2",
+   "type": "group",
+   "pivot": [
+    0,
+    0
+   ],
+   "start": 40.46667,
+   "end": 45.06667,
+   "isolate": true,
+   "clip": [
+    0,
+    0,
+    1080,
+    1920
+   ],
+   "keys": [
+    {
+     "t": 40.46667,
+     "x": -1080.0,
+     "y": 0
+    },
+    {
+     "t": 40.5,
+     "x": -1012.5
+    },
+    {
+     "t": 40.53333,
+     "x": -461.25
+    },
+    {
+     "t": 40.56667,
+     "x": 0
+    }
+   ],
+   "children": [
+    {
+     "id": "street2_bg",
+     "type": "image",
+     "asset": "street2_bg",
+     "anchor": [
+      0,
+      0
+     ],
+     "keys": [
+      {
+       "t": 40.46667,
+       "x": 0,
+       "y": 0
+      }
+     ]
+    },
+    {
+     "id": "street2_sky",
+     "type": "image",
+     "asset": "street2_sky",
+     "anchor": [
+      0,
+      0
+     ],
+     "keys": [
+      {
+       "t": 40.56667,
+       "x": -4.5,
+       "y": 0
+      },
+      {
+       "t": 40.6,
+       "x": -4.5,
+       "y": 0
+      },
+      {
+       "t": 42.5,
+       "x": -616.25,
+       "y": 0
+      },
+      {
+       "t": 45.03333,
+       "x": -616.25,
+       "y": 0
+      }
+     ]
+    },
+    {
+     "id": "traffic_light",
+     "type": "group",
+     "pivot": [
+      150.75,
+      580.5
+     ],
+     "start": 42.46667,
+     "end": 44.3,
+     "keys": [
+      {
+       "t": 42.46667,
+       "x": 150.75,
+       "y": 940.5,
+       "rot": 0
+      },
+      {
+       "t": 42.5,
+       "y": 580.5
+      },
+      {
+       "t": 44.16667,
+       "x": 150.75,
+       "rot": 0
+      },
+      {
+       "t": 44.2,
+       "x": 81.0,
+       "rot": -4
+      },
+      {
+       "t": 44.23333,
+       "x": 40.5,
+       "rot": -8
+      },
+      {
+       "t": 44.26667,
+       "x": 18.0,
+       "rot": -14
+      }
+     ],
+     "children": [
+      {
+       "type": "image",
+       "asset": "traffic_light",
+       "keys": [
+        {
+         "t": 42.46667,
+         "x": 150.75,
+         "y": 321.75
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "id": "traffic_light_flat",
+     "type": "image",
+     "asset": "traffic_light_flat",
+     "start": 44.3,
+     "keys": [
+      {
+       "t": 44.3,
+       "x": 52.875,
+       "y": 630.0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "tank_side_far",
+   "type": "image",
+   "asset": "tank_side_far",
+   "start": 39.96667,
+   "end": 44.73333,
+   "keys": [
+    {
+     "t": 39.96667,
+     "x": 1608.2034374999998,
+     "y": 770.9721875,
+     "scale": 0.78375
+    },
+    {
+     "t": 40.0,
+     "x": 1158.2034375,
+     "y": 770.9721875,
+     "scale": 0.78375
+    },
+    {
+     "t": 40.03333,
+     "x": 700.24921875,
+     "y": 770.9785937500001,
+     "scale": 0.7818749999999999
+    },
+    {
+     "t": 40.46667,
+     "x": 700.23921875,
+     "y": 770.9685937500001,
+     "scale": 0.7818749999999999
+    },
+    {
+     "t": 40.5,
+     "x": 781.3644374999999,
+     "y": 767.6551875,
+     "scale": 0.8757499999999999
+    },
+    {
+     "t": 40.56667,
+     "x": 1105.5325,
+     "y": 754.5425,
+     "scale": 1.25
+    },
+    {
+     "t": 40.63333,
+     "x": 1106.5625,
+     "y": 758.6125,
+     "scale": 1.25
+    },
+    {
+     "t": 40.66667,
+     "x": 1106.90965625,
+     "y": 758.58178125,
+     "scale": 1.249625
+    },
+    {
+     "t": 40.8,
+     "x": 1105.5710625,
+     "y": 752.5963125,
+     "scale": 1.2502499999999999
+    },
+    {
+     "t": 40.83333,
+     "x": 1104.9025000000001,
+     "y": 752.9325,
+     "scale": 1.25
+    },
+    {
+     "t": 40.9,
+     "x": 1103.6439375,
+     "y": 757.0986875,
+     "scale": 1.24975
+    },
+    {
+     "t": 40.96667,
+     "x": 1104.1639375,
+     "y": 758.2586875000001,
+     "scale": 1.24975
+    },
+    {
+     "t": 41.06667,
+     "x": 1106.4267812499997,
+     "y": 751.8894062500001,
+     "scale": 1.250125
+    },
+    {
+     "t": 41.13333,
+     "x": 1107.04821875,
+     "y": 750.69559375,
+     "scale": 1.2498749999999998
+    },
+    {
+     "t": 41.23333,
+     "x": 1105.9196562500001,
+     "y": 756.58178125,
+     "scale": 1.249625
+    },
+    {
+     "t": 41.33333,
+     "x": 1104.1925,
+     "y": 755.4425,
+     "scale": 1.25
+    },
+    {
+     "t": 41.4,
+     "x": 1103.8225,
+     "y": 750.9825,
+     "scale": 1.25
+    },
+    {
+     "t": 41.5,
+     "x": 1105.98390625,
+     "y": 754.57703125,
+     "scale": 1.2506249999999999
+    },
+    {
+     "t": 41.56667,
+     "x": 1107.06821875,
+     "y": 759.56559375,
+     "scale": 1.2498749999999998
+    },
+    {
+     "t": 41.66667,
+     "x": 1107.04390625,
+     "y": 755.96703125,
+     "scale": 1.2506249999999999
+    },
+    {
+     "t": 41.73333,
+     "x": 1105.27821875,
+     "y": 751.66559375,
+     "scale": 1.2498749999999998
+    },
+    {
+     "t": 41.9,
+     "x": 1104.1025,
+     "y": 758.4825,
+     "scale": 1.25
+    },
+    {
+     "t": 42.06667,
+     "x": 1107.13965625,
+     "y": 749.52178125,
+     "scale": 1.249625
+    },
+    {
+     "t": 42.23333,
+     "x": 1104.3539375,
+     "y": 758.0886875,
+     "scale": 1.24975
+    },
+    {
+     "t": 42.33333,
+     "x": 1104.23678125,
+     "y": 752.81940625,
+     "scale": 1.250125
+    },
+    {
+     "t": 42.4,
+     "x": 1104.96821875,
+     "y": 752.26559375,
+     "scale": 1.2498749999999998
+    },
+    {
+     "t": 42.86667,
+     "x": 1105.2439375,
+     "y": 754.3386875,
+     "scale": 1.24975
+    },
+    {
+     "t": 43.73333,
+     "x": 1105.32821875,
+     "y": 754.26559375,
+     "scale": 1.2498749999999998
+    },
+    {
+     "t": 43.76667,
+     "x": 1074.20625,
+     "y": 738.05625,
+     "scale": 1.2249999999999999
+    },
+    {
+     "t": 43.8,
+     "x": 1019.475,
+     "y": 707.1750000000001,
+     "scale": 1.2
+    },
+    {
+     "t": 43.83333,
+     "x": 963.61875,
+     "y": 674.0437499999999,
+     "scale": 1.1749999999999998
+    },
+    {
+     "t": 43.86667,
+     "x": 908.8874999999999,
+     "y": 642.0375,
+     "scale": 1.15
+    },
+    {
+     "t": 43.9,
+     "x": 854.15625,
+     "y": 608.90625,
+     "scale": 1.125
+    },
+    {
+     "t": 43.93333,
+     "x": 799.425,
+     "y": 575.775,
+     "scale": 1.0999999999999999
+    },
+    {
+     "t": 43.96667,
+     "x": 733.8375,
+     "y": 545.5124999999999,
+     "scale": 1.0499999999999998
+    },
+    {
+     "t": 44.0,
+     "x": 679.1062499999999,
+     "y": 512.38125,
+     "scale": 1.025
+    },
+    {
+     "t": 44.03333,
+     "x": 624.375,
+     "y": 481.5,
+     "scale": 1.0
+    },
+    {
+     "t": 44.73333,
+     "x": -542.6999999999998,
+     "y": 481.5,
+     "scale": 1.0
+    }
+   ]
+  },
+  {
+   "id": "tank_side",
+   "type": "image",
+   "asset": "tank_side",
+   "start": 39.96667,
+   "end": 44.73333,
+   "keys": [
+    {
+     "t": 39.96667,
+     "x": 1267.86,
+     "y": 790.37,
+     "scale": 0.627
+    },
+    {
+     "t": 40.0,
+     "x": 817.86,
+     "y": 790.37,
+     "scale": 0.627
+    },
+    {
+     "t": 40.03333,
+     "x": 360.72,
+     "y": 790.33,
+     "scale": 0.6255
+    },
+    {
+     "t": 40.46667,
+     "x": 360.71,
+     "y": 790.32,
+     "scale": 0.6255
+    },
+    {
+     "t": 40.5,
+     "x": 401.07,
+     "y": 789.33,
+     "scale": 0.7006
+    },
+    {
+     "t": 40.56667,
+     "x": 562.72,
+     "y": 785.48,
+     "scale": 1.0
+    },
+    {
+     "t": 40.63333,
+     "x": 563.75,
+     "y": 789.55,
+     "scale": 1.0
+    },
+    {
+     "t": 40.66667,
+     "x": 564.26,
+     "y": 789.51,
+     "scale": 0.9997
+    },
+    {
+     "t": 40.8,
+     "x": 562.65,
+     "y": 783.54,
+     "scale": 1.0002
+    },
+    {
+     "t": 40.83333,
+     "x": 562.09,
+     "y": 783.87,
+     "scale": 1.0
+    },
+    {
+     "t": 40.9,
+     "x": 560.94,
+     "y": 788.03,
+     "scale": 0.9998
+    },
+    {
+     "t": 40.96667,
+     "x": 561.46,
+     "y": 789.19,
+     "scale": 0.9998
+    },
+    {
+     "t": 41.06667,
+     "x": 563.56,
+     "y": 782.83,
+     "scale": 1.0001
+    },
+    {
+     "t": 41.13333,
+     "x": 564.29,
+     "y": 781.63,
+     "scale": 0.9999
+    },
+    {
+     "t": 41.23333,
+     "x": 563.27,
+     "y": 787.51,
+     "scale": 0.9997
+    },
+    {
+     "t": 41.33333,
+     "x": 561.38,
+     "y": 786.38,
+     "scale": 1.0
+    },
+    {
+     "t": 41.4,
+     "x": 561.01,
+     "y": 781.92,
+     "scale": 1.0
+    },
+    {
+     "t": 41.5,
+     "x": 562.9,
+     "y": 785.53,
+     "scale": 1.0005
+    },
+    {
+     "t": 41.56667,
+     "x": 564.31,
+     "y": 790.5,
+     "scale": 0.9999
+    },
+    {
+     "t": 41.66667,
+     "x": 563.96,
+     "y": 786.92,
+     "scale": 1.0005
+    },
+    {
+     "t": 41.73333,
+     "x": 562.52,
+     "y": 782.6,
+     "scale": 0.9999
+    },
+    {
+     "t": 41.9,
+     "x": 561.29,
+     "y": 789.42,
+     "scale": 1.0
+    },
+    {
+     "t": 42.06667,
+     "x": 564.49,
+     "y": 780.45,
+     "scale": 0.9997
+    },
+    {
+     "t": 42.23333,
+     "x": 561.65,
+     "y": 789.02,
+     "scale": 0.9998
+    },
+    {
+     "t": 42.33333,
+     "x": 561.37,
+     "y": 783.76,
+     "scale": 1.0001
+    },
+    {
+     "t": 42.4,
+     "x": 562.21,
+     "y": 783.2,
+     "scale": 0.9999
+    },
+    {
+     "t": 42.86667,
+     "x": 562.54,
+     "y": 785.27,
+     "scale": 0.9998
+    },
+    {
+     "t": 43.73333,
+     "x": 562.57,
+     "y": 785.2,
+     "scale": 0.9999
+    },
+    {
+     "t": 43.76667,
+     "x": 542.25,
+     "y": 768.375,
+     "scale": 0.98
+    },
+    {
+     "t": 43.8,
+     "x": 498.375,
+     "y": 736.875,
+     "scale": 0.96
+    },
+    {
+     "t": 43.83333,
+     "x": 453.375,
+     "y": 703.125,
+     "scale": 0.94
+    },
+    {
+     "t": 43.93333,
+     "x": 321.75,
+     "y": 603.0,
+     "scale": 0.88
+    },
+    {
+     "t": 43.96667,
+     "x": 277.875,
+     "y": 571.5,
+     "scale": 0.84
+    },
+    {
+     "t": 44.0,
+     "x": 234.0,
+     "y": 537.75,
+     "scale": 0.82
+    },
+    {
+     "t": 44.03333,
+     "x": 190.125,
+     "y": 506.25,
+     "scale": 0.8
+    },
+    {
+     "t": 44.73333,
+     "x": -976.9499999999998,
+     "y": 506.25,
+     "scale": 0.8
+    }
+   ]
+  },
+  {
+   "id": "stop_sign",
+   "type": "image",
+   "asset": "stop_sign",
+   "start": 42.9,
+   "end": 43.36667,
+   "keys": [
+    {
+     "t": 42.9,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 1.0
+    },
+    {
+     "t": 42.93333,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.86
+    },
+    {
+     "t": 42.96667,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.691
+    },
+    {
+     "t": 43.0,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.634
+    },
+    {
+     "t": 43.03333,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.608
+    },
+    {
+     "t": 43.06667,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.533
+    },
+    {
+     "t": 43.1,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.46
+    },
+    {
+     "t": 43.13333,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.364
+    },
+    {
+     "t": 43.16667,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.319
+    },
+    {
+     "t": 43.2,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.283
+    },
+    {
+     "t": 43.23333,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.255
+    },
+    {
+     "t": 43.26667,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.174
+    },
+    {
+     "t": 43.3,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.103
+    },
+    {
+     "t": 43.33333,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.06
+    },
+    {
+     "t": 43.36667,
+     "x": 511.875,
+     "y": 1067.625,
+     "opacity": 0.0
+    }
+   ]
+  },
+  {
+   "id": "crossing_bg",
+   "type": "image",
+   "asset": "crossing_bg",
+   "anchor": [
+    0,
+    0
+   ],
+   "start": 45.06667,
+   "end": 46.43333,
+   "keys": [
+    {
+     "t": 45.06667,
+     "x": 0,
+     "y": 0
+    }
+   ]
+  },
+  {
+   "id": "tank_top",
+   "type": "image",
+   "asset": "tank_top",
+   "start": 45.06667,
+   "end": 46.43333,
+   "keys": [
+    {
+     "t": 45.06667,
+     "x": 589.5,
+     "y": 1982.25
+    },
+    {
+     "t": 45.66667,
+     "x": 589.5,
+     "y": 1559.25
+    },
+    {
+     "t": 45.7,
+     "x": 589.5,
+     "y": 1548.0
+    },
+    {
+     "t": 45.83333,
+     "x": 589.5,
+     "y": 1548.0
+    }
+   ]
+  },
+  {
+   "id": "cyclist",
+   "type": "image",
+   "asset": "cyclist",
+   "start": 45.6,
+   "end": 46.43333,
+   "keys": [
+    {
+     "t": 45.6,
+     "x": 1118.5568181818182,
+     "y": 718.875
+    },
+    {
+     "t": 46.4,
+     "x": 669.375,
+     "y": 718.875
+    }
+   ]
+  },
+  {
+   "id": "road_blur_bg",
+   "type": "image",
+   "asset": "road_blur_bg",
+   "anchor": [
+    0,
+    0
+   ],
+   "start": 48.36667,
+   "end": 49.5,
+   "keys": [
+    {
+     "t": 48.43333,
+     "x": 0,
+     "y": 0
+    }
+   ]
+  },
+  {
+   "id": "blitzer_world",
+   "type": "group",
+   "pivot": [
+    0,
+    0
+   ],
+   "start": 46.43333,
+   "end": 48.4,
+   "keys": [
+    {
+     "t": 46.43333,
+     "x": -101.48,
+     "y": -8.76,
+     "scale": 1.99844,
+     "rot": 0.09
+    },
+    {
+     "t": 47.23333,
+     "x": -101.48,
+     "y": -8.76,
+     "scale": 1.99844,
+     "rot": 0.09
+    },
+    {
+     "t": 47.26667,
+     "x": -83.9025,
+     "y": -2.295,
+     "scale": 1.8
+    },
+    {
+     "t": 47.3,
+     "x": -46.26,
+     "y": 1.2375,
+     "scale": 1.4
+    },
+    {
+     "t": 47.33333,
+     "x": 0,
+     "y": 0,
+     "scale": 1.0,
+     "rot": 0
+    },
+    {
+     "t": 48.33333,
+     "x": 0,
+     "y": 0,
+     "scale": 1.0
+    },
+    {
+     "t": 48.36667,
+     "x": -386.55,
+     "y": -2.475,
+     "scale": 1.1
+    }
+   ],
+   "children": [
+    {
+     "id": "blitzer_bg",
+     "type": "image",
+     "asset": "blitzer_bg",
+     "anchor": [
+      0,
+      0
+     ],
+     "keys": [
+      {
+       "t": 46.43333,
+       "x": 0,
+       "y": 0
+      }
+     ]
+    },
+    {
+     "id": "jeep_pass",
+     "type": "image",
+     "asset": "jeep_pass",
+     "start": 47.7,
+     "end": 47.83333,
+     "keys": [
+      {
+       "t": 47.7,
+       "x": 1067.625,
+       "y": 640.125
+      },
+      {
+       "t": 47.73333,
+       "x": 527.625,
+       "y": 640.125
+      },
+      {
+       "t": 47.76667,
+       "x": -12.375,
+       "y": 640.125
+      },
+      {
+       "t": 47.8,
+       "x": -552.375,
+       "y": 640.125
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "flash_white",
+   "type": "solid",
+   "color": [
+    255,
+    255,
+    255
+   ],
+   "start": 47.7,
+   "end": 47.83333,
+   "keys": [
+    {
+     "t": 47.7,
+     "opacity": 0.0
+    },
+    {
+     "t": 47.73333,
+     "opacity": 0.355
+    },
+    {
+     "t": 47.76667,
+     "opacity": 0.213
+    },
+    {
+     "t": 47.8,
+     "opacity": 0.071
+    },
+    {
+     "t": 47.83333,
+     "opacity": 0.0
+    }
+   ]
+  },
+  {
+   "id": "flash_glow",
+   "type": "glow",
+   "start": 47.73333,
+   "end": 47.8,
+   "softness": 0.8,
+   "keys": [
+    {
+     "t": 47.73333,
+     "x": 409.5,
+     "y": 270.0,
+     "radius": 247.5,
+     "opacity": 0.9
+    },
+    {
+     "t": 47.76667,
+     "radius": 180.0,
+     "opacity": 0.5
+    }
+   ]
+  },
+  {
+   "id": "photo_card",
+   "type": "image",
+   "asset": "photo_card",
+   "start": 48.73333,
+   "end": 49.46667,
+   "keys": [
+    {
+     "t": 48.73333,
+     "x": 537.75,
+     "y": 623.25,
+     "scale": 0.291
+    },
+    {
+     "t": 48.76667,
+     "x": 535.5,
+     "y": 604.125,
+     "scale": 0.83
+    },
+    {
+     "t": 48.8,
+     "x": 535.5,
+     "y": 595.5749999999999,
+     "scale": 1.102
+    },
+    {
+     "t": 48.83333,
+     "x": 534.375,
+     "y": 594.0,
+     "scale": 1.085
+    },
+    {
+     "t": 48.86667,
+     "x": 534.375,
+     "y": 596.25,
+     "scale": 1.051
+    },
+    {
+     "t": 48.9,
+     "x": 537.75,
+     "y": 603.0,
+     "scale": 1.02
+    },
+    {
+     "t": 48.93333,
+     "x": 541.125,
+     "y": 604.125,
+     "scale": 1.0
+    },
+    {
+     "t": 49.4,
+     "x": 541.125,
+     "y": 604.125,
+     "scale": 1.0
+    },
+    {
+     "t": 49.43333,
+     "x": 540.0,
+     "y": 754.875,
+     "scale": 1.75
+    }
+   ]
+  },
+  {
+   "id": "final_jeep",
+   "type": "image",
+   "asset": "final_jeep",
+   "start": 49.46667,
+   "end": 50.53333,
+   "anchor": [
+    0,
+    0
+   ],
+   "keys": [
+    {
+     "t": 49.46667,
+     "x": 43.46,
+     "y": 9.62,
+     "scale": 0.91836,
+     "rot": 0.006
+    },
+    {
+     "t": 49.5,
+     "x": -0.0,
+     "y": -0.01,
+     "scale": 1.00002,
+     "rot": 0.0
+    }
+   ]
+  },
+  {
+   "id": "credit_40.5",
+   "type": "text",
+   "text": "QUELLE: WIKI COMMONS: BUNDESWEHR-FOTOS - CC2",
+   "start": 40.5,
+   "end": 45.06667,
+   "size": 29,
+   "style": {
+    "font": "league-spartan-400",
+    "fill": [
+     255,
+     255,
+     255
+    ]
+   },
+   "keys": [
+    {
+     "t": 40.5,
+     "x": 997.9,
+     "y": 347.6,
+     "rot": 90,
+     "opacity": 0.84
+    }
+   ]
+  },
+  {
+   "id": "credit_45.06667",
+   "type": "text",
+   "text": "QUELLE: WIKI COMMONS: RA BOE - CC3, SONAZ - CC2",
+   "start": 45.06667,
+   "end": 47.9,
+   "size": 29,
+   "style": {
+    "font": "league-spartan-400",
+    "fill": [
+     255,
+     255,
+     255
+    ]
+   },
+   "keys": [
+    {
+     "t": 45.06667,
+     "x": 997.9,
+     "y": 347.6,
+     "rot": 90,
+     "opacity": 0.84
+    }
+   ]
+  },
+  {
+   "id": "credit_47.9",
+   "type": "text",
+   "text": "QUELLE: WIKI COMMONS: RA BOE - CC3",
+   "start": 47.9,
+   "end": 48.36667,
+   "size": 29,
+   "style": {
+    "font": "league-spartan-400",
+    "fill": [
+     255,
+     255,
+     255
+    ]
+   },
+   "keys": [
+    {
+     "t": 47.9,
+     "x": 997.9,
+     "y": 347.6,
+     "rot": 90,
+     "opacity": 0.84
+    }
+   ]
+  },
+  {
+   "id": "credit_48.8",
+   "type": "text",
+   "text": "QUELLE: WIKI COMMONS: DARKONE - CC2.5",
+   "start": 48.8,
+   "end": 50.53333,
+   "size": 29,
+   "style": {
+    "font": "league-spartan-400",
+    "fill": [
+     255,
+     255,
+     255
+    ]
+   },
+   "keys": [
+    {
+     "t": 48.8,
+     "x": 997.9,
+     "y": 347.6,
+     "rot": 90,
+     "opacity": 0.84
+    }
+   ]
+  },
+  {
+   "id": "label_[Q9]_46.73333",
+   "type": "text",
+   "text": "[Q9]",
+   "start": 46.73333,
+   "end": 48.4,
+   "size": 43,
+   "style": {
+    "font": "league-spartan-400",
+    "fill": [
+     255,
+     255,
+     255
+    ]
+   },
+   "keys": [
+    {
+     "t": 46.73333,
      "x": 138.4,
      "y": 120.6,
      "opacity": 0.9
@@ -8019,6 +9308,267 @@
     "frame_start": 1198,
     "frame_end": 1211,
     "size": "huge"
+   },
+   {
+    "text": "AN",
+    "start": 40.36667,
+    "end": 40.46667,
+    "frame_start": 1211,
+    "frame_end": 1214
+   },
+   {
+    "text": "DIE",
+    "start": 40.46667,
+    "end": 40.56667,
+    "frame_start": 1214,
+    "frame_end": 1217
+   },
+   {
+    "text": "STRAßENVERKEHRSORDNUNG",
+    "start": 40.56667,
+    "end": 41.6,
+    "frame_start": 1217,
+    "frame_end": 1248
+   },
+   {
+    "text": "HALTEN.",
+    "start": 41.6,
+    "end": 41.93333,
+    "frame_start": 1248,
+    "frame_end": 1258
+   },
+   {
+    "text": "ER",
+    "start": 41.93333,
+    "end": 42.06667,
+    "frame_start": 1258,
+    "frame_end": 1262
+   },
+   {
+    "text": "MUSS",
+    "start": 42.06667,
+    "end": 42.26667,
+    "frame_start": 1262,
+    "frame_end": 1268
+   },
+   {
+    "text": "ALSO",
+    "start": 42.26667,
+    "end": 42.43333,
+    "frame_start": 1268,
+    "frame_end": 1273
+   },
+   {
+    "text": "BEI",
+    "start": 42.43333,
+    "end": 42.6,
+    "frame_start": 1273,
+    "frame_end": 1278
+   },
+   {
+    "text": "ROT",
+    "start": 42.6,
+    "end": 42.86667,
+    "frame_start": 1278,
+    "frame_end": 1286
+   },
+   {
+    "text": "STOPPEN.",
+    "start": 42.86667,
+    "end": 43.56667,
+    "frame_start": 1286,
+    "frame_end": 1307
+   },
+   {
+    "text": "AUßER,",
+    "start": 43.56667,
+    "end": 43.76667,
+    "frame_start": 1307,
+    "frame_end": 1313
+   },
+   {
+    "text": "ER",
+    "start": 43.76667,
+    "end": 43.93333,
+    "frame_start": 1313,
+    "frame_end": 1318
+   },
+   {
+    "text": "HAT",
+    "start": 43.93333,
+    "end": 44.0,
+    "frame_start": 1318,
+    "frame_end": 1320
+   },
+   {
+    "text": "DIE",
+    "start": 44.0,
+    "end": 44.13333,
+    "frame_start": 1320,
+    "frame_end": 1324
+   },
+   {
+    "text": "AMPEL",
+    "start": 44.13333,
+    "end": 44.4,
+    "frame_start": 1324,
+    "frame_end": 1332
+   },
+   {
+    "text": "ÜBERROLLT,",
+    "start": 44.4,
+    "end": 45.03333,
+    "frame_start": 1332,
+    "frame_end": 1351,
+    "size": "medium"
+   },
+   {
+    "text": "DANN",
+    "start": 45.03333,
+    "end": 45.33333,
+    "frame_start": 1351,
+    "frame_end": 1360
+   },
+   {
+    "text": "GILT",
+    "start": 45.33333,
+    "end": 45.6,
+    "frame_start": 1360,
+    "frame_end": 1368
+   },
+   {
+    "text": "GLAUBE",
+    "start": 45.6,
+    "end": 45.8,
+    "frame_start": 1368,
+    "frame_end": 1374
+   },
+   {
+    "text": "ICH",
+    "start": 45.8,
+    "end": 45.93333,
+    "frame_start": 1374,
+    "frame_end": 1378
+   },
+   {
+    "text": "RECHTS",
+    "start": 45.93333,
+    "end": 46.13333,
+    "frame_start": 1378,
+    "frame_end": 1384
+   },
+   {
+    "text": "VOR",
+    "start": 46.13333,
+    "end": 46.23333,
+    "frame_start": 1384,
+    "frame_end": 1387
+   },
+   {
+    "text": "LINKS.",
+    "start": 46.23333,
+    "end": 46.56667,
+    "frame_start": 1387,
+    "frame_end": 1397
+   },
+   {
+    "text": "GEBLITZT",
+    "start": 46.56667,
+    "end": 46.96667,
+    "frame_start": 1397,
+    "frame_end": 1409,
+    "size": "big"
+   },
+   {
+    "text": "WERDEN",
+    "start": 46.96667,
+    "end": 47.26667,
+    "frame_start": 1409,
+    "frame_end": 1418
+   },
+   {
+    "text": "KÖNNEN",
+    "start": 47.26667,
+    "end": 47.43333,
+    "frame_start": 1418,
+    "frame_end": 1423
+   },
+   {
+    "text": "SIE",
+    "start": 47.43333,
+    "end": 47.53333,
+    "frame_start": 1423,
+    "frame_end": 1426
+   },
+   {
+    "text": "ÜBRIGENS",
+    "start": 47.53333,
+    "end": 47.93333,
+    "frame_start": 1426,
+    "frame_end": 1438
+   },
+   {
+    "text": "AUCH,",
+    "start": 47.93333,
+    "end": 48.26667,
+    "frame_start": 1438,
+    "frame_end": 1448
+   },
+   {
+    "text": "OBWOHL",
+    "start": 48.26667,
+    "end": 48.56667,
+    "frame_start": 1448,
+    "frame_end": 1457
+   },
+   {
+    "text": "DAS",
+    "start": 48.56667,
+    "end": 48.66667,
+    "frame_start": 1457,
+    "frame_end": 1460
+   },
+   {
+    "text": "DANN",
+    "start": 48.66667,
+    "end": 48.8,
+    "frame_start": 1460,
+    "frame_end": 1464
+   },
+   {
+    "text": "SCHWIERIGER",
+    "start": 48.8,
+    "end": 49.26667,
+    "frame_start": 1464,
+    "frame_end": 1478
+   },
+   {
+    "text": "ZU",
+    "start": 49.26667,
+    "end": 49.43333,
+    "frame_start": 1478,
+    "frame_end": 1483
+   },
+   {
+    "text": "ERKENNEN",
+    "start": 49.43333,
+    "end": 49.8,
+    "frame_start": 1483,
+    "frame_end": 1494
+   },
+   {
+    "text": "IST,",
+    "start": 49.8,
+    "end": 50.03333,
+    "frame_start": 1494,
+    "frame_end": 1501
+   },
+   {
+    "text": "DENN...",
+    "start": 50.03333,
+    "end": 50.5,
+    "frame_start": 1501,
+    "frame_end": 1515
    }
   ]
  },
@@ -8203,6 +9753,78 @@
    "src": "@sfx/swoosh_down",
    "start": 39.65,
    "gain_db": -14.0
+  },
+  {
+   "id": "sfx_tank_in",
+   "src": "@sfx/engine_pass",
+   "start": 40.0,
+   "gain_db": -22.0
+  },
+  {
+   "id": "sfx_road_in",
+   "src": "@sfx/swoosh",
+   "start": 40.45,
+   "gain_db": -18.5
+  },
+  {
+   "id": "sfx_light_pop",
+   "src": "@sfx/pop",
+   "start": 42.45,
+   "gain_db": -14.5
+  },
+  {
+   "id": "sfx_stop",
+   "src": "@sfx/impact_low",
+   "start": 42.9,
+   "gain_db": -4.5
+  },
+  {
+   "id": "sfx_tank_drive",
+   "src": "@sfx/engine_pass",
+   "start": 43.75,
+   "gain_db": -8.5
+  },
+  {
+   "id": "sfx_light_crash",
+   "src": "@sfx/impact_low",
+   "start": 44.2,
+   "gain_db": -21.0
+  },
+  {
+   "id": "sfx_crossing",
+   "src": "@sfx/swoosh",
+   "start": 45.0,
+   "gain_db": -14.0
+  },
+  {
+   "id": "sfx_blitzer_zoom",
+   "src": "@sfx/swoosh_down",
+   "start": 47.25,
+   "gain_db": -17.0
+  },
+  {
+   "id": "sfx_flash",
+   "src": "@sfx/camera_flash",
+   "start": 47.7,
+   "gain_db": -11.5
+  },
+  {
+   "id": "sfx_pan",
+   "src": "@sfx/swoosh",
+   "start": 48.35,
+   "gain_db": -22.0
+  },
+  {
+   "id": "sfx_card_pop",
+   "src": "@sfx/pop",
+   "start": 48.73,
+   "gain_db": -21.0
+  },
+  {
+   "id": "sfx_card_zoom",
+   "src": "@sfx/swoosh",
+   "start": 49.4,
+   "gain_db": -15.5
   }
  ]
 }

@@ -270,5 +270,124 @@
   "design_scale": 2.25,
   "license": "derived_measurement",
   "source": "lineare Wischmaske"
+ },
+ "street2_bg": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/street2_bg.png",
+  "source": "Referenzframe 1345",
+  "replace_with": "eigene Illustration: Bürgersteig, Strasse, Wiese (Seitenansicht)"
+ },
+ "street2_clouds": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/street2_clouds.png",
+  "source": "Referenzframes 1218-1336 (gestitcht)",
+  "replace_with": "eigene Cartoon-Wolken"
+ },
+ "tank_side": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/tank_side.png",
+  "source": "Referenzframes 1226-1302",
+  "replace_with": "Freisteller Leopard 2 Seitenansicht (frei lizenziertes Foto)"
+ },
+ "traffic_light": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/traffic_light.png",
+  "source": "Referenzframe 1305",
+  "replace_with": "eigene Grafik: Ampel"
+ },
+ "traffic_light_flat": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/traffic_light_flat.png",
+  "source": "Referenzframe 1345",
+  "replace_with": "eigene Grafik: Ampel"
+ },
+ "stop_sign": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/stop_sign.png",
+  "source": "Referenzframe 1287",
+  "replace_with": "Stoppschild als Vektorgrafik (amtliches Zeichen, gemeinfrei)"
+ },
+ "street2_sky": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/street2_sky.png",
+  "source": "Referenzframes 1218-1351 (gestitcht)",
+  "replace_with": "eigener Himmel mit Cartoon-Wolken"
+ },
+ "crossing_bg": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/crossing_bg.png",
+  "source": "Referenzframes 1352/1390",
+  "replace_with": "eigene Draufsicht: Strasse mit Mittelinseln und Bäumen"
+ },
+ "tank_top": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/tank_top.png",
+  "source": "Referenzframes 1376-1389",
+  "replace_with": "eigene Draufsicht-Grafik eines Panzers"
+ },
+ "cyclist": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/cyclist.png",
+  "source": "Referenzframe 1386",
+  "replace_with": "eigene Grafik: Radfahrer von oben/schräg"
+ },
+ "blitzer_bg": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/blitzer_bg.png",
+  "source": "Referenzframe 1440",
+  "replace_with": "eigene Illustration: Strasse + Blitzersäule (Seitenansicht)"
+ },
+ "blitzer_close": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/blitzer_close.png",
+  "source": "Referenzframes 1395-1415",
+  "replace_with": "Nahaufnahme der eigenen Blitzersäule"
+ },
+ "jeep_pass": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/jeep_pass.png",
+  "source": "Referenzframe 1432 (Blitz herausgerechnet)",
+  "replace_with": "Freisteller Mercedes G (Wolf) Seitenansicht"
+ },
+ "final_jeep": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/final_jeep.png",
+  "source": "Referenzframes 1490-1510",
+  "replace_with": "Foto Mercedes G (Wolf) im Studio (Darkone, CC2.5 mit Nennung)"
+ },
+ "road_blur_bg": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/road_blur_bg.png",
+  "source": "Referenzframe 1461",
+  "replace_with": "eigene Strassen-Illustration, weichgezeichnet"
+ },
+ "tank_side_far": {
+  "path": "assets/proxies/tank_side_far.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 1321-1338 (gestitcht)",
+  "replace_with": "Freisteller Leopard 2 Seitenansicht"
+ },
+ "photo_card": {
+  "path": "assets/proxies/photo_card.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 1470-1480",
+  "replace_with": "Foto Mercedes G (Wolf), weisser Rahmen"
  }
 }

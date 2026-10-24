@@ -283,7 +283,7 @@ def credits_labels_3():
         credit("QUELLE: WIKI COMMONS: SONAZ - CC3, MATTHIASDD - GEMEINFREI", F(1070), F(1094)),
         credit("QUELLE: WIKI COMMONS: SONAZ - CC3", F(1094), F(1142)),
         credit("QUELLE: STVO (GESETZE-IM-INTERNET.DE)", F(1142), F(1191)),
-        label("[Q8]", F(1190), F(1300)),
+        label("[Q8]", F(1190), F(1352)),
     ]
 
 
