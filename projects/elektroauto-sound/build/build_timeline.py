@@ -206,7 +206,7 @@ def scene_dumm():
     t0, t_end = W("Wäre"), W("und", 1)
     t_d, t_50, t_a, t_k = W("dumm"), W("50.000"), W("Auto", 1), W("Klima")
     ch = [pop("face-with-spiral-eyes", t_d, t_50, 540, 520, 0.6),
-          pop("euro-banknote", t_50, t_a, 540, 1380, 1.0),
+          pop("photo_geldmann", t_50, t_a, 540, 1400, 0.78),
           text("50.000 €", t_50, t_k, 540, 540, size=150),
           pop("ecar", t_a, t_end, 540, 1400, CAR_S, out=False),
           pop("globe-showing-europe-africa", t_k, t_end, 540, 520, 0.55, out=False),
@@ -235,16 +235,17 @@ def scene_parking():
         [{"t": t_m, "x": 600, "y": 1080}, {"t": snap(t_m + 6 * FR), "x": 560, "y": 1080, "ease": "out"}]
     mute = img("muted-speaker", t_l - FR, t_b, mute_keys + out_keys(t_b, 560, 1080, 0.45)[1:])
     oma_x, oma_y = 190, 1340
-    oma = pop("old-woman", t_o, t_b, oma_x, oma_y, 0.5, out=False)
-    cart = pop("shopping-cart", snap(t_o + 2 * FR), t_end, 120, 1500, 0.45, out=False)
-    # she notices -> screams, then jumps onto the bonnet (left front of the car)
-    hood = (330, 1200)
-    scream_keys = pop_keys(t_b, oma_x, oma_y, 0.42) + [
+    oma_s = 0.48
+    # she notices (jolt + scream), then jumps onto the bonnet (left front of the car)
+    hood = (330, 1150)
+    oma_keys = pop_keys(t_o, oma_x, oma_y, oma_s) + shake(t_b, t_m, oma_x, oma_y, 7)[:-1] + [
         {"t": t_m, "x": oma_x, "y": oma_y, "rot": 0},
-        {"t": snap(t_m + 5 * FR), "x": 260, "y": 940, "rot": -20, "ease": "out"},
+        {"t": snap(t_m + 5 * FR), "x": 260, "y": 900, "rot": -20, "ease": "out"},
         {"t": snap(t_s), "x": hood[0], "y": hood[1], "rot": 8, "ease": "in"},
         {"t": snap(t_s + 3 * FR), "x": hood[0], "y": hood[1] + 20, "rot": 0}]
-    scream = img("face-screaming-in-fear", t_b - FR, t_end, scream_keys)
+    oma = img("photo_oma_bust", t_o - FR, t_end, oma_keys)
+    cart = pop("shopping-cart", snap(t_o + 2 * FR), t_end, 100, 1520, 0.4, out=False)
+    scream = pop("face-screaming-in-fear", t_b, t_m, 330, 1130, 0.22)
     boom = pop("collision", t_s, snap(t_s + 12 * FR), hood[0] + 80, hood[1] + 90, 0.5)
     pause_t = snap(W("sitzt") + 0.32)
     cam = camera(t0, t_end, [*ground(t0, t_end), pop("p_sign", snap(t0 + 3 * FR), t_end, 960, 1080, 0.75,
@@ -276,7 +277,7 @@ def scene_law():
     ch = [pop("cal_2021", t_j, t_eu, 540, 500, 0.8),
           pop("ecar", t_e, t_end, 540, 1420, CAR_S, out=False),
           pop("eu_flag", t_eu, t_end, 540, 500, 0.75, out=False),
-          pop("loudspeaker", t_k, t_end, 470, 1160, 0.42, out=False, extra=[{"t": t_k, "rot": -15}]),
+          pop("photo_radio", t_k, t_end, 470, 1110, 0.36, out=False, extra=[{"t": t_k, "rot": -8}]),
           pop("waves_red", t_lm, t_end, 690, 1140, 0.45, out=False)]
     cam = camera(t0, t_end, ch, [{"t": t0, "x": 540, "y": 1250}] + punch(t_lm, (540, 1250), 1.0, 1.22),
                  pivot=(540, 1250))
@@ -326,8 +327,8 @@ def scene_tyres():
     """'Darüber nicht mehr, weil dann sowieso die Reifen lauter sind als der Motor.'"""
     t0, t_end = W("Darüber"), W("Bei", 1)
     t_n, t_r, t_lt = W("nicht", 2), W("Reifen"), W("lauter")
-    tl = tacho_layers(t0, t_r, [(t0, 20, None), (snap(t_n), 60, "out"), (t_r, 75, None)], pop_in=False)
-    mute = pop("muted-speaker", t_n, t_r, 540, 520, 0.6, out=False)
+    tl = tacho_layers(t0, t_n, [(t0, 20, None), (snap(t_n), 40, "out")], pop_in=False)
+    mute = pop("photo_tacho_no", t_n, t_r, 540, 1330, 0.92, out=False)
     spin = [{"t": snap(t_r + i * 0.2), "rot": -72 * i * 1.0} for i in range(int((t_end - t_r) / 0.2) + 2)]
     tyre = img("tyre", t_r - FR, t_end, pop_keys(t_r, 480, 1360, 0.95) + spin)
     waves = pop("waves", t_lt, t_end, 900, 1360, 0.7, out=False)
@@ -426,12 +427,12 @@ def scene_rules():
     t0, t_end = W("Wie"), W("BMW")
     t_h, t_a, t_k, t_n, t_v, t_m = W("Hersteller"), W("Auto", 3), W("klingen"), W("nicht", 4), \
         W("Vogelgezwitscher"), W("Musik", 1)
-    ch = [pop("control-knobs", t_h, t_a, 540, 1380, 0.95),
+    ch = [pop("photo_oma_dj", t_h, t_a, 540, 1420, 0.62),
           pop("ecar", t_a, t_end, 540, 1440, 0.8, out=False),
           pop("check-mark-button", t_k, t_end, 870, 1170, 0.5, out=False),
-          pop("bird", t_v, t_end, 290, 520, 0.6, out=False),
+          pop("photo_schuhschnabel", t_v, t_end, 290, 520, 0.4, out=False),
           pop("ban", snap(t_v + 10 * FR), t_end, 290, 520, 0.6, out=False),
-          pop("musical-notes", t_m, t_end, 790, 520, 0.6, out=False),
+          pop("photo_geige", t_m, t_end, 790, 520, 0.42, out=False),
           pop("ban", snap(t_m + 6 * FR), t_end, 790, 520, 0.6, out=False)]
     for t in (t_h, t_a, t_k, t_v, t_m):
         sfx("pop", t, -11)
@@ -449,10 +450,10 @@ def scene_zimmer():
     ch = [pop("ecar", t0, t_end, 540, 1470, 0.8, out=False),
           pop("man-in-tuxedo", t_hz, t_end, 540, 560, 0.6, out=False),
           pop("violin", t_mu, t_end, 170, 1180, 0.42, out=False),
-          pop("trumpet", snap(t_mu + 2 * FR), t_end, 910, 1180, 0.42, out=False),
+          pop("trumpet", snap(t_mu + 2 * FR), t_end, 150, 1720, 0.36, out=False),
           pop("drum", snap(t_mu + 4 * FR), t_end, 960, 1730, 0.3, out=False),
           pop("ringed-planet", t_i, t_end, 190, 470, 0.45, out=False),
-          pop("lion", t_kg, t_end, 890, 470, 0.45, out=False)]
+          pop("photo_loewe", t_kg, t_end, 830, 1170, 0.42, out=False)]
     cam = camera(t0, t_end, ch, push_in(t0) + punch(t_hz, (540, 960), 1.0, 1.08))
     sfx("swoosh", t0, -12)
     sfx("impact_low", t_hz, -6)
@@ -476,7 +477,7 @@ def scene_hybrid():
                shake(snap(t_d + 9 * FR), t_end, 780, 1450, 8))]
     ch = [pop("hybrid", t_hy, t_k, 540, 520, 0.72),
           car, *puffs, *duo,
-          pop("loudspeaker", t_k, t_d, 540, 520, 0.55),
+          pop("photo_radio", t_k, t_d, 540, 520, 0.42),
           pop("ban", t_x, t_d, 540, 520, 0.65)]
     cam = camera(t0, t_end, ch, push_in(t0))
     sfx("swoosh", t0, -12)
@@ -555,6 +556,7 @@ def build():
         layers += sc()
     layers.append(credit("GRAFIKEN: MICROSOFT FLUENT EMOJI (MIT) · STIMME: ELEVENLABS", 0, DUR))
     manifest = json.load(open(os.path.join(PROJ, "assets", "manifest.json"), encoding="utf-8"))
+    manifest.update(json.load(open(os.path.join(PROJ, "assets", "manifest_photos.json"), encoding="utf-8")))
     tl = {
         "meta": {"title": "Elektroautos dürfen nicht leise sein", "fps": FPS, "width": 1080, "height": 1920,
                  "duration": DUR},

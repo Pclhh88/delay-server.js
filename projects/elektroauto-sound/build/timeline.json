@@ -310,6 +310,62 @@
    "path": "assets/png/ramp_y.png",
    "design_scale": 1.0,
    "license": "own (generated in build_assets.py)"
+  },
+  "photo_geldmann": {
+   "path": "assets/png/photo_geldmann.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+   "source": "assets/photos_src/geldmann.png",
+   "note": "Mann mit Geldstapeln"
+  },
+  "photo_radio": {
+   "path": "assets/png/photo_radio.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing (product photo, Makita logo)",
+   "source": "assets/photos_src/baustellenradio.jpg",
+   "note": "Baustellenradio"
+  },
+  "photo_tacho_no": {
+   "path": "assets/png/photo_tacho_no.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+   "source": "assets/photos_src/tacho_no.jpg",
+   "note": "Tacho 'NO!' ohne Bildunterschrift"
+  },
+  "photo_oma_dj": {
+   "path": "assets/png/photo_oma_dj.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+   "source": "assets/photos_src/oma_dj.jpg",
+   "note": "Oma am DJ-Pult, ohne Wasserzeichen"
+  },
+  "photo_oma_bust": {
+   "path": "assets/png/photo_oma_bust.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+   "source": "assets/photos_src/oma_dj.jpg",
+   "note": "Oma, nur Oberkörper"
+  },
+  "photo_schuhschnabel": {
+   "path": "assets/png/photo_schuhschnabel.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+   "source": "assets/photos_src/schuhschnabel.jpg",
+   "note": "Schuhschnabel"
+  },
+  "photo_geige": {
+   "path": "assets/png/photo_geige.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+   "source": "assets/photos_src/geige.jpg",
+   "note": "Mann mit Geige (Meme)"
+  },
+  "photo_loewe": {
+   "path": "assets/png/photo_loewe.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+   "source": "assets/photos_src/loewe.jpg",
+   "note": "Löwe, Warzenschwein, Erdmännchen"
   }
  },
  "layers": [
@@ -1184,76 +1240,76 @@
      ]
     },
     {
-     "id": "euro-banknote_1",
+     "id": "photo_geldmann_1",
      "type": "image",
-     "asset": "euro-banknote",
+     "asset": "photo_geldmann",
      "start": 3.0,
      "end": 4.0,
      "keys": [
       {
        "t": 3.0,
        "x": 540,
-       "y": 1380,
+       "y": 1400,
        "scale": 0.0
       },
       {
        "t": 3.0333,
        "x": 540,
-       "y": 1380,
-       "scale": 0.15
+       "y": 1400,
+       "scale": 0.117
       },
       {
        "t": 3.0667,
        "x": 540,
-       "y": 1380,
-       "scale": 0.45
+       "y": 1400,
+       "scale": 0.351
       },
       {
        "t": 3.1,
        "x": 540,
-       "y": 1380,
-       "scale": 1.24
+       "y": 1400,
+       "scale": 0.9672
       },
       {
        "t": 3.1333,
        "x": 540,
-       "y": 1380,
-       "scale": 1.37
+       "y": 1400,
+       "scale": 1.0686
       },
       {
        "t": 3.1667,
        "x": 540,
-       "y": 1380,
-       "scale": 1.28
+       "y": 1400,
+       "scale": 0.9984
       },
       {
        "t": 3.2,
        "x": 540,
-       "y": 1380,
-       "scale": 1.15
+       "y": 1400,
+       "scale": 0.897
       },
       {
        "t": 3.2333,
        "x": 540,
-       "y": 1380,
-       "scale": 1.0
+       "y": 1400,
+       "scale": 0.78
       },
       {
        "t": 3.8667,
        "x": 540,
-       "y": 1380,
-       "scale": 1.0
+       "y": 1400,
+       "scale": 0.78
       },
       {
        "t": 3.9,
        "x": 540,
-       "y": 1380,
-       "scale": 1.12
+       "y": 1400,
+       "scale": 0.8736000000000002
       },
       {
        "t": 3.9667,
        "x": 540,
-       "y": 1380,
+       "y": 1400,
        "scale": 0.0
       }
      ]
@@ -1539,25 +1595,25 @@
    "end": 10.2,
    "pivot": [
     330,
-    1200
+    1150
    ],
    "keys": [
     {
      "t": 5.1667,
      "x": 1410,
-     "y": 1200,
+     "y": 1150,
      "scale": 1.0
     },
     {
      "t": 5.2667,
      "x": 330,
-     "y": 1200,
+     "y": 1150,
      "ease": "out3"
     },
     {
      "t": 9.8667,
      "x": 330,
-     "y": 1200,
+     "y": 1150,
      "scale": 1.0
     },
     {
@@ -1851,60 +1907,60 @@
      "keys": [
       {
        "t": 7.0667,
-       "x": 120,
-       "y": 1500,
+       "x": 100,
+       "y": 1520,
        "scale": 0.0
       },
       {
        "t": 7.1,
-       "x": 120,
-       "y": 1500,
-       "scale": 0.0675
+       "x": 100,
+       "y": 1520,
+       "scale": 0.06
       },
       {
        "t": 7.1333,
-       "x": 120,
-       "y": 1500,
-       "scale": 0.2025
+       "x": 100,
+       "y": 1520,
+       "scale": 0.18
       },
       {
        "t": 7.1667,
-       "x": 120,
-       "y": 1500,
-       "scale": 0.558
+       "x": 100,
+       "y": 1520,
+       "scale": 0.496
       },
       {
        "t": 7.2,
-       "x": 120,
-       "y": 1500,
-       "scale": 0.6165
+       "x": 100,
+       "y": 1520,
+       "scale": 0.548
       },
       {
        "t": 7.2333,
-       "x": 120,
-       "y": 1500,
-       "scale": 0.576
+       "x": 100,
+       "y": 1520,
+       "scale": 0.512
       },
       {
        "t": 7.2667,
-       "x": 120,
-       "y": 1500,
-       "scale": 0.5175
+       "x": 100,
+       "y": 1520,
+       "scale": 0.46
       },
       {
        "t": 7.3,
-       "x": 120,
-       "y": 1500,
-       "scale": 0.45
+       "x": 100,
+       "y": 1520,
+       "scale": 0.4
       }
      ]
     },
     {
-     "id": "old-woman_1",
+     "id": "photo_oma_bust_1",
      "type": "image",
-     "asset": "old-woman",
+     "asset": "photo_oma_bust",
      "start": 7.0,
-     "end": 8.2667,
+     "end": 10.2,
      "keys": [
       {
        "t": 7.0,
@@ -1916,100 +1972,108 @@
        "t": 7.0333,
        "x": 190,
        "y": 1340,
-       "scale": 0.075
+       "scale": 0.072
       },
       {
        "t": 7.0667,
        "x": 190,
        "y": 1340,
-       "scale": 0.225
+       "scale": 0.216
       },
       {
        "t": 7.1,
        "x": 190,
        "y": 1340,
-       "scale": 0.62
+       "scale": 0.5952
       },
       {
        "t": 7.1333,
        "x": 190,
        "y": 1340,
-       "scale": 0.685
+       "scale": 0.6576
       },
       {
        "t": 7.1667,
        "x": 190,
        "y": 1340,
-       "scale": 0.64
+       "scale": 0.6144
       },
       {
        "t": 7.2,
        "x": 190,
        "y": 1340,
-       "scale": 0.575
+       "scale": 0.552
       },
       {
        "t": 7.2333,
        "x": 190,
        "y": 1340,
-       "scale": 0.5
-      }
-     ]
-    },
-    {
-     "id": "face-screaming-in-fear_1",
-     "type": "image",
-     "asset": "face-screaming-in-fear",
-     "start": 8.2,
-     "end": 10.2,
-     "keys": [
-      {
-       "t": 8.2,
-       "x": 190,
-       "y": 1340,
-       "scale": 0.0
+       "scale": 0.48
       },
       {
        "t": 8.2333,
-       "x": 190,
-       "y": 1340,
-       "scale": 0.063
-      },
-      {
-       "t": 8.2667,
-       "x": 190,
-       "y": 1340,
-       "scale": 0.189
+       "x": 183,
+       "y": 1343.5
       },
       {
        "t": 8.3,
-       "x": 190,
-       "y": 1340,
-       "scale": 0.5208
-      },
-      {
-       "t": 8.3333,
-       "x": 190,
-       "y": 1340,
-       "scale": 0.5754
+       "x": 197,
+       "y": 1336.5
       },
       {
        "t": 8.3667,
-       "x": 190,
-       "y": 1340,
-       "scale": 0.5376
-      },
-      {
-       "t": 8.4,
-       "x": 190,
-       "y": 1340,
-       "scale": 0.483
+       "x": 183,
+       "y": 1336.5
       },
       {
        "t": 8.4333,
-       "x": 190,
-       "y": 1340,
-       "scale": 0.42
+       "x": 197,
+       "y": 1343.5
+      },
+      {
+       "t": 8.5,
+       "x": 183,
+       "y": 1336.5
+      },
+      {
+       "t": 8.5667,
+       "x": 197,
+       "y": 1336.5
+      },
+      {
+       "t": 8.6333,
+       "x": 183,
+       "y": 1343.5
+      },
+      {
+       "t": 8.7,
+       "x": 197,
+       "y": 1336.5
+      },
+      {
+       "t": 8.7667,
+       "x": 183,
+       "y": 1336.5
+      },
+      {
+       "t": 8.8333,
+       "x": 197,
+       "y": 1343.5
+      },
+      {
+       "t": 8.9,
+       "x": 183,
+       "y": 1336.5
+      },
+      {
+       "t": 8.9667,
+       "x": 197,
+       "y": 1336.5
+      },
+      {
+       "t": 9.0333,
+       "x": 183,
+       "y": 1343.5
       },
       {
        "t": 9.0333,
@@ -2020,22 +2084,97 @@
       {
        "t": 9.2,
        "x": 260,
-       "y": 940,
+       "y": 900,
        "rot": -20,
        "ease": "out"
       },
       {
        "t": 9.5667,
        "x": 330,
-       "y": 1200,
+       "y": 1150,
        "rot": 8,
        "ease": "in"
       },
       {
        "t": 9.6667,
        "x": 330,
-       "y": 1220,
+       "y": 1170,
        "rot": 0
+      }
+     ]
+    },
+    {
+     "id": "face-screaming-in-fear_1",
+     "type": "image",
+     "asset": "face-screaming-in-fear",
+     "start": 8.2,
+     "end": 9.0667,
+     "keys": [
+      {
+       "t": 8.2,
+       "x": 330,
+       "y": 1130,
+       "scale": 0.0
+      },
+      {
+       "t": 8.2333,
+       "x": 330,
+       "y": 1130,
+       "scale": 0.033
+      },
+      {
+       "t": 8.2667,
+       "x": 330,
+       "y": 1130,
+       "scale": 0.099
+      },
+      {
+       "t": 8.3,
+       "x": 330,
+       "y": 1130,
+       "scale": 0.2728
+      },
+      {
+       "t": 8.3333,
+       "x": 330,
+       "y": 1130,
+       "scale": 0.3014
+      },
+      {
+       "t": 8.3667,
+       "x": 330,
+       "y": 1130,
+       "scale": 0.2816
+      },
+      {
+       "t": 8.4,
+       "x": 330,
+       "y": 1130,
+       "scale": 0.253
+      },
+      {
+       "t": 8.4333,
+       "x": 330,
+       "y": 1130,
+       "scale": 0.22
+      },
+      {
+       "t": 8.9333,
+       "x": 330,
+       "y": 1130,
+       "scale": 0.22
+      },
+      {
+       "t": 8.9667,
+       "x": 330,
+       "y": 1130,
+       "scale": 0.24640000000000004
+      },
+      {
+       "t": 9.0333,
+       "x": 330,
+       "y": 1130,
+       "scale": 0.0
       }
      ]
     },
@@ -2049,67 +2188,67 @@
       {
        "t": 9.5333,
        "x": 410,
-       "y": 1290,
+       "y": 1240,
        "scale": 0.0
       },
       {
        "t": 9.5667,
        "x": 410,
-       "y": 1290,
+       "y": 1240,
        "scale": 0.075
       },
       {
        "t": 9.6,
        "x": 410,
-       "y": 1290,
+       "y": 1240,
        "scale": 0.225
       },
       {
        "t": 9.6333,
        "x": 410,
-       "y": 1290,
+       "y": 1240,
        "scale": 0.62
       },
       {
        "t": 9.6667,
        "x": 410,
-       "y": 1290,
+       "y": 1240,
        "scale": 0.685
       },
       {
        "t": 9.7,
        "x": 410,
-       "y": 1290,
+       "y": 1240,
        "scale": 0.64
       },
       {
        "t": 9.7333,
        "x": 410,
-       "y": 1290,
+       "y": 1240,
        "scale": 0.575
       },
       {
        "t": 9.7667,
        "x": 410,
-       "y": 1290,
+       "y": 1240,
        "scale": 0.5
       },
       {
        "t": 9.8667,
        "x": 410,
-       "y": 1290,
+       "y": 1240,
        "scale": 0.5
       },
       {
        "t": 9.9,
        "x": 410,
-       "y": 1290,
+       "y": 1240,
        "scale": 0.56
       },
       {
        "t": 9.9667,
        "x": 410,
-       "y": 1290,
+       "y": 1240,
        "scale": 0.0
       }
      ]
@@ -2335,63 +2474,63 @@
      ]
     },
     {
-     "id": "loudspeaker_1",
+     "id": "photo_radio_1",
      "type": "image",
-     "asset": "loudspeaker",
+     "asset": "photo_radio",
      "start": 13.7667,
      "end": 14.8,
      "keys": [
       {
        "t": 13.7667,
        "x": 470,
-       "y": 1160,
+       "y": 1110,
        "scale": 0.0
       },
       {
        "t": 13.8,
        "x": 470,
-       "y": 1160,
-       "scale": 0.063
+       "y": 1110,
+       "scale": 0.054
       },
       {
        "t": 13.8,
-       "rot": -15
+       "rot": -8
       },
       {
        "t": 13.8333,
        "x": 470,
-       "y": 1160,
-       "scale": 0.189
+       "y": 1110,
+       "scale": 0.162
       },
       {
        "t": 13.8667,
        "x": 470,
-       "y": 1160,
-       "scale": 0.5208
+       "y": 1110,
+       "scale": 0.4464
       },
       {
        "t": 13.9,
        "x": 470,
-       "y": 1160,
-       "scale": 0.5754
+       "y": 1110,
+       "scale": 0.4932
       },
       {
        "t": 13.9333,
        "x": 470,
-       "y": 1160,
-       "scale": 0.5376
+       "y": 1110,
+       "scale": 0.4608
       },
       {
        "t": 13.9667,
        "x": 470,
-       "y": 1160,
-       "scale": 0.483
+       "y": 1110,
+       "scale": 0.414
       },
       {
        "t": 14.0,
        "x": 470,
-       "y": 1160,
-       "scale": 0.42
+       "y": 1110,
+       "scale": 0.36
       }
      ]
     },
@@ -2942,7 +3081,7 @@
      "type": "image",
      "asset": "tacho",
      "start": 17.8333,
-     "end": 19.4,
+     "end": 18.2667,
      "keys": [
       {
        "t": 17.8667,
@@ -2957,7 +3096,7 @@
      "type": "image",
      "asset": "needle",
      "start": 17.8333,
-     "end": 19.4,
+     "end": 18.2667,
      "keys": [
       {
        "t": 17.8667,
@@ -2971,12 +3110,8 @@
       },
       {
        "t": 18.2667,
-       "rot": 0.0,
+       "rot": -45.0,
        "ease": "out"
-      },
-      {
-       "t": 19.4,
-       "rot": 33.75
       }
      ],
      "anchor": [
@@ -2985,59 +3120,59 @@
      ]
     },
     {
-     "id": "muted-speaker_3",
+     "id": "photo_tacho_no_1",
      "type": "image",
-     "asset": "muted-speaker",
+     "asset": "photo_tacho_no",
      "start": 18.2333,
      "end": 19.4333,
      "keys": [
       {
        "t": 18.2333,
        "x": 540,
-       "y": 520,
+       "y": 1330,
        "scale": 0.0
       },
       {
        "t": 18.2667,
        "x": 540,
-       "y": 520,
-       "scale": 0.09
+       "y": 1330,
+       "scale": 0.138
       },
       {
        "t": 18.3,
        "x": 540,
-       "y": 520,
-       "scale": 0.27
+       "y": 1330,
+       "scale": 0.414
       },
       {
        "t": 18.3333,
        "x": 540,
-       "y": 520,
-       "scale": 0.744
+       "y": 1330,
+       "scale": 1.1408
       },
       {
        "t": 18.3667,
        "x": 540,
-       "y": 520,
-       "scale": 0.822
+       "y": 1330,
+       "scale": 1.2604
       },
       {
        "t": 18.4,
        "x": 540,
-       "y": 520,
-       "scale": 0.768
+       "y": 1330,
+       "scale": 1.1776
       },
       {
        "t": 18.4333,
        "x": 540,
-       "y": 520,
-       "scale": 0.69
+       "y": 1330,
+       "scale": 1.058
       },
       {
        "t": 18.4667,
        "x": 540,
-       "y": 520,
-       "scale": 0.6
+       "y": 1330,
+       "scale": 0.92
       }
      ]
     },
@@ -4749,76 +4884,76 @@
    ],
    "children": [
     {
-     "id": "control-knobs_1",
+     "id": "photo_oma_dj_1",
      "type": "image",
-     "asset": "control-knobs",
+     "asset": "photo_oma_dj",
      "start": 35.9,
      "end": 37.9667,
      "keys": [
       {
        "t": 35.9,
        "x": 540,
-       "y": 1380,
+       "y": 1420,
        "scale": 0.0
       },
       {
        "t": 35.9333,
        "x": 540,
-       "y": 1380,
-       "scale": 0.1425
+       "y": 1420,
+       "scale": 0.093
       },
       {
        "t": 35.9667,
        "x": 540,
-       "y": 1380,
-       "scale": 0.4275
+       "y": 1420,
+       "scale": 0.279
       },
       {
        "t": 36.0,
        "x": 540,
-       "y": 1380,
-       "scale": 1.178
+       "y": 1420,
+       "scale": 0.7688
       },
       {
        "t": 36.0333,
        "x": 540,
-       "y": 1380,
-       "scale": 1.3015
+       "y": 1420,
+       "scale": 0.8494
       },
       {
        "t": 36.0667,
        "x": 540,
-       "y": 1380,
-       "scale": 1.216
+       "y": 1420,
+       "scale": 0.7936
       },
       {
        "t": 36.1,
        "x": 540,
-       "y": 1380,
-       "scale": 1.0925
+       "y": 1420,
+       "scale": 0.713
       },
       {
        "t": 36.1333,
        "x": 540,
-       "y": 1380,
-       "scale": 0.95
+       "y": 1420,
+       "scale": 0.62
       },
       {
        "t": 37.8333,
        "x": 540,
-       "y": 1380,
-       "scale": 0.95
+       "y": 1420,
+       "scale": 0.62
       },
       {
        "t": 37.8667,
        "x": 540,
-       "y": 1380,
-       "scale": 1.064
+       "y": 1420,
+       "scale": 0.6944
       },
       {
        "t": 37.9333,
        "x": 540,
-       "y": 1380,
+       "y": 1420,
        "scale": 0.0
       }
      ]
@@ -4938,9 +5073,9 @@
      ]
     },
     {
-     "id": "bird_1",
+     "id": "photo_schuhschnabel_1",
      "type": "image",
-     "asset": "bird",
+     "asset": "photo_schuhschnabel",
      "start": 38.8333,
      "end": 40.4667,
      "keys": [
@@ -4954,43 +5089,43 @@
        "t": 38.8667,
        "x": 290,
        "y": 520,
-       "scale": 0.09
+       "scale": 0.06
       },
       {
        "t": 38.9,
        "x": 290,
        "y": 520,
-       "scale": 0.27
+       "scale": 0.18
       },
       {
        "t": 38.9333,
        "x": 290,
        "y": 520,
-       "scale": 0.744
+       "scale": 0.496
       },
       {
        "t": 38.9667,
        "x": 290,
        "y": 520,
-       "scale": 0.822
+       "scale": 0.548
       },
       {
        "t": 39.0,
        "x": 290,
        "y": 520,
-       "scale": 0.768
+       "scale": 0.512
       },
       {
        "t": 39.0333,
        "x": 290,
        "y": 520,
-       "scale": 0.69
+       "scale": 0.46
       },
       {
        "t": 39.0667,
        "x": 290,
        "y": 520,
-       "scale": 0.6
+       "scale": 0.4
       }
      ]
     },
@@ -5052,9 +5187,9 @@
      ]
     },
     {
-     "id": "musical-notes_1",
+     "id": "photo_geige_1",
      "type": "image",
-     "asset": "musical-notes",
+     "asset": "photo_geige",
      "start": 39.9,
      "end": 40.4667,
      "keys": [
@@ -5068,43 +5203,43 @@
        "t": 39.9333,
        "x": 790,
        "y": 520,
-       "scale": 0.09
+       "scale": 0.063
       },
       {
        "t": 39.9667,
        "x": 790,
        "y": 520,
-       "scale": 0.27
+       "scale": 0.189
       },
       {
        "t": 40.0,
        "x": 790,
        "y": 520,
-       "scale": 0.744
+       "scale": 0.5208
       },
       {
        "t": 40.0333,
        "x": 790,
        "y": 520,
-       "scale": 0.822
+       "scale": 0.5754
       },
       {
        "t": 40.0667,
        "x": 790,
        "y": 520,
-       "scale": 0.768
+       "scale": 0.5376
       },
       {
        "t": 40.1,
        "x": 790,
        "y": 520,
-       "scale": 0.69
+       "scale": 0.483
       },
       {
        "t": 40.1333,
        "x": 790,
        "y": 520,
-       "scale": 0.6
+       "scale": 0.42
       }
      ]
     },
@@ -5493,51 +5628,51 @@
      "keys": [
       {
        "t": 44.0667,
-       "x": 910,
-       "y": 1180,
+       "x": 150,
+       "y": 1720,
        "scale": 0.0
       },
       {
        "t": 44.1,
-       "x": 910,
-       "y": 1180,
-       "scale": 0.063
+       "x": 150,
+       "y": 1720,
+       "scale": 0.054
       },
       {
        "t": 44.1333,
-       "x": 910,
-       "y": 1180,
-       "scale": 0.189
+       "x": 150,
+       "y": 1720,
+       "scale": 0.162
       },
       {
        "t": 44.1667,
-       "x": 910,
-       "y": 1180,
-       "scale": 0.5208
+       "x": 150,
+       "y": 1720,
+       "scale": 0.4464
       },
       {
        "t": 44.2,
-       "x": 910,
-       "y": 1180,
-       "scale": 0.5754
+       "x": 150,
+       "y": 1720,
+       "scale": 0.4932
       },
       {
        "t": 44.2333,
-       "x": 910,
-       "y": 1180,
-       "scale": 0.5376
+       "x": 150,
+       "y": 1720,
+       "scale": 0.4608
       },
       {
        "t": 44.2667,
-       "x": 910,
-       "y": 1180,
-       "scale": 0.483
+       "x": 150,
+       "y": 1720,
+       "scale": 0.414
       },
       {
        "t": 44.3,
-       "x": 910,
-       "y": 1180,
-       "scale": 0.42
+       "x": 150,
+       "y": 1720,
+       "scale": 0.36
       }
      ]
     },
@@ -5656,59 +5791,59 @@
      ]
     },
     {
-     "id": "lion_1",
+     "id": "photo_loewe_1",
      "type": "image",
-     "asset": "lion",
+     "asset": "photo_loewe",
      "start": 45.2,
      "end": 46.3667,
      "keys": [
       {
        "t": 45.2,
-       "x": 890,
-       "y": 470,
+       "x": 830,
+       "y": 1170,
        "scale": 0.0
       },
       {
        "t": 45.2333,
-       "x": 890,
-       "y": 470,
-       "scale": 0.0675
+       "x": 830,
+       "y": 1170,
+       "scale": 0.063
       },
       {
        "t": 45.2667,
-       "x": 890,
-       "y": 470,
-       "scale": 0.2025
+       "x": 830,
+       "y": 1170,
+       "scale": 0.189
       },
       {
        "t": 45.3,
-       "x": 890,
-       "y": 470,
-       "scale": 0.558
+       "x": 830,
+       "y": 1170,
+       "scale": 0.5208
       },
       {
        "t": 45.3333,
-       "x": 890,
-       "y": 470,
-       "scale": 0.6165
+       "x": 830,
+       "y": 1170,
+       "scale": 0.5754
       },
       {
        "t": 45.3667,
-       "x": 890,
-       "y": 470,
-       "scale": 0.576
+       "x": 830,
+       "y": 1170,
+       "scale": 0.5376
       },
       {
        "t": 45.4,
-       "x": 890,
-       "y": 470,
-       "scale": 0.5175
+       "x": 830,
+       "y": 1170,
+       "scale": 0.483
       },
       {
        "t": 45.4333,
-       "x": 890,
-       "y": 470,
-       "scale": 0.45
+       "x": 830,
+       "y": 1170,
+       "scale": 0.42
       }
      ]
     }
@@ -7470,9 +7605,9 @@
      ]
     },
     {
-     "id": "loudspeaker_2",
+     "id": "photo_radio_2",
      "type": "image",
-     "asset": "loudspeaker",
+     "asset": "photo_radio",
      "start": 50.0,
      "end": 52.0667,
      "keys": [
@@ -7486,55 +7621,55 @@
        "t": 50.0333,
        "x": 540,
        "y": 520,
-       "scale": 0.0825
+       "scale": 0.063
       },
       {
        "t": 50.0667,
        "x": 540,
        "y": 520,
-       "scale": 0.2475
+       "scale": 0.189
       },
       {
        "t": 50.1,
        "x": 540,
        "y": 520,
-       "scale": 0.682
+       "scale": 0.5208
       },
       {
        "t": 50.1333,
        "x": 540,
        "y": 520,
-       "scale": 0.7535
+       "scale": 0.5754
       },
       {
        "t": 50.1667,
        "x": 540,
        "y": 520,
-       "scale": 0.704
+       "scale": 0.5376
       },
       {
        "t": 50.2,
        "x": 540,
        "y": 520,
-       "scale": 0.6325
+       "scale": 0.483
       },
       {
        "t": 50.2333,
        "x": 540,
        "y": 520,
-       "scale": 0.55
+       "scale": 0.42
       },
       {
        "t": 51.9333,
        "x": 540,
        "y": 520,
-       "scale": 0.55
+       "scale": 0.42
       },
       {
        "t": 51.9667,
        "x": 540,
        "y": 520,
-       "scale": 0.6160000000000001
+       "scale": 0.47040000000000004
       },
       {
        "t": 52.0333,
@@ -7919,7 +8054,7 @@
      ]
     },
     {
-     "id": "muted-speaker_4",
+     "id": "muted-speaker_3",
      "type": "image",
      "asset": "muted-speaker",
      "start": 56.5333,

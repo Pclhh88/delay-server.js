@@ -1,0 +1,58 @@
+{
+ "photo_geldmann": {
+  "path": "assets/png/photo_geldmann.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/geldmann.png",
+  "note": "Mann mit Geldstapeln"
+ },
+ "photo_radio": {
+  "path": "assets/png/photo_radio.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing (product photo, Makita logo)",
+  "source": "assets/photos_src/baustellenradio.jpg",
+  "note": "Baustellenradio"
+ },
+ "photo_tacho_no": {
+  "path": "assets/png/photo_tacho_no.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/tacho_no.jpg",
+  "note": "Tacho 'NO!' ohne Bildunterschrift"
+ },
+ "photo_oma_dj": {
+  "path": "assets/png/photo_oma_dj.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/oma_dj.jpg",
+  "note": "Oma am DJ-Pult, ohne Wasserzeichen"
+ },
+ "photo_oma_bust": {
+  "path": "assets/png/photo_oma_bust.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/oma_dj.jpg",
+  "note": "Oma, nur Oberkörper"
+ },
+ "photo_schuhschnabel": {
+  "path": "assets/png/photo_schuhschnabel.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/schuhschnabel.jpg",
+  "note": "Schuhschnabel"
+ },
+ "photo_geige": {
+  "path": "assets/png/photo_geige.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/geige.jpg",
+  "note": "Mann mit Geige (Meme)"
+ },
+ "photo_loewe": {
+  "path": "assets/png/photo_loewe.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/loewe.jpg",
+  "note": "Löwe, Warzenschwein, Erdmännchen"
+ }
+}
