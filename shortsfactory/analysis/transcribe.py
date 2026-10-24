@@ -32,16 +32,29 @@ def transcribe(path, models="models", lang="de"):
     a = load_16k(path)
     out = []
 
+    def split(samples, max_len=16000 * 20):
+        """Whisper handles <= 30 s: cut long speech at its quietest 100 ms
+        (searched in the middle third of each overlong piece)."""
+        if len(samples) <= max_len:
+            return [(0, samples)]
+        n = len(samples)
+        win = 1600
+        lo, hi = n // 3, 2 * n // 3
+        e = [float((samples[i:i + win] ** 2).mean()) for i in range(lo, hi - win, win // 2)]
+        cut = lo + int(np.argmin(e)) * (win // 2) + win // 2
+        return split(samples[:cut], max_len) + [(cut + o, x) for o, x in split(samples[cut:], max_len)]
+
     def drain():
         while not vad.empty():
             seg = vad.front
             st = seg.start / 16000
-            samples = np.array(seg.samples)
-            s = rec.create_stream()
-            s.accept_waveform(16000, samples)
-            rec.decode_stream(s)
-            out.append({"start": round(st, 2), "end": round(st + len(samples) / 16000, 2),
-                        "text": s.result.text.strip()})
+            for off, samples in split(np.array(seg.samples)):
+                s = rec.create_stream()
+                s.accept_waveform(16000, samples)
+                rec.decode_stream(s)
+                t0 = st + off / 16000
+                out.append({"start": round(t0, 2), "end": round(t0 + len(samples) / 16000, 2),
+                            "text": s.result.text.strip()})
             vad.pop()
     ws = cfg.silero_vad.window_size
     for i in range(0, len(a), ws):

@@ -15,6 +15,9 @@ Phasen: 1 Analyse → 2 Rekonstruktion → 3 Abgleich → 4 Template → 5 „Ne
   `timeline_part3.py` → `timeline.json`.
 * Sprechertext + Tonfall/Bauplan für neue Skripte:
   `projects/bundeswehr-kennzeichen/analysis/SPRECHERTEXT.md`.
+* Referenz 2 `references/Burj-Khalifa.mp4` ausgewertet (nicht nachgebaut):
+  `projects/burj-khalifa/analysis/` (Sprechertext, Untertitel). Vergleich beider Videos =
+  feste Stilregeln: Abschnitt „Abgleich mit Referenz 2" in `docs/STYLE_GUIDE.md`.
 * Code: `shortsfactory/` (Renderer, Audio, Analyse-Tools). Doku: `docs/ARCHITECTURE.md`,
   Stilregeln: `docs/STYLE_GUIDE.md`.
 * 17 Bild-Assets + Stimme sind Referenz-Platzhalter (aus dem Original geschnitten),
