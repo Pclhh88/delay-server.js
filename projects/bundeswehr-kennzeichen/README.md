@@ -7,6 +7,7 @@
 | `output/recon_full_1080.mp4` | Rekonstruktion komplett (50,5 s), 1080×1920, mit Ton |
 | `output/vergleich_original_vs_rekonstruktion_komplett.mp4` | links Original, rechts Rekonstruktion |
 | `output/compare_frames/full/` | Vergleichsbilder + `metrics.json` (lokal erzeugt, nicht im Git) |
+| `analysis/SPRECHERTEXT.md` | kompletter Sprechertext mit Zeitmarken + Tonfall-Analyse |
 | `analysis/timeline_analysis.json` | Phase 1: Szenen, Elemente, Bewegungen, Gags, SFX (maschinenlesbar) |
 | `analysis/captions.json` + WORDS2 / WORDS3 in `timeline_part2.py` / `timeline_part3.py` | 75 + 63 + 37 Untertitel-Wörter, framegenau |
 | `reconstruction/timeline.json` | die Rekonstruktion als steuerbare Layer/Keyframes/Audio |

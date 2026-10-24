@@ -13,6 +13,8 @@ Phasen: 1 Analyse → 2 Rekonstruktion → 3 Abgleich → 4 Template → 5 „Ne
 * Messungen/Assets: `reconstruction/build_proxies.py` (0–20 s), `build_part2.py` (20–40 s),
   `build_part3.py` (40–50,5 s); Timeline: `build_timeline.py` + `timeline_part2.py` +
   `timeline_part3.py` → `timeline.json`.
+* Sprechertext + Tonfall/Bauplan für neue Skripte:
+  `projects/bundeswehr-kennzeichen/analysis/SPRECHERTEXT.md`.
 * Code: `shortsfactory/` (Renderer, Audio, Analyse-Tools). Doku: `docs/ARCHITECTURE.md`,
   Stilregeln: `docs/STYLE_GUIDE.md`.
 * 17 Bild-Assets + Stimme sind Referenz-Platzhalter (aus dem Original geschnitten),
