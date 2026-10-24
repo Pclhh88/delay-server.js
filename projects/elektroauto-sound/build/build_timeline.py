@@ -223,16 +223,16 @@ def scene_hook():
     """0 - 'Wäre': Elektroautos dürfen NICHT leise sein."""
     t_end = W("Wäre")
     t_n, t_l = W("nicht"), W("leise")
-    car = img("ecar", 0, t_end, [{"t": 0, "x": 420, "y": 1330, "scale": 0.82},
+    car = img("photo_car", 0, t_end, [{"t": 0, "x": 395, "y": 1330, "scale": 0.78},
                                  {"t": t_end, "scale": 0.86}])
-    cam = camera(0, t_end, [car], punch(t_n, (420, 1330), 1.0, 1.15, t_end), pivot=(420, 1330))
+    cam = camera(0, t_end, [car], punch(t_n, (395, 1330), 1.0, 1.1, t_end), pivot=(395, 1330))
     # the car faces left: the (missing) tailpipe would sit at the rear bumper, bottom right
-    a = arrow((835, 1500), 120, t_l, snap(t_end - 3 * FR))
+    a = arrow((783, 1560), 180, t_l, snap(t_end - 3 * FR))
     sfx("ev_hum", 0.0, -14)
     sfx("impact_low", t_n, -4)
     sfx("buzzer", t_n, -13)
     sfx("swoosh", t_l, -12)
-    return [cam, a, red_flash(t_n), pop("muted-speaker", t_l, t_end, 300, 520, 0.6, out=False)]
+    return [cam, a, red_flash(t_n)]
 
 
 def scene_dumm():
@@ -240,9 +240,9 @@ def scene_dumm():
     t0, t_end = W("Wäre"), W("und", 1)
     t_d, t_50, t_a, t_k = W("dumm"), W("50.000"), W("Auto", 1), W("Klima")
     ch = [pop("face-with-spiral-eyes", t_d, t_50, 540, 520, 0.6),
-          pop("photo_geldmann", t_50, t_a, 540, 1400, 0.78),
+          pop("photo_geldmann2", t_50, t_a, 540, 1400, 0.78),
           text("50.000 €", t_50, t_k, 540, 540, size=150),
-          pop("ecar", t_a, t_end, 540, 1400, CAR_S, out=False),
+          pop("photo_car", t_a, t_end, 540, 1400, CAR_S, out=False),
           pop("globe-showing-europe-africa", t_k, t_end, 540, 520, 0.55, out=False),
           pop("green-heart", snap(t_k + 4 * FR), t_end, 690, 420, 0.4, out=False)]
     for t in (t_d, t_50, t_a, t_k):
@@ -265,7 +265,7 @@ def scene_parking():
                 {"t": t_l, "x": 1050, "y": car_y, "ease": "out"},
                 {"t": t_m, "x": 790, "y": car_y},
                 {"t": snap(t_m + 10 * FR), "x": 680, "y": car_y, "ease": "out"}]
-    car = img("ecar", t0, t_end, car_keys + shake(t_s, snap(t_s + 8 * FR), 680, car_y, 8)[1:])
+    car = img("photo_car", t0, t_end, car_keys + shake(t_s, snap(t_s + 8 * FR), 680, car_y, 8)[1:])
 
     def car_x(t):
         from shortsfactory.render.keyframes import value_at
@@ -321,17 +321,18 @@ def scene_law():
     t0, t_end = W("Deshalb"), W("und", 2)
     t_j, t_e, t_eu, t_k, t_lm = W("Juli"), W("E-Auto"), W("EU"), W("künstlich"), W("Lärm", 1)
     ch = [pop("cal_2021", t_j, t_eu, 540, 500, 0.8),
-          pop("ecar", t_e, t_end, 540, 1420, CAR_S, out=False),
+          pop("photo_car", t_e, t_end, 540, 1420, CAR_S, out=False),
           pop("eu_flag", t_eu, t_end, 540, 500, 0.75, out=False),
-          pop("photo_radio", t_k, t_end, 470, 1110, 0.36, out=False, extra=[{"t": t_k, "rot": -8}]),
-          pop("waves_red", t_lm, t_end, 690, 1140, 0.45, out=False)]
+          pop("photo_radio", t_k, t_end, 470, 1170, 0.36, out=False, extra=[{"t": t_k, "rot": -8}]),
+          pop("waves_red", t_lm, t_end, 690, 1190, 0.45, out=False)]
     cam = camera(t0, t_end, ch, [{"t": t0, "x": 540, "y": 1250}] + punch(t_lm, (540, 1250), 1.0, 1.22),
                  pivot=(540, 1250))
     for t in (t_j, t_e, t_eu, t_k):
         sfx("pop", t, -11)
     sfx("swoosh_down", t0, -13)
     sfx("impact_low", t_lm, -5)
-    sfx("ev_hum", t_lm, -12)
+    AUDIO.append({"src": SFX_DIR + "radio_laerm.mp3", "start": t_lm, "gain_db": -15.0,
+                  "trim": [12.45, 13.75], "fade_out": 0.2})
     return [cam, label("[Q1]", t_eu, t_end)]
 
 
@@ -356,7 +357,7 @@ def scene_speed():
     t_a, t_20, t_r = W("Anfahren"), W("20", 1), W("Rückwärtsfahren")
     tl = tacho_layers(t0, t_r, [(t0, 0, None), (t_a, 0, None), (snap(t_20 + 6 * FR), 20, "back_out")])
     zone = text("0–20 KM/H", t_20, t_r, 540, 520, size=130, fill=(31, 179, 91))
-    rev_car = img("ecar", t_r, t_end, [{"t": t_r, "x": 540, "y": 1400, "scale": CAR_S},
+    rev_car = img("photo_car", t_r, t_end, [{"t": t_r, "x": 540, "y": 1400, "scale": CAR_S},
                                         {"t": t_end, "x": 760, "y": 1400, "ease": "inout"}])
     waves = pop("waves", snap(t_r + 3 * FR), t_end, 1000, 1400, 0.45, out=False)
     rtxt = text("R", t_r, t_end, 540, 520, size=220, fill=(255, 255, 255))
@@ -406,7 +407,7 @@ def scene_db():
           text("56 dB", t_56, t_end, 760, meter_y(0.56, y, s), size=110, fill=(31, 179, 91)),
           text("75 dB", t_75, t_end, 760, meter_y(0.75, y, s), size=110, fill=(227, 32, 43)),
           text("TEMPO 20", t_20, t_56, 540, 480, size=120, fill=(27, 30, 39)),
-          pop("exploding-head", t_lm, t_end, 760, 470, 0.5, out=False)]
+          pop("photo_roll_safe", t_lm, t_end, 770, 480, 0.3, out=False)]
     cam = camera(t0, t_end, ch, push_in(t0) + punch(t_lm, (540, 960), 1.0, 1.12))
     sfx("swoosh", t0, -12)
     sfx("pop", t_20, -12)
@@ -436,7 +437,7 @@ def scene_pitch():
                pop_keys(t_b, lo[0], lo[1] - 80, 0.3) + [{"t": t_gas, "x": lo[0], "y": lo[1] - 80},
                                                          {"t": snap(t_gas + 5 * FR), "x": hi[0], "y": hi[1] - 80,
                                                           "ease": "out3"}])
-    car = pop("ecar", t_b, t_end, 760, 520, 0.4, out=False)
+    car = pop("photo_car", t_b, t_end, 760, 520, 0.4, out=False)
     sfx("swoosh", t0, -12)
     sfx("pop", t0, -12)
     sfx("chirp_up", t_g, -10)
@@ -475,7 +476,7 @@ def scene_rules():
     t_h, t_a, t_k, t_n, t_v, t_m = W("Hersteller"), W("Auto", 3), W("klingen"), W("nicht", 4), \
         W("Vogelgezwitscher"), W("Musik", 1)
     ch = [pop("photo_oma_dj", t_h, t_a, 540, 1420, 0.62),
-          pop("ecar", t_a, t_end, 540, 1440, 0.8, out=False),
+          pop("photo_car", t_a, t_end, 540, 1440, 0.8, out=False),
           pop("check-mark-button", t_k, t_end, 870, 1170, 0.5, out=False),
           pop("photo_schuhschnabel", t_v, t_end, 290, 520, 0.4, out=False),
           pop("ban", snap(t_v + 10 * FR), t_end, 290, 520, 0.6, out=False),
@@ -496,7 +497,7 @@ def scene_zimmer():
     t0, t_end = W("BMW"), W("Bei", 2)
     t_hz, t_mu, t_i, t_kg = W("Hans"), W("Musik", 2), W("Interstellar"), W("König")
     ch = [pop("photo_feiger_loewe", t_kg, t_end, 720, 1240, 0.38, out=False),
-          pop("ecar", t0, t_end, 540, 1470, 0.8, out=False),
+          pop("photo_car", t0, t_end, 540, 1470, 0.8, out=False),
           pop("man-in-tuxedo", t_hz, t_end, 540, 560, 0.6, out=False),
           pop("violin", t_mu, t_end, 170, 1180, 0.42, out=False),
           pop("trumpet", snap(t_mu + 2 * FR), t_end, 150, 1720, 0.36, out=False),
@@ -521,9 +522,9 @@ def scene_hybrid():
     puffs = [pop("dashing-away", snap(t_be + i * 0.35), snap(t_be + i * 0.35 + 0.5), 1010, 1500 - 30 * (i % 2),
                  0.4 + 0.05 * (i % 2)) for i in range(int((t_d - t_be) / 0.35))]
     single = [{"t": t0, "x": 540, "y": 1440, "scale": 0.8}] + shake(t_be, t_d, 540, 1440, 4, s=0.8, every=1)
-    car = img("automobile", t0, t_d, single)
-    duo = [img("automobile", t_d, t_end, pop_keys(t_d, 300, 1450, 0.5) + shake(snap(t_d + 7 * FR), t_end, 300, 1450, 8)),
-           img("automobile", t_d, t_end, pop_keys(snap(t_d + 2 * FR), 780, 1450, 0.5) +
+    car = img("photo_car", t0, t_d, single)
+    duo = [img("photo_car", t_d, t_end, pop_keys(t_d, 300, 1450, 0.5) + shake(snap(t_d + 7 * FR), t_end, 300, 1450, 8)),
+           img("photo_car", t_d, t_end, pop_keys(snap(t_d + 2 * FR), 780, 1450, 0.5) +
                shake(snap(t_d + 9 * FR), t_end, 780, 1450, 8))]
     ch = [pop("hybrid", t_hy, t_k, 540, 520, 0.72),
           car, *puffs, *duo,
@@ -545,7 +546,7 @@ def scene_ending():
     t0, t_end = W("Und", 2), DUR
     t_e, t_v, t_l, t_p, t_h, t_k, t_dn = W("ältere"), W("vor"), W("lautlos", 2), W("Parkplatz", 1), \
         W("hörst", 2), W("kommt"), W("denn", 2)
-    car = img("ecar", t0, t_p, pop_keys(t_e, 540, 1430, CAR_S) +
+    car = img("photo_car", t0, t_p, pop_keys(t_e, 540, 1430, CAR_S) +
               [{"t": t_e, "tint": [140, 140, 140, 0.0]}, {"t": snap(t_e + 6 * FR), "tint": [150, 140, 120, 0.55]}])
     dark = {"id": "night", "type": "solid", "start": t_p, "end": t_end, "color": [14, 18, 38],
             "keys": [{"t": t_p, "opacity": 0.0}, {"t": snap(t_p + 9 * FR), "opacity": 0.82, "ease": "out"}]}
@@ -573,6 +574,8 @@ def scene_ending():
     sfx("pop", t_v, -11)
     sfx("pop", t_l, -11)
     sfx("drone_low", t_p, -16)
+    AUDIO.append({"src": SFX_DIR + "cricket.mp3", "start": W("gar"), "gain_db": -8.0,
+                  "trim": [0.25, 0.25 + t_k - W("gar")], "fade_out": 0.15})
     sfx("pop", t_h, -12)
     sfx("ev_hum", t_k, -10)
     sfx("impact_low", t_dn, -5)

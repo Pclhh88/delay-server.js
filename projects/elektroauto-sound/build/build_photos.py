@@ -31,6 +31,9 @@ PHOTOS = {
     "loewe": ("loewe.jpg", (0, 0, 413, 345), "cutout", 1000, MEME, "Löwe, Warzenschwein, Erdmännchen"),
     "oma_portrait": ("oma_portrait.png", (0, 0, 394, 255), "cutout", 900, MEME + " (Shutterstock preview)",
                      "Oma-Porträt, ohne Wasserzeichen-Leiste"),
+    "roll_safe": ("roll_safe.jpg", None, "cutout", 1000, MEME, "Roll-Safe-Meme (Finger an der Schläfe)"),
+    "geldmann2": ("geldmann2.jpg", (0, 255, 880, 1184), "cutout", 1100, MEME, "älterer Mann mit Dollarscheinen"),
+    "vw": ("vw_id_polo.png", None, "alpha", 940, MEME + " (VW press/configurator image)", "VW ID. Polo, freigestellt geliefert"),
     "tars": ("tars.png", None, "white", 1100, MEME, "TARS (Interstellar) aus Lego"),
     "feiger_loewe": ("feiger_loewe.jpg", None, "cutout", 1100, MEME, "Feiger Löwe (Zauberer von Oz)"),
 }
@@ -89,11 +92,15 @@ def main():
     session = new_session("isnet-general-use")
     manifest = {}
     for name, (src, box, mode, edge, lic, note) in PHOTOS.items():
-        im = Image.open(os.path.join(SRC, src)).convert("RGB")
+        im = Image.open(os.path.join(SRC, src))
+        im = im.convert("RGBA" if mode == "alpha" else "RGB")
         if box:
             im = im.crop(box)
-        if mode in ("cutout", "white"):
-            cut = remove(im, session=session, post_process_mask=True) if mode == "cutout" else cut_white(im)
+        if mode in ("cutout", "white", "alpha"):
+            if mode == "cutout":
+                cut = remove(im, session=session, post_process_mask=True)
+            else:
+                cut = cut_white(im) if mode == "white" else im
             bbox = cut.getchannel("A").point(lambda v: 255 if v > 16 else 0).getbbox()
             out = upscale(cut.crop(bbox), edge)
         else:
@@ -103,6 +110,15 @@ def main():
         manifest[f"photo_{name}"] = {"path": f"assets/png/photo_{name}.png", "design_scale": 1.0,
                                      "license": lic, "source": f"assets/photos_src/{src}", "note": note}
         print(name, out.size)
+    # the car photo framed like the "ecar" emoji (1000x1000, car 940 wide, wheels on y=850),
+    # so it drops into every position/scale used for the emoji car
+    car = Image.open(os.path.join(PNG, "photo_vw.png"))
+    car = car.resize((940, round(car.height * 940 / car.width)), Image.LANCZOS)
+    frame = Image.new("RGBA", (1000, 1000), (0, 0, 0, 0))
+    frame.alpha_composite(car, (30, 850 - car.height))
+    frame.save(os.path.join(PNG, "photo_car.png"))
+    manifest["photo_car"] = dict(manifest["photo_vw"], path="assets/png/photo_car.png",
+                                 note="VW ID. Polo im Rahmen des ecar-Emojis")
     json.dump(manifest, open(os.path.join(PROJ, "assets", "manifest_photos.json"), "w"), indent=1,
               ensure_ascii=False)
 

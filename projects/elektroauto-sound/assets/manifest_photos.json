@@ -62,6 +62,27 @@
   "source": "assets/photos_src/oma_portrait.png",
   "note": "Oma-Porträt, ohne Wasserzeichen-Leiste"
  },
+ "photo_roll_safe": {
+  "path": "assets/png/photo_roll_safe.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/roll_safe.jpg",
+  "note": "Roll-Safe-Meme (Finger an der Schläfe)"
+ },
+ "photo_geldmann2": {
+  "path": "assets/png/photo_geldmann2.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/geldmann2.jpg",
+  "note": "älterer Mann mit Dollarscheinen"
+ },
+ "photo_vw": {
+  "path": "assets/png/photo_vw.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing (VW press/configurator image)",
+  "source": "assets/photos_src/vw_id_polo.png",
+  "note": "VW ID. Polo, freigestellt geliefert"
+ },
  "photo_tars": {
   "path": "assets/png/photo_tars.png",
   "design_scale": 1.0,
@@ -75,5 +96,12 @@
   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
   "source": "assets/photos_src/feiger_loewe.jpg",
   "note": "Feiger Löwe (Zauberer von Oz)"
+ },
+ "photo_car": {
+  "path": "assets/png/photo_car.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing (VW press/configurator image)",
+  "source": "assets/photos_src/vw_id_polo.png",
+  "note": "VW ID. Polo im Rahmen des ecar-Emojis"
  }
 }
