@@ -54,5 +54,26 @@
   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
   "source": "assets/photos_src/loewe.jpg",
   "note": "Löwe, Warzenschwein, Erdmännchen"
+ },
+ "photo_oma_portrait": {
+  "path": "assets/png/photo_oma_portrait.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing (Shutterstock preview)",
+  "source": "assets/photos_src/oma_portrait.png",
+  "note": "Oma-Porträt, ohne Wasserzeichen-Leiste"
+ },
+ "photo_tars": {
+  "path": "assets/png/photo_tars.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/tars.png",
+  "note": "TARS (Interstellar) aus Lego"
+ },
+ "photo_feiger_loewe": {
+  "path": "assets/png/photo_feiger_loewe.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/feiger_loewe.jpg",
+  "note": "Feiger Löwe (Zauberer von Oz)"
  }
 }

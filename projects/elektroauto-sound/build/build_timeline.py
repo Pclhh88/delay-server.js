@@ -181,8 +181,10 @@ AUDIO = []
 
 SFX_DIR = "audio/sfx_src/"
 # ready-made sounds supplied by the user, replacing the synthetic presets:
-# preset -> (file, lead-in to skip (s), offset to the start (s), gain change vs. the preset (dB))
+# preset -> (file, lead-in to skip (s), offset to the start (s), gain change vs. the preset (dB)[, length (s)])
 SAMPLES = {
+    "ev_hum": ("ecar_rpm.wav", 3.6, 0.0, -2.0, 2.2),
+    "beep_reverse": ("rueckfahrpiepen.mp3", 0.0, 0.0, 2.0, 0.8),
     "impact_low": ("vine_boom.mp3", 0.07, 0.0, -6.0),
     "swoosh": ("whoosh_wind.mp3", 0.07, -0.12, 5.0),
     "swoosh_down": ("whoosh_wind.mp3", 0.07, -0.12, 5.0),
@@ -192,11 +194,23 @@ SAMPLES = {
 }
 
 
+_buzz = []
+
+
 def sfx(name, t, gain):
+    if name == "buzzer":           # alternate the two "wrong" sounds
+        _buzz.append(t)
+        if len(_buzz) % 2 == 0:
+            AUDIO.append({"src": SFX_DIR + "wrong2.mp3", "start": snap(t), "gain_db": gain + 1.0,
+                          "trim": [0.07, 1.1], "fade_out": 0.08})
+            return
     if name in SAMPLES:
-        f, lead, off, dg = SAMPLES[name]
-        AUDIO.append({"src": SFX_DIR + f, "start": snap(max(t + off, 0)), "gain_db": gain + dg,
-                      "trim": [lead, 60.0]})
+        f, lead, off, dg, *ln = SAMPLES[name]
+        item = {"src": SFX_DIR + f, "start": snap(max(t + off, 0)), "gain_db": gain + dg,
+                "trim": [lead, lead + ln[0] if ln else 60.0]}
+        if ln:
+            item["fade_out"] = 0.15
+        AUDIO.append(item)
         return
     AUDIO.append({"src": f"@sfx/{name}", "start": snap(t), "gain_db": gain})
 
@@ -276,7 +290,7 @@ def scene_parking():
         {"t": snap(t_m + 5 * FR), "x": 330, "y": 880, "rot": -25, "ease": "out"},
         {"t": snap(t_s), "x": hood[0], "y": hood[1], "rot": 8, "ease": "in"},
         {"t": snap(t_s + 3 * FR), "x": hood[0], "y": hood[1] + 20, "rot": 0}]
-    oma = img("photo_oma_bust", t_p, t_end, oma_keys)
+    oma = img("photo_oma_portrait", t_p, t_end, oma_keys)
     cart = pop("shopping-cart", snap(t0 + 3 * FR), t_end, 120, 1520, 0.4, out=False)
     scream = pop("face-screaming-in-fear", t_b, t_m, 560, 1120, 0.22)
     hit = pop("collision", t_m, snap(t_m + 10 * FR), 430, 1300, 0.55)
@@ -291,10 +305,11 @@ def scene_parking():
                    {"t": snap(pause_t - FR), "x": hood[0], "y": hood[1], "scale": 1.0},
                    {"t": snap(pause_t + 2 * FR), "x": 540, "y": 1100, "scale": 1.5}]
     sfx("swoosh", t0, -12)
-    sfx("ev_hum", snap(t0 + 0.1), -16)
     AUDIO.append({"src": SFX_DIR + "dexter_meme.mp3", "start": t_p, "gain_db": -8.0,
                   "trim": [0.0, round(t_m - t_p, 3)], "fade_out": 0.04})
     sfx("pop", t_l, -11)
+    AUDIO.append({"src": SFX_DIR + "reifen_quietschen.mp3", "start": snap(t_m - 0.35), "gain_db": -11.0,
+                  "trim": [0.0, 0.9], "fade_out": 0.1})
     AUDIO.append({"src": SFX_DIR + "oma_ueberfahren.mp3", "start": snap(t_m - 0.05), "gain_db": -5.0})
     sfx("boing", snap(t_s + 2 * FR), -12)
     sfx("impact_low", pause_t, -7)
@@ -365,7 +380,8 @@ def scene_tyres():
     waves = pop("waves", t_lt, t_end, 900, 1360, 0.7, out=False)
     sfx("buzzer", t_n, -14)
     sfx("pop", t_r, -10)
-    sfx("engine_pass", t_lt, -10)
+    AUDIO.append({"src": SFX_DIR + "reifen_quietschen.mp3", "start": t_lt, "gain_db": -8.0,
+                  "trim": [0.0, 1.6], "fade_out": 0.2})
     return [camera(t0, t_end, tl + [mute, tyre, waves]), red_flash(t_n)]
 
 
@@ -479,17 +495,19 @@ def scene_zimmer():
     für „Interstellar" und „König der Löwen" gemacht hat.'"""
     t0, t_end = W("BMW"), W("Bei", 2)
     t_hz, t_mu, t_i, t_kg = W("Hans"), W("Musik", 2), W("Interstellar"), W("König")
-    ch = [pop("ecar", t0, t_end, 540, 1470, 0.8, out=False),
+    ch = [pop("photo_feiger_loewe", t_kg, t_end, 720, 1240, 0.38, out=False),
+          pop("ecar", t0, t_end, 540, 1470, 0.8, out=False),
           pop("man-in-tuxedo", t_hz, t_end, 540, 560, 0.6, out=False),
           pop("violin", t_mu, t_end, 170, 1180, 0.42, out=False),
           pop("trumpet", snap(t_mu + 2 * FR), t_end, 150, 1720, 0.36, out=False),
           pop("drum", snap(t_mu + 4 * FR), t_end, 960, 1730, 0.3, out=False),
-          pop("ringed-planet", t_i, t_end, 190, 470, 0.45, out=False),
-          pop("photo_loewe", t_kg, t_end, 830, 1170, 0.42, out=False)]
+          pop("photo_tars", t_i, t_end, 170, 470, 0.32, out=False),
+]
     cam = camera(t0, t_end, ch, push_in(t0) + punch(t_hz, (540, 960), 1.0, 1.08))
     sfx("swoosh", t0, -12)
     sfx("impact_low", t_hz, -6)
     sfx("magic_glide", t_mu, -16)
+    AUDIO.append({"src": SFX_DIR + "lion.mp3", "start": snap(t_kg + 2 * FR), "gain_db": -7.0, "trim": [0.0, 1.95]})
     for t in (t_i, t_kg):
         sfx("pop", t, -11)
     return [cam, label("[Q3]", t_hz, t_end)]
@@ -586,7 +604,6 @@ def build():
     for sc in (scene_hook, scene_dumm, scene_parking, scene_law, scene_speed, scene_tyres, scene_db,
                scene_pitch, scene_bobbycar, scene_rules, scene_zimmer, scene_hybrid, scene_ending):
         layers += sc()
-    layers.append(credit("GRAFIKEN: MICROSOFT FLUENT EMOJI (MIT) · STIMME: ELEVENLABS", 0, DUR))
     manifest = json.load(open(os.path.join(PROJ, "assets", "manifest.json"), encoding="utf-8"))
     manifest.update(json.load(open(os.path.join(PROJ, "assets", "manifest_photos.json"), encoding="utf-8")))
     tl = {

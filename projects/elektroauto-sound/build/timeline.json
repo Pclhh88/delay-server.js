@@ -366,6 +366,27 @@
    "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
    "source": "assets/photos_src/loewe.jpg",
    "note": "Löwe, Warzenschwein, Erdmännchen"
+  },
+  "photo_oma_portrait": {
+   "path": "assets/png/photo_oma_portrait.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing (Shutterstock preview)",
+   "source": "assets/photos_src/oma_portrait.png",
+   "note": "Oma-Porträt, ohne Wasserzeichen-Leiste"
+  },
+  "photo_tars": {
+   "path": "assets/png/photo_tars.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+   "source": "assets/photos_src/tars.png",
+   "note": "TARS (Interstellar) aus Lego"
+  },
+  "photo_feiger_loewe": {
+   "path": "assets/png/photo_feiger_loewe.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+   "source": "assets/photos_src/feiger_loewe.jpg",
+   "note": "Feiger Löwe (Zauberer von Oz)"
   }
  },
  "layers": [
@@ -1950,9 +1971,9 @@
      ]
     },
     {
-     "id": "photo_oma_bust_1",
+     "id": "photo_oma_portrait_1",
      "type": "image",
-     "asset": "photo_oma_bust",
+     "asset": "photo_oma_portrait",
      "start": 5.6667,
      "end": 10.2,
      "keys": [
@@ -5524,6 +5545,63 @@
    ],
    "children": [
     {
+     "id": "photo_feiger_loewe_1",
+     "type": "image",
+     "asset": "photo_feiger_loewe",
+     "start": 45.2,
+     "end": 46.3667,
+     "keys": [
+      {
+       "t": 45.2,
+       "x": 720,
+       "y": 1240,
+       "scale": 0.0
+      },
+      {
+       "t": 45.2333,
+       "x": 720,
+       "y": 1240,
+       "scale": 0.057
+      },
+      {
+       "t": 45.2667,
+       "x": 720,
+       "y": 1240,
+       "scale": 0.171
+      },
+      {
+       "t": 45.3,
+       "x": 720,
+       "y": 1240,
+       "scale": 0.4712
+      },
+      {
+       "t": 45.3333,
+       "x": 720,
+       "y": 1240,
+       "scale": 0.5206
+      },
+      {
+       "t": 45.3667,
+       "x": 720,
+       "y": 1240,
+       "scale": 0.4864
+      },
+      {
+       "t": 45.4,
+       "x": 720,
+       "y": 1240,
+       "scale": 0.437
+      },
+      {
+       "t": 45.4333,
+       "x": 720,
+       "y": 1240,
+       "scale": 0.38
+      }
+     ]
+    },
+    {
      "id": "ecar_8",
      "type": "image",
      "asset": "ecar",
@@ -5809,116 +5887,59 @@
      ]
     },
     {
-     "id": "ringed-planet_1",
+     "id": "photo_tars_1",
      "type": "image",
-     "asset": "ringed-planet",
+     "asset": "photo_tars",
      "start": 44.4,
      "end": 46.3667,
      "keys": [
       {
        "t": 44.4,
-       "x": 190,
+       "x": 170,
        "y": 470,
        "scale": 0.0
       },
       {
        "t": 44.4333,
-       "x": 190,
+       "x": 170,
        "y": 470,
-       "scale": 0.0675
+       "scale": 0.048
       },
       {
        "t": 44.4667,
-       "x": 190,
+       "x": 170,
        "y": 470,
-       "scale": 0.2025
+       "scale": 0.144
       },
       {
        "t": 44.5,
-       "x": 190,
+       "x": 170,
        "y": 470,
-       "scale": 0.558
+       "scale": 0.3968
       },
       {
        "t": 44.5333,
-       "x": 190,
+       "x": 170,
        "y": 470,
-       "scale": 0.6165
+       "scale": 0.4384
       },
       {
        "t": 44.5667,
-       "x": 190,
+       "x": 170,
        "y": 470,
-       "scale": 0.576
+       "scale": 0.4096
       },
       {
        "t": 44.6,
-       "x": 190,
+       "x": 170,
        "y": 470,
-       "scale": 0.5175
+       "scale": 0.368
       },
       {
        "t": 44.6333,
-       "x": 190,
+       "x": 170,
        "y": 470,
-       "scale": 0.45
-      }
-     ]
-    },
-    {
-     "id": "photo_loewe_1",
-     "type": "image",
-     "asset": "photo_loewe",
-     "start": 45.2,
-     "end": 46.3667,
-     "keys": [
-      {
-       "t": 45.2,
-       "x": 830,
-       "y": 1170,
-       "scale": 0.0
-      },
-      {
-       "t": 45.2333,
-       "x": 830,
-       "y": 1170,
-       "scale": 0.063
-      },
-      {
-       "t": 45.2667,
-       "x": 830,
-       "y": 1170,
-       "scale": 0.189
-      },
-      {
-       "t": 45.3,
-       "x": 830,
-       "y": 1170,
-       "scale": 0.5208
-      },
-      {
-       "t": 45.3333,
-       "x": 830,
-       "y": 1170,
-       "scale": 0.5754
-      },
-      {
-       "t": 45.3667,
-       "x": 830,
-       "y": 1170,
-       "scale": 0.5376
-      },
-      {
-       "t": 45.4,
-       "x": 830,
-       "y": 1170,
-       "scale": 0.483
-      },
-      {
-       "t": 45.4333,
-       "x": 830,
-       "y": 1170,
-       "scale": 0.42
+       "scale": 0.32
       }
      ]
     }
@@ -8459,31 +8480,6 @@
      ]
     }
    ]
-  },
-  {
-   "id": "credit_1",
-   "type": "text",
-   "text": "GRAFIKEN: MICROSOFT FLUENT EMOJI (MIT) · STIMME: ELEVENLABS",
-   "start": 0.0,
-   "end": 61.4,
-   "size": 29,
-   "style": {
-    "font": "league-spartan-400",
-    "fill": [
-     255,
-     255,
-     255
-    ]
-   },
-   "keys": [
-    {
-     "t": 0.0,
-     "x": 997.9,
-     "y": 347.6,
-     "rot": 90,
-     "opacity": 0.84
-    }
-   ]
   }
  ],
  "captions": {
@@ -9722,9 +9718,14 @@
    "gain_db": 0.0
   },
   {
-   "src": "@sfx/ev_hum",
+   "src": "audio/sfx_src/ecar_rpm.wav",
    "start": 0.0,
-   "gain_db": -14
+   "gain_db": -16.0,
+   "trim": [
+    3.6,
+    5.800000000000001
+   ],
+   "fade_out": 0.15
   },
   {
    "src": "audio/sfx_src/vine_boom.mp3",
@@ -9808,11 +9809,6 @@
    ]
   },
   {
-   "src": "@sfx/ev_hum",
-   "start": 5.2667,
-   "gain_db": -16
-  },
-  {
    "src": "audio/sfx_src/dexter_meme.mp3",
    "start": 5.6667,
    "gain_db": -8.0,
@@ -9830,6 +9826,16 @@
     0.035,
     60.0
    ]
+  },
+  {
+   "src": "audio/sfx_src/reifen_quietschen.mp3",
+   "start": 8.6667,
+   "gain_db": -11.0,
+   "trim": [
+    0.0,
+    0.9
+   ],
+   "fade_out": 0.1
   },
   {
    "src": "audio/sfx_src/oma_ueberfahren.mp3",
@@ -9909,9 +9915,14 @@
    ]
   },
   {
-   "src": "@sfx/ev_hum",
+   "src": "audio/sfx_src/ecar_rpm.wav",
    "start": 14.2,
-   "gain_db": -12
+   "gain_db": -14.0,
+   "trim": [
+    3.6,
+    5.800000000000001
+   ],
+   "fade_out": 0.15
   },
   {
    "src": "audio/sfx_src/whoosh_wind.mp3",
@@ -9946,18 +9957,24 @@
    ]
   },
   {
-   "src": "@sfx/beep_reverse",
+   "src": "audio/sfx_src/rueckfahrpiepen.mp3",
    "start": 17.1667,
-   "gain_db": -14
+   "gain_db": -12.0,
+   "trim": [
+    0.0,
+    0.8
+   ],
+   "fade_out": 0.15
   },
   {
-   "src": "audio/sfx_src/buzzer_raab.mp3",
+   "src": "audio/sfx_src/wrong2.mp3",
    "start": 18.2667,
-   "gain_db": -10.0,
+   "gain_db": -13.0,
    "trim": [
-    0.04,
-    60.0
-   ]
+    0.07,
+    1.1
+   ],
+   "fade_out": 0.08
   },
   {
    "src": "audio/sfx_src/pop.mp3",
@@ -9969,9 +9986,14 @@
    ]
   },
   {
-   "src": "@sfx/engine_pass",
+   "src": "audio/sfx_src/reifen_quietschen.mp3",
    "start": 19.8,
-   "gain_db": -10
+   "gain_db": -8.0,
+   "trim": [
+    0.0,
+    1.6
+   ],
+   "fade_out": 0.2
   },
   {
    "src": "audio/sfx_src/whoosh_wind.mp3",
@@ -10093,9 +10115,14 @@
    ]
   },
   {
-   "src": "@sfx/ev_hum",
+   "src": "audio/sfx_src/ecar_rpm.wav",
    "start": 32.8667,
-   "gain_db": -15
+   "gain_db": -17.0,
+   "trim": [
+    3.6,
+    5.800000000000001
+   ],
+   "fade_out": 0.15
   },
   {
    "src": "audio/sfx_src/whoosh_wind.mp3",
@@ -10157,13 +10184,14 @@
    "gain_db": -8.0
   },
   {
-   "src": "audio/sfx_src/buzzer_raab.mp3",
+   "src": "audio/sfx_src/wrong2.mp3",
    "start": 39.2,
-   "gain_db": -9.0,
+   "gain_db": -12.0,
    "trim": [
-    0.04,
-    60.0
-   ]
+    0.07,
+    1.1
+   ],
+   "fade_out": 0.08
   },
   {
    "src": "audio/sfx_src/pop.mp3",
@@ -10225,6 +10253,15 @@
    ]
   },
   {
+   "src": "audio/sfx_src/lion.mp3",
+   "start": 45.3,
+   "gain_db": -7.0,
+   "trim": [
+    0.0,
+    1.95
+   ]
+  },
+  {
    "src": "audio/sfx_src/whoosh_wind.mp3",
    "start": 46.2,
    "gain_db": -7.0,
@@ -10248,13 +10285,14 @@
    "gain_db": -9
   },
   {
-   "src": "audio/sfx_src/buzzer_raab.mp3",
+   "src": "audio/sfx_src/wrong2.mp3",
    "start": 50.0333,
-   "gain_db": -8.0,
+   "gain_db": -11.0,
    "trim": [
-    0.04,
-    60.0
-   ]
+    0.07,
+    1.1
+   ],
+   "fade_out": 0.08
   },
   {
    "src": "audio/sfx_src/pop.mp3",
@@ -10321,9 +10359,14 @@
    ]
   },
   {
-   "src": "@sfx/ev_hum",
+   "src": "audio/sfx_src/ecar_rpm.wav",
    "start": 60.3333,
-   "gain_db": -10
+   "gain_db": -12.0,
+   "trim": [
+    3.6,
+    5.800000000000001
+   ],
+   "fade_out": 0.15
   },
   {
    "src": "audio/sfx_src/vine_boom.mp3",
