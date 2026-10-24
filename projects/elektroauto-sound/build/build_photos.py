@@ -34,6 +34,9 @@ PHOTOS = {
     "roll_safe": ("roll_safe.jpg", None, "cutout", 1000, MEME, "Roll-Safe-Meme (Finger an der Schläfe)"),
     "geldmann2": ("geldmann2.jpg", (0, 255, 880, 1184), "cutout", 1100, MEME, "älterer Mann mit Dollarscheinen"),
     "vw": ("vw_id_polo.png", None, "alpha", 940, MEME + " (VW press/configurator image)", "VW ID. Polo, freigestellt geliefert"),
+    "hans_zimmer": ("hans_zimmer.jpg", None, "cutout", 1100, MEME, "Hans Zimmer im Bademantel mit Oscar-Figur"),
+    "rakete": ("rakete_selbstbau.jpg", (0, 30, 335, 597), "card", 900, MEME, "selbstgebaute Rakete (Meme), als Fotokarte"),
+    "bobbycar_mann": ("bobbycar_mann.jpg", None, "cutout", 1100, MEME, "Mann auf Bobbycar"),
     "tars": ("tars.png", None, "white", 1100, MEME, "TARS (Interstellar) aus Lego"),
     "feiger_loewe": ("feiger_loewe.jpg", None, "cutout", 1100, MEME, "Feiger Löwe (Zauberer von Oz)"),
 }

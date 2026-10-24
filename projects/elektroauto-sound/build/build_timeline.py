@@ -189,7 +189,6 @@ SAMPLES = {
     "swoosh": ("whoosh_wind.mp3", 0.07, -0.12, 5.0),
     "swoosh_down": ("whoosh_wind.mp3", 0.07, -0.12, 5.0),
     "pop": ("pop.mp3", 0.035, 0.0, 6.0),
-    "buzzer": ("buzzer_raab.mp3", 0.04, 0.0, 4.0),
     "boing": ("boing.mp3", 0.25, 0.0, 5.0),
 }
 
@@ -198,12 +197,10 @@ _buzz = []
 
 
 def sfx(name, t, gain):
-    if name == "buzzer":           # alternate the two "wrong" sounds
-        _buzz.append(t)
-        if len(_buzz) % 2 == 0:
-            AUDIO.append({"src": SFX_DIR + "wrong2.mp3", "start": snap(t), "gain_db": gain + 1.0,
-                          "trim": [0.07, 1.1], "fade_out": 0.08})
-            return
+    if name == "buzzer":           # the user's "wrong" sound (replaces the Schlag-den-Raab buzzer)
+        AUDIO.append({"src": SFX_DIR + "wrong2.mp3", "start": snap(t), "gain_db": gain + 1.0,
+                      "trim": [0.07, 1.1], "fade_out": 0.08})
+        return
     if name in SAMPLES:
         f, lead, off, dg, *ln = SAMPLES[name]
         item = {"src": SFX_DIR + f, "start": snap(max(t + off, 0)), "gain_db": gain + dg,
@@ -225,13 +222,9 @@ def scene_hook():
     t_end = W("Wäre")
     t_n, t_l = W("nicht"), W("leise")
     piv = (540, 1350)
-    car = img("photo_car", 0, t_end, [{"t": 0, "x": piv[0], "y": piv[1], "scale": 0.95}])
-    rear = (413, 247)              # rear bumper relative to the car centre (design px at scale 0.95)
-    s2 = 1.7
-    keys = punch(t_n, piv, 1.0, 1.2) + [
-        {"t": snap(t_l - FR), "x": piv[0], "y": piv[1], "scale": 1.2},
-        {"t": snap(t_l + 3 * FR), "x": round(700 - s2 * rear[0]), "y": round(1420 - s2 * rear[1]),
-         "scale": s2, "ease": "out3"}]
+    car = img("photo_car", 0, t_end, [{"t": 0, "x": piv[0], "y": piv[1], "scale": 0.85}])
+    # two punch zooms on the same centre, so the car never slides sideways
+    keys = punch(t_n, piv, 1.0, 1.15) + punch(t_l, piv, 1.15, 1.25)
     cam = camera(0, t_end, [car], keys, pivot=piv)
     sfx("ev_hum", 0.0, -14)
     sfx("impact_low", t_n, -4)
@@ -451,21 +444,17 @@ def scene_bobbycar():
     je schneller du warst.'"""
     t0, t_end = W("also", 1), W("Wie")
     t_bc, t_br, t_sch = W("Bobbycar"), W("Brrrmmm"), W("schneller")
-    bx, by = 540, 1480
-    rock = shake(t_br, t_end, bx, by, 6, every=2)
-    car = img("bobbycar", t0, t_end, pop_keys(t0, bx, by, 0.95) + rock)
-    kid = img("child", t0, t_end, pop_keys(snap(t0 + 3 * FR), 470, 1230, 0.55) +
-              shake(t_br, t_end, 470, 1230, 6, every=2))
+    bx, by = 540, 1380
+    man = img("photo_bobbycar_mann", t0, t_end, pop_keys(t0, bx, by, 0.72) + shake(t_br, t_end, bx, by, 6, every=2))
     bubble = img("bubble", t_br - FR, t_end, pop_keys(t_br, 560, 560, 0.7) +
                  [{"t": snap(t_br + 7 * FR), "scale": 0.7}, {"t": t_end, "scale": 1.0}])
-    puff = pop("dashing-away", t_sch, t_end, 1000, 1400, 0.55, out=False)
     sfx("swoosh", t0, -12)
     sfx("pop", t0, -11)
     sfx("pop", t_bc, -12)
     sfx("boing", t_br, -10)
     sfx("ev_hum", t_br, -15)
     sfx("swoosh", t_sch, -13)
-    return [camera(t0, t_end, [car, kid, bubble, puff], [{"t": t0, "x": 540, "y": 1300}] +
+    return [camera(t0, t_end, [man, bubble], [{"t": t0, "x": 540, "y": 1300}] +
                    punch(t_bc, (540, 1300), 1.0, 1.12), pivot=(540, 1300))]
 
 
@@ -481,13 +470,16 @@ def scene_rules():
           pop("photo_schuhschnabel", t_v, t_m, 540, 1390, 0.7),
           pop("ban", snap(t_v + 10 * FR), t_m, 540, 1390, 1.05),
           pop("photo_geige", t_m, t_end, 540, 1390, 0.8, out=False),
-          pop("ban", snap(t_m + 6 * FR), t_end, 540, 1390, 1.1, out=False)]
+          pop("ban", snap(t_m + 10 * FR), t_end, 540, 1390, 1.1, out=False)]
     for t in (t_h, t_a, t_k, t_v, t_m):
         sfx("pop", t, -11)
     sfx("swoosh", t0, -12)
     AUDIO.append({"src": SFX_DIR + "vogel.mp3", "start": t_v, "gain_db": -8.0})
     sfx("buzzer", snap(t_v + 10 * FR), -13)
-    sfx("buzzer", snap(t_m + 6 * FR), -13)
+    # a short burst of the "Lärm" song from the radio on "Musik", cut by the buzzer
+    AUDIO.append({"src": SFX_DIR + "radio_laerm.mp3", "start": t_m, "gain_db": -15.0,
+                  "trim": [26.0, 26.36], "fade_out": 0.06})
+    sfx("buzzer", snap(t_m + 10 * FR), -13)
     return [camera(t0, t_end, ch, push_in(t0)), red_flash(t_n), label("[Q1]", t_n, t_end)]
 
 
@@ -497,8 +489,8 @@ def scene_zimmer():
     t0, t_end = W("BMW"), W("Bei", 2)
     t_hz, t_mu, t_i, t_kg = W("Hans"), W("Musik", 2), W("Interstellar"), W("König")
     ch = [pop("photo_car", t0, t_hz, 540, 1420, 0.85),
-          pop("man-in-tuxedo", t_hz, t_i, 540, 1380, 0.85),
-          pop("photo_tars", t_i, t_kg, 540, 1400, 0.5),
+          pop("photo_hans_zimmer", t_hz, t_i, 540, 1420, 0.5),
+          pop("photo_rakete", t_i, t_kg, 540, 1420, 0.75),
           pop("photo_feiger_loewe", t_kg, t_end, 540, 1400, 0.75, out=False)]
     cam = camera(t0, t_end, ch, push_in(t0))
     sfx("swoosh", t0, -12)
@@ -597,6 +589,18 @@ def captions():
     return [w for w in words if w["end"] > w["start"]]
 
 
+def thin_pops(audio):
+    """keep only every second pop sound (in time order) - pops on every event are too much."""
+    out, n = [], 0
+    for a in sorted(audio, key=lambda a: a["start"]):
+        if a["src"].endswith("pop.mp3"):
+            n += 1
+            if n % 2 == 0:
+                continue
+        out.append(a)
+    return out
+
+
 def build():
     cap_style = dict(STYLE["caption"])
     layers = [{"id": "bg_stripes", "type": "stripes_bg", **STYLE["stripes_bg"]}]
@@ -611,8 +615,7 @@ def build():
         "assets": manifest,
         "layers": layers,
         "captions": {"style": cap_style, "words": captions()},
-        "audio": [{"id": "voice", "src": "audio/voice.flac", "start": 0.0, "gain_db": 0.0}] +
-                 sorted(AUDIO, key=lambda a: a["start"]),
+        "audio": [{"id": "voice", "src": "audio/voice.flac", "start": 0.0, "gain_db": 0.0}] + thin_pops(AUDIO),
         "sources": {
             "Q1": "Verordnung (EU) Nr. 540/2014, Anhang VIII (AVAS)",
             "Q2": "UN-ECE-Regelung Nr. 138 (Mindest-/Höchstpegel, Frequenzverschiebung)",

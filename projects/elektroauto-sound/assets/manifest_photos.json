@@ -83,6 +83,27 @@
   "source": "assets/photos_src/vw_id_polo.png",
   "note": "VW ID. Polo, freigestellt geliefert"
  },
+ "photo_hans_zimmer": {
+  "path": "assets/png/photo_hans_zimmer.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/hans_zimmer.jpg",
+  "note": "Hans Zimmer im Bademantel mit Oscar-Figur"
+ },
+ "photo_rakete": {
+  "path": "assets/png/photo_rakete.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/rakete_selbstbau.jpg",
+  "note": "selbstgebaute Rakete (Meme), als Fotokarte"
+ },
+ "photo_bobbycar_mann": {
+  "path": "assets/png/photo_bobbycar_mann.png",
+  "design_scale": 1.0,
+  "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+  "source": "assets/photos_src/bobbycar_mann.jpg",
+  "note": "Mann auf Bobbycar"
+ },
  "photo_tars": {
   "path": "assets/png/photo_tars.png",
   "design_scale": 1.0,

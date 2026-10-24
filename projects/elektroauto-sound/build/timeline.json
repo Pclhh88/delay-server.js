@@ -395,6 +395,27 @@
    "source": "assets/photos_src/vw_id_polo.png",
    "note": "VW ID. Polo, freigestellt geliefert"
   },
+  "photo_hans_zimmer": {
+   "path": "assets/png/photo_hans_zimmer.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+   "source": "assets/photos_src/hans_zimmer.jpg",
+   "note": "Hans Zimmer im Bademantel mit Oscar-Figur"
+  },
+  "photo_rakete": {
+   "path": "assets/png/photo_rakete.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+   "source": "assets/photos_src/rakete_selbstbau.jpg",
+   "note": "selbstgebaute Rakete (Meme), als Fotokarte"
+  },
+  "photo_bobbycar_mann": {
+   "path": "assets/png/photo_bobbycar_mann.png",
+   "design_scale": 1.0,
+   "license": "unknown (internet meme/photo supplied by the user) - clear rights before publishing",
+   "source": "assets/photos_src/bobbycar_mann.jpg",
+   "note": "Mann auf Bobbycar"
+  },
   "photo_tars": {
    "path": "assets/png/photo_tars.png",
    "design_scale": 1.0,
@@ -984,20 +1005,19 @@
      "t": 1.1667,
      "x": 540,
      "y": 1350,
-     "scale": 1.2
+     "scale": 1.15
     },
     {
      "t": 1.2333,
      "x": 540,
      "y": 1350,
-     "scale": 1.2
+     "scale": 1.15
     },
     {
-     "t": 1.3667,
-     "x": -2,
-     "y": 1000,
-     "scale": 1.7,
-     "ease": "out3"
+     "t": 1.3333,
+     "x": 540,
+     "y": 1350,
+     "scale": 1.25
     }
    ],
    "children": [
@@ -1012,7 +1032,7 @@
        "t": 0,
        "x": 540,
        "y": 1350,
-       "scale": 0.95
+       "scale": 0.85
       }
      ]
     }
@@ -4084,416 +4104,209 @@
    ],
    "children": [
     {
-     "id": "bobbycar_1",
+     "id": "photo_bobbycar_mann_1",
      "type": "image",
-     "asset": "bobbycar",
+     "asset": "photo_bobbycar_mann",
      "start": 30.5667,
      "end": 34.8,
      "keys": [
       {
        "t": 30.5333,
        "x": 540,
-       "y": 1480,
+       "y": 1380,
        "scale": 0.0
       },
       {
        "t": 30.5667,
        "x": 540,
-       "y": 1480,
-       "scale": 0.1425
+       "y": 1380,
+       "scale": 0.108
       },
       {
        "t": 30.6,
        "x": 540,
-       "y": 1480,
-       "scale": 0.4275
+       "y": 1380,
+       "scale": 0.324
       },
       {
        "t": 30.6333,
        "x": 540,
-       "y": 1480,
-       "scale": 1.178
+       "y": 1380,
+       "scale": 0.8928
       },
       {
        "t": 30.6667,
        "x": 540,
-       "y": 1480,
-       "scale": 1.3015
+       "y": 1380,
+       "scale": 0.9864
       },
       {
        "t": 30.7,
        "x": 540,
-       "y": 1480,
-       "scale": 1.216
+       "y": 1380,
+       "scale": 0.9216
       },
       {
        "t": 30.7333,
        "x": 540,
-       "y": 1480,
-       "scale": 1.0925
+       "y": 1380,
+       "scale": 0.828
       },
       {
        "t": 30.7667,
        "x": 540,
-       "y": 1480,
-       "scale": 0.95
+       "y": 1380,
+       "scale": 0.72
       },
       {
        "t": 32.8667,
        "x": 534,
-       "y": 1483.0
+       "y": 1383.0
       },
       {
        "t": 32.9333,
        "x": 546,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 33.0,
        "x": 534,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 33.0667,
        "x": 546,
-       "y": 1483.0
+       "y": 1383.0
       },
       {
        "t": 33.1333,
        "x": 534,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 33.2,
        "x": 546,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 33.2667,
        "x": 534,
-       "y": 1483.0
+       "y": 1383.0
       },
       {
        "t": 33.3333,
        "x": 546,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 33.4,
        "x": 534,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 33.4667,
        "x": 546,
-       "y": 1483.0
+       "y": 1383.0
       },
       {
        "t": 33.5333,
        "x": 534,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 33.6,
        "x": 546,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 33.6667,
        "x": 534,
-       "y": 1483.0
+       "y": 1383.0
       },
       {
        "t": 33.7333,
        "x": 546,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 33.8,
        "x": 534,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 33.8667,
        "x": 546,
-       "y": 1483.0
+       "y": 1383.0
       },
       {
        "t": 33.9333,
        "x": 534,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 34.0,
        "x": 546,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 34.0667,
        "x": 534,
-       "y": 1483.0
+       "y": 1383.0
       },
       {
        "t": 34.1333,
        "x": 546,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 34.2,
        "x": 534,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 34.2667,
        "x": 546,
-       "y": 1483.0
+       "y": 1383.0
       },
       {
        "t": 34.3333,
        "x": 534,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 34.4,
        "x": 546,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 34.4667,
        "x": 534,
-       "y": 1483.0
+       "y": 1383.0
       },
       {
        "t": 34.5333,
        "x": 546,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 34.6,
        "x": 534,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 34.6667,
        "x": 546,
-       "y": 1483.0
+       "y": 1383.0
       },
       {
        "t": 34.7333,
        "x": 534,
-       "y": 1477.0
+       "y": 1377.0
       },
       {
        "t": 34.8,
        "x": 540,
-       "y": 1480
-      }
-     ]
-    },
-    {
-     "id": "child_1",
-     "type": "image",
-     "asset": "child",
-     "start": 30.5667,
-     "end": 34.8,
-     "keys": [
-      {
-       "t": 30.6333,
-       "x": 470,
-       "y": 1230,
-       "scale": 0.0
-      },
-      {
-       "t": 30.6667,
-       "x": 470,
-       "y": 1230,
-       "scale": 0.0825
-      },
-      {
-       "t": 30.7,
-       "x": 470,
-       "y": 1230,
-       "scale": 0.2475
-      },
-      {
-       "t": 30.7333,
-       "x": 470,
-       "y": 1230,
-       "scale": 0.682
-      },
-      {
-       "t": 30.7667,
-       "x": 470,
-       "y": 1230,
-       "scale": 0.7535
-      },
-      {
-       "t": 30.8,
-       "x": 470,
-       "y": 1230,
-       "scale": 0.704
-      },
-      {
-       "t": 30.8333,
-       "x": 470,
-       "y": 1230,
-       "scale": 0.6325
-      },
-      {
-       "t": 30.8667,
-       "x": 470,
-       "y": 1230,
-       "scale": 0.55
-      },
-      {
-       "t": 32.8667,
-       "x": 464,
-       "y": 1233.0
-      },
-      {
-       "t": 32.9333,
-       "x": 476,
-       "y": 1227.0
-      },
-      {
-       "t": 33.0,
-       "x": 464,
-       "y": 1227.0
-      },
-      {
-       "t": 33.0667,
-       "x": 476,
-       "y": 1233.0
-      },
-      {
-       "t": 33.1333,
-       "x": 464,
-       "y": 1227.0
-      },
-      {
-       "t": 33.2,
-       "x": 476,
-       "y": 1227.0
-      },
-      {
-       "t": 33.2667,
-       "x": 464,
-       "y": 1233.0
-      },
-      {
-       "t": 33.3333,
-       "x": 476,
-       "y": 1227.0
-      },
-      {
-       "t": 33.4,
-       "x": 464,
-       "y": 1227.0
-      },
-      {
-       "t": 33.4667,
-       "x": 476,
-       "y": 1233.0
-      },
-      {
-       "t": 33.5333,
-       "x": 464,
-       "y": 1227.0
-      },
-      {
-       "t": 33.6,
-       "x": 476,
-       "y": 1227.0
-      },
-      {
-       "t": 33.6667,
-       "x": 464,
-       "y": 1233.0
-      },
-      {
-       "t": 33.7333,
-       "x": 476,
-       "y": 1227.0
-      },
-      {
-       "t": 33.8,
-       "x": 464,
-       "y": 1227.0
-      },
-      {
-       "t": 33.8667,
-       "x": 476,
-       "y": 1233.0
-      },
-      {
-       "t": 33.9333,
-       "x": 464,
-       "y": 1227.0
-      },
-      {
-       "t": 34.0,
-       "x": 476,
-       "y": 1227.0
-      },
-      {
-       "t": 34.0667,
-       "x": 464,
-       "y": 1233.0
-      },
-      {
-       "t": 34.1333,
-       "x": 476,
-       "y": 1227.0
-      },
-      {
-       "t": 34.2,
-       "x": 464,
-       "y": 1227.0
-      },
-      {
-       "t": 34.2667,
-       "x": 476,
-       "y": 1233.0
-      },
-      {
-       "t": 34.3333,
-       "x": 464,
-       "y": 1227.0
-      },
-      {
-       "t": 34.4,
-       "x": 476,
-       "y": 1227.0
-      },
-      {
-       "t": 34.4667,
-       "x": 464,
-       "y": 1233.0
-      },
-      {
-       "t": 34.5333,
-       "x": 476,
-       "y": 1227.0
-      },
-      {
-       "t": 34.6,
-       "x": 464,
-       "y": 1227.0
-      },
-      {
-       "t": 34.6667,
-       "x": 476,
-       "y": 1233.0
-      },
-      {
-       "t": 34.7333,
-       "x": 464,
-       "y": 1227.0
-      },
-      {
-       "t": 34.8,
-       "x": 470,
-       "y": 1230
+       "y": 1380
       }
      ]
     },
@@ -4559,63 +4372,6 @@
       {
        "t": 34.8,
        "scale": 1.0
-      }
-     ]
-    },
-    {
-     "id": "dashing-away_1",
-     "type": "image",
-     "asset": "dashing-away",
-     "start": 34.0333,
-     "end": 34.8333,
-     "keys": [
-      {
-       "t": 34.0333,
-       "x": 1000,
-       "y": 1400,
-       "scale": 0.0
-      },
-      {
-       "t": 34.0667,
-       "x": 1000,
-       "y": 1400,
-       "scale": 0.0825
-      },
-      {
-       "t": 34.1,
-       "x": 1000,
-       "y": 1400,
-       "scale": 0.2475
-      },
-      {
-       "t": 34.1333,
-       "x": 1000,
-       "y": 1400,
-       "scale": 0.682
-      },
-      {
-       "t": 34.1667,
-       "x": 1000,
-       "y": 1400,
-       "scale": 0.7535
-      },
-      {
-       "t": 34.2,
-       "x": 1000,
-       "y": 1400,
-       "scale": 0.704
-      },
-      {
-       "t": 34.2333,
-       "x": 1000,
-       "y": 1400,
-       "scale": 0.6325
-      },
-      {
-       "t": 34.2667,
-       "x": 1000,
-       "y": 1400,
-       "scale": 0.55
       }
      ]
     }
@@ -5080,53 +4836,53 @@
      "id": "ban_2",
      "type": "image",
      "asset": "ban",
-     "start": 40.1,
+     "start": 40.2333,
      "end": 40.4667,
      "keys": [
       {
-       "t": 40.1,
+       "t": 40.2333,
        "x": 540,
        "y": 1390,
        "scale": 0.0
       },
       {
-       "t": 40.1333,
+       "t": 40.2667,
        "x": 540,
        "y": 1390,
        "scale": 0.165
       },
       {
-       "t": 40.1667,
+       "t": 40.3,
        "x": 540,
        "y": 1390,
        "scale": 0.495
       },
       {
-       "t": 40.2,
+       "t": 40.3333,
        "x": 540,
        "y": 1390,
        "scale": 1.364
       },
       {
-       "t": 40.2333,
+       "t": 40.3667,
        "x": 540,
        "y": 1390,
        "scale": 1.507
       },
       {
-       "t": 40.2667,
+       "t": 40.4,
        "x": 540,
        "y": 1390,
        "scale": 1.408
       },
       {
-       "t": 40.3,
+       "t": 40.4333,
        "x": 540,
        "y": 1390,
        "scale": 1.265
       },
       {
-       "t": 40.3333,
+       "t": 40.4667,
        "x": 540,
        "y": 1390,
        "scale": 1.1
@@ -5345,151 +5101,151 @@
      ]
     },
     {
-     "id": "man-in-tuxedo_1",
+     "id": "photo_hans_zimmer_1",
      "type": "image",
-     "asset": "man-in-tuxedo",
+     "asset": "photo_hans_zimmer",
      "start": 41.9,
      "end": 44.4667,
      "keys": [
       {
        "t": 41.9,
        "x": 540,
-       "y": 1380,
+       "y": 1420,
        "scale": 0.0
       },
       {
        "t": 41.9333,
        "x": 540,
-       "y": 1380,
-       "scale": 0.1275
+       "y": 1420,
+       "scale": 0.075
       },
       {
        "t": 41.9667,
        "x": 540,
-       "y": 1380,
-       "scale": 0.3825
+       "y": 1420,
+       "scale": 0.225
       },
       {
        "t": 42.0,
        "x": 540,
-       "y": 1380,
-       "scale": 1.054
+       "y": 1420,
+       "scale": 0.62
       },
       {
        "t": 42.0333,
        "x": 540,
-       "y": 1380,
-       "scale": 1.1645
+       "y": 1420,
+       "scale": 0.685
       },
       {
        "t": 42.0667,
        "x": 540,
-       "y": 1380,
-       "scale": 1.088
+       "y": 1420,
+       "scale": 0.64
       },
       {
        "t": 42.1,
        "x": 540,
-       "y": 1380,
-       "scale": 0.9775
+       "y": 1420,
+       "scale": 0.575
       },
       {
        "t": 42.1333,
        "x": 540,
-       "y": 1380,
-       "scale": 0.85
+       "y": 1420,
+       "scale": 0.5
       },
       {
        "t": 44.3333,
        "x": 540,
-       "y": 1380,
-       "scale": 0.85
+       "y": 1420,
+       "scale": 0.5
       },
       {
        "t": 44.3667,
        "x": 540,
-       "y": 1380,
-       "scale": 0.9520000000000001
+       "y": 1420,
+       "scale": 0.56
       },
       {
        "t": 44.4333,
        "x": 540,
-       "y": 1380,
+       "y": 1420,
        "scale": 0.0
       }
      ]
     },
     {
-     "id": "photo_tars_1",
+     "id": "photo_rakete_1",
      "type": "image",
-     "asset": "photo_tars",
+     "asset": "photo_rakete",
      "start": 44.4,
      "end": 45.2667,
      "keys": [
       {
        "t": 44.4,
        "x": 540,
-       "y": 1400,
+       "y": 1420,
        "scale": 0.0
       },
       {
        "t": 44.4333,
        "x": 540,
-       "y": 1400,
-       "scale": 0.075
+       "y": 1420,
+       "scale": 0.1125
       },
       {
        "t": 44.4667,
        "x": 540,
-       "y": 1400,
-       "scale": 0.225
+       "y": 1420,
+       "scale": 0.3375
       },
       {
        "t": 44.5,
        "x": 540,
-       "y": 1400,
-       "scale": 0.62
+       "y": 1420,
+       "scale": 0.93
       },
       {
        "t": 44.5333,
        "x": 540,
-       "y": 1400,
-       "scale": 0.685
+       "y": 1420,
+       "scale": 1.0275
       },
       {
        "t": 44.5667,
        "x": 540,
-       "y": 1400,
-       "scale": 0.64
+       "y": 1420,
+       "scale": 0.96
       },
       {
        "t": 44.6,
        "x": 540,
-       "y": 1400,
-       "scale": 0.575
+       "y": 1420,
+       "scale": 0.8625
       },
       {
        "t": 44.6333,
        "x": 540,
-       "y": 1400,
-       "scale": 0.5
+       "y": 1420,
+       "scale": 0.75
       },
       {
        "t": 45.1333,
        "x": 540,
-       "y": 1400,
-       "scale": 0.5
+       "y": 1420,
+       "scale": 0.75
       },
       {
        "t": 45.1667,
        "x": 540,
-       "y": 1400,
-       "scale": 0.56
+       "y": 1420,
+       "scale": 0.8400000000000001
       },
       {
        "t": 45.2333,
        "x": 540,
-       "y": 1400,
+       "y": 1420,
        "scale": 0.0
       }
      ]
@@ -6375,7 +6131,7 @@
      ]
     },
     {
-     "id": "dashing-away_2",
+     "id": "dashing-away_1",
      "type": "image",
      "asset": "dashing-away",
      "start": 48.3,
@@ -6450,7 +6206,7 @@
      ]
     },
     {
-     "id": "dashing-away_3",
+     "id": "dashing-away_2",
      "type": "image",
      "asset": "dashing-away",
      "start": 48.6333,
@@ -6525,7 +6281,7 @@
      ]
     },
     {
-     "id": "dashing-away_4",
+     "id": "dashing-away_3",
      "type": "image",
      "asset": "dashing-away",
      "start": 49.0,
@@ -6600,7 +6356,7 @@
      ]
     },
     {
-     "id": "dashing-away_5",
+     "id": "dashing-away_4",
      "type": "image",
      "asset": "dashing-away",
      "start": 49.3333,
@@ -6675,7 +6431,7 @@
      ]
     },
     {
-     "id": "dashing-away_6",
+     "id": "dashing-away_5",
      "type": "image",
      "asset": "dashing-away",
      "start": 49.7,
@@ -6750,7 +6506,7 @@
      ]
     },
     {
-     "id": "dashing-away_7",
+     "id": "dashing-away_6",
      "type": "image",
      "asset": "dashing-away",
      "start": 50.0333,
@@ -6825,7 +6581,7 @@
      ]
     },
     {
-     "id": "dashing-away_8",
+     "id": "dashing-away_7",
      "type": "image",
      "asset": "dashing-away",
      "start": 50.4,
@@ -6900,7 +6656,7 @@
      ]
     },
     {
-     "id": "dashing-away_9",
+     "id": "dashing-away_8",
      "type": "image",
      "asset": "dashing-away",
      "start": 50.7333,
@@ -6975,7 +6731,7 @@
      ]
     },
     {
-     "id": "dashing-away_10",
+     "id": "dashing-away_9",
      "type": "image",
      "asset": "dashing-away",
      "start": 51.1,
@@ -7050,7 +6806,7 @@
      ]
     },
     {
-     "id": "dashing-away_11",
+     "id": "dashing-away_10",
      "type": "image",
      "asset": "dashing-away",
      "start": 51.4333,
@@ -9345,13 +9101,14 @@
    ]
   },
   {
-   "src": "audio/sfx_src/buzzer_raab.mp3",
+   "src": "audio/sfx_src/wrong2.mp3",
    "start": 1.1,
-   "gain_db": -9.0,
+   "gain_db": -12.0,
    "trim": [
-    0.04,
-    60.0
-   ]
+    0.07,
+    1.1
+   ],
+   "fade_out": 0.08
   },
   {
    "src": "audio/sfx_src/whoosh_wind.mp3",
@@ -9382,25 +9139,7 @@
   },
   {
    "src": "audio/sfx_src/pop.mp3",
-   "start": 3.0333,
-   "gain_db": -5.0,
-   "trim": [
-    0.035,
-    60.0
-   ]
-  },
-  {
-   "src": "audio/sfx_src/pop.mp3",
    "start": 3.9667,
-   "gain_db": -5.0,
-   "trim": [
-    0.035,
-    60.0
-   ]
-  },
-  {
-   "src": "audio/sfx_src/pop.mp3",
-   "start": 4.4667,
    "gain_db": -5.0,
    "trim": [
     0.035,
@@ -9479,25 +9218,7 @@
   },
   {
    "src": "audio/sfx_src/pop.mp3",
-   "start": 10.8333,
-   "gain_db": -5.0,
-   "trim": [
-    0.035,
-    60.0
-   ]
-  },
-  {
-   "src": "audio/sfx_src/pop.mp3",
    "start": 12.6667,
-   "gain_db": -5.0,
-   "trim": [
-    0.035,
-    60.0
-   ]
-  },
-  {
-   "src": "audio/sfx_src/pop.mp3",
-   "start": 13.4667,
    "gain_db": -5.0,
    "trim": [
     0.035,
@@ -9542,15 +9263,6 @@
    ]
   },
   {
-   "src": "audio/sfx_src/pop.mp3",
-   "start": 14.7667,
-   "gain_db": -6.0,
-   "trim": [
-    0.035,
-    60.0
-   ]
-  },
-  {
    "src": "@sfx/chirp_up",
    "start": 15.3333,
    "gain_db": -14
@@ -9583,15 +9295,6 @@
     1.1
    ],
    "fade_out": 0.08
-  },
-  {
-   "src": "audio/sfx_src/pop.mp3",
-   "start": 19.4,
-   "gain_db": -4.0,
-   "trim": [
-    0.035,
-    60.0
-   ]
   },
   {
    "src": "audio/sfx_src/reifen_quietschen.mp3",
@@ -9641,13 +9344,14 @@
    ]
   },
   {
-   "src": "audio/sfx_src/buzzer_raab.mp3",
+   "src": "audio/sfx_src/wrong2.mp3",
    "start": 25.9333,
-   "gain_db": -8.0,
+   "gain_db": -11.0,
    "trim": [
-    0.04,
-    60.0
-   ]
+    0.07,
+    1.1
+   ],
+   "fade_out": 0.08
   },
   {
    "src": "audio/sfx_src/whoosh_wind.mp3",
@@ -9655,15 +9359,6 @@
    "gain_db": -7.0,
    "trim": [
     0.07,
-    60.0
-   ]
-  },
-  {
-   "src": "audio/sfx_src/pop.mp3",
-   "start": 26.4667,
-   "gain_db": -6.0,
-   "trim": [
-    0.035,
     60.0
    ]
   },
@@ -9692,15 +9387,6 @@
    "gain_db": -7.0,
    "trim": [
     0.07,
-    60.0
-   ]
-  },
-  {
-   "src": "audio/sfx_src/pop.mp3",
-   "start": 30.5667,
-   "gain_db": -5.0,
-   "trim": [
-    0.035,
     60.0
    ]
   },
@@ -9752,25 +9438,7 @@
   },
   {
    "src": "audio/sfx_src/pop.mp3",
-   "start": 35.9333,
-   "gain_db": -5.0,
-   "trim": [
-    0.035,
-    60.0
-   ]
-  },
-  {
-   "src": "audio/sfx_src/pop.mp3",
    "start": 37.9333,
-   "gain_db": -5.0,
-   "trim": [
-    0.035,
-    60.0
-   ]
-  },
-  {
-   "src": "audio/sfx_src/pop.mp3",
-   "start": 38.1667,
    "gain_db": -5.0,
    "trim": [
     0.035,
@@ -9802,22 +9470,24 @@
    "fade_out": 0.08
   },
   {
-   "src": "audio/sfx_src/pop.mp3",
+   "src": "audio/sfx_src/radio_laerm.mp3",
    "start": 39.9333,
-   "gain_db": -5.0,
+   "gain_db": -15.0,
    "trim": [
-    0.035,
-    60.0
-   ]
+    26.0,
+    26.36
+   ],
+   "fade_out": 0.06
   },
   {
-   "src": "audio/sfx_src/buzzer_raab.mp3",
-   "start": 40.1333,
-   "gain_db": -9.0,
+   "src": "audio/sfx_src/wrong2.mp3",
+   "start": 40.2667,
+   "gain_db": -12.0,
    "trim": [
-    0.04,
-    60.0
-   ]
+    0.07,
+    1.1
+   ],
+   "fade_out": 0.08
   },
   {
    "src": "audio/sfx_src/whoosh_wind.mp3",
@@ -9845,15 +9515,6 @@
   {
    "src": "audio/sfx_src/pop.mp3",
    "start": 44.4333,
-   "gain_db": -5.0,
-   "trim": [
-    0.035,
-    60.0
-   ]
-  },
-  {
-   "src": "audio/sfx_src/pop.mp3",
-   "start": 45.2333,
    "gain_db": -5.0,
    "trim": [
     0.035,
@@ -9903,15 +9564,6 @@
    "fade_out": 0.08
   },
   {
-   "src": "audio/sfx_src/pop.mp3",
-   "start": 50.2667,
-   "gain_db": -5.0,
-   "trim": [
-    0.035,
-    60.0
-   ]
-  },
-  {
    "src": "@sfx/drone_low",
    "start": 52.0333,
    "gain_db": -13
@@ -9928,15 +9580,6 @@
   {
    "src": "audio/sfx_src/pop.mp3",
    "start": 52.8333,
-   "gain_db": -5.0,
-   "trim": [
-    0.035,
-    60.0
-   ]
-  },
-  {
-   "src": "audio/sfx_src/pop.mp3",
-   "start": 53.9333,
    "gain_db": -5.0,
    "trim": [
     0.035,
@@ -9966,15 +9609,6 @@
     2.0833000000000013
    ],
    "fade_out": 0.15
-  },
-  {
-   "src": "audio/sfx_src/pop.mp3",
-   "start": 58.8333,
-   "gain_db": -6.0,
-   "trim": [
-    0.035,
-    60.0
-   ]
   },
   {
    "src": "audio/sfx_src/ecar_rpm.wav",
