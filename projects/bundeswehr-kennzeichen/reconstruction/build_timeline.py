@@ -83,8 +83,9 @@ def credit(text, start, end, keys=None):
                               "rot": 90, "opacity": STYLE["credit"]["opacity"]}]}
 
 
-def label(text, start, end, appear_frame=None):
-    """Source marker like [Q1] top-left; slides in from the top."""
+def label(text, start, end, appear_frame=None, appear=None, exit=None):
+    """Source marker like [Q1] top-left; slides in from the top.
+    appear/exit = (first_frame, last_frame, distance_ref_px) for measured slides."""
     st = STYLE["label"]
     x, y = st["x"], st["y"]
     keys = [{"t": start, "x": x, "y": y, "opacity": st["opacity"]}]
@@ -92,6 +93,12 @@ def label(text, start, end, appear_frame=None):
         a = F(appear_frame)
         keys = [{"t": a, "x": x, "y": y - st["slide"], "opacity": st["opacity"]},
                 {"t": a + st["slide_dur"], "x": x, "y": y, "opacity": st["opacity"], "ease": "out3"}]
+    if appear is not None:
+        keys = [{"t": F(appear[0]), "x": x, "y": y - appear[2] * D, "opacity": st["opacity"]},
+                {"t": F(appear[1]), "x": x, "y": y, "opacity": st["opacity"], "ease": "out"}]
+    if exit is not None:
+        keys += [{"t": F(exit[0]), "x": x, "y": y},
+                 {"t": F(exit[1]), "x": x, "y": y - exit[2] * D, "ease": "in"}]
     return {"id": f"label_{text}_{start}", "type": "text", "text": text, "start": start, "end": end,
             "size": st["size"], "style": {"font": st["font"], "fill": st["fill"]},
             "keys": keys}
@@ -401,18 +408,19 @@ def scene_plates():
         {"id": "plate_x", "type": "image", "asset": "plate_x", "start": F(506), "end": F(545), "keys": x_keys},
         {"id": "drake_nato", "type": "image", "asset": "drake_nato", "start": F(522), "end": F(545),
          "keys": nato_keys},
-        {"id": "plate_tuev", "type": "image", "asset": "plate_tuev", "start": F(543), "keys": t_keys},
-        {"id": "arrow_tuev", "type": "arrow", "start": F(552), "keys": arrow_keys([(552, *a3)])},
+        {"id": "plate_tuev", "type": "image", "asset": "plate_tuev", "start": F(543), "end": F(600), "keys": t_keys},
+        {"id": "arrow_tuev", "type": "arrow", "start": F(552), "end": F(601),
+         "keys": arrow_keys([(552, *a3), (599, *a3), (600, *along(a3[:2], a3[2], 234), a3[2])])},
         red_flash(FLASH1, "red_flash_keine"),
         red_flash(FLASH2, "red_flash_nicht_sehen"),
         credit("QUELLE: WIKI COMMONS: THORSTENS - CC3", F(355), F(407)),
         credit("QUELLE: WIKI COMMONS: THORSTENS - CC3, BUNDESWEHR - GEMEINFREI", F(407), F(458)),
         credit("QUELLE: WIKI COMMONS: THORSTENS - CC3", F(458), F(521)),
         credit("QUELLE: WIKI COMMONS: THORSTENS - CC3, SANGJINHWA - GEMEINFREI", F(521), F(544)),
-        credit("QUELLE: WIKI COMMONS: THORSTENS - CC3", F(544), F(700)),
+        credit("QUELLE: WIKI COMMONS: THORSTENS - CC3", F(544), F(602)),
         label("[Q3]", F(355), F(506), appear_frame=355),
         label("[Q4]", F(506), F(551), appear_frame=506),
-        label("[Q5]", F(551), F(700), appear_frame=551),
+        label("[Q5]", F(551), F(643), appear_frame=551),
     ]
 
 
@@ -446,9 +454,13 @@ def wipe_in(frame_start, frame_end, from_x_ref):
 
 
 def build():
+    import timeline_part2 as P2
+    words = P2.fix_part1_words(CAPTIONS["words"]) + P2.caption_words2()
+    cap_style = dict(STYLE["caption"])
+    cap_style["sizes"] = dict(cap_style["sizes"], huge=128)
     tl = {
         "meta": {"title": "Bundeswehr-Kennzeichen (Rekonstruktion)", "fps": FPS, "width": 1080,
-                 "height": 1920, "duration": 20.0, "reference": "references/Bundeswehr-Kennzeichen.mp4"},
+                 "height": 1920, "duration": 40.0, "reference": "references/Bundeswehr-Kennzeichen.mp4"},
         "assets": json.load(open(os.path.join(PROJ, "assets", "manifest.json"), encoding="utf-8")),
         "layers": [
             {"id": "bg_stripes", "type": "stripes_bg", **STYLE["stripes_bg"]},
@@ -458,9 +470,10 @@ def build():
             *scene_world(),
             logo_placeholder(F(92), F(193)),
             *scene_plates(),
+            *P2.layers_part2(),
         ],
-        "captions": {"style": STYLE["caption"], "words": CAPTIONS["words"]},
-        "audio": AUDIO,
+        "captions": {"style": cap_style, "words": words},
+        "audio": AUDIO + P2.AUDIO2,
     }
     out = os.path.join(PROJ, "reconstruction", "timeline.json")
     with open(out, "w", encoding="utf-8") as f:

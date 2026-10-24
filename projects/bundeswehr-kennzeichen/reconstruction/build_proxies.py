@@ -39,9 +39,20 @@ def load_meas():
     return {}
 
 
+def _jsonable(o):
+    if isinstance(o, np.generic):
+        return o.item()
+    if isinstance(o, np.ndarray):
+        return o.tolist()
+    raise TypeError(type(o))
+
+
 def save_meas(m):
-    with open(MEAS_PATH, "w") as f:
-        json.dump(m, f, indent=1)
+    """Atomic write (a crash while serialising must not destroy the file)."""
+    tmp = MEAS_PATH + ".tmp"
+    with open(tmp, "w") as f:
+        json.dump(m, f, indent=1, default=_jsonable)
+    os.replace(tmp, MEAS_PATH)
 
 
 def camera_track(ref, frames, mask_kw=None):
@@ -155,7 +166,7 @@ def overlays(n, red=True):
     img = FRAMES(n)
     m = caption_text_mask(img)
     m[:, 425:452] = 255          # vertical credit
-    m[:70, :125] = 255           # [Qn] label
+    m[:70, 38:88] = 255          # [Qn] label
     if red:
         m |= red_mask(img, 9)
     return m

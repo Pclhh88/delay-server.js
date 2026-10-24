@@ -130,5 +130,145 @@
   "license": "derived_measurement",
   "source": "Lichtkarte aus Differenz Frame 260 vs. 230",
   "replace_with": "prozeduraler Lichtkegel (light_cone) mit diesen Parametern"
+ },
+ "plate_close_tuev": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/plate_close_tuev.png",
+  "source": "Referenzframes 603-607",
+  "replace_with": "Nahaufnahme Kennzeichen mit TÜV-Plakette (Foto)"
+ },
+ "plate_close_seal": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/plate_close_seal.png",
+  "source": "Referenzframes 615-630",
+  "replace_with": "Nahaufnahme Bundeswehr-Kennzeichen mit Siegelplakette (Foto)"
+ },
+ "street_truck1": {
+  "path": "assets/proxies/street_truck1.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 729-749 (gestitcht)",
+  "replace_with": "Freisteller-Foto eines Bundeswehrfahrzeugs (Seitenansicht)"
+ },
+ "street_crane": {
+  "path": "assets/proxies/street_crane.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 751-773 (gestitcht)",
+  "replace_with": "Freisteller-Foto eines Bundeswehrfahrzeugs (Seitenansicht)"
+ },
+ "street_truck3": {
+  "path": "assets/proxies/street_truck3.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 773-793 (gestitcht)",
+  "replace_with": "Freisteller-Foto eines Bundeswehrfahrzeugs (Seitenansicht)"
+ },
+ "street_tank_street": {
+  "path": "assets/proxies/street_tank_street.png",
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 811-876 (gestitcht)",
+  "replace_with": "Freisteller-Foto eines Bundeswehrfahrzeugs (Seitenansicht)"
+ },
+ "villager_idle": {
+  "path": "assets/proxies/villager_idle.png",
+  "design_scale": 0.8780830471433032,
+  "license": "reference_proxy",
+  "source": "Referenzframes [680, 896, 908, 912, 893]",
+  "replace_with": "eigene Voxel-Figur mit rotem Barett (kein Minecraft-Asset)"
+ },
+ "villager_seal": {
+  "path": "assets/proxies/villager_seal.png",
+  "design_scale": 0.8780830471433032,
+  "license": "reference_proxy",
+  "source": "Referenzframes [705, 712, 718]",
+  "replace_with": "eigene Voxel-Figur mit rotem Barett (kein Minecraft-Asset)"
+ },
+ "house_world": {
+  "path": "assets/proxies/house_world.png",
+  "design_scale": 0.8780830471433032,
+  "license": "reference_proxy",
+  "source": "Mosaik Referenzframes 650/660/700/905/885",
+  "replace_with": "eigene Illustration: Haus mit Bundeswehr-Schild, Strasse, Himmel"
+ },
+ "seal_coin": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/seal_coin.png",
+  "source": "Referenzframe 833",
+  "replace_with": "eigene Grafik: graues Dienstsiegel (Bundesadler gemeinfrei)"
+ },
+ "seal_stamp": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/seal_stamp.png",
+  "source": "Referenzframe 845",
+  "replace_with": "eigene Grafik: Stempelabdruck Dienstsiegel"
+ },
+ "sweat_meme": {
+  "path": "assets/proxies/sweat_meme/{i:03d}.png",
+  "frames": 50,
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "source": "Referenzframes 924-973, Freisteller pro Frame, Rottönung herausgerechnet",
+  "replace_with": "eigene Animation: schwitzender Mann wischt sich die Stirn (Cartoon)"
+ },
+ "leo_tank": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/leo_tank.png",
+  "design_scale": 2.25,
+  "source": "Referenzframes 1010-1026",
+  "replace_with": "Foto Leopard 2 (frei lizenziert, z. B. Wikimedia Commons, Sonaz CC3 mit Nennung)"
+ },
+ "leo_world": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/leo_world.png",
+  "design_scale": 2.25,
+  "source": "Referenzframes 1032-1054",
+  "replace_with": "eigene Illustration: Himmel, Hügel, Strasse"
+ },
+ "leo_cannon_hr": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/leo_cannon_hr.png",
+  "design_scale": 0.5232558139534884,
+  "source": "Mosaik Referenzframes 1058-1095",
+  "replace_with": "hochaufgelöstes Panzerfoto"
+ },
+ "ce_mark": {
+  "license": "reference_proxy",
+  "path": "assets/proxies/ce_mark.png",
+  "design_scale": 2.25,
+  "source": "Referenzframe 1080",
+  "replace_with": "CE-Zeichen als Vektorgrafik (gemeinfrei)"
+ },
+ "wasted_text": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/wasted_text.png",
+  "source": "Referenzframe 1114",
+  "replace_with": "eigener Schriftzug im GTA-Stil (freie Schrift, z. B. Pricedown-Alternative)"
+ },
+ "stvo_page": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/stvo_page.png",
+  "source": "Median Referenzframes 1143-1189",
+  "replace_with": "eigener Screenshot von gesetze-im-internet.de (§ 35 StVO, amtliches Werk)"
+ },
+ "stvo_page_marked": {
+  "design_scale": 2.25,
+  "license": "reference_proxy",
+  "path": "assets/proxies/stvo_page_marked.png",
+  "source": "Median Referenzframes 1143-1189",
+  "replace_with": "eigener Screenshot von gesetze-im-internet.de (§ 35 StVO, amtliches Werk)"
+ },
+ "wipe_lr_112_363": {
+  "path": "assets/proxies/wipe_lr_112_363.png",
+  "design_scale": 2.25,
+  "license": "derived_measurement",
+  "source": "lineare Wischmaske"
  }
 }

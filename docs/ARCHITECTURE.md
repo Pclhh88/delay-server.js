@@ -2,7 +2,7 @@
 
 Ziel: ein Produktionssystem für YouTube Shorts im Stil des Referenzvideos
 `references/Bundeswehr-Kennzeichen.mp4`. Zuerst wird das Referenzvideo
-rekonstruiert (aktueller Stand: **0–20 s**), danach wird daraus ein Template
+rekonstruiert (aktueller Stand: **0–40 s**), danach wird daraus ein Template
 abgeleitet (Phase 4) und ein Themen-Workflow gebaut (Phase 5).
 
 ```
@@ -10,7 +10,8 @@ references/                         Referenzvideo(s)
 shortsfactory/                      wiederverwendbarer Code
   render/engine.py                  Timeline-JSON -> Frames -> MP4 (Layer, Gruppen, Kamera, Blend-Modes)
   render/keyframes.py               Keyframe-Interpolation + Easings
-  render/shapes.py                  prozedurale Layer: stripes_bg, radial_bg, solid, arrow, glow, light_cone, polygon, text
+  render/shapes.py                  prozedurale Layer: stripes_bg, radial_bg, solid, arrow, glow, light_cone, polygon, text, grade
+                                    (+ engine: image, sequence = animierte Bildfolge, group mit clip/isolate)
   render/text.py                    Wort-für-Wort-Untertitel + Textlayer (League Spartan, OFL)
   audio/sfx.py                      selbst synthetisierte Soundeffekte (keine Fremd-Samples)
   audio/mix.py                      Audio-Mix aus timeline["audio"]

@@ -176,6 +176,12 @@ def light_cone(r, layer, p, t, M):
     return out
 
 
+def grade(r, layer, p, t, M):
+    """Colour grade of everything below: saturation / value (keyable).
+    Handled in the engine (needs the canvas), see Renderer.render_layer."""
+    return None
+
+
 def text(r, layer, p, t, M):
     return r.text.draw_text_layer(r, layer, p, M)
 
@@ -189,6 +195,7 @@ DRAWERS = {
     "polygon": polygon,
     "light_cone": light_cone,
     "text": text,
+    "grade": grade,
 }
 
 

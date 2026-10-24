@@ -46,12 +46,15 @@ def main():
     ap.add_argument("--start", type=float, default=0.0)
     ap.add_argument("--end", type=float, default=20.0)
     ap.add_argument("--frames", default="")
+    ap.add_argument("--render-start", type=float, default=None,
+                    help="time in the reference at which the render file starts (default: 0 = same timeline)")
     ap.add_argument("--w", type=int, default=480)
     ap.add_argument("--h", type=int, default=854)
     a = ap.parse_args()
     os.makedirs(a.outdir, exist_ok=True)
     R = read_frames(a.ref, a.w, a.h, a.start, a.end)
-    X = read_frames(a.render, a.w, a.h, a.start, a.end)
+    off = 0.0 if a.render_start is None else a.render_start
+    X = read_frames(a.render, a.w, a.h, a.start - off, a.end - off)
     n = min(len(R), len(X))
     n0 = int(round(a.start * 30))
     per = []

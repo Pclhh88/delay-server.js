@@ -141,6 +141,48 @@ def buzzer(dur=0.55):
     return _stereo(_norm(x * _env(len(t), 0.004, None, 0.05), 0.6))
 
 
+def engine_pass(dur=1.0):
+    """Vehicle driving by: low rumble (60-450 Hz noise + 2-stroke-ish pulses), swell."""
+    t = _t(dur)
+    n = _bandpass(_noise(len(t), 11), 50, 450)
+    pulse = 0.5 + 0.5 * np.sin(2 * np.pi * 28 * t)
+    hiss = _bandpass(_noise(len(t), 12), 1500, 6000) * 0.15
+    env = np.sin(np.pi * np.clip(t / dur, 0, 1)) ** 0.8
+    return _stereo(_norm((n * (0.6 + 0.4 * pulse) + hiss) * env, 0.8), width=1.0, seed=11)
+
+
+def chirp_up(dur=0.35):
+    """Rising chirps 1000 -> 2400 Hz (something flies towards the camera)."""
+    t = _t(dur)
+    f = 1000 + 1400 * (t / dur)
+    x = np.sin(2 * np.pi * np.cumsum(f) / SR) * (0.5 + 0.5 * np.sign(np.sin(2 * np.pi * 14 * t)))
+    return _stereo(_norm(x * _env(len(t), 0.005, None, 0.05), 0.6))
+
+
+def drone_low(dur=1.5):
+    """Sustained low tone ~250 Hz with slow wobble (tension / panic)."""
+    t = _t(dur)
+    f = 250 + 6 * np.sin(2 * np.pi * 5 * t)
+    x = np.sin(2 * np.pi * np.cumsum(f) / SR) + 0.3 * np.sin(2 * np.pi * np.cumsum(2 * f) / SR)
+    return _stereo(_norm(x * _env(len(t), 0.03, None, 0.1), 0.7))
+
+
+def boing(dur=0.45):
+    """Cartoon stretch 'boing': vibrato tone gliding up."""
+    t = _t(dur)
+    f = 300 + 500 * (t / dur) + 60 * np.sin(2 * np.pi * 18 * t)
+    x = np.sin(2 * np.pi * np.cumsum(f) / SR) * _env(len(t), 0.003, 0.25, 0.05)
+    return _stereo(_norm(x, 0.7))
+
+
+def wasted(dur=1.6):
+    """GTA-like 'wasted' sting: broadband noise burst + low boom, long tail."""
+    t = _t(dur)
+    burst = _bandpass(_noise(len(t), 13), 300, 9000) * np.exp(-t / 0.18)
+    boom = np.sin(2 * np.pi * np.cumsum(300 - 120 * t / dur) / SR) * np.exp(-t / 0.8)
+    return _stereo(_norm(burst * 0.8 + boom * 0.7, 0.9), width=1.0, seed=13)
+
+
 PRESETS = {
     "impact_low": impact_low,
     "swoosh": swoosh,
@@ -150,6 +192,11 @@ PRESETS = {
     "camera_flash": camera_flash,
     "tinnitus": tinnitus,
     "buzzer": buzzer,
+    "engine_pass": engine_pass,
+    "chirp_up": chirp_up,
+    "drone_low": drone_low,
+    "boing": boing,
+    "wasted": wasted,
 }
 
 

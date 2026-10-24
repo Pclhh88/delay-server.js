@@ -83,7 +83,19 @@ class Renderer:
         self.allow_proxies = True
 
     # ------------------------------------------------------------ assets
-    def asset(self, aid):
+    def asset(self, aid, frame=None):
+        """Image asset; for sequence assets (spec "frames": N, path with {i})
+        `frame` selects the image (cached individually)."""
+        if frame is not None:
+            spec = self.manifest[aid]
+            frame = int(min(max(frame, 0), spec["frames"] - 1))
+            key = f"{aid}#{frame}"
+            if key not in self.assets:
+                if spec.get("license") == "reference_proxy" and not self.allow_proxies:
+                    raise RuntimeError(f"asset {aid} is a reference proxy without publishing rights")
+                path = os.path.join(self.base, spec["path"].format(i=frame))
+                self.assets[key] = Asset(path, spec.get("design_scale", 1.0))
+            return self.assets[key]
         if aid not in self.assets:
             spec = self.manifest[aid]
             if spec.get("license") == "reference_proxy" and not self.allow_proxies:
@@ -160,8 +172,12 @@ class Renderer:
                 for ch in layer["children"]:
                     self.render_layer(canvas, ch, t, M, op)
             return
-        if typ == "image":
-            a = self.asset(layer["asset"])
+        if typ in ("image", "sequence"):
+            if typ == "sequence":
+                fps = layer.get("fps", self.fps)
+                a = self.asset(layer["asset"], (t - layer.get("start", 0.0)) * fps + 1e-3)
+            else:
+                a = self.asset(layer["asset"])
             anc = layer.get("anchor", [0.5, 0.5])
             ds = a.design_scale
             Mlocal = self._local_matrix(layer, p) @ scale(ds, ds) @ translate(-anc[0] * a.w, -anc[1] * a.h)
@@ -190,6 +206,16 @@ class Renderer:
                 col = np.array([r, g, b], np.float32) / 255.0
                 warped[..., :3] = warped[..., :3] * (1 - amt) + col * warped[..., 3:4] * amt
             self._composite(canvas, warped, blend, op)
+            return
+        if typ == "grade":
+            if canvas.shape[2] == 3:
+                sat = p.get("saturation", 1.0)
+                val = p.get("value", 1.0)
+                if sat != 1.0:
+                    gray = canvas @ np.array([0.299, 0.587, 0.114], np.float32)
+                    canvas[:] = gray[..., None] + (canvas - gray[..., None]) * sat
+                if val != 1.0:
+                    canvas *= val
             return
         # procedural layers draw in output space given full matrix
         M = self._design_to_out() @ parent_M
