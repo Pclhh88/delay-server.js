@@ -40,7 +40,7 @@ PHOTOS = {
     "zele": ("zagato_zele.jpg", None, "cutout", 1000, MEME, "Zagato Zele (altes E-Auto)"),
     "mercedes_card": ("mercedes_wallbox.jpg", None, "card", 1000, MEME + " (Mercedes press image)",
                       "Mercedes an der Wallbox, als Fotokarte"),
-    "mercedes": ("mercedes_wallbox.jpg", (100, 160, 1200, 600), "cutout", 1000, MEME + " (Mercedes press image)",
+    "mercedes": ("mercedes_wallbox.jpg", None, "cutout", 1000, MEME + " (Mercedes press image)",
                  "Mercedes, freigestellt"),
     "tars": ("tars.png", None, "white", 1100, MEME, "TARS (Interstellar) aus Lego"),
     "feiger_loewe": ("feiger_loewe.jpg", None, "cutout", 1100, MEME, "Feiger Löwe (Zauberer von Oz)"),

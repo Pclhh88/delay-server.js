@@ -214,6 +214,7 @@ def sfx(name, t, gain):
 
 # ------------------------------------------------------------------ scenes
 CAR_S = 0.9            # ecar 1000 px asset -> 900 design px
+HOOK = (540, 1350, 0.85)   # car pose in the first frame (and the last: the video loops)
 
 
 def scene_hook():
@@ -221,8 +222,8 @@ def scene_hook():
     NICHT and a zoom to the rear bumper (where the tailpipe would be) on 'leise'."""
     t_end = W("Wäre")
     t_n, t_l = W("nicht"), W("leise")
-    piv = (540, 1350)
-    car = img("photo_car", 0, t_end, [{"t": 0, "x": piv[0], "y": piv[1], "scale": 0.85}])
+    piv = HOOK[:2]
+    car = img("photo_car", 0, t_end, [{"t": 0, "x": piv[0], "y": piv[1], "scale": HOOK[2]}])
     # two punch zooms on the same centre, so the car never slides sideways
     keys = punch(t_n, piv, 1.0, 1.15) + punch(t_l, piv, 1.15, 1.25)
     cam = camera(0, t_end, [car], keys, pivot=piv)
@@ -307,7 +308,8 @@ def scene_parking():
     sfx("pop", t_l, -11)
     AUDIO.append({"src": SFX_DIR + "reifen_quietschen.mp3", "start": snap(t_m - 0.35), "gain_db": -11.0,
                   "trim": [0.0, 0.9], "fade_out": 0.1})
-    AUDIO.append({"src": SFX_DIR + "oma_ueberfahren.mp3", "start": snap(t_m - 0.05), "gain_db": -5.0})
+    AUDIO.append({"src": SFX_DIR + "oma_ueberfahren.mp3", "start": t_m, "gain_db": -5.0,
+                  "trim": [0.25, 0.86], "fade_out": 0.08})
     sfx("boing", snap(t_s + 2 * FR), -12)
     sfx("impact_low", pause_t, -7)
     return [cam]
@@ -330,7 +332,7 @@ def scene_law():
     sfx("impact_low", t_lm, -5)
     AUDIO.append({"src": SFX_DIR + "radio_laerm.mp3", "start": t_lm, "gain_db": -15.0,
                   "trim": [12.45, 13.75], "fade_out": 0.2})
-    return [cam, label("[Q1]", t_eu, t_end)]
+    return [cam]
 
 
 def needle_rot(v):
@@ -408,7 +410,7 @@ def scene_db():
     sfx("chirp_up", t_75, -12)
     sfx("impact_low", t_lm, -4)
     sfx("buzzer", t_lm, -12)
-    return [cam, red_flash(t_lm), label("[Q2]", t_db, t_end)]
+    return [cam, red_flash(t_lm)]
 
 
 def scene_pitch():
@@ -480,10 +482,10 @@ def scene_rules():
     AUDIO.append({"src": SFX_DIR + "vogel.mp3", "start": t_v, "gain_db": -8.0})
     sfx("buzzer", snap(t_v + 10 * FR), -13)
     # a short burst of the "Lärm" song from the radio on "Musik", cut by the buzzer
-    AUDIO.append({"src": SFX_DIR + "radio_laerm.mp3", "start": t_m, "gain_db": -15.0,
-                  "trim": [26.0, 26.36], "fade_out": 0.06})
+    AUDIO.append({"src": SFX_DIR + "radio_laerm.mp3", "start": t_m, "gain_db": -9.0,
+                  "trim": [18.45, 18.78], "fade_out": 0.05})
     sfx("buzzer", snap(t_m + 10 * FR), -13)
-    return [camera(t0, t_end, ch, push_in(t0)), red_flash(t_n), label("[Q1]", t_n, t_end)]
+    return [camera(t0, t_end, ch, push_in(t0)), red_flash(t_n)]
 
 
 def scene_zimmer():
@@ -502,7 +504,7 @@ def scene_zimmer():
     AUDIO.append({"src": SFX_DIR + "lion.mp3", "start": snap(t_kg + 2 * FR), "gain_db": -7.0, "trim": [0.0, 1.95]})
     for t in (t_i, t_kg):
         sfx("pop", t, -11)
-    return [cam, label("[Q3]", t_hz, t_end)]
+    return [cam]
 
 
 def scene_hybrid():
@@ -510,16 +512,14 @@ def scene_hybrid():
     keinen Extra-Ton machen, sonst würde das Auto ja doppelt brummen.'"""
     t0, t_end = W("Bei", 2), W("Und", 2)
     t_hy, t_be, t_k, t_x, t_d = W("Hybriden"), W("Benziner"), W("keinen"), W("Extra-Ton"), W("doppelt")
-    # Mercedes plug-in hybrid at the wall box (photo card); exhaust at its rear, bottom left
-    mx, my, ms = 540, 1400, 0.8
-    puffs = [pop("dashing-away", snap(t_be + i * 0.35), snap(t_be + i * 0.35 + 0.5), 250, 1500 - 30 * (i % 2),
-                 0.4 + 0.05 * (i % 2)) for i in range(int((t_d - t_be) / 0.35))]
+    # Mercedes plug-in hybrid (cut out like the other photos)
+    mx, my, ms = 540, 1420, 0.85
     single = pop_keys(t_hy, mx, my, ms) + shake(t_be, t_d, mx, my, 4, s=ms, every=1)
-    car = img("photo_mercedes_card", t_hy - FR, t_d, single)
-    duo = [img("photo_mercedes", t_d, t_end, pop_keys(t_d, 300, 1430, 0.48) + shake(snap(t_d + 7 * FR), t_end, 300, 1430, 8)),
-           img("photo_mercedes", t_d, t_end, pop_keys(snap(t_d + 2 * FR), 790, 1430, 0.48) +
+    car = img("photo_mercedes", t_hy - FR, t_d, single)
+    duo = [img("photo_mercedes", t_d, t_end, pop_keys(t_d, 290, 1430, 0.5) + shake(snap(t_d + 7 * FR), t_end, 290, 1430, 8)),
+           img("photo_mercedes", t_d, t_end, pop_keys(snap(t_d + 2 * FR), 790, 1430, 0.5) +
                shake(snap(t_d + 9 * FR), t_end, 790, 1430, 8))]
-    ch = [car, *puffs, *duo,
+    ch = [car, *duo,
           pop("photo_radio", t_k, t_d, 540, 520, 0.42),
           pop("ban", t_x, t_d, 540, 520, 0.65)]
     cam = camera(t0, t_end, ch, push_in(t0))
@@ -529,45 +529,51 @@ def scene_hybrid():
     sfx("buzzer", t_k, -12)
     sfx("pop", t_x, -11)
     sfx("drone_low", t_d, -13)
-    return [cam, red_flash(t_k), label("[Q1]", t_hy, t_end)]
+    return [cam, red_flash(t_k)]
 
 
 def scene_ending():
     """'Und ältere E-Autos von vor 2021 dürfen übrigens weiterhin komplett lautlos fahren,
-    also wenn du auf dem Parkplatz gar nichts hörst, heißt das nicht, dass da nichts kommt, denn …'"""
+    also wenn du auf dem Parkplatz gar nichts hörst, heißt das nicht, dass da nichts kommt, denn …'
+    Loop: in the dark an e-car rolls in with its headlights on; on 'denn' the night cuts away and
+    the car stands exactly like in the first frame of the video."""
     t0, t_end = W("Und", 2), DUR
-    t_e, t_v, t_l, t_p, t_h, t_k, t_dn = W("ältere"), W("vor"), W("lautlos", 2), W("Parkplatz", 1), \
-        W("hörst", 2), W("kommt"), W("denn", 2)
-    car = img("photo_zele", t0, t_p, pop_keys(t_e, 540, 1400, 0.8))
-    dark = {"id": "night", "type": "solid", "start": t_p, "end": t_end, "color": [14, 18, 38],
+    t_e, t_v, t_l, t_p, t_k, t_dn = W("ältere"), W("vor"), W("lautlos", 2), W("Parkplatz", 1), \
+        W("kommt"), W("denn", 2)
+    old = img("photo_zele", t0, t_p, pop_keys(t_e, 540, 1400, 0.8))
+    dark = {"id": "night", "type": "solid", "start": t_p, "end": t_dn, "color": [14, 18, 38],
             "keys": [{"t": t_p, "opacity": 0.0}, {"t": snap(t_p + 9 * FR), "opacity": 0.82, "ease": "out"}]}
-    lights = [glow(t_k, t_end, x, 1450, 60, keys=[{"t": t_k, "x": x, "y": 1450, "radius": 10},
-                                                 {"t": snap(t_k + 5 * FR), "x": x, "y": 1450, "radius": 120,
-                                                  "ease": "out"}])
-              for x in (700, 930)]
-    ch = [car,
+    # the car of the hook (same pose as frame 0) drives in from the right during the night
+    car_keys = [{"t": t_k, "x": 1500, "y": HOOK[1], "scale": HOOK[2]},
+                {"t": snap(t_dn - FR), "x": HOOK[0], "y": HOOK[1], "ease": "out3"},
+                {"t": t_dn, "x": HOOK[0], "y": HOOK[1], "scale": HOOK[2]}]
+    car = img("photo_car", t_k, t_end, car_keys)
+    from shortsfactory.render.keyframes import value_at
+
+    def light(dx, dy):           # headlight relative to the car centre (car faces left)
+        keys = []
+        t = t_k
+        while t < t_dn:
+            x = value_at(car_keys, "x", t)
+            keys.append({"t": snap(t), "x": round(x + dx, 1), "y": HOOK[1] + dy,
+                         "radius": min(110, 20 + 400 * (t - t_k))})
+            t += FR
+        return glow(t_k, t_dn, 0, 0, 60, keys=keys)
+    ch = [old,
           pop("cal_old", t_v, t_l, 540, 500, 0.7),
           pop("muted-speaker", t_l, t_p, 540, 500, 0.6),
-          *ground(t_p, t_end),
-          img("p_sign", t_p, t_end, [{"t": t_p, "x": 160, "y": 1080, "scale": 0.75}]),
-          dark,
-          pop("ear", t_h, t_k, 540, 520, 0.55),
-          *lights]
-    cam = camera(t0, t_end, ch, push_in(t0) + [{"t": snap(t_dn - FR), "x": 540, "y": 960, "scale": 1.0},
-                                               {"t": snap(t_dn + 2 * FR), "x": 540, "y": 960, "scale": 1.0}])
-    cam["pivot"] = [815, 1450]
-    cam["keys"] = [{"t": t0, "x": 815 + 1080, "y": 1450, "scale": 1.0},
-                   {"t": snap(t0 + 3 * FR), "x": 815, "y": 1450, "ease": "out3"},
-                   {"t": snap(t_dn - FR), "x": 815, "y": 1450, "scale": 1.0},
-                   {"t": snap(t_dn + 2 * FR), "x": 700, "y": 1250, "scale": 1.6}]
+          *ground(t_p, t_dn),
+          img("p_sign", t_p, t_dn, [{"t": t_p, "x": 160, "y": 1080, "scale": 0.75}]),
+          car, dark, light(-360, 70), light(-215, 80)]
+    cam = camera(t0, t_end, ch, push_in(t0))
     sfx("swoosh", t0, -12)
     sfx("pop", t_e, -11)
+    AUDIO.append({"src": SFX_DIR + "hupe.mp3", "start": snap(t_e + 2 * FR), "gain_db": -8.0, "trim": [0.3, 2.3]})
     sfx("pop", t_v, -11)
     sfx("pop", t_l, -11)
     sfx("drone_low", t_p, -16)
     AUDIO.append({"src": SFX_DIR + "cricket.mp3", "start": W("gar"), "gain_db": -8.0,
                   "trim": [0.25, 0.25 + t_k - W("gar")], "fade_out": 0.15})
-    sfx("pop", t_h, -12)
     sfx("ev_hum", t_k, -10)
     sfx("impact_low", t_dn, -5)
     return [cam]
@@ -606,7 +612,11 @@ def thin_pops(audio):
 
 def build():
     cap_style = dict(STYLE["caption"])
-    layers = [{"id": "bg_stripes", "type": "stripes_bg", **STYLE["stripes_bg"]}]
+    # stripes: scroll speed rounded to a whole number of periods over the video, so the
+    # background is seamless when the video loops
+    bg = dict(STYLE["stripes_bg"])
+    bg["speed"] = round(bg["period"] * round(bg["speed"] * DUR / bg["period"]) / DUR, 4)
+    layers = [{"id": "bg_stripes", "type": "stripes_bg", **bg}]
     for sc in (scene_hook, scene_dumm, scene_parking, scene_law, scene_speed, scene_tyres, scene_db,
                scene_pitch, scene_bobbycar, scene_rules, scene_zimmer, scene_hybrid, scene_ending):
         layers += sc()
