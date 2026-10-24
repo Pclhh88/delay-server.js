@@ -11,10 +11,12 @@ only needs build_voice.py + this script.
 """
 import json
 import os
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROJ = os.path.dirname(HERE)
 ROOT = os.path.dirname(os.path.dirname(PROJ))
+sys.path.insert(0, ROOT)
 STYLE = json.load(open(os.path.join(ROOT, "projects", "bundeswehr-kennzeichen", "analysis",
                                     "style_measurements.json"), encoding="utf-8"))
 VOICE = json.load(open(os.path.join(HERE, "words.json"), encoding="utf-8"))
@@ -177,7 +179,25 @@ def ground(start, end, y=1560, color=(88, 92, 104)):
 AUDIO = []
 
 
+SFX_DIR = "audio/sfx_src/"
+# ready-made sounds supplied by the user, replacing the synthetic presets:
+# preset -> (file, lead-in to skip (s), offset to the start (s), gain change vs. the preset (dB))
+SAMPLES = {
+    "impact_low": ("vine_boom.mp3", 0.07, 0.0, -6.0),
+    "swoosh": ("whoosh_wind.mp3", 0.07, -0.12, 5.0),
+    "swoosh_down": ("whoosh_wind.mp3", 0.07, -0.12, 5.0),
+    "pop": ("pop.mp3", 0.035, 0.0, 6.0),
+    "buzzer": ("buzzer_raab.mp3", 0.04, 0.0, 4.0),
+    "boing": ("boing.mp3", 0.25, 0.0, 5.0),
+}
+
+
 def sfx(name, t, gain):
+    if name in SAMPLES:
+        f, lead, off, dg = SAMPLES[name]
+        AUDIO.append({"src": SFX_DIR + f, "start": snap(max(t + off, 0)), "gain_db": gain + dg,
+                      "trim": [lead, 60.0]})
+        return
     AUDIO.append({"src": f"@sfx/{name}", "start": snap(t), "gain_db": gain})
 
 
@@ -224,36 +244,47 @@ def scene_parking():
     t_p, t_l, t_o, t_b, t_m, t_s = W("Aldi-Parkplatz"), W("lautlos", 1), W("Oma"), W("bemerkt"), \
         W("Motorhaube"), W("sitzt")
     car_y = 1430
-    # car rolls in from the right (it faces left) and creeps towards the Oma
+    # the Oma walks across the car park (Dexter music) while the car rolls in silently from
+    # the right (it faces left) and hits her on "Motorhaube"; she lands on the bonnet
+    walk_x0, walk_x1 = -120, 400
     car_keys = [{"t": t0, "x": 1500, "y": car_y, "scale": 0.78},
-                {"t": t_l, "x": 760, "y": car_y, "ease": "out"},
-                {"t": t_m, "x": 600, "y": car_y},
-                {"t": snap(t_m + 6 * FR), "x": 560, "y": car_y, "ease": "out"}]
-    car = img("ecar", t0, t_end, car_keys + shake(t_s, snap(t_s + 8 * FR), 560, car_y, 8)[1:])
-    mute_keys = [{"t": snap(t_l - FR), "x": 760, "y": 1080, "scale": 0}] + \
-        [{"t": snap(t_l + i * FR), "x": 760, "y": 1080, "scale": round(0.45 * f, 3)} for i, f in enumerate(POP)] + \
-        [{"t": t_m, "x": 600, "y": 1080}, {"t": snap(t_m + 6 * FR), "x": 560, "y": 1080, "ease": "out"}]
-    mute = img("muted-speaker", t_l - FR, t_b, mute_keys + out_keys(t_b, 560, 1080, 0.45)[1:])
-    oma_x, oma_y = 190, 1340
-    oma_s = 0.48
-    # she notices (jolt + scream), then jumps onto the bonnet (left front of the car)
-    hood = (330, 1150)
-    oma_keys = pop_keys(t_o, oma_x, oma_y, oma_s) + shake(t_b, t_m, oma_x, oma_y, 7)[:-1] + [
-        {"t": t_m, "x": oma_x, "y": oma_y, "rot": 0},
-        {"t": snap(t_m + 5 * FR), "x": 260, "y": 900, "rot": -20, "ease": "out"},
+                {"t": t_l, "x": 1050, "y": car_y, "ease": "out"},
+                {"t": t_m, "x": 790, "y": car_y},
+                {"t": snap(t_m + 10 * FR), "x": 680, "y": car_y, "ease": "out"}]
+    car = img("ecar", t0, t_end, car_keys + shake(t_s, snap(t_s + 8 * FR), 680, car_y, 8)[1:])
+
+    def car_x(t):
+        from shortsfactory.render.keyframes import value_at
+        return value_at(car_keys, "x", t)
+    mute_keys = [{"t": snap(t_l - FR), "x": 1050, "y": 1080, "scale": 0}] + \
+        [{"t": snap(t_l + i * FR), "x": round(car_x(t_l + i * FR), 1), "y": 1080,
+          "scale": round(0.45 * f, 3)} for i, f in enumerate(POP)] + \
+        [{"t": snap(t_b), "x": round(car_x(t_b), 1), "y": 1080}]
+    mute = img("muted-speaker", t_l - FR, t_b, mute_keys + out_keys(t_b, round(car_x(t_b), 1), 1080, 0.45)[1:])
+    oma_y, oma_s = 1340, 0.48
+    hood = (450, 1150)
+    walk = []
+    t, i = t_p, 0
+    while t < t_m:                       # waddle: bob + tilt every 6 frames
+        x = walk_x0 + (walk_x1 - walk_x0) * (t - t_p) / (t_m - t_p)
+        walk.append({"t": snap(t), "x": round(x, 1), "y": oma_y - (14 if i % 2 else 0), "rot": 4 if i % 2 else -4,
+                     "scale": oma_s})
+        t += 6 * FR
+        i += 1
+    oma_keys = walk + [
+        {"t": t_m, "x": walk_x1, "y": oma_y, "rot": 0},
+        {"t": snap(t_m + 5 * FR), "x": 330, "y": 880, "rot": -25, "ease": "out"},
         {"t": snap(t_s), "x": hood[0], "y": hood[1], "rot": 8, "ease": "in"},
         {"t": snap(t_s + 3 * FR), "x": hood[0], "y": hood[1] + 20, "rot": 0}]
-    oma = img("photo_oma_bust", t_o - FR, t_end, oma_keys)
-    cart = pop("shopping-cart", snap(t_o + 2 * FR), t_end, 100, 1520, 0.4, out=False)
-    scream = pop("face-screaming-in-fear", t_b, t_m, 330, 1130, 0.22)
+    oma = img("photo_oma_bust", t_p, t_end, oma_keys)
+    cart = pop("shopping-cart", snap(t0 + 3 * FR), t_end, 120, 1520, 0.4, out=False)
+    scream = pop("face-screaming-in-fear", t_b, t_m, 560, 1120, 0.22)
+    hit = pop("collision", t_m, snap(t_m + 10 * FR), 430, 1300, 0.55)
     boom = pop("collision", t_s, snap(t_s + 12 * FR), hood[0] + 80, hood[1] + 90, 0.5)
     pause_t = snap(W("sitzt") + 0.32)
     cam = camera(t0, t_end, [*ground(t0, t_end), pop("p_sign", snap(t0 + 3 * FR), t_end, 960, 1080, 0.75,
-                                                       out=False), car, mute, cart, oma, scream, boom],
-                 push_in(t0) + [{"t": snap(pause_t - FR), "scale": 1.0},
-                                {"t": snap(pause_t + 2 * FR), "scale": 1.45}],
-                 pivot=(540, 960))
-    # zoom on the screaming face during the pause: pivot moves with the keys above
+                                                       out=False), cart, car, mute, oma, scream, hit, boom])
+    # zoom on the Oma on the bonnet during the pause
     cam["pivot"] = [hood[0], hood[1]]
     cam["keys"] = [{"t": t0, "x": hood[0] + 1080, "y": hood[1], "scale": 1.0},
                    {"t": snap(t0 + 3 * FR), "x": hood[0], "y": hood[1], "ease": "out3"},
@@ -261,10 +292,10 @@ def scene_parking():
                    {"t": snap(pause_t + 2 * FR), "x": 540, "y": 1100, "scale": 1.5}]
     sfx("swoosh", t0, -12)
     sfx("ev_hum", snap(t0 + 0.1), -16)
+    AUDIO.append({"src": SFX_DIR + "dexter_meme.mp3", "start": t_p, "gain_db": -8.0,
+                  "trim": [0.0, round(t_m - t_p, 3)], "fade_out": 0.04})
     sfx("pop", t_l, -11)
-    sfx("pop", t_o, -11)
-    sfx("chirp_up", t_m, -12)
-    sfx("impact_low", t_s, -5)
+    AUDIO.append({"src": SFX_DIR + "oma_ueberfahren.mp3", "start": snap(t_m - 0.05), "gain_db": -5.0})
     sfx("boing", snap(t_s + 2 * FR), -12)
     sfx("impact_low", pause_t, -7)
     return [cam]
@@ -437,6 +468,7 @@ def scene_rules():
     for t in (t_h, t_a, t_k, t_v, t_m):
         sfx("pop", t, -11)
     sfx("swoosh", t0, -12)
+    AUDIO.append({"src": SFX_DIR + "vogel.mp3", "start": t_v, "gain_db": -8.0})
     sfx("buzzer", snap(t_v + 10 * FR), -13)
     sfx("buzzer", snap(t_m + 6 * FR), -13)
     return [camera(t0, t_end, ch, push_in(t0)), red_flash(t_n), label("[Q1]", t_n, t_end)]
