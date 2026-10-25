@@ -52,3 +52,20 @@ python cityshorts/blender/diorama_still.py build/diorama/test.png --percent 40 -
 CPU-Rendering hier: ~25–30 min für ein Vollbild. Mit einer Grafikkarte
 (Cycles nutzt sie automatisch) 1–2 min; für 60-s-Videos ist eine GPU
 praktisch Pflicht (oder Cloud-Rendering, kostenpflichtig).
+
+## 4. Version 2: gewachsener Stadtteil statt Rahmen
+
+| Wunsch | Umsetzung (alles im wiederverwendbaren Baukasten) |
+|---|---|
+| **Vielfalt der Gebäude** | `house_detail.random_spec()` würfelt zusätzlich: Fassadentyp (plastisch / glatt / aufgemalte Rahmen), Achsrhythmus (gleichmäßig, betonte Mitte, Fensterpaare), andersfarbiges Erdgeschoss, Satteldach (neben Walm, Mansarde, Flachdach), zurückgesetztes Dachgeschoss mit Terrasse, Bogen-Loggia im obersten Stock, römische Dachterrasse (Altana). **Pro Fenster** zufällig: Läden offen/halb/geschlossen, Blumenkasten mit Blüten, Einzelbalkon, Klimagerät, Vorhang. Dazu Efeu und Wäscheleinen. |
+| **Akzentbauten** | `kit/specials.py`: Barockkirche mit Tambourkuppel, Laterne und Voluten-Fassade; romanischer Campanile; Piazza-Brunnen. |
+| **organische Stadt** | `kit/diorama.py`: Randbebauung entlang der Straße mit wechselnden Breiten/Tiefen, Rücksprüngen, ±2,5° Verdrehung und Durchgängen; danach zufällig gepackte Innenbebauung (Kollisionstest) mit Höfen; Freiflächen für Wahrzeichen (frei positionierbar), Piazza, gewundene Gasse, Park. Brandwände werden automatisch erkannt. |
+| **Höhenstaffelung** | Höhenzonen relativ zur Kamera: vorne 2–3, Mitte 3–5, hinten 4–6 Geschosse → Wahrzeichen bleibt sichtbar, Tiefe entsteht. |
+| **9:16-Komposition** | Hochformat-Kachel (26 × 37 statt quadratisch), Kamera −102° / 40°, 85 mm: Kachel füllt die Bildbreite, oben bleibt Platz für Titel, unten für Untertitel, rundum Luft für Kamerafahrten. |
+| **animierbar** | Jedes Haus, jeder Baum, jede Laterne, jeder Poller, jede Bank, jede Person, jedes Auto ist ein eigenes Objekt (gleiche Requisiten teilen sich die Mesh-Daten). |
+| **Konfiguration** | Kachel-Layout + Kamera in `cities/rome/city.json` → `"tiles"`. Neue Stadt/Kachel = neuer Eintrag, kein Code. |
+
+```bash
+python cityshorts/blender/diorama_still.py build/diorama/rom.png --city rome --tile colosseum
+python3 -m cityshorts.compare_stills vergleich.png alt.png "v1" neu.png "v2"
+```

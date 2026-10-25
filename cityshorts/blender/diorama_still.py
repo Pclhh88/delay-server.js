@@ -1,7 +1,12 @@
 """Hochwertiges Standbild einer Diorama-Kachel (Qualitätsabgleich mit B2).
 
-    python cityshorts/blender/diorama_still.py OUT.png [--percent 100] [--samples 256]
-        [--az -135 --el 34 --lens 85] [--family rome] [--seed 3] [--save-blend scene.blend]
+    python cityshorts/blender/diorama_still.py OUT.png [--city rome --tile colosseum]
+        [--percent 100] [--samples 256] [--az .. --el .. --lens .. --dist ..] [--seed ..]
+        [--save-blend scene.blend]
+
+Die Kachel-Konfiguration (Wahrzeichen, Plätze, Gasse, Park, Sonderbauten,
+Kamera) steht in cities/<stadt>/city.json -> "tiles". Neue Stadt/Kachel =
+neuer Eintrag dort, kein Code.
 """
 import argparse
 import math
@@ -17,6 +22,42 @@ from cityshorts.blender import landmarks  # noqa: E402
 from cityshorts.blender.kit import stage  # noqa: E402
 from cityshorts.blender.kit.diorama import Diorama  # noqa: E402
 
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+
+
+def load_tile(city, tile_id):
+    """Kachel-Konfiguration aus cities/<stadt>/city.json -> "tiles"."""
+    import json
+    cfg = json.load(open(os.path.join(ROOT, "cities", city, "city.json")))
+    for t in cfg.get("tiles", []):
+        if t["id"] == tile_id:
+            return t
+    raise SystemExit(f"Kachel {tile_id} nicht in cities/{city}/city.json")
+
+
+def build_tile(col, cfg, seed, cam_dir):
+    lm = cfg["landmark"]
+    lm_col = bpy.data.collections.new("LANDMARK")
+    col.children.link(lm_col)
+    landmarks.build(lm["builder"], lm_col, {"id": "landmark"})
+    root = bpy.data.objects.new("ROOT_landmark", None)
+    lm_col.objects.link(root)
+    root.scale = (lm["scale"],) * 3
+    root.location = (*lm["pos"], 0.1)
+    root.rotation_euler = (0, 0, math.radians(lm["rot"]))
+    for ob in lm_col.objects:
+        if ob is not root and ob.parent is None:
+            ob.parent = root
+    city = bpy.data.collections.new("CITY")
+    col.children.link(city)
+    d = Diorama(city, family=cfg["family"], seed=seed, hx=cfg["hx"], hy=cfg["hy"], corner=cfg["corner"],
+                hero={"pos": tuple(lm["pos"]), "ellipse": tuple(lm["ellipse"]), "rot": lm["rot"]},
+                plazas=[tuple(p) for p in cfg["plazas"]],
+                alleys=[([tuple(q) for q in pts], w) for pts, w in cfg["alleys"]],
+                park=tuple(cfg["park"]) if cfg.get("park") else None, camera_dir=cam_dir,
+                specials_spec=cfg["specials"]).build()
+    return d
+
 
 def main():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else sys.argv[1:]
@@ -24,46 +65,32 @@ def main():
     ap.add_argument("out")
     ap.add_argument("--percent", type=int, default=100)
     ap.add_argument("--samples", type=int, default=256)
-    ap.add_argument("--az", type=float, default=-128)
-    ap.add_argument("--el", type=float, default=33)
-    ap.add_argument("--lens", type=float, default=85)
-    ap.add_argument("--dist", type=float, default=215)
-    ap.add_argument("--family", default="rome")
-    ap.add_argument("--seed", type=int, default=3)
+    ap.add_argument("--az", type=float)
+    ap.add_argument("--el", type=float)
+    ap.add_argument("--lens", type=float)
+    ap.add_argument("--dist", type=float)
+    ap.add_argument("--target", type=float, nargs=3)
+    ap.add_argument("--seed", type=int)
+    ap.add_argument("--city", default="rome")
+    ap.add_argument("--tile", default="colosseum")
     ap.add_argument("--save-blend")
-    ap.add_argument("--lm-rot", type=float, default=20)
     a = ap.parse_args(argv)
+    cfg = load_tile(a.city, a.tile)
+    for k, v in cfg.get("camera", {}).items():
+        if getattr(a, k, None) is None:
+            setattr(a, k, v)
+    if a.seed is None:
+        a.seed = cfg.get("seed", 1)
 
     bpy.ops.wm.read_factory_settings(use_empty=True)
     sc = bpy.context.scene
     stage.setup(sc, 30, 1, "final")
     stage.still_look(sc, a.samples, a.percent)
-    col = sc.collection
-
-    lm_col = bpy.data.collections.new("LANDMARK")
-    col.children.link(lm_col)
-    info = landmarks.build("rome.colosseum", lm_col, {"id": "colosseum"})
-    root = bpy.data.objects.new("ROOT_colosseum", None)
-    lm_col.objects.link(root)
-    s = 0.78
-    root.scale = (s, s, s)
-    root.location = (0.3, 0.6, 0.1)
-    root.rotation_euler = (0, 0, math.radians(a.lm_rot))
-    for ob in lm_col.objects:
-        if ob is not root and ob.parent is None:
-            ob.parent = root
-
-    d = Diorama(col, family=a.family, seed=a.seed, hero_ellipse=(8.0 * s + 1.0, 6.6 * s + 1.0)).build()
-    # Grün: Schirmpinien + Laubbäume auf Plätzen und in Höfen
-    d.fill_greenery(n=34, avoid_ellipse=(8.0 * s + 0.9, 6.6 * s + 0.9), pines=8)
-    from cityshorts.blender.kit import props
-    from cityshorts.blender.kit.mesh import MeshBuilder
-    ppl = MeshBuilder()
-    ea, eb = 8.0 * s + 0.3, 6.6 * s + 0.3
-    props.crowd(ppl, 0, 0, 9.0, 70, 5, z=0.1, avoid=lambda x, y: (x / ea) ** 2 + (y / eb) ** 2 < 1
-                or any(math.hypot(x - fx, y - fy) < fr + 0.2 for fx, fy, fr in d.footprints))
-    ppl.build("plaza_people", col)
-    print(f"[diorama] {d.n_house} Häuser")
+    az, el = math.radians(a.az), math.radians(a.el)
+    d = build_tile(sc.collection, cfg, a.seed, (math.cos(az), math.sin(az)))
+    n_obj = len([o for o in sc.objects])
+    print(f"[diorama] {len(d.houses)} Gebäude, {len(d.trees)} Bäume, {len(d.people)} Personen, "
+          f"{len(d.cars)} Autos, {n_obj} Objekte gesamt")
 
     cam_d = bpy.data.cameras.new("cam")
     cam_d.lens = a.lens
@@ -71,10 +98,9 @@ def main():
     cam_d.sensor_height = 24
     cam_d.clip_end = 2000
     cam = bpy.data.objects.new("cam", cam_d)
-    col.objects.link(cam)
+    sc.collection.objects.link(cam)
     sc.camera = cam
-    tgt = Vector((0.0, 0.0, 3.2))
-    az, el = math.radians(a.az), math.radians(a.el)
+    tgt = Vector(a.target)
     cam.location = tgt + Vector((math.cos(el) * math.cos(az), math.cos(el) * math.sin(az), math.sin(el))) * a.dist
     cam.rotation_euler = (tgt - cam.location).to_track_quat("-Z", "Y").to_euler()
     cam_d.dof.use_dof = True
