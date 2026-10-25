@@ -69,3 +69,18 @@ praktisch Pflicht (oder Cloud-Rendering, kostenpflichtig).
 python cityshorts/blender/diorama_still.py build/diorama/rom.png --city rome --tile colosseum
 python3 -m cityshorts.compare_stills vergleich.png alt.png "v1" neu.png "v2"
 ```
+
+## 5. Version 3: ruhige Hero-Komposition + ausgewählte Details
+
+Feedback zu v2: dichter und interessanter, aber unruhig; das Kolosseum verliert Dominanz.
+
+| Entscheidung | Umsetzung (`cities/rome/city.json` → Kachel `colosseum`, Steuerung über `composition`) |
+|---|---|
+| bleibt aus v1 | quadratische Kachel, Wahrzeichen zentral, ruhiger Ring aus Randbebauung, diagonale 3/4-Ansicht (−135°/36°) |
+| übernommen aus v2 | Hausvielfalt pro Gebäude/Fenster, unregelmäßige Randbebauung, Campanile + Kirchenkuppel als Silhouetten-Akzente hinten, locker verteilte Figuren |
+| reduziert | `interior: 0` (keine Häuser im Blockinneren), `front_open: 42` (Kamera-Ecke als Vorplatz mit Bäumen statt Häusern), vorne 2–3 Geschosse, 6 statt 9 Autos, 45 statt 90 Figuren mit Mindestabstand |
+| Blickführung | Ringstraße + Baumreihen + offener Vorplatz führen diagonal zum Kolosseum; helle Travertin-Ringe (`hero_rings`) rahmen es; hinten die höchsten Häuser als ruhige Kulisse |
+| Hervorhebung | Kolosseum größer (0,84) und mittig, eingestürzte Seite zur Kamera, Travertin heller/wärmer (`palette`), Umgebungsfarben 18 % entsättigt (`mute`), leichte Tiefenunschärfe auf das Kolosseum fokussiert (`fstop`), stärkere Vignette (`grade`) |
+| Materialtiefe | Gehweg mit Plattenfugen, Asphalt mit Flecken/Relief, Ziegeldächer mit kräftigeren Reihen und Patina |
+
+Alle Stellschrauben sind Konfiguration – dieselbe Mechanik funktioniert für jede Stadt.

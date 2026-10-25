@@ -381,7 +381,7 @@
   ],
   "tiles": [
     {
-      "id": "colosseum",
+      "id": "colosseum_v2",
       "family": "rome",
       "hx": 13.0,
       "hy": 18.5,
@@ -469,6 +469,107 @@
           0.0,
           1.5
         ]
+      }
+    },
+    {
+      "id": "colosseum",
+      "family": "rome",
+      "hx": 14.0,
+      "hy": 14.0,
+      "corner": 5.5,
+      "seed": 11,
+      "landmark": {
+        "builder": "rome.colosseum",
+        "pos": [
+          0.6,
+          0.6
+        ],
+        "rot": 10,
+        "scale": 0.84,
+        "ellipse": [
+          7.27,
+          6.093999999999999
+        ]
+      },
+      "plazas": [],
+      "park": null,
+      "alleys": [],
+      "specials": [
+        {
+          "type": "campanile",
+          "pos": [
+            8.6,
+            8.0
+          ],
+          "rot": 0,
+          "scale": 1.05
+        },
+        {
+          "type": "church",
+          "pos": [
+            -8.6,
+            7.6
+          ],
+          "rot": -45,
+          "wall": "stone_cream"
+        }
+      ],
+      "composition": {
+        "interior": 0,
+        "front_open": 42,
+        "zones": [
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            6
+          ]
+        ],
+        "people": 45,
+        "cars": 6,
+        "inner_trees": 16,
+        "pines": 6,
+        "hero_rings": true,
+        "gap_prob": 0.04
+      },
+      "mute": 0.18,
+      "palette": {
+        "travertine": [
+          0.9,
+          0.82,
+          0.67
+        ],
+        "travertine_dark": [
+          0.62,
+          0.53,
+          0.4
+        ]
+      },
+      "camera": {
+        "az": -135,
+        "el": 36,
+        "lens": 85,
+        "dist": 182,
+        "target": [
+          0.0,
+          0.2,
+          1.6
+        ],
+        "fstop": 0.3
+      },
+      "grade": {
+        "vignette": 0.26,
+        "bloom": 0.12
       }
     }
   ]

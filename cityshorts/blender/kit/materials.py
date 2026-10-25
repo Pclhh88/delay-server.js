@@ -5,9 +5,9 @@ import bpy
 
 # name: (RGB 0..1 sRGB-ähnlich, roughness, extra)
 BASE = {
-    "asphalt": ((0.24, 0.25, 0.27), 0.85, {"noise": 0.1, "noise_scale": 2.0, "grime": 0.3, "bump": 0.2}),
+    "asphalt": ((0.25, 0.26, 0.28), 0.85, {"noise": 0.16, "noise_scale": 1.5, "grime": 0.35, "bump": 0.3, "objvar": 0.0}),
     "road_line": ((0.93, 0.92, 0.86), 0.6, {}),
-    "sidewalk": ((0.74, 0.71, 0.66), 0.85, {"noise": 0.06, "grime": 0.4}),
+    "sidewalk": ((0.76, 0.72, 0.66), 0.85, {"noise": 0.07, "grime": 0.45, "pavers": True, "paver_scale": 9.0, "seam_bump": 0.12, "objvar": 0.0}),
     "ground": ((0.80, 0.74, 0.62), 0.9, {}),
     "plaza": ((0.84, 0.79, 0.69), 0.85, {"noise": 0.08, "grime": 0.4, "pavers": True, "seam_bump": 0.15}),
     "grass": ((0.36, 0.52, 0.22), 0.95, {"sheen": 0.6}),
@@ -81,7 +81,7 @@ BASE = {
     "zinc_blue": ((0.39, 0.44, 0.51), 0.5, {"seams": True, "seam_freq": 9.0, "seam_bump": 0.12, "grime": 0.4, "noise": 0.06, "objvar": 0.08, "metallic": 0.25}),
     "zinc_dark": ((0.30, 0.32, 0.36), 0.5, {"seams": True, "seam_freq": 9.0, "seam_bump": 0.12, "grime": 0.4, "noise": 0.06, "objvar": 0.08, "metallic": 0.25}),
     "zinc_red": ((0.52, 0.30, 0.25), 0.6, {"seams": True, "seam_freq": 9.0, "seam_bump": 0.12, "grime": 0.4, "noise": 0.08, "objvar": 0.08}),
-    "tile_terracotta": ((0.70, 0.35, 0.22), 0.8, {"tiles": True, "seam_freq": 7.0, "seam_bump": 0.3, "grime": 0.45, "noise": 0.12, "objvar": 0.12}),
+    "tile_terracotta": ((0.68, 0.35, 0.23), 0.8, {"tiles": True, "seam_freq": 8.0, "seam_bump": 0.35, "grime": 0.55, "noise": 0.16, "noise_scale": 6.0, "objvar": 0.14}),
     "window_glass": ((0.07, 0.10, 0.14), 0.06, {"spec": 1.0}),
     "frame_white": ((0.90, 0.88, 0.83), 0.6, {"grime": 0.3, "noise": 0.03}),
     "iron": ((0.06, 0.06, 0.07), 0.45, {"metallic": 0.7}),
@@ -101,6 +101,15 @@ _overrides = {}
 def set_palette(overrides):
     """city.json -> "palette": {"wall_ochre": [r,g,b], ...}"""
     _overrides.update({k: tuple(v) for k, v in (overrides or {}).items()})
+
+
+def mute(names_prefix=("stone_",), amount=0.15, keep=()):
+    """Umgebungsfarben leicht entsättigen, damit das Wahrzeichen hervorsticht."""
+    for name, (col, rough, extra) in BASE.items():
+        if name.startswith(names_prefix) and name not in keep:
+            c = _overrides.get(name, col)
+            g = 0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2]
+            _overrides[name] = tuple(x + (g - x) * amount for x in c)
 
 
 def _srgb_to_lin(c):

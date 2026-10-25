@@ -19,7 +19,7 @@ import bpy  # noqa: E402
 from mathutils import Vector  # noqa: E402
 
 from cityshorts.blender import landmarks  # noqa: E402
-from cityshorts.blender.kit import stage  # noqa: E402
+from cityshorts.blender.kit import materials, stage  # noqa: E402
 from cityshorts.blender.kit.diorama import Diorama  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
@@ -52,10 +52,10 @@ def build_tile(col, cfg, seed, cam_dir):
     col.children.link(city)
     d = Diorama(city, family=cfg["family"], seed=seed, hx=cfg["hx"], hy=cfg["hy"], corner=cfg["corner"],
                 hero={"pos": tuple(lm["pos"]), "ellipse": tuple(lm["ellipse"]), "rot": lm["rot"]},
-                plazas=[tuple(p) for p in cfg["plazas"]],
-                alleys=[([tuple(q) for q in pts], w) for pts, w in cfg["alleys"]],
+                plazas=[tuple(p) for p in cfg.get("plazas", [])],
+                alleys=[([tuple(q) for q in pts], w) for pts, w in cfg.get("alleys", [])],
                 park=tuple(cfg["park"]) if cfg.get("park") else None, camera_dir=cam_dir,
-                specials_spec=cfg["specials"]).build()
+                specials_spec=cfg.get("specials", []), composition=cfg.get("composition")).build()
     return d
 
 
@@ -74,15 +74,19 @@ def main():
     ap.add_argument("--city", default="rome")
     ap.add_argument("--tile", default="colosseum")
     ap.add_argument("--save-blend")
+    ap.add_argument("--vignette", type=float)
     a = ap.parse_args(argv)
     cfg = load_tile(a.city, a.tile)
     for k, v in cfg.get("camera", {}).items():
-        if getattr(a, k, None) is None:
+        if k != "fstop" and getattr(a, k, None) is None:
             setattr(a, k, v)
     if a.seed is None:
         a.seed = cfg.get("seed", 1)
 
     bpy.ops.wm.read_factory_settings(use_empty=True)
+    materials.set_palette(cfg.get("palette"))
+    if cfg.get("mute"):
+        materials.mute(amount=cfg["mute"])
     sc = bpy.context.scene
     stage.setup(sc, 30, 1, "final")
     stage.still_look(sc, a.samples, a.percent)
@@ -104,8 +108,10 @@ def main():
     cam.location = tgt + Vector((math.cos(el) * math.cos(az), math.cos(el) * math.sin(az), math.sin(el))) * a.dist
     cam.rotation_euler = (tgt - cam.location).to_track_quat("-Z", "Y").to_euler()
     cam_d.dof.use_dof = True
-    cam_d.dof.focus_distance = a.dist
-    cam_d.dof.aperture_fstop = 4.0
+    lm = cfg["landmark"]
+    focus = Vector((*lm["pos"], 1.5))
+    cam_d.dof.focus_distance = (cam.location - focus).length
+    cam_d.dof.aperture_fstop = cfg.get("camera", {}).get("fstop", 4.0)
 
     if a.save_blend:
         bpy.ops.wm.save_as_mainfile(filepath=os.path.abspath(a.save_blend))
@@ -114,7 +120,10 @@ def main():
     bpy.ops.render.render(write_still=True)
     from PIL import Image
     from cityshorts.grade import grade
-    grade(Image.open(raw)).save(os.path.abspath(a.out))
+    gcfg = dict(cfg.get("grade", {}))
+    if a.vignette is not None:
+        gcfg["vignette"] = a.vignette
+    grade(Image.open(raw), **gcfg).save(os.path.abspath(a.out))
     print("[diorama] gespeichert", a.out)
 
 

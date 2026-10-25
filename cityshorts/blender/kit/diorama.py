@@ -109,9 +109,15 @@ class Prop:
 # --- Diorama ---------------------------------------------------------------
 class Diorama:
     def __init__(self, col, family="rome", seed=3, hx=13.0, hy=17.0, corner=5.0, road_w=2.2,
-                 hero=None, plazas=(), alleys=(), park=None, camera_dir=(-0.35, -1.0), specials_spec=()):
+                 hero=None, plazas=(), alleys=(), park=None, camera_dir=(-0.35, -1.0), specials_spec=(),
+                 composition=None):
         """hero = {"pos": (x, y), "ellipse": (a, b), "rot": grad}
-        plazas = [(x, y, r)], alleys = [[(x, y), ...], breite], park = (x, y, r)."""
+        plazas = [(x, y, r)], alleys = [[(x, y), ...], breite], park = (x, y, r).
+        composition steuert, wie stark die Stadt mit dem Wahrzeichen konkurriert:
+          interior     Anzahl Häuser im Blockinneren (0 = ruhige Hero-Komposition)
+          front_open   halber Öffnungswinkel (Grad) der Kamera-Ecke ohne Häuser
+          zones        Geschossbereiche [vorne, mitte, hinten, ganz hinten]
+          people, cars, inner_trees, pines, hero_rings, gap_prob"""
         self.col = col
         self.family = family
         self.rng = random.Random(seed)
@@ -127,6 +133,10 @@ class Diorama:
         self.houses = []         # (objekt, höhe)
         self.trees, self.people, self.cars, self.objects = [], [], [], []
         self.n_house = 0
+        self.comp = {"interior": 60, "front_open": 0, "zones": [(2, 3), (3, 4), (3, 5), (4, 6)],
+                     "people": 90, "cars": 9, "inner_trees": 34, "pines": 7, "hero_rings": False,
+                     "gap_prob": 0.09}
+        self.comp.update(composition or {})
 
     @property
     def footprints(self):  # Kompatibilität (Mittelpunkt, Radius)
@@ -142,12 +152,12 @@ class Diorama:
         self._paving()
         self._specials()
         self._perimeter()
-        self._interior()
+        self._interior(self.comp["interior"])
         self._make_houses()
-        self._greenery()
+        self._greenery(self.comp["inner_trees"], self.comp["pines"])
         self._street_furniture()
-        self._people()
-        self._traffic()
+        self._people(self.comp["people"])
+        self._traffic(self.comp["cars"])
         return self
 
     # ------------------------------------------------------------------
@@ -188,6 +198,24 @@ class Diorama:
         mb.polygon_prism(self._rr(self.block_off + 0.6), 0.09, 0.012, "plaza")
         for pts, w in self.alleys:
             mb.strip(pts, w, 0.105, "plaza")
+        if self.hero and self.comp["hero_rings"]:  # Travertin-Ringe um das Wahrzeichen
+            hx, hy = self.hero["pos"]
+            a, b = self.hero["ellipse"]
+            r = math.radians(self.hero.get("rot", 0))
+            for k, (da, mat) in enumerate([(-0.9, "travertine"), (-0.35, "stone_light"), (0.25, "travertine")]):
+                ring = []
+                for i in range(64):
+                    t = 2 * math.pi * i / 64
+                    u, v = (a + da) * math.cos(t), (b + da) * math.sin(t)
+                    ring.append((hx + u * math.cos(r) - v * math.sin(r), hy + u * math.sin(r) + v * math.cos(r)))
+                mb.strip(ring, 0.16, 0.104 + 0.001 * k, mat, closed=True)
+            for i in range(24):  # radiale Fugen
+                t = 2 * math.pi * i / 24
+                pts = []
+                for da in (-0.9, 0.25):
+                    u, v = (a + da) * math.cos(t), (b + da) * math.sin(t)
+                    pts.append((hx + u * math.cos(r) - v * math.sin(r), hy + u * math.sin(r) + v * math.cos(r)))
+                mb.strip(pts, 0.05, 0.103, "travertine")
         self.paving = mb.build("paving", self.col)
 
     # ------------------------------------------------------------------
@@ -219,13 +247,23 @@ class Diorama:
     def _zone_floors(self, x, y):
         """Höhenzone nach Lage zur Kamera: vorne niedrig, hinten hoch."""
         depth = -(x * self.cam[0] + y * self.cam[1]) / max(self.hx, self.hy)  # +1 hinten, -1 vorne
+        z = self.comp["zones"]
         if depth < -0.45:
-            return (2, 3)
+            return tuple(z[0])
         if depth < 0.1:
-            return (3, 4)
+            return tuple(z[1])
         if depth < 0.5:
-            return (3, 5)
-        return (4, 6)
+            return tuple(z[2])
+        return tuple(z[3])
+
+    def _in_front_open(self, x, y):
+        """Liegt der Punkt im offenen Sektor zur Kamera (Vorplatz)?"""
+        fo = self.comp["front_open"]
+        if not fo:
+            return False
+        L = math.hypot(x, y) or 1
+        cosang = (x * self.cam[0] + y * self.cam[1]) / L
+        return cosang > math.cos(math.radians(fo))
 
     def _specials(self):
         self.special_objs = []
@@ -252,7 +290,13 @@ class Diorama:
         self.plots = []
         s = rng.uniform(0, 2)
         while s < path.length - 1.5:
-            if rng.random() < 0.09:  # Durchgang / Gasse
+            (px, py), _ = path.at(s + 1.0)
+            if self._in_front_open(px, py):  # Vorplatz zur Kamera bleibt frei
+                if rng.random() < 0.5:
+                    self.plots.append({"tree": (px, py)})
+                s += 1.6
+                continue
+            if rng.random() < self.comp["gap_prob"]:  # Durchgang / Gasse
                 s += rng.uniform(0.5, 1.0)
                 continue
             w = rng.uniform(1.5, 3.3)
@@ -463,6 +507,8 @@ class Diorama:
                 if (u / (ea - 0.9)) ** 2 + (v / (eb - 0.9)) ** 2 < 1:
                     continue
             if not self._tree_free(x, y, 0.12):
+                continue
+            if any((p.location.x - x) ** 2 + (p.location.y - y) ** 2 < 0.3 ** 2 for p in self.people):
                 continue
             self.people.append(rng.choice(variants).place(x, y, 0.1, rng.uniform(0, 6.28)))
 
