@@ -5,3 +5,4 @@ projects/*/output/*.video.mp4
 projects/*/output/compare_frames/
 models/
 projects/*/output/*.wav
+build/

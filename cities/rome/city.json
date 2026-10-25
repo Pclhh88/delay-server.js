@@ -1,0 +1,382 @@
+{
+  "id": "rome",
+  "name": "Rom",
+  "target_duration": [
+    60,
+    70
+  ],
+  "voice": {
+    "backend": "espeak",
+    "voice": "mb-de6",
+    "rate": 185,
+    "pitch": 42
+  },
+  "music": {
+    "style": "italian_pluck",
+    "bpm": 112,
+    "gain_db": -15
+  },
+  "world": {
+    "half": 32,
+    "corner": 6,
+    "seed": 7,
+    "style": "roman",
+    "tree_kinds": [
+      "round",
+      "pine",
+      "cypress",
+      "autumn"
+    ],
+    "house_variants": 16,
+    "park_ratio": 0.1,
+    "cars": 16,
+    "streets": [
+      [
+        [
+          -29.6,
+          -3
+        ],
+        [
+          29.6,
+          -3
+        ]
+      ],
+      [
+        [
+          9.5,
+          -3
+        ],
+        [
+          9.5,
+          29.6
+        ]
+      ],
+      [
+        [
+          2.5,
+          -3
+        ],
+        [
+          2.5,
+          -29.6
+        ]
+      ]
+    ],
+    "river": {
+      "pts": [
+        [
+          -4,
+          31
+        ],
+        [
+          -3,
+          22
+        ],
+        [
+          -6,
+          12
+        ],
+        [
+          -6.5,
+          3
+        ],
+        [
+          -5,
+          -6
+        ],
+        [
+          -3,
+          -15
+        ],
+        [
+          -4,
+          -24
+        ],
+        [
+          -6,
+          -31
+        ]
+      ],
+      "width": 3.6
+    }
+  },
+  "landmarks": [
+    {
+      "id": "colosseum",
+      "name": "Kolosseum",
+      "builder": "rome.colosseum",
+      "pos": [
+        14,
+        -14
+      ],
+      "rot": 0,
+      "footprint": [
+        9.8,
+        8.4
+      ]
+    },
+    {
+      "id": "trevi",
+      "name": "Trevi-Brunnen",
+      "builder": "rome.trevi",
+      "pos": [
+        17,
+        16
+      ],
+      "rot": 0,
+      "footprint": [
+        6.6,
+        5.0
+      ],
+      "fp_center": [
+        0,
+        -1.4
+      ]
+    },
+    {
+      "id": "pantheon",
+      "name": "Pantheon",
+      "builder": "rome.pantheon",
+      "pos": [
+        3,
+        10
+      ],
+      "rot": 0,
+      "footprint": [
+        5.2,
+        7.7
+      ],
+      "fp_center": [
+        0,
+        -4.2
+      ]
+    },
+    {
+      "id": "st_peters",
+      "name": "Petersdom",
+      "builder": "rome.st_peters",
+      "pos": [
+        -24,
+        4.5
+      ],
+      "rot": 90,
+      "scale": 0.65,
+      "footprint": [
+        4.9,
+        8.6
+      ],
+      "fp_center": [
+        0,
+        -4.85
+      ]
+    }
+  ],
+  "beats": [
+    {
+      "id": "intro",
+      "focus": "island",
+      "shot": {
+        "move": "overview_orbit"
+      },
+      "text": "Rom. 3000 Jahre Geschichte, vier Weltwunder und trotzdem findet hier niemand einen Parkplatz.",
+      "sfx": [
+        {
+          "name": "swoosh",
+          "at": 0.0
+        }
+      ],
+      "emphasis": [
+        "Rom",
+        "Parkplatz"
+      ]
+    },
+    {
+      "id": "colosseum_a",
+      "focus": "colosseum",
+      "pin": true,
+      "actions": [
+        "bounce"
+      ],
+      "shot": {
+        "move": "push_in"
+      },
+      "text": "Das Kolosseum. Eröffnet im Jahr 80, Platz für 50.000 Zuschauer. Eintritt frei, Verpflegung inklusive. Nur das Programm war eher endgültig.",
+      "sfx": [
+        {
+          "name": "pop",
+          "at": 0.1
+        }
+      ],
+      "emphasis": [
+        "Kolosseum",
+        "50.000",
+        "endgültig"
+      ]
+    },
+    {
+      "id": "colosseum_b",
+      "focus": "colosseum",
+      "actions": [
+        "stones"
+      ],
+      "shot": {
+        "move": "orbit",
+        "az": [
+          160,
+          260
+        ],
+        "el": [
+          26,
+          34
+        ]
+      },
+      "text": "Dass ein Teil fehlt, waren nicht die Barbaren. Die Römer haben es jahrhundertelang als Steinbruch benutzt. Recycling mit Ehrgeiz.",
+      "sfx": [
+        {
+          "name": "swoosh_down",
+          "at": 1.0
+        }
+      ],
+      "emphasis": [
+        "Steinbruch",
+        "Ehrgeiz"
+      ]
+    },
+    {
+      "id": "trevi",
+      "focus": "trevi",
+      "pin": true,
+      "actions": [
+        "bounce",
+        "coins"
+      ],
+      "shot": {
+        "move": "push_in",
+        "az": [
+          -115,
+          -90
+        ],
+        "el": [
+          26,
+          20
+        ],
+        "dist": [
+          3.8,
+          2.7
+        ]
+      },
+      "text": "Der Trevi-Brunnen. Touristen werfen hier jeden Tag rund 3000 Euro ins Wasser. Die Stadt fischt es raus und spendet es. Bessere Finanzplanung als du.",
+      "sfx": [
+        {
+          "name": "pop",
+          "at": 0.1
+        },
+        {
+          "name": "water",
+          "at": 0.0
+        },
+        {
+          "name": "coins",
+          "at": 0.6
+        }
+      ],
+      "emphasis": [
+        "Trevi-Brunnen",
+        "3000",
+        "Euro",
+        "du"
+      ]
+    },
+    {
+      "id": "pantheon",
+      "focus": "pantheon",
+      "pin": true,
+      "actions": [
+        "bounce",
+        "rain"
+      ],
+      "shot": {
+        "move": "top_down",
+        "az": [
+          -110,
+          -60
+        ],
+        "el": [
+          46,
+          66
+        ],
+        "dist": [
+          4.6,
+          3.6
+        ]
+      },
+      "text": "Das Pantheon. Fast 2000 Jahre alt, bis heute die größte Kuppel aus unbewehrtem Beton. Oben: ein Loch, fast neun Meter breit. Regnet es, regnet es rein. Dafür hat der Boden Abflusslöcher. Problem gelöst, auf römisch.",
+      "sfx": [
+        {
+          "name": "pop",
+          "at": 0.1
+        },
+        {
+          "name": "rain",
+          "at": 0.8
+        }
+      ],
+      "emphasis": [
+        "Pantheon",
+        "Loch",
+        "römisch"
+      ]
+    },
+    {
+      "id": "st_peters",
+      "focus": "st_peters",
+      "pin": true,
+      "actions": [
+        "bounce"
+      ],
+      "shot": {
+        "move": "crane_up",
+        "az": [
+          -10,
+          25
+        ],
+        "look_height": 0.45
+      },
+      "text": "Und dann der Petersdom. Streng genommen schon Vatikan, der kleinste Staat der Welt. Die Kuppel: 136 Meter hoch, entworfen von Michelangelo, fertig erst nach seinem Tod. Bauzeit: 120 Jahre. Für deutsche Großbaustellen wäre das Rekordtempo.",
+      "sfx": [
+        {
+          "name": "pop",
+          "at": 0.1
+        },
+        {
+          "name": "bell",
+          "at": 0.3
+        }
+      ],
+      "emphasis": [
+        "Petersdom",
+        "Vatikan",
+        "136",
+        "Rekordtempo"
+      ]
+    },
+    {
+      "id": "outro",
+      "focus": "island",
+      "shot": {
+        "move": "pullback_360"
+      },
+      "text": "Rom also: vier Wunder, null Parkplätze. Welche Stadt soll ich als Nächstes schrumpfen?",
+      "sfx": [
+        {
+          "name": "swoosh",
+          "at": 0.0
+        }
+      ],
+      "emphasis": [
+        "null",
+        "schrumpfen"
+      ]
+    }
+  ]
+}
