@@ -13,7 +13,9 @@ import bpy  # noqa: E402
 from mathutils import Vector  # noqa: E402
 
 from cityshorts.blender.kit import stage, vegetation, vehicles  # noqa: E402
-from cityshorts.blender.kit.house_detail import build_house  # noqa: E402
+import random
+
+from cityshorts.blender.kit.house_detail import build_house, random_spec  # noqa: E402
 from cityshorts.blender.kit.mesh import MeshBuilder, rounded_rect  # noqa: E402
 from cityshorts.blender.kit.props import lamp  # noqa: E402
 
@@ -26,7 +28,7 @@ def main():
     ap.add_argument("--samples", type=int, default=32)
     ap.add_argument("--az", type=float, default=-58)
     ap.add_argument("--el", type=float, default=30)
-    ap.add_argument("--style2", default="haussmann_red")
+    ap.add_argument("--style2", default="paris", help="Stil-Familie des Nachbarhauses (paris|rome)")
     a = ap.parse_args(argv)
 
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -50,11 +52,11 @@ def main():
 
     # Haus 1: Eckhaus mit abgeschrägter Ecke (wie im Referenzbild)
     corner = [(-1.6, -1.3), (1.05, -1.3), (1.6, -0.75), (1.6, 1.3), (-1.6, 1.3)]
-    h1, _ = build_house(corner, "haussmann", blind=[4], seed=1, name="house_corner", collection=col)
+    h1, _ = build_house(corner, random_spec("paris", random.Random(1)), blind=[4], seed=1, name="house_corner", collection=col)
     h1.location = (0.9, 0.2, 0.06)
     # Haus 2: niedrigeres Nachbarhaus mit rötlichem Mansarddach
     nb = [(-2.2, -1.3), (0.0, -1.3), (0.0, 1.3), (-2.2, 1.3)]
-    h2, _ = build_house(nb, a.style2, blind=[1, 3], seed=2, name="house_neighbor", collection=col)
+    h2, _ = build_house(nb, random_spec(a.style2, random.Random(2)), blind=[1, 3], seed=2, name="house_neighbor", collection=col)
     h2.location = (-0.7, 0.2, 0.06)
 
     # Requisiten

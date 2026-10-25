@@ -85,3 +85,33 @@ def _has_gpu():
     except Exception:
         pass
     return False
+
+
+def still_look(scene, samples=256, percent=100):
+    """Einstellungen für Diorama-Standbilder: mehr Samples/Bounces, warmes
+    Streiflicht von vorne links, weicher Schatten, warme Umgebung."""
+    from mathutils import Vector
+    c = scene.cycles
+    c.samples = samples
+    c.max_bounces = 8
+    c.diffuse_bounces = 4
+    c.glossy_bounces = 3
+    c.use_adaptive_sampling = True
+    c.adaptive_threshold = 0.01
+    scene.render.resolution_percentage = percent
+    scene.render.use_motion_blur = False
+    try:
+        scene.view_settings.look = "AgX - Base Contrast"
+    except TypeError:
+        pass
+    scene.view_settings.exposure = 0.15
+    bg = scene.world.node_tree.nodes.get("Background")
+    bg.inputs["Color"].default_value = (0.95, 0.86, 0.74, 1)
+    bg.inputs["Strength"].default_value = 0.55
+    sun = bpy.data.objects["Sun"]
+    sun.data.energy = 5.2
+    sun.data.angle = math.radians(3.5)
+    sun.data.color = (1.0, 0.88, 0.74)
+    az, el = math.radians(-165), math.radians(38)
+    d = Vector((math.cos(el) * math.cos(az), math.cos(el) * math.sin(az), math.sin(el)))
+    sun.rotation_euler = (-d).to_track_quat("-Z", "Y").to_euler()

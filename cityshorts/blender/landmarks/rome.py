@@ -23,73 +23,96 @@ def _tangent(a, b, t):
 
 @register("rome.colosseum")
 def colosseum(col, params):
+    """Kolosseum mit echten Rundbögen, Halbsäulen, Gebälk je Rang, Attika mit
+    Pilastern und Fenstern, eingestürzter Südseite, Rängen und Hypogäum."""
+    from ..kit.house_detail import Facade
     a, b = 8.0, 6.6
     mb = MeshBuilder()
     rng = random.Random(3)
-    N = 64
+    N = 52
     tiers = [(0.0, 1.35), (1.35, 1.25), (2.6, 1.25), (3.85, 1.05)]
-    # Bruchkante: auf der Südwestseite fehlen die oberen Ränge
+    T = 0.5  # Mauertiefe
+
     def n_tiers(t):
         d = (math.degrees(t) - 215) % 360
         d = min(d, 360 - d)
-        if d < 50:
-            return 2
-        if d < 62:
-            return 3
-        return 4
-    per = 2 * math.pi * math.sqrt((a * a + b * b) / 2) / N
+        return 2 if d < 48 else (3 if d < 60 else 4)
+    pts = [_ellipse_pt(a, b, 2 * math.pi * i / N) for i in range(N)]
     for i in range(N):
-        t = 2 * math.pi * i / N
-        x, y = _ellipse_pt(a, b, t)
-        rz = _tangent(a, b, t)
+        t = 2 * math.pi * (i + 0.5) / N
+        f = Facade(mb, pts[i], pts[(i + 1) % N])
+        L = f.L
         nt = n_tiers(t)
         for k, (z0, h) in enumerate(tiers[:nt]):
+            mat = "travertine"
             if k < 3:
-                # Pfeiler + Halbsäule + Bogen-Sturz
-                mb.box_on(x, y, z0, per * 0.42, 0.7, h, "travertine", rz=rz)
-                mb.box((x, y, z0 + h * 0.86), (per * 1.02, 0.66, h * 0.28), "travertine", rz=rz)
-                mb.box((x, y, z0 + h - 0.05), (per * 1.05, 0.78, 0.1), "travertine_dark", rz=rz)
-            else:  # Attika: geschlossene Wand mit kleinen Fenstern
-                mb.box_on(x, y, z0, per * 1.02, 0.66, h, "travertine", rz=rz)
+                ow = L * 0.58
+                u0, u1 = (L - ow) / 2, (L + ow) / 2
+                zs = z0 + 0.12 + (h - 0.3) - ow / 2
+                f.box(0, L, -T, 0, z0, z0 + 0.12, mat)                 # Sockel/Brüstung
+                f.box(0, u0, -T, 0, z0 + 0.12, zs, mat)                # Pfeiler
+                f.box(u1, L, -T, 0, z0 + 0.12, zs, mat)
+                f.arch_fill(u0, u1, zs, -T, 0.0, mat, seg=8)
+                f.box(0, u0, -T, 0, zs, zs + ow / 2, mat)
+                f.box(u1, L, -T, 0, zs, zs + ow / 2, mat)
+                f.box(0, L, -T, 0, zs + ow / 2, z0 + h, mat)           # Wand über dem Bogen
+                f.arch_ring(u0, u1, zs, 0.0, "travertine_dark", t=0.035, seg=8)
+                f.box(-0.01, L + 0.01, 0.0, 0.07, z0 + h - 0.13, z0 + h, "travertine")   # Gebälk
+                f.box(-0.01, L + 0.01, 0.0, 0.04, z0 + h - 0.18, z0 + h - 0.13, "travertine_dark")
+                x, y = f.w(0, 0.03)
+                mb.cyl((x, y, z0 + 0.12), 0.075, h - 0.3, "travertine", seg=10)      # Halbsäule
+                mb.box((x, y, z0 + h - 0.2), (0.17, 0.17, 0.05), "travertine", rz=f.rz)
+                # Tonnengewölbe dahinter (dunkler Umgang)
+                f.box(0, L, -T - 0.9, -T, z0, z0 + h, "travertine_dark")
+            else:  # Attika
+                f.box(0, L, -T, 0, z0, z0 + h, mat)
+                f.box(0, 0.08, 0.0, 0.035, z0, z0 + h - 0.12, mat)                    # Pilaster
                 if i % 2 == 0:
-                    nx, ny = math.cos(rz - math.pi / 2), math.sin(rz - math.pi / 2)
-                    mb.box((x - nx * 0.34, y - ny * 0.34, z0 + h * 0.55), (per * 0.3, 0.04, 0.25), "dark", rz=rz)
-        if nt < 4:  # unregelmäßige Bruchkante
+                    f.box(L * 0.35, L * 0.65, -0.02, 0.005, z0 + h * 0.45, z0 + h * 0.7, "dark")
+                for c in (L * 0.25, L * 0.75):                                          # Konsolen (Velarium)
+                    f.box(c - 0.03, c + 0.03, 0.0, 0.06, z0 + 0.15, z0 + 0.25, mat)
+                f.box(-0.01, L + 0.01, 0.0, 0.08, z0 + h - 0.12, z0 + h, mat)
+        if nt < 4:  # Bruchkante: unregelmäßige Reste
             z0, h = tiers[nt]
-            mb.box_on(x, y, z0, per * 1.02, 0.66, rng.uniform(0.1, 0.6), "travertine", rz=rz)
-        # Bögen dunkel hinterlegen (Blick ins Innere)
-        for k, (z0, h) in enumerate(tiers[:min(nt, 3)]):
-            ix, iy = _ellipse_pt(a - 0.45, b - 0.45, t)
-            mb.box_on(ix, iy, z0, per * 1.02, 0.15, h, "travertine_dark", rz=rz)
-    # innerer Ring (sichtbar an der Bruchkante)
-    mb.ring(a - 0.5, b - 0.5, a - 1.3, b - 1.3, 0, 3.6, "travertine_dark", n=N)
-    # Zuschauerränge (cavea) – Stufenringe nach innen abfallend
-    steps = 7
+            for j in range(3):
+                hh = rng.uniform(0.05, 0.7) * (1 - j * 0.25)
+                f.box(L * j / 3, L * (j + 1) / 3, -T, 0, z0, z0 + hh, "travertine")
+    # innerer Ring (an der Bruchkante sichtbar)
+    mb.ring(a - 0.9, b - 0.9, a - 1.6, b - 1.6, 0, 3.6, "travertine_dark", n=N)
+    for k in range(N):
+        tt = 2 * math.pi * (k + 0.5) / N
+        x, y = _ellipse_pt(a - 0.9, b - 0.9, tt)
+        mb.box((x, y, 2.0), (0.22, 0.22, 0.9), "dark", rz=_tangent(a, b, tt))
+    # Zuschauerränge: feine Stufen
+    steps = 12
     for s in range(steps):
         f0 = s / steps
-        ao, bo = a - 1.3 - f0 * 2.6, b - 1.3 - f0 * 2.6
-        mb.ring(ao, bo, ao - 2.6 / steps, bo - 2.6 / steps, 0, 3.4 - s * 0.38,
-                "travertine" if s % 2 else "stone_grey", n=N)
-    ai, bi = a - 3.9, b - 3.9
-    # Arena: halb Sandboden, halb offengelegte Unterbauten (Hypogäum)
-    mb.polygon_prism([(ai * math.cos(t), bi * math.sin(t)) for t in [2 * math.pi * i / 40 for i in range(40)]],
+        ao, bo = a - 1.6 - f0 * 2.4, b - 1.6 - f0 * 2.4
+        mb.ring(ao, bo, ao - 2.4 / steps, bo - 2.4 / steps, 0, 3.5 - s * 0.24,
+                "travertine" if s % 3 else "stone_grey", n=N)
+    for k in range(16):  # Zugänge (vomitoria)
+        tt = 2 * math.pi * k / 16
+        x, y = _ellipse_pt(a - 2.6, b - 2.6, tt)
+        mb.box((x, y, 2.6), (0.3, 0.3, 0.3), "dark", rz=_tangent(a, b, tt))
+    ai, bi = a - 4.0, b - 4.0
+    mb.polygon_prism([(ai * math.cos(t), bi * math.sin(t)) for t in [2 * math.pi * i / 48 for i in range(48)]],
                      0.0, 0.08, "travertine_dark")
-    for gx in range(-8, 9):
-        x = gx * ai / 8.5
+    mb.ring(ai + 0.15, bi + 0.15, ai, bi, 0, 0.75, "travertine", n=48)  # Podium
+    for gx in range(-9, 10):
+        x = gx * ai / 9.5
         if x > 0.2:
             continue
         hh = bi * math.sqrt(max(0, 1 - (x / ai) ** 2)) * 0.92
         if hh > 0.1:
-            mb.box_on(x, 0, 0.08, 0.08, 2 * hh, 0.45, "travertine")
-    for gy in range(-3, 4):
-        y = gy * bi / 3.6
+            mb.box_on(x, 0, 0.08, 0.07, 2 * hh, 0.5, "travertine")
+    for gy in range(-4, 5):
+        y = gy * bi / 4.6
         ww = ai * math.sqrt(max(0, 1 - (y / bi) ** 2)) * 0.92
         if ww > 0.1:
-            mb.box_on(-ww / 2, y, 0.08, ww, 0.08, 0.45, "travertine")
+            mb.box_on(-ww / 2, y, 0.08, ww, 0.07, 0.5, "travertine")
     sand = [(ai * 0.95 * math.cos(t), bi * 0.95 * math.sin(t)) for t in [-math.pi / 2 + math.pi * i / 24 for i in range(25)]]
-    mb.polygon_prism(sand, 0.08, 0.45, "sand")
-    ob = mb.build("colosseum", col, bevel=0.02)
-    # Platz rund ums Kolosseum
+    mb.polygon_prism(sand, 0.08, 0.5, "sand")
+    ob = mb.build("colosseum", col, bevel=0.01)
     plat = MeshBuilder()
     plat.ring(a + 1.6, b + 1.6, 0.01, 0.01, -0.02, 0.07, "plaza", n=48)
     pl = plat.build("colosseum_plaza", col)
@@ -97,7 +120,6 @@ def colosseum(col, params):
     props.crowd(ppl, 0, -b - 0.9, 2.2, 14, 7)
     props.crowd(ppl, a + 0.8, 0, 1.0, 6, 8)
     people = ppl.build("colosseum_people", col)
-    # Steine, die im "Steinbruch"-Gag herausfliegen (Animation im Szenen-Skript)
     stones = []
     for k in range(6):
         t = math.radians(215 + rng.uniform(-35, 35))

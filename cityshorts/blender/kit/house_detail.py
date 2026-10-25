@@ -1,37 +1,63 @@
-"""Detaillierte Miniatur-Häuser im Look des Referenzbilds.
+"""Detaillierte Miniatur-Häuser im Look des Referenzbilds (B2).
 
-Statt aufgeklebter Fenster-Kästchen wird jede Fassade aus Pfeilern und
-Brüstungsbändern aufgebaut, sodass Fenster echte Laibungen haben. Dazu
-Rahmen mit Sprossen, Gesimse, durchgehende schmiedeeiserne Balkone,
-Ladenzone mit Markisen, Mansarddach mit Gauben und Kaminen.
+Jedes Haus entsteht aus Grundriss + Spezifikation. `random_spec()` würfelt
+aus einer Stil-Familie (z. B. "paris", "rome") eine individuelle Variante:
+Geschosszahl, Achsmaß, Fensterformen (gerade, Verdachung, Dreiecksgiebel,
+Rundbogen), Balkone, Läden, Erdgeschoss (Läden, Arkaden, Rustika mit Portal),
+Gliederung (Gesimse, Eckquader, Konsolen), Dach (Mansarde mit Gauben,
+Walmdach mit Ziegeln, Flachdach mit Balustrade) und Dachlandschaft
+(Kamine, Lüfter, Wassertanks, Antennen, Pflanzkübel, Pergola).
 
-Ein Haus = Grundriss (konvexes Polygon, gegen den Uhrzeigersinn) + Stil.
-Kanten in `blind` (Index) sind Brandwände zum Nachbarhaus (ohne Fenster).
+Fassaden werden aus Pfeilern und Bändern aufgebaut, sodass Fenster echte
+Laibungen haben (keine aufgeklebten Kästchen).
 """
 import math
 import random
 
 from .mesh import MeshBuilder, inset_polygon
 
-STYLES = {
-    "haussmann": {
-        "wall": "stone_cream", "trim": "stone_light", "roof": "zinc_blue", "roof_shape": "mansard",
-        "ground_h": 0.95, "floor_h": 0.62, "floors": 4, "bay": 0.5, "win_w": 0.25, "win_h": 0.68,
-        "balcony_floors": [1, 4], "shutters": None, "hoods": [1], "awnings": ["awning_red", "awning_green"],
+REC = 0.06  # Tiefe der Fensterlaibung
+
+FAMILIES = {
+    "paris": {
+        "walls": ["stone_cream", "stone_warm", "stone_tan", "stone_light", "stone_pinkish"],
+        "roofs": [("mansard", "zinc_blue"), ("mansard", "zinc_dark"), ("mansard", "zinc_red"), ("flat", "rooftop_grey")],
+        "floors": (3, 6), "floor_h": (0.56, 0.64), "ground_h": (0.85, 1.0), "bay": (0.46, 0.56),
+        "tops": ["flat", "hood", "hood", "pediment", "arch"], "shutters": [None],
+        "grounds": ["shops", "shops", "arcade", "rustic"], "balconies": [[1], [1, 4], [1, 5], [2], []],
+        "shops": ["shop_wood", "shop_green", "shop_red"], "awnings": ["awning_red", "awning_green", None],
     },
-    "haussmann_red": {
-        "wall": "stone_warm", "trim": "stone_light", "roof": "zinc_red", "roof_shape": "mansard",
-        "ground_h": 0.95, "floor_h": 0.6, "floors": 3, "bay": 0.5, "win_w": 0.25, "win_h": 0.66,
-        "balcony_floors": [1], "shutters": None, "hoods": [1, 2], "awnings": ["awning_red"],
-    },
-    "roman": {
-        "wall": "stone_ochre", "trim": "stone_light", "roof": "tile_terracotta", "roof_shape": "hip",
-        "ground_h": 0.9, "floor_h": 0.6, "floors": 3, "bay": 0.55, "win_w": 0.22, "win_h": 0.6,
-        "balcony_floors": [1], "shutters": "shutter_green", "hoods": [1], "awnings": ["awning_red"],
+    "rome": {
+        "walls": ["stone_ochre", "stone_sienna", "stone_salmon", "stone_yellow", "stone_cream", "stone_rose"],
+        "roofs": [("hip", "tile_terracotta"), ("hip", "tile_terracotta"), ("flat", "rooftop_grey"), ("mansard", "zinc_dark")],
+        "floors": (3, 5), "floor_h": (0.56, 0.66), "ground_h": (0.85, 1.05), "bay": (0.5, 0.62),
+        "tops": ["flat", "hood", "pediment", "arch", "flat"], "shutters": ["shutter_green", "shutter_green", "shutter_brown", None],
+        "grounds": ["shops", "rustic", "arcade"], "balconies": [[1], [], [2], [1]],
+        "shops": ["shop_wood", "shop_green"], "awnings": ["awning_red", "awning_green", None],
     },
 }
 
 
+def random_spec(family, rng):
+    F = FAMILIES[family]
+    shape, roof = rng.choice(F["roofs"])
+    floors = rng.randint(*F["floors"])
+    tops = [rng.choice(F["tops"]) for _ in range(floors)]
+    if rng.random() < 0.6:  # oberste Etage meist schlicht
+        tops[-1] = "flat"
+    return {
+        "wall": rng.choice(F["walls"]), "trim": "stone_light", "roof": roof, "roof_shape": shape,
+        "floors": floors, "floor_h": rng.uniform(*F["floor_h"]), "ground_h": rng.uniform(*F["ground_h"]),
+        "bay": rng.uniform(*F["bay"]), "win_w": rng.uniform(0.5, 0.62), "win_h": rng.uniform(0.6, 0.72),
+        "tops": tops, "balcony_floors": rng.choice(F["balconies"]), "balconettes": rng.random() < 0.7,
+        "shutters": rng.choice(F["shutters"]), "ground": rng.choice(F["grounds"]),
+        "shop": rng.choice(F["shops"]), "awning": rng.choice(F["awnings"]),
+        "quoins": rng.random() < 0.5, "strings": rng.random() < 0.7, "brackets": rng.random() < 0.6,
+        "clutter": True, "balustrade": rng.random() < 0.6,
+    }
+
+
+# ---------------------------------------------------------------------------
 class Facade:
     """Lokales Koordinatensystem einer Fassadenkante: u entlang, v nach außen."""
 
@@ -43,214 +69,443 @@ class Facade:
         self.nx, self.ny = self.uy, -self.ux  # rechts = außen (CCW)
         self.rz = math.atan2(self.uy, self.ux)
 
+    def w(self, u, v):
+        return (self.p0[0] + self.ux * u + self.nx * v, self.p0[1] + self.uy * u + self.ny * v)
+
     def box(self, u0, u1, v0, v1, z0, z1, mat):
-        if u1 - u0 <= 1e-4 or z1 - z0 <= 1e-4:
+        if u1 - u0 <= 1e-4 or z1 - z0 <= 1e-4 or v1 - v0 <= 1e-5:
             return
-        u, v = (u0 + u1) / 2, (v0 + v1) / 2
-        x = self.p0[0] + self.ux * u + self.nx * v
-        y = self.p0[1] + self.uy * u + self.ny * v
+        x, y = self.w((u0 + u1) / 2, (v0 + v1) / 2)
         self.mb.box((x, y, (z0 + z1) / 2), (u1 - u0, v1 - v0, z1 - z0), mat, rz=self.rz)
 
+    def pediment(self, u, z, width, height, depth, mat):
+        x, y = self.w(u, depth / 2)
+        self.mb.prism(x, y, z, depth, width, height, mat, rz=self.rz + math.pi / 2)
+
+    def arch_fill(self, a, b, zs, v0, v1, mat, seg=10):
+        """Füllt [a,b] x [zs, zs+r] außerhalb eines Halbkreises (Bogenzwickel)."""
+        bm = self.mb.bm
+        r, c = (b - a) / 2, (a + b) / 2
+        arc = [(c - r * math.cos(math.pi * i / seg), zs + r * math.sin(math.pi * i / seg)) for i in range(seg + 1)]
+        # äußere Randpunkte: linke Kante hoch, oben quer, rechte Kante runter
+        outer = []
+        for i in range(seg + 1):
+            t = i / seg
+            if t < 0.25:
+                outer.append((a, zs + r * t / 0.25))
+            elif t < 0.75:
+                outer.append((a + (b - a) * (t - 0.25) / 0.5, zs + r))
+            else:
+                outer.append((b, zs + r * (1 - (t - 0.75) / 0.25)))
+        verts = []
+
+        def V(u, z, v):
+            x, y = self.w(u, v)
+            vv = bm.verts.new((x, y, z))
+            verts.append(vv)
+            return vv
+        fa = [V(u, z, v1) for u, z in arc]
+        fo = [V(u, z, v1) for u, z in outer]
+        ba = [V(u, z, v0) for u, z in arc]
+        bo = [V(u, z, v0) for u, z in outer]
+        for i in range(seg):
+            for quad in ((fa[i], fa[i + 1], fo[i + 1], fo[i]), (bo[i], bo[i + 1], ba[i + 1], ba[i]),
+                         (ba[i], ba[i + 1], fa[i + 1], fa[i])):
+                try:
+                    bm.faces.new(quad)
+                except ValueError:
+                    pass
+        self.mb._tag(verts, mat, False)
+
+    def arch_ring(self, a, b, zs, v, mat, t=0.03, seg=12):
+        """Archivolte: Profilring um einen Rundbogen."""
+        r, c = (b - a) / 2 + t / 2, (a + b) / 2
+        for i in range(seg):
+            a0, a1 = math.pi * i / seg, math.pi * (i + 1) / seg
+            am = (a0 + a1) / 2
+            u, z = c - r * math.cos(am), zs + r * math.sin(am)
+            x, y = self.w(u, v + 0.01)
+            ln = r * math.pi / seg * 1.08
+            self.mb.box((x, y, z), (ln, 0.02, t), mat, rz=self.rz, ry=am - math.pi / 2)
+            if i == seg // 2:  # Schlussstein
+                self.mb.box((x, y, z), (0.05, 0.03, 0.07), mat, rz=self.rz)
 
 
-REC = 0.06  # Tiefe der Fensterlaibung
-
-
-def _window(f, u, z0, w, h, st, floor_idx, rng):
-    t = 0.022
-    f.box(u - w / 2, u + w / 2, -REC, -REC + 0.01, z0, z0 + h, "window_glass")
-    for a, b, c, d in [(u - w / 2, u - w / 2 + t, z0, z0 + h), (u + w / 2 - t, u + w / 2, z0, z0 + h),
-                       (u - w / 2, u + w / 2, z0 + h - t, z0 + h), (u - w / 2, u + w / 2, z0, z0 + t),
-                       (u - t / 3, u + t / 3, z0, z0 + h), (u - w / 2, u + w / 2, z0 + h * 0.72, z0 + h * 0.72 + t * 0.7)]:
-        f.box(a, b, -REC + 0.005, -REC + 0.025, c, d, "frame_white")
-    for k in (0.33, 0.52):  # Quersprossen
-        f.box(u - w / 2, u + w / 2, -REC + 0.008, -REC + 0.02, z0 + h * k, z0 + h * k + 0.008, "frame_white")
-    f.box(u - w / 2 - 0.03, u + w / 2 + 0.03, -0.01, 0.035, z0 - 0.025, z0, st["trim"])  # Sims
-    # Faschen (Rahmung) um die Öffnung
-    for a, b in [(u - w / 2 - 0.035, u - w / 2), (u + w / 2, u + w / 2 + 0.035)]:
-        f.box(a, b, 0.0, 0.012, z0, z0 + h, st["trim"])
-    f.box(u - w / 2 - 0.035, u + w / 2 + 0.035, 0.0, 0.012, z0 + h, z0 + h + 0.035, st["trim"])
-    if floor_idx in st["hoods"]:  # Verdachung
-        f.box(u - w / 2 - 0.06, u + w / 2 + 0.06, 0.0, 0.05, z0 + h + 0.05, z0 + h + 0.085, st["trim"])
-        f.box(u - w / 2 - 0.02, u + w / 2 + 0.02, 0.0, 0.03, z0 + h + 0.035, z0 + h + 0.05, st["trim"])
-    if st["shutters"]:
-        for s in (-1, 1):
-            f.box(u + s * (w / 2 + 0.005) - (0.12 if s < 0 else 0), u + s * (w / 2 + 0.005) + (0.12 if s > 0 else 0),
-                  0.0, 0.02, z0, z0 + h, st["shutters"])
-            for k in range(6):  # Lamellen
-                zz = z0 + 0.05 + k * (h - 0.1) / 5
-                f.box(u + s * (w / 2 + 0.06) - 0.05, u + s * (w / 2 + 0.06) + 0.05, 0.02, 0.026, zz, zz + 0.008,
-                      "dark")
-    elif floor_idx not in st["balcony_floors"]:  # französischer Austritt (Brüstungsgitter)
-        _railing(f, u - w / 2 - 0.01, u + w / 2 + 0.01, 0.015, z0, 0.15)
-
-
-def _railing(f, u0, u1, v, z0, h, pitch=0.032):
-    f.box(u0, u1, v, v + 0.012, z0 + h - 0.012, z0 + h, "iron")
-    f.box(u0, u1, v, v + 0.01, z0 + 0.012, z0 + 0.022, "iron")
-    n = max(2, int((u1 - u0) / pitch))
-    for i in range(n + 1):
-        u = u0 + (u1 - u0) * i / n
-        f.box(u - 0.004, u + 0.004, v + 0.002, v + 0.008, z0, z0 + h, "iron")
-        if i % 4 == 2:  # kleines Ornament
-            f.box(u - 0.012, u + 0.012, v, v + 0.01, z0 + h * 0.45, z0 + h * 0.6, "iron")
-
-
-def _bays(L, st):
-    n = max(1, int(round(L / st["bay"])))
+# ---------------------------------------------------------------------------
+def _bays(L, spec):
+    if L < 0.34:
+        return [], L
+    n = max(1, int(round(L / spec["bay"])))
     return [(i + 0.5) * L / n for i in range(n)], L / n
 
 
-def build_house(pts, style="haussmann", blind=(), seed=0, name="house", collection=None, floors=None):
-    st = dict(STYLES[style])
-    if floors:
-        st["floors"] = floors
+def _railing(f, u0, u1, v, z0, h, pitch=0.03):
+    f.box(u0, u1, v, v + 0.014, z0 + h - 0.014, z0 + h, "iron")
+    f.box(u0, u1, v, v + 0.01, z0 + 0.015, z0 + 0.025, "iron")
+    n = max(2, int((u1 - u0) / pitch))
+    for i in range(n + 1):
+        u = u0 + (u1 - u0) * i / n
+        f.box(u - 0.0035, u + 0.0035, v + 0.002, v + 0.008, z0, z0 + h, "iron")
+        if i % 3 == 1:
+            f.box(u - 0.01, u + 0.01, v + 0.001, v + 0.009, z0 + h * 0.5, z0 + h * 0.62, "iron")
+
+
+def _skin(f, cuts, L, o0, o1, z0, z1, mat):
+    """Wandhaut eines Geschosses [z0,z1] mit Öffnungen [o0,o1] an `cuts`."""
+    if o0 > z0:
+        f.box(0, L, -REC, 0, z0, o0, mat)
+    if z1 > o1:
+        f.box(0, L, -REC, 0, o1, z1, mat)
+    edges = [0.0] + [c for cut in cuts for c in cut] + [L]
+    for a, b in zip(edges[0::2], edges[1::2]):
+        f.box(a, b, -REC, 0, o0, o1, mat)
+
+
+def _rustic(f, cuts, L, z0, z1, o1, mat):
+    """Rustika-Erdgeschoss: Steinlagen mit tiefen Fugen."""
+    edges = [0.0] + [c for cut in cuts for c in cut] + [L]
+    z = z0
+    k = 0
+    while z < z1 - 1e-4:
+        zz = min(z + 0.09, z1)
+        if zz <= o1:
+            for a, b in zip(edges[0::2], edges[1::2]):
+                f.box(a, b, -REC, 0.012, z + 0.01, zz, mat)
+        else:
+            f.box(0, L, -REC, 0.012, max(z, o1) + 0.01, zz, mat)
+        f.box(0, L, -REC, 0.0, z, z + 0.01, mat)  # Fuge (zurückliegend)
+        z = zz
+        k += 1
+
+
+def _window(f, u, z0, w, h, spec, top, floor_idx, wall):
+    t = 0.02
+    trim = spec["trim"]
+    arch = top == "arch"
+    hr = h - w / 2 if arch else h
+    f.box(u - w / 2, u + w / 2, -REC, -REC + 0.008, z0, z0 + h, "window_glass")
+    for a, b, c, d in [(u - w / 2, u - w / 2 + t, z0, z0 + hr), (u + w / 2 - t, u + w / 2, z0, z0 + hr),
+                       (u - w / 2, u + w / 2, z0, z0 + t), (u - t / 3, u + t / 3, z0, z0 + h - 0.01),
+                       (u - w / 2, u + w / 2, z0 + hr * 0.7, z0 + hr * 0.7 + t * 0.7)]:
+        f.box(a, b, -REC + 0.004, -REC + 0.022, c, d, "frame_white")
+    f.box(u - w / 2, u + w / 2, -REC + 0.006, -REC + 0.018, z0 + hr * 0.36, z0 + hr * 0.36 + 0.007, "frame_white")
+    if arch:
+        f.box(u - w / 2, u + w / 2, -REC + 0.004, -REC + 0.022, z0 + hr - t, z0 + hr, "frame_white")
+        f.arch_fill(u - w / 2, u + w / 2, z0 + hr, -REC, 0.0, wall)
+        f.arch_ring(u - w / 2, u + w / 2, z0 + hr, 0.0, trim)
+    # Sohlbank + Faschen
+    f.box(u - w / 2 - 0.035, u + w / 2 + 0.035, -0.01, 0.04, z0 - 0.028, z0, trim)
+    if not arch:
+        for a, b in [(u - w / 2 - 0.03, u - w / 2), (u + w / 2, u + w / 2 + 0.03)]:
+            f.box(a, b, 0.0, 0.012, z0, z0 + h, trim)
+        f.box(u - w / 2 - 0.03, u + w / 2 + 0.03, 0.0, 0.012, z0 + h, z0 + h + 0.03, trim)
+    if top == "hood":
+        f.box(u - w / 2 - 0.06, u + w / 2 + 0.06, 0.0, 0.055, z0 + h + 0.045, z0 + h + 0.08, trim)
+        for s in (-1, 1):  # Konsölchen
+            f.box(u + s * (w / 2 + 0.045) - 0.012, u + s * (w / 2 + 0.045) + 0.012, 0.0, 0.04, z0 + h - 0.05, z0 + h + 0.045, trim)
+    elif top == "pediment":
+        f.box(u - w / 2 - 0.05, u + w / 2 + 0.05, 0.0, 0.05, z0 + h + 0.04, z0 + h + 0.065, trim)
+        f.pediment(u, z0 + h + 0.065, w + 0.12, 0.09, 0.05, trim)
+    if spec["shutters"] and not arch:
+        for s in (-1, 1):
+            u0 = u + s * (w / 2 + 0.01)
+            a, b = (u0 - 0.13, u0) if s < 0 else (u0, u0 + 0.13)
+            f.box(a, b, 0.0, 0.018, z0, z0 + h, spec["shutters"])
+            for k in range(7):
+                zz = z0 + 0.04 + k * (h - 0.08) / 6
+                f.box(a + 0.015, b - 0.015, 0.018, 0.024, zz, zz + 0.01, "dark")
+    elif spec["balconettes"] and floor_idx not in spec["balcony_floors"]:
+        _railing(f, u - w / 2 - 0.02, u + w / 2 + 0.02, 0.012, z0, 0.15)
+
+
+def _ground(f, us, bw, L, spec, rng):
+    gh = spec["ground_h"]
+    kind = spec["ground"]
+    wall, trim = spec["wall"], spec["trim"]
+    door = len(us) // 2 if len(us) >= 3 else (0 if us and rng.random() < 0.4 else -1)
+    if kind == "shops":
+        sw = min(bw * 0.8, 0.52)
+        oh = gh * 0.74
+        cuts = [(u - sw / 2, u + sw / 2) for u in us]
+        _rustic(f, cuts, L, 0, gh - 0.08, oh, wall)
+        for i, u in enumerate(us):
+            if i == door:
+                f.box(u - sw / 2, u + sw / 2, -REC, -REC + 0.02, 0, oh, "shop_wood")
+                f.box(u - 0.008, u + 0.008, -REC + 0.02, -REC + 0.028, 0, oh * 0.92, "dark")
+                f.box(u - sw / 2 + 0.03, u + sw / 2 - 0.03, -REC + 0.02, -REC + 0.026, oh * 0.78, oh * 0.95, "window_glass")
+                continue
+            sm = spec["shop"]
+            f.box(u - sw / 2, u + sw / 2, -REC, -REC + 0.008, 0.1, oh - 0.12, "window_glass")
+            f.box(u - sw / 2, u + sw / 2, -REC, -REC + 0.035, 0, 0.1, sm)
+            f.box(u - sw / 2, u + sw / 2, -REC, -REC + 0.04, oh - 0.12, oh, sm)  # Ladenschild
+            f.box(u - sw / 4, u + sw / 4, -REC + 0.04, -REC + 0.046, oh - 0.095, oh - 0.025, "stone_light")
+            for k in (1, 2):
+                uu = u - sw / 2 + sw * k / 3
+                f.box(uu - 0.007, uu + 0.007, -REC + 0.004, -REC + 0.026, 0.1, oh - 0.12, sm)
+            if spec["awning"]:
+                _awning(f, u - sw / 2 - 0.02, u + sw / 2 + 0.02, oh - 0.12, spec["awning"])
+    else:
+        arch = kind == "arcade"
+        sw = min(bw * (0.7 if arch else 0.42), 0.5)
+        oh = gh * (0.8 if arch else 0.62)
+        cuts = [(u - sw / 2, u + sw / 2) for u in us]
+        _rustic(f, cuts, L, 0, gh - 0.08, oh, wall)
+        for i, u in enumerate(us):
+            if arch or i == door:
+                ww = sw if arch else min(bw * 0.6, 0.42)
+                zs = oh - ww / 2
+                f.box(u - ww / 2, u + ww / 2, -REC - 0.04, -REC - 0.03, 0, oh, "shop_wood" if i == door else "dark")
+                f.arch_fill(u - ww / 2, u + ww / 2, zs, -REC, 0.012, wall)
+                f.arch_ring(u - ww / 2, u + ww / 2, zs, 0.012, trim)
+                if arch and i != door:
+                    f.box(u - ww / 2, u + ww / 2, -REC - 0.03, -REC - 0.022, 0.08, zs, "window_glass")
+            else:  # vergitterte Fenster
+                z0 = gh * 0.25
+                f.box(u - sw / 2, u + sw / 2, -REC, -REC + 0.008, z0, oh, "window_glass")
+                for k in range(5):
+                    uu = u - sw / 2 + sw * (k + 0.5) / 5
+                    f.box(uu - 0.005, uu + 0.005, -REC + 0.01, -REC + 0.02, z0, oh, "iron")
+    # Füllen über Öffnungen bis zum Gurtgesims
+    f.box(0, L, -REC, 0.0, gh - 0.08, gh - 0.06, wall)
+    f.box(-0.02, L + 0.02, 0, 0.05, gh - 0.07, gh, trim)
+
+
+def _awning(f, u0, u1, z, mat):
+    for k in range(6):
+        a = k / 6
+        f.box(u0, u1, 0.03 + a * 0.22, 0.03 + (a + 1 / 6) * 0.22, z - 0.03 - a * 0.12, z - a * 0.12, mat)
+    for k in range(int((u1 - u0) / 0.05)):  # gewellte Kante
+        uu = u0 + 0.025 + k * 0.05
+        f.box(uu - 0.02, uu + 0.02, 0.245, 0.26, z - 0.2, z - 0.12, mat)
+
+
+# ---------------------------------------------------------------------------
+def footprint(w, d, corner="square", which=(1,), r=0.6, seg=4):
+    """Rechteck (CCW, Front = Kante 0 bei -y) mit abgeschrägten/runden Ecken.
+    which: Ecken 0=(+x,-y) 1=(+x,+y) 2=(-x,+y) 3=(-x,-y)."""
+    corners = [(w / 2, -d / 2, 0), (w / 2, d / 2, 90), (-w / 2, d / 2, 180), (-w / 2, -d / 2, 270)]
+    pts = []
+    for k, (x, y, a0) in enumerate([corners[3]] + corners[:3]):
+        idx = (k + 3) % 4
+        if idx not in which or corner == "square":
+            pts.append((x, y))
+            continue
+        sx, sy = (1 if x > 0 else -1), (1 if y > 0 else -1)
+        cx, cy = x - sx * r, y - sy * r
+        # Bogen von der vorherigen Kante zur nächsten (CCW)
+        ang0 = {0: -90, 1: 0, 2: 90, 3: 180}[idx]
+        n = 1 if corner == "chamfer" else seg
+        for i in range(n + 1):
+            a = math.radians(ang0 + 90 * i / n)
+            pts.append((cx + r * math.cos(a), cy + r * math.sin(a)))
+    return pts
+
+
+def build_house(pts, spec, blind=(), seed=0, name="house", collection=None):
     rng = random.Random(seed)
     mb = MeshBuilder()
-    gh, fh, nf = st["ground_h"], st["floor_h"], st["floors"]
+    gh, fh, nf = spec["ground_h"], spec["floor_h"], spec["floors"]
     H = gh + nf * fh
-    # Kern (zurückgesetzt um die Laibungstiefe)
-    mb.polygon_prism(inset_polygon(pts, REC), 0, H, st["wall"])
+    wall, trim = spec["wall"], spec["trim"]
+    mb.polygon_prism(inset_polygon(pts, REC), 0, H, wall)
     n = len(pts)
     for e in range(n):
         f = Facade(mb, pts[e], pts[(e + 1) % n])
         L = f.L
         if e in blind:
-            f.box(0, L, -REC, 0, 0, H, st["wall"])
+            f.box(0, L, -REC, 0, 0, H, wall)
             continue
-        us, bw = _bays(L, st)
-        ww = min(st["win_w"], bw * 0.6)
-        # --- Erdgeschoss: Läden, Tür, Rustika ---
-        door = len(us) // 2 if len(us) > 2 else -1
-        sw = min(bw * 0.78, 0.5)
-        oh = gh * 0.72
-        cuts = [(u - sw / 2, u + sw / 2) for u in us]
-        _skin(f, cuts, L, 0, oh, gh, st["wall"], rustic=True)
-        for i, u in enumerate(us):
-            if i == door:
-                f.box(u - sw / 2, u + sw / 2, -REC, -REC + 0.02, 0, oh, "shop_wood")
-                f.box(u - 0.01, u + 0.01, -REC + 0.02, -REC + 0.03, 0, oh * 0.9, "dark")
-                continue
-            f.box(u - sw / 2, u + sw / 2, -REC, -REC + 0.01, 0.12, oh - 0.02, "window_glass")
-            f.box(u - sw / 2, u + sw / 2, -REC, -REC + 0.03, 0, 0.12, "shop_wood")
-            f.box(u - sw / 2, u + sw / 2, -REC, -REC + 0.03, oh - 0.1, oh, "shop_wood")
-            for k in (1, 2):
-                uu = u - sw / 2 + sw * k / 3
-                f.box(uu - 0.008, uu + 0.008, -REC + 0.005, -REC + 0.025, 0.12, oh - 0.1, "shop_wood")
-        if st["awnings"] and rng.random() < 0.8:
-            aw = rng.choice(st["awnings"])
-            for i, u in enumerate(us):
-                if i != door:
-                    _awning(f, u - sw / 2 - 0.02, u + sw / 2 + 0.02, oh, aw)
-        f.box(-0.02, L + 0.02, 0, 0.05, gh - 0.06, gh, st["trim"])  # Gurtgesims
-        # --- Obergeschosse ---
+        us, bw = _bays(L, spec)
+        if not us:  # schmale Kante (Rundung): glatte Wand mit Gesimsen
+            f.box(0, L, -REC, 0, 0, H, wall)
+            for k in range(nf):
+                f.box(-0.01, L + 0.01, 0, 0.03, gh + k * fh - 0.02, gh + k * fh + 0.02, trim)
+            f.box(-0.06, L + 0.06, 0, 0.1, H, H + 0.05, trim)
+            continue
+        ww = min(spec["win_w"] * bw, 0.3)
+        _ground(f, us, bw, L, spec, rng)
         for k in range(nf):
             z = gh + k * fh
-            sill = z + 0.1
-            wh = fh * 0.66
+            top = spec["tops"][k]
+            wh = fh * spec["win_h"]
+            sill = z + (fh - wh) * 0.42
             cuts = [(u - ww / 2, u + ww / 2) for u in us]
-            _skin(f, cuts, L, sill, sill + wh, fh, st["wall"], z0=z)
+            _skin(f, cuts, L, sill, sill + wh, z, z + fh, wall)
             for u in us:
-                _window(f, u, sill, ww, wh, st, k + 1, rng)
-            if (k + 1) in st["balcony_floors"]:
-                f.box(-0.01, L + 0.01, 0, 0.16, sill - 0.035, sill, st["trim"])  # Balkonplatte
-                for i in range(len(us) + 1):  # Konsolen
+                _window(f, u, sill, ww, wh, spec, top, k + 1, wall)
+            if (k + 1) in spec["balcony_floors"]:
+                f.box(-0.01, L + 0.01, 0, 0.16, sill - 0.035, sill, trim)
+                for i in range(len(us) + 1):
                     uc = min(max(i * bw, 0.03), L - 0.03)
-                    f.box(uc - 0.02, uc + 0.02, 0.0, 0.14, sill - 0.08, sill - 0.035, st["trim"])
+                    f.box(uc - 0.018, uc + 0.018, 0.0, 0.14, sill - 0.09, sill - 0.035, trim)
                 _railing(f, 0.0, L, 0.145, sill, 0.17)
-            if k == nf - 1:
-                f.box(-0.04, L + 0.04, 0, 0.06, z + fh - 0.05, z + fh, st["trim"])
-        # Hauptgesims
-        f.box(-0.06, L + 0.06, 0, 0.1, H, H + 0.05, st["trim"])
-        f.box(-0.08, L + 0.08, 0, 0.13, H + 0.05, H + 0.085, st["trim"])
-        # Eck-Lisenen
-        f.box(0, 0.05, 0, 0.012, gh, H, st["trim"])
-        f.box(L - 0.05, L, 0, 0.012, gh, H, st["trim"])
-    _roof(mb, pts, H + 0.085, st, blind, rng)
-    ob = mb.build(name, collection, bevel=0.006) if collection else mb
+            if spec["strings"] and k < nf - 1:
+                f.box(-0.01, L + 0.01, 0, 0.025, z + fh - 0.02, z + fh + 0.015, trim)
+        # Hauptgesims (evtl. mit Konsolen)
+        f.box(-0.04, L + 0.04, 0, 0.06, H - 0.06, H, trim)
+        f.box(-0.08, L + 0.08, 0, 0.13, H, H + 0.045, trim)
+        f.box(-0.1, L + 0.1, 0, 0.16, H + 0.045, H + 0.075, trim)
+        if spec["brackets"]:
+            for i in range(int(L / 0.12) + 1):
+                uu = 0.04 + i * (L - 0.08) / max(1, int(L / 0.12))
+                f.box(uu - 0.015, uu + 0.015, 0.0, 0.12, H - 0.05, H, trim)
+        if spec["quoins"]:
+            for side in (0, 1):
+                z = gh
+                k = 0
+                while z < H - 0.08:
+                    ln = 0.16 if k % 2 else 0.1
+                    a, b = (0, ln) if side == 0 else (L - ln, L)
+                    f.box(a, b, 0, 0.014, z + 0.008, z + 0.1, trim)
+                    z += 0.11
+                    k += 1
+    _roof(mb, pts, H + 0.075, spec, blind, rng)
+    ob = mb.build(name, collection, bevel=0.005) if collection else mb
     return ob, H
 
 
-def _skin(f, cuts, L, o0, o1, h, mat, rustic=False, z0=None):
-    """Wandhaut eines Geschosses mit Öffnungen [o0,o1] an den Stellen `cuts`."""
-    z0 = o0 if z0 is None else z0
-    top = z0 + h
-    base = z0
-    if o0 > base:
-        f.box(0, L, -REC, 0, base, o0, mat)
-    f.box(0, L, -REC, 0, o1, top, mat)
-    edges = [0.0] + [c for cut in cuts for c in cut] + [L]
-    for a, b in zip(edges[0::2], edges[1::2]):
-        if not rustic:
-            f.box(a, b, -REC, 0, o0, o1, mat)
-            continue
-        z = base
-        while z < o1 - 1e-4:  # Rustika: Steinlagen mit Fugen
-            z1 = min(z + 0.1, o1)
-            f.box(a, b, -REC, 0.0 if int(z * 100) % 20 else 0.008, z + 0.008, z1, mat)
-            f.box(a, b, -REC, -0.008, z, z + 0.008, mat)
-            z = z1
-
-
-def _awning(f, u0, u1, z, mat):
-    for k in range(6):  # schräge Markise in Streifen
-        a = k / 6
-        f.box(u0, u1, 0.03 + a * 0.22, 0.03 + (a + 1 / 6) * 0.22, z - 0.03 - a * 0.12, z - a * 0.12, mat)
-    f.box(u0, u1, 0.24, 0.26, z - 0.2, z - 0.12, mat)
-
-
-def _roof(mb, pts, z, st, blind, rng):
-    roof = st["roof"]
-    if st["roof_shape"] == "hip":
-        out = inset_polygon(pts, -0.18)
-        mid = inset_polygon(pts, 0.9)
-        mb.loft(out, z, mid, z + 0.55, roof, cap_top=True, cap_bottom=True)
-        return
-    # Mansarde: steiler Brisis-Teil + flacher Terrasson
-    a = inset_polygon(pts, -0.02)
-    b = inset_polygon(pts, 0.2)
-    c = inset_polygon(pts, 0.6)
-    h1 = 0.62
-    mb.loft(a, z, b, z + h1, roof)
-    mb.loft(b, z + h1, c, z + h1 + 0.16, roof, cap_top=True)
-    mb.polygon_prism(inset_polygon(pts, 0.04), z, 0.02, "stone_light")
-    mb.loft(inset_polygon(pts, 0.17), z + h1 - 0.02, inset_polygon(pts, 0.23), z + h1 + 0.02, "frame_white")  # Zinkleiste
+# ---------------------------------------------------------------------------
+def _roof(mb, pts, z, spec, blind, rng):
+    roof = spec["roof"]
     n = len(pts)
+    shape = spec["roof_shape"]
+    if shape == "hip":
+        out = inset_polygon(pts, -0.22)
+        mb.loft(out, z - 0.02, out, z + 0.02, "shop_wood")  # Traufbrett
+        xs, ys = [p[0] for p in pts], [p[1] for p in pts]
+        mid = inset_polygon(pts, min(0.75, 0.42 * min(max(xs) - min(xs), max(ys) - min(ys))))
+        hgt = 0.5 + rng.uniform(0, 0.15)
+        mb.loft(out, z + 0.02, mid, z + hgt, roof, cap_top=True, cap_bottom=True)
+        _chimneys(mb, pts, z + hgt * 0.4, blind, rng, 0.75)
+        return
+    if shape == "flat":
+        inner = inset_polygon(pts, 0.1)
+        mb.polygon_prism(inner, z - 0.02, 0.03, roof)
+        for e in range(n):
+            if e in blind:
+                continue
+            f = Facade(mb, pts[e], pts[(e + 1) % n])
+            if spec["balustrade"]:
+                f.box(0.0, f.L, -0.08, 0.0, z, z + 0.035, "stone_light")
+                f.box(0.0, f.L, -0.09, 0.01, z + 0.2, z + 0.235, "stone_light")
+                for i in range(int(f.L / 0.06)):
+                    uu = 0.04 + i * 0.06
+                    x, y = f.w(uu, -0.04)
+                    mb.cyl((x, y, z + 0.035), 0.016, 0.165, "stone_light", seg=6, r2=0.01)
+            else:
+                f.box(0.0, f.L, -0.1, 0.0, z, z + 0.16, spec["wall"])
+                f.box(-0.01, f.L + 0.01, -0.11, 0.01, z + 0.16, z + 0.19, "stone_light")
+        _clutter(mb, inner, z + 0.01, rng, rich=True)
+        _chimneys(mb, pts, z, blind, rng, 0.25)
+        return
+    # Mansarde: steiler Brisis + flacher Terrasson + Gauben
+    h1 = 0.6 + rng.uniform(-0.05, 0.08)
+    a = inset_polygon(pts, -0.02)
+    b = inset_polygon(pts, 0.17)
+    c = inset_polygon(pts, 0.55)
+    mb.loft(a, z, b, z + h1, roof)
+    mb.loft(b, z + h1, c, z + h1 + 0.15, roof, cap_top=True)
+    mb.loft(inset_polygon(pts, 0.15), z + h1 - 0.015, inset_polygon(pts, 0.2), z + h1 + 0.02, "frame_white")
+    gtype = rng.choice(["pediment", "segment", "flat"])
     for e in range(n):
         if e in blind:
             continue
         f = Facade(mb, pts[e], pts[(e + 1) % n])
-        us, bw = _bays(f.L, st)
+        us, bw = _bays(f.L, spec)
         for i, u in enumerate(us):
-            if f.L > 1.2 and (i == 0 or i == len(us) - 1):
-                continue
-            _dormer(f, u, z, st)
-    # Kamine auf den Brandwänden / im Dachfirst
+            _dormer(f, u, z, spec, gtype)
+    _clutter(mb, c, z + h1 + 0.15, rng, rich=False)
+    _chimneys(mb, pts, z + h1 * 0.6, blind, rng, 0.35)
+
+
+def _dormer(f, u, z, spec, gtype):
+    w, h = 0.22, 0.32
+    v0, v1 = -0.035, -0.36
+    z0 = z + 0.08
+    trim = spec["trim"]
+    f.box(u - w / 2, u + w / 2, v1, v0, z0, z0 + h, spec["wall"])
+    f.box(u - w / 2 - 0.02, u - w / 2 + 0.02, v1, v0 + 0.012, z0, z0 + h, trim)
+    f.box(u + w / 2 - 0.02, u + w / 2 + 0.02, v1, v0 + 0.012, z0, z0 + h, trim)
+    f.box(u - w / 2 + 0.02, u + w / 2 - 0.02, v0 - 0.02, v0 - 0.012, z0 + 0.04, z0 + h - 0.03, "window_glass")
+    f.box(u - 0.006, u + 0.006, v0 - 0.012, v0, z0 + 0.04, z0 + h - 0.03, "frame_white")
+    f.box(u - w / 2 + 0.02, u + w / 2 - 0.02, v0 - 0.012, v0, z0 + h * 0.55, z0 + h * 0.55 + 0.01, "frame_white")
+    f.box(u - w / 2 - 0.02, u + w / 2 + 0.02, v1, v0 + 0.02, z0 + h, z0 + h + 0.025, trim)
+    top = z0 + h + 0.025
+    x, y = f.w(u, (v0 + v1) / 2)
+    if gtype == "pediment":
+        f.mb.prism(x, y, top, abs(v1 - v0) + 0.03, w + 0.06, 0.12, spec["roof"], rz=f.rz + math.pi / 2)
+    elif gtype == "segment":
+        x2, y2 = f.w(u, v1)
+        f.mb.cyl((x2, y2, top - 0.06), w / 2 + 0.04, abs(v1 - v0) + 0.05, spec["roof"], seg=12,
+                 rx=math.pi / 2, rz=f.rz, smooth=False)
+        f.box(u - w / 2 - 0.02, u + w / 2 + 0.02, v1, v1 + 0.02, top - 0.07, top, spec["roof"])
+    else:
+        f.box(u - w / 2 - 0.03, u + w / 2 + 0.03, v1 - 0.02, v0 + 0.035, top, top + 0.03, spec["roof"])
+
+
+def _chimneys(mb, pts, z, blind, rng, inset):
+    n = len(pts)
     cen = (sum(p[0] for p in pts) / n, sum(p[1] for p in pts) / n)
-    for e in (list(blind) or [0]):
+    edges = list(blind) or [rng.randrange(n)]
+    for e in edges:
         p, q = pts[e], pts[(e + 1) % n]
-        for t in (0.3, 0.7):
+        for t in (0.28, 0.72) if math.dist(p, q) > 1.6 else (0.5,):
             x = p[0] + (q[0] - p[0]) * t
             y = p[1] + (q[1] - p[1]) * t
-            x += (cen[0] - x) * 0.12
-            y += (cen[1] - y) * 0.12
-            mb.box((x, y, z + 0.55), (0.32, 0.18, 0.6), "brick")
-            mb.box((x, y, z + 0.86), (0.36, 0.22, 0.04), "stone_light")
-            for k in range(3):
-                mb.cyl((x - 0.1 + k * 0.1, y, z + 0.88), 0.03, 0.09, "chimney_pot", seg=8)
+            x += (cen[0] - x) * inset / max(math.dist((x, y), cen), 1e-6)
+            y += (cen[1] - y) * inset / max(math.dist((x, y), cen), 1e-6)
+            ang = math.atan2(q[1] - p[1], q[0] - p[0])
+            if rng.random() < 0.35:
+                continue
+            hh = 0.4 + rng.uniform(0, 0.18)
+            mb.box((x, y, z + hh / 2), (0.32, 0.16, hh), "brick", rz=ang)
+            mb.box((x, y, z + hh + 0.015), (0.35, 0.19, 0.04), "stone_light", rz=ang)
+            for k in range(rng.randint(2, 3)):
+                o = -0.1 + k * 0.1
+                mb.cyl((x + math.cos(ang) * o, y + math.sin(ang) * o, z + hh + 0.035), 0.024,
+                       0.07 + rng.uniform(0, 0.05), "chimney_pot", seg=8)
 
 
-def _dormer(f, u, z, st):
-    w, h = 0.24, 0.36
-    v0, v1 = -0.035, -0.4
-    z += 0.04
-    f.box(u - w / 2, u + w / 2, v1, v0, z, z + h, st["trim"])
-    f.box(u - w / 2 + 0.04, u + w / 2 - 0.04, v0, v0 + 0.006, z + 0.06, z + h - 0.05, "window_glass")
-    f.box(u - 0.006, u + 0.006, v0, v0 + 0.012, z + 0.06, z + h - 0.05, "frame_white")
-    f.box(u - w / 2 + 0.04, u + w / 2 - 0.04, v0, v0 + 0.012, z + h * 0.55, z + h * 0.55 + 0.01, "frame_white")
-    # Segmentbogen-Dach der Gaube
-    x = f.p0[0] + f.ux * u + f.nx * v1
-    y = f.p0[1] + f.uy * u + f.ny * v1
-    f.mb.cyl((x, y, z + h), w / 2 + 0.03, abs(v1 - v0) + 0.04, st["roof"], seg=12,
-             rx=math.pi / 2, rz=f.rz, smooth=False)
-    f.box(u - w / 2 - 0.02, u + w / 2 + 0.02, v0, v0 + 0.03, z + h - 0.02, z + h + 0.02, st["trim"])
+def _clutter(mb, poly, z, rng, rich):
+    """Dachlandschaft: Lüfter, Wassertank, Antennen, Kübel, Aufzugshaus, Pergola."""
+    xs = [p[0] for p in poly]
+    ys = [p[1] for p in poly]
+    x0, x1, y0, y1 = min(xs) + 0.2, max(xs) - 0.2, min(ys) + 0.2, max(ys) - 0.2
+    if x1 <= x0 or y1 <= y0:
+        return
+
+    def P():
+        return rng.uniform(x0, x1), rng.uniform(y0, y1)
+    for _ in range(rng.randint(2, 4)):  # Lüftungshauben
+        x, y = P()
+        mb.cyl((x, y, z), 0.04, 0.12, "metal", seg=8)
+        mb.cyl((x, y, z + 0.12), 0.07, 0.04, "metal", seg=8, r2=0.02)
+    if rng.random() < 0.6:
+        x, y = P()
+        mb.box((x, y, z + 0.035), (0.22, 0.14, 0.07), "metal")  # Klimagerät
+    if rng.random() < 0.5:
+        x, y = P()
+        mb.cyl((x, y, z), 0.008, 0.45, "iron", seg=4)  # Antenne
+        mb.box((x, y, z + 0.4), (0.2, 0.012, 0.012), "iron")
+        mb.box((x, y, z + 0.32), (0.14, 0.012, 0.012), "iron")
+    if rich:
+        if rng.random() < 0.7:  # Treppenhaus-Aufbau
+            x, y = P()
+            mb.box((x, y, z + 0.2), (0.5, 0.4, 0.4), "stone_light")
+            mb.box((x, y, z + 0.42), (0.56, 0.46, 0.04), "rooftop_grey")
+            mb.box((x, y - 0.2, z + 0.15), (0.14, 0.01, 0.3), "shop_wood")
+        if rng.random() < 0.5:  # Wassertank
+            x, y = P()
+            mb.cyl((x, y, z), 0.15, 0.3, "metal", seg=12)
+            mb.cyl((x, y, z + 0.3), 0.16, 0.06, "metal", seg=12, r2=0.02)
+        for _ in range(rng.randint(2, 6)):  # Pflanzkübel
+            x, y = P()
+            mb.box((x, y, z + 0.04), (0.12, 0.12, 0.08), "chimney_pot")
+            mb.sphere((x, y, z + 0.14), 0.09, rng.choice(["leaf", "leaf_light", "hedge"]), ico=2)
+        if rng.random() < 0.35:  # Pergola mit Sonnenschirm
+            x, y = P()
+            for dx in (-0.25, 0.25):
+                for dy in (-0.2, 0.2):
+                    mb.box((x + dx, y + dy, z + 0.15), (0.02, 0.02, 0.3), "shop_wood")
+            for k in range(6):
+                mb.box((x - 0.25 + k * 0.1, y, z + 0.31), (0.015, 0.46, 0.015), "shop_wood")
