@@ -293,6 +293,11 @@
   "design_scale": 1.0,
   "license": "own (generated in build_assets.py)"
  },
+ "red_x": {
+  "path": "assets/png/red_x.png",
+  "design_scale": 1.0,
+  "license": "own (generated in build_assets.py)"
+ },
  "ramp_x": {
   "path": "assets/png/ramp_x.png",
   "design_scale": 1.0,

@@ -301,6 +301,11 @@
    "design_scale": 1.0,
    "license": "own (generated in build_assets.py)"
   },
+  "red_x": {
+   "path": "assets/png/red_x.png",
+   "design_scale": 1.0,
+   "license": "own (generated in build_assets.py)"
+  },
   "ramp_x": {
    "path": "assets/png/ramp_x.png",
    "design_scale": 1.0,
@@ -1054,6 +1059,28 @@
        "x": 540,
        "y": 1350,
        "scale": 0.85
+      }
+     ]
+    },
+    {
+     "id": "red_x_1",
+     "type": "image",
+     "asset": "red_x",
+     "start": 1.2667,
+     "end": 1.7333,
+     "keys": [
+      {
+       "t": 1.2667,
+       "x": 540,
+       "y": 1330,
+       "sx": 0.0,
+       "sy": 0.9,
+       "scale": 0.85
+      },
+      {
+       "t": 1.3667,
+       "sx": 1.0,
+       "ease": "out3"
       }
      ]
     }
@@ -4285,7 +4312,7 @@
    "id": "cam_10",
    "type": "group",
    "start": 34.8,
-   "end": 40.4333,
+   "end": 40.9,
    "pivot": [
     540,
     960
@@ -4684,7 +4711,7 @@
      "type": "image",
      "asset": "photo_geige",
      "start": 39.9,
-     "end": 40.4667,
+     "end": 40.9333,
      "keys": [
       {
        "t": 39.9,
@@ -4740,53 +4767,53 @@
      "id": "ban_2",
      "type": "image",
      "asset": "ban",
-     "start": 40.2333,
-     "end": 40.4667,
+     "start": 40.4667,
+     "end": 40.9333,
      "keys": [
       {
-       "t": 40.2333,
+       "t": 40.4667,
        "x": 540,
        "y": 1390,
        "scale": 0.0
       },
       {
-       "t": 40.2667,
+       "t": 40.5,
        "x": 540,
        "y": 1390,
        "scale": 0.165
       },
       {
-       "t": 40.3,
+       "t": 40.5333,
        "x": 540,
        "y": 1390,
        "scale": 0.495
       },
       {
-       "t": 40.3333,
+       "t": 40.5667,
        "x": 540,
        "y": 1390,
        "scale": 1.364
       },
       {
-       "t": 40.3667,
+       "t": 40.6,
        "x": 540,
        "y": 1390,
        "scale": 1.507
       },
       {
-       "t": 40.4,
+       "t": 40.6333,
        "x": 540,
        "y": 1390,
        "scale": 1.408
       },
       {
-       "t": 40.4333,
+       "t": 40.6667,
        "x": 540,
        "y": 1390,
        "scale": 1.265
       },
       {
-       "t": 40.4667,
+       "t": 40.7,
        "x": 540,
        "y": 1390,
        "scale": 1.1
@@ -4879,7 +4906,7 @@
   {
    "id": "cam_11",
    "type": "group",
-   "start": 40.4333,
+   "start": 40.9,
    "end": 46.3333,
    "pivot": [
     540,
@@ -4887,12 +4914,12 @@
    ],
    "keys": [
     {
-     "t": 40.4333,
+     "t": 40.9,
      "x": 1620,
      "y": 960
     },
     {
-     "t": 40.5333,
+     "t": 41.0,
      "x": 540,
      "y": 960,
      "ease": "out3"
@@ -4903,53 +4930,53 @@
      "id": "photo_car_8",
      "type": "image",
      "asset": "photo_car",
-     "start": 40.4,
+     "start": 40.8667,
      "end": 41.9667,
      "keys": [
       {
-       "t": 40.4,
+       "t": 40.8667,
        "x": 540,
        "y": 1420,
        "scale": 0.0
       },
       {
-       "t": 40.4333,
+       "t": 40.9,
        "x": 540,
        "y": 1420,
        "scale": 0.1275
       },
       {
-       "t": 40.4667,
+       "t": 40.9333,
        "x": 540,
        "y": 1420,
        "scale": 0.3825
       },
       {
-       "t": 40.5,
+       "t": 40.9667,
        "x": 540,
        "y": 1420,
        "scale": 1.054
       },
       {
-       "t": 40.5333,
+       "t": 41.0,
        "x": 540,
        "y": 1420,
        "scale": 1.1645
       },
       {
-       "t": 40.5667,
+       "t": 41.0333,
        "x": 540,
        "y": 1420,
        "scale": 1.088
       },
       {
-       "t": 40.6,
+       "t": 41.0667,
        "x": 540,
        "y": 1420,
        "scale": 0.9775
       },
       {
-       "t": 40.6333,
+       "t": 41.1,
        "x": 540,
        "y": 1420,
        "scale": 0.85
@@ -8381,14 +8408,9 @@
    ]
   },
   {
-   "src": "audio/sfx_src/wrong2.mp3",
+   "src": "audio/sfx_src/korrekt.mp3",
    "start": 25.9333,
-   "gain_db": -11.0,
-   "trim": [
-    0.07,
-    1.1
-   ],
-   "fade_out": 0.08
+   "gain_db": -10.0
   },
   {
    "src": "audio/sfx_src/whoosh_wind.mp3",
@@ -8524,16 +8546,16 @@
   {
    "src": "audio/sfx_src/radio_laerm.mp3",
    "start": 39.9333,
-   "gain_db": -9.0,
+   "gain_db": -15.0,
    "trim": [
     18.45,
-    18.78
+    19.05
    ],
-   "fade_out": 0.05
+   "fade_out": 0.08
   },
   {
    "src": "audio/sfx_src/wrong2.mp3",
-   "start": 40.2667,
+   "start": 40.5,
    "gain_db": -12.0,
    "trim": [
     0.07,
@@ -8543,7 +8565,7 @@
   },
   {
    "src": "audio/sfx_src/whoosh_wind.mp3",
-   "start": 40.3,
+   "start": 40.7667,
    "gain_db": -7.0,
    "trim": [
     0.07,
@@ -8601,9 +8623,14 @@
    ]
   },
   {
-   "src": "@sfx/engine_pass",
-   "start": 48.3333,
-   "gain_db": -9
+   "src": "audio/sfx_src/auto_klingen.mp3",
+   "start": 48.2667,
+   "gain_db": -6.0,
+   "trim": [
+    0.0,
+    1.7
+   ],
+   "fade_out": 0.1
   },
   {
    "src": "audio/sfx_src/wrong2.mp3",

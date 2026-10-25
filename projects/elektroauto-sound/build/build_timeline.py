@@ -231,6 +231,10 @@ def scene_hook():
     sfx("impact_low", t_n, -4)
     sfx("buzzer", t_n, -13)
     sfx("swoosh", t_l, -12)
+    # red cross over the car on "leise" (drawn in one swipe: scales in along x)
+    cross = img("red_x", t_l, t_end, [{"t": t_l, "x": piv[0], "y": piv[1] - 20, "sx": 0.0, "sy": 0.9, "scale": 0.85},
+                                      {"t": snap(t_l + 3 * FR), "sx": 1.0, "ease": "out3"}])
+    cam["children"].append(cross)
     return [cam, red_flash(t_n)]
 
 
@@ -409,7 +413,7 @@ def scene_db():
     sfx("chirp_up", t_56, -12)
     sfx("chirp_up", t_75, -12)
     sfx("impact_low", t_lm, -4)
-    sfx("buzzer", t_lm, -12)
+    AUDIO.append({"src": SFX_DIR + "korrekt.mp3", "start": t_lm, "gain_db": -10.0})
     return [cam, red_flash(t_lm)]
 
 
@@ -464,7 +468,7 @@ def scene_bobbycar():
 def scene_rules():
     """'Wie das klingt, dürfen sich die Hersteller selbst ausdenken, es soll aber nach einem Auto
     klingen und nicht nach Vogelgezwitscher oder Musik.'"""
-    t0, t_end = W("Wie"), W("BMW")
+    t0, t_end = W("Wie"), W("hat", 1)       # runs into "BMW": the music burst gets more room
     t_h, t_a, t_k, t_n, t_v, t_m = W("Hersteller"), W("Auto", 3), W("klingen"), W("nicht", 4), \
         W("Vogelgezwitscher"), W("Musik", 1)
     ch = [pop("photo_oma_dj", t_h, t_a, 540, 1420, 0.62),
@@ -473,7 +477,7 @@ def scene_rules():
           pop("photo_schuhschnabel", t_v, t_m, 540, 1390, 0.7),
           pop("ban", snap(t_v + 10 * FR), t_m, 540, 1390, 1.05),
           pop("photo_geige", t_m, t_end, 540, 1390, 0.8, out=False),
-          pop("ban", snap(t_m + 10 * FR), t_end, 540, 1390, 1.1, out=False)]
+          pop("ban", snap(t_m + 17 * FR), t_end, 540, 1390, 1.1, out=False)]
     for t in (t_h, t_a, t_k, t_v, t_m):
         sfx("pop", t, -11)
     sfx("swoosh", t0, -12)
@@ -482,16 +486,16 @@ def scene_rules():
     AUDIO.append({"src": SFX_DIR + "vogel.mp3", "start": t_v, "gain_db": -8.0})
     sfx("buzzer", snap(t_v + 10 * FR), -13)
     # a short burst of the "Lärm" song from the radio on "Musik", cut by the buzzer
-    AUDIO.append({"src": SFX_DIR + "radio_laerm.mp3", "start": t_m, "gain_db": -9.0,
-                  "trim": [18.45, 18.78], "fade_out": 0.05})
-    sfx("buzzer", snap(t_m + 10 * FR), -13)
+    AUDIO.append({"src": SFX_DIR + "radio_laerm.mp3", "start": t_m, "gain_db": -15.0,
+                  "trim": [18.45, 19.05], "fade_out": 0.08})
+    sfx("buzzer", snap(t_m + 17 * FR), -13)
     return [camera(t0, t_end, ch, push_in(t0)), red_flash(t_n)]
 
 
 def scene_zimmer():
     """'BMW hat sich dafür trotzdem einfach Hans Zimmer geholt, also den Typen, der die Musik
     für „Interstellar" und „König der Löwen" gemacht hat.'"""
-    t0, t_end = W("BMW"), W("Bei", 2)
+    t0, t_end = W("hat", 1), W("Bei", 2)
     t_hz, t_mu, t_i, t_kg = W("Hans"), W("Musik", 2), W("Interstellar"), W("König")
     ch = [pop("photo_car", t0, t_hz, 540, 1420, 0.85),
           pop("photo_hans_zimmer", t_hz, t_i, 540, 1420, 0.5),
@@ -525,7 +529,9 @@ def scene_hybrid():
     cam = camera(t0, t_end, ch, push_in(t0))
     sfx("swoosh", t0, -12)
     sfx("pop", t_hy, -11)
-    sfx("engine_pass", t_be, -9)
+    # real engine start (the user's car sound) when the petrol engine runs
+    AUDIO.append({"src": SFX_DIR + "auto_klingen.mp3", "start": snap(t_be - 0.08), "gain_db": -6.0,
+                  "trim": [0.0, round(t_k - t_be, 3)], "fade_out": 0.1})
     sfx("buzzer", t_k, -12)
     sfx("pop", t_x, -11)
     sfx("drone_low", t_d, -13)

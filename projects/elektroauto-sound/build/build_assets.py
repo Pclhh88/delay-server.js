@@ -226,6 +226,16 @@ def g_ban():
                          '<line x1="138" y1="138" x2="562" y2="562" stroke="#ff2d3b" stroke-width="70"/>')
 
 
+def g_red_x():
+    """Big red cross to strike out the car (two strokes with a soft dark edge)."""
+    b = ""
+    for x0, y0, x1, y1 in ((60, 60, 940, 540), (940, 60, 60, 540)):
+        b += (f'<line x1="{x0}" y1="{y0}" x2="{x1}" y2="{y1}" stroke="#1b1e27" stroke-width="104" '
+              'stroke-linecap="round" opacity="0.25"/>'
+              f'<line x1="{x0}" y1="{y0}" x2="{x1}" y2="{y1}" stroke="#ff2d3b" stroke-width="80" stroke-linecap="round"/>')
+    return svg(1000, 600, b)
+
+
 def g_ramp(axis, w, h):
     """Reveal map: 0 at the start, 1 at the end (x: left->right, y: bottom->top)."""
     if axis == "x":
@@ -264,6 +274,7 @@ OWN_ASSETS = {  # name -> (svg, (w, h))
     "p_sign": (g_pole_sign, (400, 1100)),
     "hybrid": (g_hybrid, (1100, 560)),
     "ban": (g_ban, (700, 700)),
+    "red_x": (g_red_x, (1000, 600)),
 }
 
 
