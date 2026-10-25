@@ -2,65 +2,27 @@
 // Läuft in headless Chromium (render.js). Koordinaten: Szene [x=Ost, y=Nord] in Metern,
 // three.js: X = Ost, Y = oben, Z = -Nord.
 import * as THREE from 'three';
+import { Builder } from './builder.js';
+import { detailBuilding, SignAtlas } from './detail.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 const C = (hex) => new THREE.Color(hex);           // sRGB-Hex -> linear (ColorManagement)
 const lerp = (a, b, k) => a + (b - a) * k;
 const clamp01 = (k) => Math.min(1, Math.max(0, k));
 
 export const STYLE = {
-  ground: '#bfd590', land_side: '#9a958a', water: '#5fb7d4', water_deep: '#3f9cc4',
-  green: '#a9cc72', pitch: '#7fbf5a', paved: '#e7e1d3', parking: '#c4c6c8',
-  sidewalk: '#eeebe4', path: '#e3dccb', road: '#8b9198', rail: '#8d8378', pier: '#b58a5c',
-  window: '#9cc6dc', window_frame: '#ffffff', tree: ['#5fa043', '#6db24a', '#4f9439', '#7cbc53'],
-  trunk: '#7a5236', sky: '#ffffff', accent: '#ffcc2e',
+  ground: '#8fc45a', land_side: '#a39a8a', water: '#4fb3d9', water_deep: '#3f9cc4',
+  green: '#86bf4f', pitch: '#6fb548', paved: '#efe5d6', parking: '#c9c7c2',
+  sidewalk: '#f1e7dc', path: '#efe3cf', road: '#8e8582', road_line: '#fbf8f2', rail: '#9a8f82', pier: '#b88a5a',
+  window: '#9cc6dc', window_frame: '#ffffff',
+  tree: ['#7cbf45', '#8ccc4f', '#6db33f', '#9bd15a', '#78b84d'], tree_autumn: ['#f08c2e', '#e8a33a'],
+  trunk: '#8a5a3a', sky: '#ffffff', accent: '#ffcc2e',
   car: ['#e94f37', '#f2c14e', '#3b8ea5', '#ffffff', '#2d3142', '#6c9a4a', '#f08a4b'],
   boat_hull: ['#ffffff', '#1f4e79', '#a83232', '#2b2b2b', '#f4f1e8'], sail: '#fbf8ef',
 };
-
-// ------------------------------------------------------------------ Mesh-Builder
-// Sammelt Dreiecke mit Farbe und "wall"-Info (u entlang Wand, v Höhe, Wandhöhe) für das
-// Fensterraster im Shader. Flache Normalen pro Dreieck.
-class Builder {
-  constructor() { this.p = []; this.c = []; this.w = []; }
-  tri(a, b, c, col, wa = [0, 0, 0], wb = [0, 0, 0], wc = [0, 0, 0]) {
-    this.p.push(...a, ...b, ...c);
-    for (let i = 0; i < 3; i++) this.c.push(col.r, col.g, col.b);
-    this.w.push(...wa, ...wb, ...wc);
-  }
-  quad(a, b, c, d, col, wa, wb, wc, wd) {   // a-b-c-d gegen den Uhrzeigersinn (von außen)
-    this.tri(a, b, c, col, wa, wb, wc); this.tri(a, c, d, col, wa, wc, wd);
-  }
-  // senkrechte Wand von Punkt p0 nach p1 (Szenenkoords), Höhe y0..y1, u0 = Startlänge
-  wall(p0, p1, y0, y1, col, u0 = 0, windows = true) {
-    const len = Math.hypot(p1[0] - p0[0], p1[1] - p0[1]);
-    const H = windows ? y1 : 0;
-    const A = [p0[0], y0, -p0[1]], B = [p1[0], y0, -p1[1]];
-    const Cc = [p1[0], y1, -p1[1]], D = [p0[0], y1, -p0[1]];
-    this.quad(A, B, Cc, D, col, [u0, y0, H], [u0 + len, y0, H], [u0 + len, y1, H], [u0, y1, H]);
-    return len;
-  }
-  // horizontale Fläche aus Ringen [[outer], [hole]...] (Szenenkoords, CCW) in Höhe y
-  flat(rings, y, col) {
-    const outer = rings[0].map(([x, n]) => new THREE.Vector2(x, n));
-    const holes = rings.slice(1).map((r) => r.map(([x, n]) => new THREE.Vector2(x, n)));
-    if (THREE.ShapeUtils.isClockWise(outer)) outer.reverse();
-    holes.forEach((h) => { if (!THREE.ShapeUtils.isClockWise(h)) h.reverse(); });
-    const pts = outer.concat(...holes);
-    const faces = THREE.ShapeUtils.triangulateShape(outer, holes);
-    for (const [i, j, k] of faces) {
-      const a = pts[i], b = pts[j], c = pts[k];
-      this.tri([a.x, y, -a.y], [b.x, y, -b.y], [c.x, y, -c.y], col);
-    }
-  }
-  geometry() {
-    const g = new THREE.BufferGeometry();
-    g.setAttribute('position', new THREE.Float32BufferAttribute(this.p, 3));
-    g.setAttribute('color', new THREE.Float32BufferAttribute(this.c, 3));
-    g.setAttribute('wall', new THREE.Float32BufferAttribute(this.w, 3));
-    g.computeVertexNormals();   // nicht indiziert -> flache Normalen
-    return g;
-  }
-}
 
 // Lambert-Material mit prozeduralen Fenstern auf Wänden (wall.z > 0)
 function cityMaterial() {
@@ -73,6 +35,15 @@ function cityMaterial() {
     sh.fragmentShader = sh.fragmentShader
       .replace('#include <common>', '#include <common>\nvarying vec3 vWall;\nuniform vec3 uWindow;')
       .replace('#include <color_fragment>', `#include <color_fragment>
+      if (vWall.z < -0.5) {           // Dachziegel: Reihen entlang des Gefälles
+        vec2 tc = vec2(vWall.x / 0.42, vWall.y / 0.36);
+        vec2 tf = fract(tc + vec2(0.5 * step(0.5, fract(tc.y * 0.5)), 0.0));
+        vec2 tw = fwidth(tc);
+        float fade = 1.0 - smoothstep(0.3, 0.7, max(tw.x, tw.y));
+        float row = smoothstep(0.0, 0.25 + tw.y, tf.y) * 0.22;
+        float seam = (1.0 - smoothstep(0.0, 0.08 + tw.x, min(tf.x, 1.0 - tf.x))) * 0.12;
+        diffuseColor.rgb *= 1.0 - fade * (0.2 - row + seam);
+      }
       if (vWall.z > 0.5) {
         float u = vWall.x, v = vWall.y;
         vec2 cell = vec2(u / 3.2, (v - 0.4) / 3.0);
@@ -184,6 +155,9 @@ const MODELS = {
     const eave = 8.5, peak = eave + W * 0.55;
     steppedGableHouse(B, T, L, W, eave, peak, 5, brick, roof, trim);
     const P = (x, y, z) => { const [a, b] = T([x, y]); return [a, z, -b]; };
+    // Sockel aus Naturstein + helles Traufgesims rundum
+    boxL(B, T, -L / 2 - 0.12, -W / 2 - 0.12, L / 2 + 0.12, W / 2 + 0.12, 0, 0.9, C('#b9b0a2'), C('#b9b0a2'));
+    boxL(B, T, -L / 2 - 0.1, -W / 2 - 0.1, L / 2 + 0.1, W / 2 + 0.1, eave - 0.35, eave, trim, trim);
     for (const sx of [-1, 1]) {
       const x = sx * (L / 2 + 0.05), aw = 2.3, ah = 3.4, n = 12;
       const face = (pts, col) => {     // Polygon in der (y, z)-Ebene auf der Giebelseite
@@ -267,14 +241,31 @@ export class City {
     this.ground();
     this.buildings();
     this.trees();
+    this.props();
     this.boats();
     this.cars();
     this.landmarks();
+    if (shot.ao !== false) this.setupAO(W, H);
+  }
+
+  // weiche Kontaktschatten (Ambient Occlusion) wie in Illustrationen
+  setupAO(W, H) {
+    const rt = new THREE.WebGLRenderTarget(W, H, { samples: 4, type: THREE.HalfFloatType });
+    const comp = new EffectComposer(this.renderer, rt);
+    comp.setPixelRatio(1); comp.setSize(W, H);
+    comp.addPass(new RenderPass(this.scene, this.camera));
+    const ao = new GTAOPass(this.scene, this.camera, W, H);
+    ao.output = GTAOPass.OUTPUT.Default;
+    ao.blendIntensity = this.shot.ao_strength ?? 0.8;
+    this.aoPass = ao;
+    comp.addPass(ao);
+    comp.addPass(new OutputPass());
+    this.composer = comp;
   }
 
   lights() {
-    this.scene.add(new THREE.HemisphereLight(0xffffff, 0xb9c4a8, 1.7));
-    const sun = new THREE.DirectionalLight(0xffffff, 2.1);
+    this.scene.add(new THREE.HemisphereLight(0xf4f8ff, 0x9fb88a, 1.8));
+    const sun = new THREE.DirectionalLight(0xfff1dc, 2.3);
     sun.castShadow = true;
     sun.shadow.mapSize.set(4096, 4096);
     sun.shadow.bias = -0.0004;
@@ -287,7 +278,7 @@ export class City {
   areaMesh(name, y, col, opts = {}) {
     const B = new Builder();
     for (const rings of this.data.areas[name] || []) B.flat(rings, y, C(col));
-    if (!B.p.length) return null;
+    if (B.empty) return null;
     const m = new THREE.Mesh(B.geometry(), opts.material || this.mat);
     m.receiveShadow = true;
     this.scene.add(m);
@@ -330,43 +321,108 @@ export class City {
     // Flächen (leicht gestapelt gegen Z-Fighting)
     const lay = [['green', STYLE.green], ['pitch', STYLE.pitch], ['paved', STYLE.paved],
       ['parking', STYLE.parking], ['sidewalk', STYLE.sidewalk], ['path', STYLE.path],
-      ['road', STYLE.road], ['rail', STYLE.rail]];
+      ['road', STYLE.road], ['road_line', STYLE.road_line], ['rail', STYLE.rail]];
     lay.forEach(([n, col], i) => this.areaMesh(n, 0.04 + i * 0.03, col));
     const pier = this.areaMesh('pier', 0.35, STYLE.pier);
     if (pier) pier.castShadow = true;
   }
 
+  // Detailzonen: Gebäude darin bekommen echte Fassaden-Geometrie, der Rest Shader-Fenster
+  inDetail(b) {
+    const zones = this.shot.detail ?? Object.values(this.data.landmarks).map((lm) => ({ x: lm.center[0], y: lm.center[1], r: 260 }));
+    const p = b.rect ? b.rect[0] : b.poly[0][0][0];
+    return zones.some((z) => Math.hypot(p[0] - z.x, p[1] - z.y) < z.r);
+  }
+
   buildings() {
-    const B = new Builder();
+    const B = new Builder(), D = new Builder();
+    const words = this.data.buildings.filter((b) => b.shop).map((b) => b.shop.sign);
+    this.signs = new SignAtlas(words.length ? words : ['LADEN']);
+    const S = new Builder({ uv: true });
     this.landmarkBuildings = {};
+    let nd = 0;
     for (const b of this.data.buildings) {
-      if (b.landmark) { const LB = new Builder(); addBuilding(LB, b); this.landmarkBuildings[b.landmark] = LB; continue; }
-      addBuilding(B, b);
+      if (b.landmark) {
+        const LB = new Builder(); detailBuilding(LB, S, b, this.signs);
+        this.landmarkBuildings[b.landmark] = LB; continue;
+      }
+      if (this.inDetail(b)) { detailBuilding(D, S, b, this.signs); nd++; } else addBuilding(B, b);
     }
-    const m = new THREE.Mesh(B.geometry(), this.mat);
-    m.castShadow = true; m.receiveShadow = true;
-    this.scene.add(m);
+    for (const G of [B, D]) {
+      if (G.empty) continue;
+      const m = new THREE.Mesh(G.geometry(), this.mat);
+      m.castShadow = true; m.receiveShadow = true;
+      this.scene.add(m);
+    }
+    if (!S.empty) {
+      const sm = new THREE.MeshBasicMaterial({ map: this.signs.texture, transparent: true, alphaTest: 0.25 });
+      this.scene.add(new THREE.Mesh(S.geometry(), sm));
+    }
+    this.stats = { detailed: nd, triangles: (B.p.n + D.p.n) / 9 };
   }
 
   trees() {
+    // flauschige Laubbäume (3 Kugeln), einige Säulenbäume, wenige Herbstbäume
     const T = this.data.trees;
-    const crown = new THREE.IcosahedronGeometry(2.6, 1);
-    const trunk = new THREE.CylinderGeometry(0.35, 0.45, 2.4, 6);
+    const merge = (geos) => {
+      const pos = [];
+      for (const g of geos) { const gg = g.toNonIndexed(); pos.push(...gg.attributes.position.array); }
+      const out = new THREE.BufferGeometry();
+      out.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+      out.computeVertexNormals();
+      return out;
+    };
+    const ball = (r, x, y, z) => new THREE.IcosahedronGeometry(r, 1).translate(x, y, z);
+    const round = merge([ball(2.2, 0, 4.6, 0), ball(1.7, 1.5, 3.9, 0.6), ball(1.6, -1.2, 4.0, -0.9), ball(1.5, 0.2, 5.9, 0.3)]);
+    const column = merge([new THREE.ConeGeometry(1.5, 6.5, 7).translate(0, 5.2, 0), ball(1.45, 0, 2.6, 0)]);
+    const trunk = new THREE.CylinderGeometry(0.28, 0.4, 3.2, 6).translate(0, 1.6, 0);
     const cm = new THREE.MeshLambertMaterial({ flatShading: true });
     const tm = new THREE.MeshLambertMaterial({ color: C(STYLE.trunk) });
-    const ci = new THREE.InstancedMesh(crown, cm, T.length);
-    const ti = new THREE.InstancedMesh(trunk, tm, T.length);
-    const M = new THREE.Matrix4(), q = new THREE.Quaternion(), s = new THREE.Vector3(), p = new THREE.Vector3();
-    T.forEach(([x, n, k], i) => {
-      p.set(x, 2.2 * k + 2.2 * k, -n); s.set(k, k * 1.1, k);
-      q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), (x * 7.3 + n) % 6.28);
-      ci.setMatrixAt(i, M.compose(p, q, s));
-      ci.setColorAt(i, C(STYLE.tree[Math.abs(Math.floor(x * 3 + n * 7)) % STYLE.tree.length]));
-      p.set(x, 1.2 * k, -n); s.set(k, k, k);
-      ti.setMatrixAt(i, M.compose(p, q, s));
+    const groups = { round: [], column: [] };
+    T.forEach((t) => {
+      const h = Math.abs(Math.sin(t[0] * 12.9898 + t[1] * 78.233) * 43758.5453) % 1;
+      (h < 0.15 ? groups.column : groups.round).push([...t, h]);
     });
-    ci.castShadow = ti.castShadow = true;
-    this.scene.add(ci, ti);
+    const M = new THREE.Matrix4(), q = new THREE.Quaternion(), s = new THREE.Vector3(), p = new THREE.Vector3();
+    const up = new THREE.Vector3(0, 1, 0);
+    for (const [name, geo] of [['round', round], ['column', column]]) {
+      const list = groups[name];
+      const ci = new THREE.InstancedMesh(geo, cm, list.length);
+      list.forEach(([x, n, k, h], i) => {
+        p.set(x, 0, -n); s.set(k, k * (0.9 + h * 0.3), k);
+        q.setFromAxisAngle(up, h * 40);
+        ci.setMatrixAt(i, M.compose(p, q, s));
+        const autumn = name === 'round' && h > 0.93;
+        const pal = autumn ? STYLE.tree_autumn : STYLE.tree;
+        ci.setColorAt(i, C(pal[Math.floor(h * 997) % pal.length]));
+      });
+      ci.castShadow = true; ci.receiveShadow = true;
+      this.scene.add(ci);
+    }
+    const ti = new THREE.InstancedMesh(trunk, tm, T.length);
+    T.forEach(([x, n, k], i) => { p.set(x, 0, -n); s.set(k, k, k); q.identity(); ti.setMatrixAt(i, M.compose(p, q, s)); });
+    ti.castShadow = true;
+    this.scene.add(ti);
+  }
+
+  props() {
+    const pr = this.data.props || {};
+    const M = new THREE.Matrix4(), q = new THREE.Quaternion(), s = new THREE.Vector3(1, 1, 1), p = new THREE.Vector3();
+    const add = (geo, mat, pts, y = 0) => {
+      if (!pts || !pts.length) return;
+      const im = new THREE.InstancedMesh(geo, mat, pts.length);
+      pts.forEach(([x, n], i) => { p.set(x, y, -n); q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), (x + n) % 3); im.setMatrixAt(i, M.compose(p, q, s)); });
+      im.castShadow = true;
+      this.scene.add(im);
+    };
+    const dark = new THREE.MeshLambertMaterial({ color: C('#3d434b') });
+    const pole = new THREE.CylinderGeometry(0.07, 0.1, 4.6, 6).translate(0, 2.3, 0);
+    const head = new THREE.BoxGeometry(0.5, 0.35, 0.5).translate(0, 4.75, 0);
+    add(pole, dark, pr.lamp); add(head, new THREE.MeshLambertMaterial({ color: C('#fff3c4'), emissive: C('#6b5a20') }), pr.lamp);
+    const bench = new THREE.BoxGeometry(1.8, 0.12, 0.55).translate(0, 0.45, 0);
+    const back = new THREE.BoxGeometry(1.8, 0.45, 0.1).translate(0, 0.8, -0.25);
+    const wood = new THREE.MeshLambertMaterial({ color: C('#a8703f') });
+    add(bench, wood, pr.bench); add(back, wood, pr.bench);
   }
 
   boats() {
@@ -549,7 +605,12 @@ export class City {
 
   render(t) {
     this.setTime(t);
-    this.renderer.render(this.scene, this.camera);
+    if (this.composer) {
+      // AO-Radius an den Zoom koppeln (Meter -> sichtbare Kontaktschatten)
+      const view = this.camera.top - this.camera.bottom;
+      this.aoPass.updateGtaoMaterial({ radius: Math.min(4, Math.max(0.6, view / 60)), distanceExponent: 1, thickness: 2, scale: 1 });
+      this.composer.render();
+    } else this.renderer.render(this.scene, this.camera);
     const lm = {};
     for (const k of Object.keys(this.lmObjs)) lm[k] = this.project(k);
     return lm;

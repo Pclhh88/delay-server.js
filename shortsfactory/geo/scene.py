@@ -26,10 +26,12 @@ PAVED_LU = {"plaza", "pedestrian", "marina"}
 PITCH_LU = {"pitch", "track"}
 GREEN_LAND = {"grass", "forest", "shrub", "wetland"}
 
-FACADES = ["#b9553f", "#a5473a", "#c8664a", "#efe4c8", "#f3efe6", "#e9cf8f",
-           "#d9a477", "#cfd9df", "#e8b3a0", "#b9553f", "#efe4c8", "#9a4433"]
-ROOFS_PITCHED = ["#b84a34", "#9c3b2b", "#c9603f", "#5a5f68", "#8a3d30"]
-ROOFS_FLAT = ["#c7c6c0", "#b9b8b2", "#d3d1ca"]
+FACADES = ["#c8644a", "#b8553f", "#d9774f",            # Backstein (Flensburg)
+           "#f3dc8f", "#f6c27a", "#f2a77e", "#ec9a8f",  # Gelb, Apricot, Lachs, Rosé
+           "#f6efe2", "#efe4cc", "#e8d3b0",             # Weiß, Creme, Sand
+           "#bfdbe6", "#cfe3c3", "#e9c6d6", "#d9a7c9"]  # Hellblau, Mint, Rosa, Flieder
+ROOFS_PITCHED = ["#c9573c", "#b84a34", "#d66a45", "#a8443a", "#5d6670", "#c25a3f"]
+ROOFS_FLAT = ["#d8d3c9", "#cfcac0", "#e0dbd2"]
 NAMED_COLORS = {"red": "#b9553f", "brown": "#8a5a44", "white": "#f3efe6", "grey": "#a9a9a9",
                 "gray": "#a9a9a9", "yellow": "#e9cf8f", "beige": "#e6d5b0", "black": "#3c3c3c",
                 "darkgrey": "#5a5f68", "darkgray": "#5a5f68", "green": "#6d8f6a", "blue": "#6f8fb3"}
@@ -139,6 +141,16 @@ def building(f, proj, clip):
     pitched = pitched and rectness > 0.82 and short > 3.5 and not hasattr(g, "geoms") and not poly.interiors
     b = {"id": rid, "h": round(h, 2),
          "facade": color(p.get("facade_color"), FACADES[int(hrand(rid, "f") * len(FACADES))])}
+    if cls in ("house", "detached", "semidetached_house", "terrace", "bungalow"):
+        style = "house"
+    elif cls in ("garage", "garages", "shed", "carport", "industrial", "warehouse", "roof",
+                 "parking", "transportation", "service") or h < 4:
+        style = "plain"
+    elif cls in ("commercial", "office", "retail", "school", "university", "hospital", "hotel") or h > 20:
+        style = "modern"
+    else:
+        style = "altbau" if hrand(rid, "st") < 0.65 else "modern"
+    b["style"] = style
     if cls in ("garage", "garages", "shed", "carport", "industrial", "warehouse"):
         b["facade"] = color(p.get("facade_color"), ["#d8d4cc", "#c9c4bb", "#b9b4ab"][int(hrand(rid, "g") * 3)])
     if pitched:
@@ -151,11 +163,54 @@ def building(f, proj, clip):
                  ridge=0 if ridge_along_0 else 1, rh=round(rh, 2),
                  roofc=color(p.get("roof_color"), ROOFS_PITCHED[int(hrand(rid, "rc") * len(ROOFS_PITCHED))]))
     else:
+        inset = g.buffer(-0.35, join_style="mitre")
+        if not inset.is_empty and inset.area > 4:
+            b["inset"] = rings(inset)
         b.update(roof="flat", poly=rings(g),
                  roofc=color(p.get("roof_color"), ROOFS_FLAT[int(hrand(rid, "rc") * len(ROOFS_FLAT))]))
         if not b["poly"]:
             return None
+    fh = 3.6 if style == "altbau" else 3.1
+    b["floors"] = max(1, int(round((b["h"] - 0.3) / fh)))
     return b, g
+
+
+def front_normal(b, target):
+    """Außennormale der Wand, die am nächsten an Straße/Weg liegt (für Tür/Laden/Balkone)"""
+    if b["roof"] == "flat":
+        ring = b["poly"][0][0]
+    else:
+        ring = b["rect"]
+    if Polygon(ring).exterior.is_ccw is False:
+        ring = ring[::-1]
+    best, bn = 1e9, None
+    for i in range(len(ring)):
+        (ax, ay), (bx, by) = ring[i], ring[(i + 1) % len(ring)]
+        L = math.hypot(bx - ax, by - ay)
+        if L < 2.5:
+            continue
+        nx, ny = (by - ay) / L, -(bx - ax) / L          # CCW-Ring: rechts = außen
+        m = Point((ax + bx) / 2 + nx * 3, (ay + by) / 2 + ny * 3)
+        d = target.distance(m) - min(L, 20) * 0.05
+        if d < best:
+            best, bn = d, [round(nx, 3), round(ny, 3)]
+    return bn
+
+
+SHOP_KIND = {  # basic_category -> (Schild, Markisenfarbe)
+    "restaurant": ("RESTAURANT", "#d64545"), "casual_eatery": ("IMBISS", "#e8833a"),
+    "cafe": ("CAFÉ", "#2f8f83"), "bar": ("BAR", "#2e6b45"), "dance_club": ("CLUB", "#6b3fa0"),
+    "music_venue": ("LIVE", "#6b3fa0"), "food_and_beverage_store": ("MARKT", "#3f9b3f"),
+    "fashion_and_apparel_store": ("MODE", "#d9578c"), "pharmacy_and_drug_store": ("APOTHEKE", "#2fa36b"),
+    "books_music_and_video_store": ("BÜCHER", "#3d6fb6"), "flowers_and_gifts_store": ("BLUMEN", "#e0609a"),
+    "hotel": ("HOTEL", "#2b4f8c"), "lodging": ("PENSION", "#2b4f8c"), "bank_or_credit_union": ("BANK", "#c23b3b"),
+    "kiosk": ("KIOSK", "#e0a020"), "electronics_store": ("ELEKTRO", "#3d6fb6"),
+    "sporting_goods_store": ("SPORT", "#2f7fc1"), "specialty_store": ("LADEN", "#b05a3c"),
+    "shopping": ("LADEN", "#b05a3c"), "second_hand_store": ("SECOND HAND", "#8a5bb5"),
+    "personal_care_and_beauty_store": ("BEAUTY", "#d9578c"), "arts_crafts_and_hobby_store": ("HOBBY", "#e0a020"),
+    "hardware_home_and_garden_store": ("WOHNEN", "#5f8f3a"), "art_gallery": ("GALERIE", "#333333"),
+    "museum": ("MUSEUM", "#7a4a2a"), "personal_or_beauty_service": ("FRISEUR", "#c2477a"),
+}
 
 
 def main(cfg_path):
@@ -257,17 +312,39 @@ def main(cfg_path):
             parking.append(P(f).buffer(0).intersection(clip))
     pier_u = polys_only(unary_union(piers)) if piers else Polygon()
 
+    # Läden (Erdgeschoss) aus Overture Places
+    shops = []
+    for f in load(f"{gd}/places.geojson"):
+        pr = f["properties"]
+        k = SHOP_KIND.get(pr.get("basic_category"))
+        if k and f["geometry"]["type"] == "Point" and (pr.get("confidence") or 1) > 0.5:
+            pt = P(f)
+            if clip.contains(pt):
+                shops.append((pt, k))
+    # Laternen, Bänke
+    props = {"lamp": [], "bench": []}
+    for f in load(f"{gd}/infrastructure.geojson"):
+        c = f["properties"].get("class")
+        kind = {"street_lamp": "lamp", "bench": "bench"}.get(c)
+        if kind and f["geometry"]["type"] == "Point":
+            pt = P(f)
+            if clip.contains(pt):
+                props[kind].append([round(pt.x, 1), round(pt.y, 1)])
+    front_target = unary_union([road_u, path_u] + ([unary_union(paved)] if paved else []))
+
     # Gebäude
     lm_cfg = cfg.get("landmarks", {})
     lm_names = {v["name"]: k for k, v in lm_cfg.items()}
-    blds, footprints, landmarks = [], [], {}
+    blds, footprints, landmarks, fp_b = [], [], {}, []
     for f in load(f"{gd}/buildings.geojson"):
         name = (f["properties"].get("names") or {}).get("primary")
         r = building(f, proj, clip)
         if not r:
             continue
         b, g = r
+        b["front"] = front_normal(b, front_target)
         footprints.append(g)
+        fp_b.append(b)
         if name in lm_names:
             key = lm_names[name]
             if key in landmarks:  # mehrere Gebäude gleichen Namens: größtes nehmen
@@ -288,6 +365,13 @@ def main(cfg_path):
             b["landmark"] = k
             blds.append(b)
     bunion = unary_union(footprints)
+    tree_fp = shapely.STRtree(footprints)
+    for pt, (sign, col) in shops:
+        idx = tree_fp.query_nearest(pt, max_distance=4.0)
+        if len(idx):
+            b = fp_b[int(idx[0])]
+            if "shop" not in b and b.get("style") != "plain":
+                b["shop"] = {"sign": sign, "color": col}
 
     # Bäume nicht in Gebäuden / Wasser / Straßen
     blocked = unary_union([bunion.buffer(1.5), water, road_u])
@@ -353,6 +437,7 @@ def main(cfg_path):
             "sidewalk": area(sidewalk.difference(water)),
             "path": area(path_u.difference(water) if not water.is_empty else path_u),
             "road": area(road_u),
+            "road_line": area(road_u.buffer(-0.7).boundary.buffer(0.13).intersection(road_u)),
             "rail": area(rail_u) if rail_u is not None else [],
             "pier": area(pier_u),
         },
@@ -361,12 +446,13 @@ def main(cfg_path):
         "boats": boats,
         "cars": cars,
         "landmarks": landmarks,
+        "props": props,
     }
     out = os.path.join(base, cfg["out"])
     with open(out, "w") as fh:
         json.dump(scene, fh, separators=(",", ":"))
     print(f"{out}: {len(blds)} Gebäude, {len(tree_out)} Bäume, {len(boats)} Boote, "
-          f"{len(cars)} Autopfade, Wahrzeichen: {list(landmarks)} "
+          f"{len(cars)} Autopfade, {sum('shop' in b for b in blds)} Läden, Wahrzeichen: {list(landmarks)} "
           f"({os.path.getsize(out) // 1024} KB)")
 
 

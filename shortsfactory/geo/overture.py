@@ -29,7 +29,7 @@ LAYERS = {
     "land_use": ("base/type=land_use", ["id", "geometry", "bbox", "subtype", "class", "names"]),
     "land": ("base/type=land", ["id", "geometry", "bbox", "subtype", "class"]),
     "infrastructure": ("base/type=infrastructure", ["id", "geometry", "bbox", "subtype", "class", "names"]),
-    "places": ("places/type=place", ["id", "geometry", "bbox", "categories", "names"]),
+    "places": ("places/type=place", ["id", "geometry", "bbox", "basic_category", "taxonomy", "names", "confidence"]),
 }
 
 

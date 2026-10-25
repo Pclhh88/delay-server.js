@@ -23,6 +23,17 @@ Phasen: 1 Analyse → 2 Rekonstruktion → 3 Abgleich → 4 Template → 5 „Ne
 * 17 Bild-Assets + Stimme sind Referenz-Platzhalter (aus dem Original geschnitten),
   nicht veröffentlichen – siehe `projects/bundeswehr-kennzeichen/assets/manifest.json`.
 
+## Neues Format: Städte-Highlights (isometrische 3D-Stadt)
+* Idee des Nutzers: 60-s-Shorts „Highlights einer Stadt“, Stadt im Stil einer isometrischen
+  Illustration (bunte Häuser mit Details), echte Kartendaten. Erstes Projekt: Flensburg.
+* Pipeline: `shortsfactory/geo/overture.py` (Overture Maps = OSM-Daten via S3; OSM selbst ist
+  gesperrt) → `shortsfactory/geo/scene.py` (scene.json) → `shortsfactory/city/render.js`
+  (three.js in headless Chromium, Detail-Fassaden in `detail.js`, Detailzonen per shot.json)
+  → Frames → Timeline (`projects/flensburg-highlights/test/build_timeline.py`) → Engine.
+* Stand: 12-s-Test (Überblick → Nordertor). Nutzer wünscht liebevolle Häuser wie im Beispiel
+  (Fenster, Markisen, Balkone, Pflanzen …) – umgesetzt, Feedback steht aus.
+* Pflicht bei Veröffentlichung: „© OpenStreetMap-Mitwirkende“.
+
 ## Offene Entscheidungen (beim Nutzer nachfragen)
 * Nächster Schritt: Template herauslösen (Phase 4) und Themen-Workflow (Phase 5).
 * Stimme für neue Themen: eigene Aufnahme des Nutzers oder TTS-Dienst (hier keiner eingerichtet).
