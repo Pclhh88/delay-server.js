@@ -1,0 +1,51 @@
+{
+ "scene": "../scene/scene.json",
+ "width": 1080,
+ "height": 1920,
+ "fps": 30,
+ "duration": 12,
+ "sun_azimuth": 200,
+ "camera": {
+  "azimuth": 135,
+  "elevation": 35.26,
+  "keys": [
+   {
+    "t": 0.0,
+    "x": -40,
+    "y": -120,
+    "view": 1750
+   },
+   {
+    "t": 2.4,
+    "x": -60,
+    "y": -40,
+    "view": 1550,
+    "ease": "linear"
+   },
+   {
+    "t": 6.2,
+    "x": -246,
+    "y": 447,
+    "view": 140,
+    "az": 160,
+    "ease": "inout3"
+   },
+   {
+    "t": 12.0,
+    "x": -246,
+    "y": 447,
+    "view": 100,
+    "az": 205,
+    "ease": "linear"
+   }
+  ]
+ },
+ "events": [
+  {
+   "t": 6.25,
+   "type": "pop",
+   "landmark": "nordertor",
+   "dur": 0.8
+  }
+ ]
+}

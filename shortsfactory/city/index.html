@@ -1,0 +1,17 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>html,body{margin:0;background:#fff}canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./node_modules/three/build/three.module.js"}}</script>
+</head><body><canvas id="c"></canvas>
+<script type="module">
+import { City } from './city.js';
+window.initCity = async (sceneUrl, shot) => {
+  const scene = await (await fetch(sceneUrl)).json();
+  window.city = new City(document.getElementById('c'), scene, shot);
+  return Object.keys(window.city.lmObjs);
+};
+window.renderFrame = (t, type = 'image/png', q = 0.95) => {
+  const lm = window.city.render(t);
+  return { lm, img: document.getElementById('c').toDataURL(type, q) };
+};
+window.cityReady = true;
+</script></body></html>

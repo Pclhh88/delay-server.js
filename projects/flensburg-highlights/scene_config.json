@@ -1,0 +1,11 @@
+{
+  "geodata": "geodata",
+  "bbox": [9.4215, 54.7815, 9.4465, 54.8015],
+  "out": "scene/scene.json",
+  "landmarks": {
+    "nordertor": {"name": "Nordertor", "model": "nordertor"},
+    "schifffahrtsmuseum": {"name": "Flensburger Schifffahrtsmuseum"},
+    "nikolai": {"name": "Sankt Nikolai", "model": "nikolai"},
+    "kompagnietor": {"name": "Kompagnietor"}
+  }
+}

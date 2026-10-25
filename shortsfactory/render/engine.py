@@ -94,6 +94,10 @@ class Renderer:
                 if spec.get("license") == "reference_proxy" and not self.allow_proxies:
                     raise RuntimeError(f"asset {aid} is a reference proxy without publishing rights")
                 path = os.path.join(self.base, spec["path"].format(i=frame))
+                # lange Bildfolgen: nur die letzten Frames im Speicher halten
+                old = [k for k in self.assets if k.startswith(f"{aid}#")]
+                for k in old[:-3]:
+                    del self.assets[k]
                 self.assets[key] = Asset(path, spec.get("design_scale", 1.0))
             return self.assets[key]
         if aid not in self.assets:
