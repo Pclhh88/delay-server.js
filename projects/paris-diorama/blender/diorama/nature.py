@@ -89,3 +89,57 @@ def build_bush(name, location, materials, collection, r=0.35, seed=0, mat='hedge
         mb.sphere((rng.uniform(-r, r) * 0.6, rng.uniform(-r, r) * 0.6, r * 0.6), r * rng.uniform(0.6, 0.9),
                   mat, seg=10, rings=7, jitter=_jitter(seed + k, 0.2, 3.0))
     return mb.build(name, materials, collection, location=location)
+
+
+# ---------------------------------------------------------------------------- Bäume in Benchmark-Qualität
+HQ_LEAVES = {  # Typ -> (Laub hell, Laub dunkel)
+    'round': ('leaf_green', 'leaf_dark'), 'dark': ('leaf_dark', 'leaf_dark'), 'tall': ('leaf_green', 'leaf_dark'),
+    'small': ('leaf_green', 'leaf_dark'), 'orange': ('leaf_orange', 'leaf_ochre'), 'ochre': ('leaf_ochre', 'leaf_orange'),
+    'blossom': ('leaf_white', 'leaf_white'),
+}
+
+
+def build_tree_hq(name, kind, location, materials, collection, size=1.0, seed=0):
+    """Baum aus geschwungenem Stamm, Ästen und ~110 kleinen Blattbüscheln in einer Ellipsoid-Hülle.
+    Die Büschel liegen dichter an der Oberfläche, oben/sonnenseitig im helleren Laub."""
+    from .landmark import g_tube
+    leaf_a, leaf_b = HQ_LEAVES[kind]
+    _, R, trunk_h, _, shape = TREE_TYPES[kind]
+    rng = random.Random(seed)
+    R *= size
+    trunk_h *= size
+    mb = MeshBuilder()
+    tr = 0.06 * size + 0.025
+    cz = trunk_h + R * shape[2] * 0.85
+    lean = Vector((rng.uniform(-0.08, 0.08), rng.uniform(-0.08, 0.08), 0))
+    stem = [(lean * (t * t) + Vector((0, 0, cz * 0.85 * t))) for t in [i / 8 for i in range(9)]]
+    v, f = g_tube([tuple(p) for p in stem], tr * 1.2, seg=10, taper=lambda t: 1.0 - 0.55 * t)
+    mb.add(v, f, 'bark', True)
+    nbr = 7 if kind == 'blossom' else 5
+    for k in range(nbr):
+        a = 2 * math.pi * k / nbr + rng.uniform(-0.3, 0.3)
+        z0 = trunk_h * rng.uniform(0.7, 1.0)
+        L = R * rng.uniform(0.55, 0.85)
+        p0 = Vector((lean.x, lean.y, z0))
+        p2 = p0 + Vector((math.cos(a) * L, math.sin(a) * L, L * rng.uniform(0.45, 0.85)))
+        p1 = (p0 + p2) / 2 + Vector((0, 0, L * 0.12))
+        pts = [tuple(p0 * (1 - t) ** 2 + p1 * 2 * t * (1 - t) + p2 * t * t) for t in [i / 5 for i in range(6)]]
+        v, f = g_tube(pts, tr * 0.55, seg=6, taper=lambda t: 1.0 - 0.6 * t)
+        mb.add(v, f, 'bark', True)
+    # Krone
+    sx, sy, sz = R * shape[0], R * shape[1], R * shape[2]
+    sun = Vector((0.05, -0.8, 0.55)).normalized()
+    n_cl = int((90 if kind == 'small' else 240) * min(1.6, max(0.7, size)))
+    placed = 0
+    while placed < n_cl:
+        p = Vector((rng.uniform(-1, 1), rng.uniform(-1, 1), rng.uniform(-1, 1)))
+        L = p.length
+        if L > 1.0 or L < 0.62:
+            continue
+        c = Vector((p.x * sx * 0.82, p.y * sy * 0.82, cz + p.z * sz * 0.78))
+        r = R * rng.uniform(0.09, 0.15)
+        light = (p.normalized().dot(sun) + p.z * 0.6 + rng.uniform(-0.4, 0.4)) > 0.1
+        mb.sphere(c, r, leaf_a if light else leaf_b, seg=7, rings=5, jitter=_jitter(seed * 97 + placed, 0.3, 4.0))
+        placed += 1
+    mb.sphere((0, 0, cz), R * 0.78, leaf_b, seg=14, rings=10, scale=shape, jitter=_jitter(seed, 0.12))
+    return mb.build(name, materials, collection, location=location, rotation=rng.uniform(0, 6.28))

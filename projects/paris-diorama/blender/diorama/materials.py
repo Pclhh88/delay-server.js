@@ -131,14 +131,14 @@ def make_materials():
     M['brick'] = _mat('brick', '#B26A4A', 0.8, var=0.1)
     M['copper_green'] = _mat('copper_green', '#9DBE95', 0.55, metal=0.2, var=0.08)
     # Eiffelturm
-    M['tower_bronze'] = _mat('tower_bronze', '#8A5638', 0.5, metal=0.45, var=0.1, noise_scale=30, bump=0.05)
+    M['tower_bronze'] = _mat('tower_bronze', '#93644A', 0.5, metal=0.3, var=0.1, noise_scale=30, bump=0.05)
     M['tower_dark'] = _mat('tower_dark', '#5E3626', 0.55, metal=0.4, var=0.08)
     M['gold'] = _mat('gold', '#D9A93A', 0.3, metal=1.0, var=0.0, bump=0)
     # Straße / Plattform
     M['asphalt'] = _mat('asphalt', '#34373D', 0.85, var=0.08, noise_scale=80, bump=0.2)
-    M['sidewalk'] = _mat('sidewalk', '#B3AB9E', 0.8, var=0.05, noise_scale=30)
+    M['sidewalk'] = _mat('sidewalk', '#C2BAAD', 0.8, var=0.05, noise_scale=30)
     M['curb'] = _mat('curb', '#CFCBC3', 0.75, var=0.04)
-    M['plaza'] = _mat('plaza', '#9C9488', 0.85, var=0.07, noise_scale=20)
+    M['plaza'] = _mat('plaza', '#B5AC9E', 0.85, var=0.07, noise_scale=20)
     M['slab'] = _mat('slab', '#C4C0B8', 0.8, var=0.03)
     M['marking'] = _mat('marking', '#F2F0EA', 0.6, var=0.0, bump=0)
     M['grass'] = _mat('grass', '#7A8A45', 0.9, var=0.15, noise_scale=40, bump=0.3)

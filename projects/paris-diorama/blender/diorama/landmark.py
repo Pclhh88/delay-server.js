@@ -31,7 +31,20 @@ Z_F3 = (3.72, 4.78)
 Z_CORN = 4.78                   # Unterkante Hauptgesims
 Z_EAVE = 5.07                   # Oberkante Hauptgesims = Dachfuß
 ROOF_H, ROOF_IN = 1.62, 0.85    # Mansarde: Höhe, Rücksprung
+ROOF_KIND = 'bell'              # bell | mansard | curved | low
 SEG = 12
+
+# Werte von Gebäude F; configure() stellt Grundriss und Dach für andere Häuser um (siehe city.py)
+F_DEFAULTS = dict(lx=4.4, ly=5.21, rad=dict(SW=1.3, SE=0.35, NE=0.25, NW=0.35), eave=5.07, roof_h=1.62,
+                  roof_in=0.85, roof_kind='bell')
+
+
+def configure(lx, ly, rad, eave, roof_h, roof_in, roof_kind):
+    """Setzt Grundriss (lokal, Designeinheiten) und Dach für die nachfolgenden Bauteil-Aufrufe."""
+    global LX, LY, RAD, Z_EAVE, ROOF_H, ROOF_IN, ROOF_KIND, _NS
+    LX, LY, RAD = lx, ly, dict(rad)
+    Z_EAVE, ROOF_H, ROOF_IN, ROOF_KIND = eave, roof_h, roof_in, roof_kind
+    _NS = _straight_counts()
 
 
 # ----------------------------------------------------------------------------- Grundriss-Ringe
@@ -123,7 +136,18 @@ class Frame:
         return Frame((o.x, o.y), (t.x, t.y), (n.x, n.y))
 
 
-def edge_frames():
+def edge_frames(off=0.0):
+    """Fassadensysteme der vier geraden Seiten (off: Versatz nach außen, z. B. negativ für ein Attikageschoss)."""
+    if off:
+        hw = min(LX, LY) / 2 + off - 1e-3
+        r = {k: min(max(v + off, 0.04), hw) for k, v in RAD.items()}
+        x0, y0, x1, y1 = -off, -off, LX + off, LY + off
+        return {
+            'right': Frame((x0 + r['SW'], y0), (1, 0), (0, -1)), 'right_len': x1 - x0 - r['SW'] - r['SE'],
+            'left': Frame((x0, y1 - r['NW']), (0, -1), (-1, 0)), 'left_len': y1 - y0 - r['NW'] - r['SW'],
+            'east': Frame((x1, y0 + r['SE']), (0, 1), (1, 0)), 'east_len': y1 - y0 - r['SE'] - r['NE'],
+            'north': Frame((x1 - r['NE'], y1), (-1, 0), (0, 1)), 'north_len': x1 - x0 - r['NE'] - r['NW'],
+        }
     r = RAD
     return {
         'right': Frame((r['SW'], 0), (1, 0), (0, -1)), 'right_len': LX - r['SW'] - r['SE'],
@@ -513,8 +537,33 @@ def balcony(fr, mb, s0, s1, z, depth=0.38):
 
 # ----------------------------------------------------------------------------- Dachdetails
 def roof_profile(n=16):
-    """Glockenförmige Mansarde: unten senkrecht mit leichtem Ausschwung, oben ~40° flacher."""
+    """Dachprofil [(d, z)] je nach ROOF_KIND:
+    bell    glockenförmig: unten senkrecht mit Ausbauchung, oben ~40° (Gebäude F)
+    mansard klassische Pariser Mansarde: steiler Unterhang (~75°) mit leichtem Knick, flaches Oberdach
+    curved  konvex gerundet (Viertelkreis-artig, rotes Dach)
+    low     niedrige, flach geneigte Abdeckung"""
     pts = [(0.06, Z_EAVE - 0.01), (0.07, Z_EAVE + 0.04)]
+    if ROOF_KIND == 'mansard':
+        for i in range(1, n + 1):
+            t = i / n
+            # Unterhang: 85 % der Höhe, 55 % des Rücksprungs, leicht konkav; dann flacher Oberhang
+            if t <= 0.8:
+                u = t / 0.8
+                d = 0.07 - ROOF_IN * 0.55 * (u ** 1.15)
+                z = Z_EAVE + 0.04 + (ROOF_H - 0.04) * 0.85 * u
+            else:
+                u = (t - 0.8) / 0.2
+                d = 0.07 - ROOF_IN * (0.55 + 0.45 * u)
+                z = Z_EAVE + 0.04 + (ROOF_H - 0.04) * (0.85 + 0.15 * u)
+            pts.append((d, z))
+        return pts
+    if ROOF_KIND in ('curved', 'low'):
+        for i in range(1, n + 1):
+            th = (math.pi / 2) * i / n
+            d = 0.07 - ROOF_IN * (1 - math.cos(th))
+            z = Z_EAVE + 0.04 + (ROOF_H - 0.04) * math.sin(th) ** (0.85 if ROOF_KIND == 'curved' else 1.0)
+            pts.append((d, z))
+        return pts
     th_max = math.radians(70)
     for i in range(1, n + 1):
         th = th_max * i / n
@@ -793,8 +842,9 @@ def _boolean(target, cutter_mb, M, coll):
     bpy.data.objects.remove(cut)
 
 
-def build_landmark(coll, location=(0, 0, 0), name='Landmark_F'):
-    M = make_materials()
+def build_landmark(coll, location=(0, 0, 0), name='Landmark_F', M=None):
+    configure(**F_DEFAULTS)
+    M = M or make_materials()
     root = bpy.data.objects.new(name, None)
     root.empty_display_type = 'CUBE'
     root.empty_display_size = 0.5

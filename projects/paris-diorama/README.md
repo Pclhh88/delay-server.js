@@ -42,3 +42,10 @@ wiederverwendbar.
 Hinweis: Die Vorlage (`reference/reference.png`) trägt Freepik-Wasserzeichen und ist nur interne Referenz –
 sie ist nicht im Git. Zum Abgleich das Originalbild (2732×2048) links/rechts auf 2048×2048 zuschneiden
 (x = 342…2389) und dort ablegen.
+
+## Stadt in Benchmark-Qualität (aktuell)
+`blender/build_city.py` → `paris_city.blend`, `renders/city_final.png`.
+Häuser: `blender/diorama/city.py` (parametrischer Generator mit den Techniken aus dem Gebäude-F-Benchmark:
+Profil-Sweeps, Boolean-Öffnungen, plastische Fenster, Gussbalkone, Gauben mit echten Fenstern, Kaminstöcke,
+Ladenfronten, Fensterläden, Steinbalustrade, Attikageschoss). Gebäude F = `blender/diorama/landmark.py`.
+Bäume: `build_tree_hq` (Büschel-Kronen) in `blender/diorama/nature.py`.
