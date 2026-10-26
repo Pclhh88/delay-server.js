@@ -4,3 +4,4 @@ renders/*.log
 reference/reference.png
 renders/compare_*.png
 renders/*_id.png
+renders/landmark_mask.png
