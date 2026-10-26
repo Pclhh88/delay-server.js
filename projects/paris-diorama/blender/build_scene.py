@@ -90,11 +90,12 @@ def setup_camera(sc, C):
     cj = json.load(open(os.path.join(HERE, 'camera.json')))
     cam = bpy.data.objects.new('Camera_Reference', bpy.data.cameras.new('Camera_Reference'))
     cam.location = cj['location']
-    cam.rotation_euler = cj['rotation_euler']
+    cam.rotation_euler = (cj['pitch'], cj['roll'], cj['yaw'])
     cam.data.lens = cj['lens']
     cam.data.sensor_width = cj['sensor']
-    cam.data.shift_x = cj.get('shift_x', 0)
-    cam.data.shift_y = cj.get('shift_y', 0)
+    cam.data.sensor_fit = 'HORIZONTAL'
+    cam.data.shift_x = -cj['shift_x']  # Fit: Hauptpunkt in Bildkoordinaten; Blender: Bildausschnitt
+    cam.data.shift_y = -cj['shift_y']
     cam.data.clip_end = 1000
     C.objects.link(cam)
     sc.camera = cam

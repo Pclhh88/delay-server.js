@@ -4,7 +4,9 @@ Ziel: Das Referenzbild `reference/reference.png` (Miniatur-Paris mit Eiffelturm)
 dreidimensionale Blender-Szene** nachbauen – jedes Haus, jeder Baum, jedes Auto ein eigenes, später
 animierbares Objekt. Keine Bildprojektion, keine KI-Standbilder.
 
-* Analyse, Vermessung, Modellierungsplan, Iterationen: [analysis/ANALYSE.md](analysis/ANALYSE.md)
+* **Exakte Rekonstruktion (aktuell):** Bildanalyse + Blockout: [analysis/REKONSTRUKTION_EXAKT.md](analysis/REKONSTRUKTION_EXAKT.md)
+  `blender/measurements.py` (Bildmessungen → 3D-Maße), `blender/blockout.py` → `blockout.blend`, `renders/blockout.png`
+* Erste stilistische Version v1 (überholt): [analysis/ANALYSE.md](analysis/ANALYSE.md)
 * Ergebnis v1: `renders/render_v1.png`, Vergleich: `renders/compare_v1_*.png`
 * Blender-Datei: `paris_diorama.blend` (Blender 5.2, Cycles)
 

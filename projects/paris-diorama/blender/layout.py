@@ -5,11 +5,14 @@ Weltkoordinaten: Plattform 24 x 24, Vorderecke (zur Kamera) bei (0,0).
 Objekte, deren Fußpunkt im Bild sichtbar ist, werden direkt in Bildkoordinaten
 angegeben und über die gemessene Bodenabbildung (img2world) platziert.
 """
+import json
 import math
+import os
 import numpy as np
 from diorama.meshkit import chamfer_rect
 
-SIZE, CORNER_R = 24.0, 3.2
+SIZE = 24.0
+CORNER_R = round(json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'camera.json')))['corner_radius'], 2)
 BLOCK_Z = 0.12            # Oberkante Gehweg/Blockfläche
 ROAD = (0.35, 2.55)       # Straße zwischen diesen Randabständen
 WALK = 3.45               # Gehweg bis hier
@@ -20,13 +23,13 @@ _CAM = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '
 
 
 def img2world(sx, sy, z=BLOCK_Z):
-    """Bildpunkt der Referenz -> Weltpunkt auf Höhe z (Strahl der kalibrierten Kamera)."""
-    x, y, _ = _unproject(_CAM['params'], (sx, sy), z)
+    """Bildpunkt der Referenz -> Weltpunkt auf Höhe z (Sehstrahl der kalibrierten Kamera)."""
+    x, y, _ = _unproject(_CAM, (sx, sy), z)
     return float(x), float(y), z
 
 
 def world2img(p):
-    return _project(_CAM['params'], np.array([p], float))[0]
+    return _project(_CAM, np.array([p], float))[0]
 
 
 def rect(x0, y0, x1, y1):
