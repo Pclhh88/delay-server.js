@@ -178,7 +178,8 @@ def build_platform(coll):
 
 
 # Turmprofil aus measurements.TOWER (z über Block, halbe Breite); Plattformen als Kästen
-def build_tower_blockout(coll):
+def tower_profile():
+    """Turm-Fußpunkt (x, y) und gemessenes Profil {Marke: (z über Block, halbe Breite)}."""
     from scipy.optimize import brentq
     from fit_camera import project
     P = lambda p: project(CAM, np.array([p], float))[0]
@@ -188,6 +189,11 @@ def build_tower_blockout(coll):
         z = brentq(lambda z: P((t[0], t[1], z))[1] - v, -2, 40)
         a = brentq(lambda a: P((t[0] + a, t[1] - a, z))[0] - P((t[0] - a, t[1] + a, z))[0] - w, 1e-3, 10) if w else 0
         prof[name] = (z - Z0, a)
+    return t, prof
+
+
+def build_tower_blockout(coll):
+    t, prof = tower_profile()
     mb = MeshBuilder()
 
     def sq(a):
@@ -254,12 +260,12 @@ def setup_camera_and_light(sc, coll):
     sc.world = w
     w.use_nodes = True
     w.node_tree.nodes['Background'].inputs['Color'].default_value = (0.95, 0.88, 0.75, 1)
-    w.node_tree.nodes['Background'].inputs['Strength'].default_value = 0.7
+    w.node_tree.nodes['Background'].inputs['Strength'].default_value = 0.9
     sun = bpy.data.objects.new('Sun', bpy.data.lights.new('Sun', 'SUN'))
     sun.data.energy = 4.0
-    sun.data.angle = math.radians(10)
+    sun.data.angle = math.radians(14)
     sun.data.color = (1.0, 0.94, 0.84)
-    d = Vector((0.62, -0.42, 0.62)).normalized()
+    d = Vector((0.70, -0.40, 0.50)).normalized()  # tiefere Sonne von rechts -> langer Schatten nach links
     sun.rotation_euler = (-d).to_track_quat('-Z', 'Y').to_euler()
     coll.objects.link(sun)
     me = bpy.data.meshes.new('Floor')
@@ -276,7 +282,7 @@ def render(sc, path, res, samples):
     sc.render.resolution_x = sc.render.resolution_y = res
     sc.view_settings.view_transform = 'AgX'
     sc.view_settings.look = 'AgX - Medium High Contrast'
-    sc.view_settings.exposure = 0.35
+    sc.view_settings.exposure = 0.55
     sc.render.filepath = path
     bpy.ops.render.render(write_still=True)
 

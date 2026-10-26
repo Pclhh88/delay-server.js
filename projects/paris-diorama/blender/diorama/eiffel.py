@@ -151,3 +151,142 @@ def build_eiffel(materials, collection, location, scale, rotation=0.0, name='Eif
     mb.box(P(1.6, 0, 331), (3.0 * S, 0.3 * S, 1.8 * S), 'gold')  # Fähnchen
     ob = mb.build(name, materials, collection, location=location, rotation=rotation)
     return ob
+
+
+def build_eiffel_measured(materials, collection, location, prof, name='EiffelTower'):
+    """Fachwerk-Turm nach einem im Bild gemessenen Profil (Einheiten der Szene, nicht Meter).
+
+    prof: {Marke: (z, halbe Breite)} aus blockout.tower_profile(). Der Turm der Vorlage hat keine
+    realen Proportionen (1. Etage hoch, oberer Schaft gestreckt) – nachgebaut wird das Bild.
+    """
+    M, D = 'tower_bronze', 'tower_dark'
+    chord, brace = 0.11, 0.045
+    zL1a, zL1b = prof['etage1_unten'][0], prof['etage1_oben'][0]
+    zL2 = prof['etage2'][0]
+    zL3a, zL3b = prof['etage3_unten'][0], prof['etage3_oben'][0]
+    samples = sorted([(0.0, prof['fuss'][1]), (zL1a, prof['etage1_unten'][1] * 0.93),
+                      (prof['zwischen_1_2'][0], prof['zwischen_1_2'][1]), (zL2, prof['etage2'][1] * 0.95)] +
+                     [prof[k] for k in ('schaft_720', 'schaft_650', 'schaft_550', 'schaft_450', 'schaft_350',
+                                        'schaft_280')] + [(zL3a, prof['schaft_280'][1])])
+
+    def half(z):
+        for (z0, a0), (z1, a1) in zip(samples, samples[1:]):
+            if z <= z1:
+                t = (z - z0) / max(1e-6, z1 - z0)
+                return a0 + (a1 - a0) * t
+        return samples[-1][1]
+
+    def legw(z):
+        return 0.78 + (half(zL2) - 0.78) * min(1.0, z / zL2)
+
+    mb = MeshBuilder()
+    V = Vector
+    # ---- vier Pfeiler (Fuß -> 2. Etage) ----
+    zs = [zL2 * k / 22 for k in range(23)]
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            secs = []
+            for z in zs:
+                w = half(z)
+                a = max(w - legw(z), 0.04)
+                secs.append([V((sx * a, sy * a, z)), V((sx * w, sy * a, z)), V((sx * w, sy * w, z)), V((sx * a, sy * w, z))])
+            for k in range(len(secs) - 1):
+                A, B = secs[k], secs[k + 1]
+                for c in range(4):
+                    d = (c + 1) % 4
+                    mb.beam(A[c], B[c], chord, M)
+                    mb.beam(A[c], B[d], brace, M)
+                    mb.beam(A[d], B[c], brace, M)
+                    if k % 2 == 0:
+                        mb.beam(B[c], B[d], brace, M)
+            w0, a0 = half(0), half(0) - legw(0)
+            c0 = (w0 + a0) / 2
+            mb.box((sx * c0, sy * c0, 0.06), (legw(0) + 0.12, legw(0) + 0.12, 0.12), 'stone_beige')
+    # ---- Zierbögen auf allen vier Seiten (Fuß -> unter der 1. Etage) ----
+    apex = zL1a - 0.95
+    for side in range(4):
+        ang = side * math.pi / 2
+        ca, sa = math.cos(ang), math.sin(ang)
+
+        def R(u, v, z):
+            return V((u * ca - v * sa, u * sa + v * ca, z))
+        span = half(0.35) - legw(0.35)
+        outer, inner = [], []
+        for k in range(21):
+            t = math.pi * k / 20
+            u = -math.cos(t) * span
+            z = 0.35 + math.sin(t) * (apex - 0.35)
+            v = -(half(z) - 0.02)
+            outer.append(R(u, v, z))
+            inner.append(R(u * 0.9, v + 0.01, 0.35 + math.sin(t) * (apex - 0.35) + 0.22))
+        for p0, p1 in zip(outer, outer[1:]):
+            mb.beam(p0, p1, chord * 1.1, D)
+        for p0, p1 in zip(inner, inner[1:]):
+            mb.beam(p0, p1, brace * 1.3, D)
+        for p0, p1 in zip(outer[1:-1:2], inner[1:-1:2]):
+            mb.beam(p0, p1, brace, D)
+        # Bogenzwickel bis zur Etage: senkrechte Stäbe + Rauten
+        for k in range(1, 20, 2):
+            u = -math.cos(math.pi * k / 20) * span
+            z0 = 0.35 + math.sin(math.pi * k / 20) * (apex - 0.35) + 0.22
+            v = -(half(zL1a) - 0.03)
+            mb.beam(R(u * 0.9, v, z0), R(u * 0.95, v, zL1a), brace, D)
+    # ---- 1. Etage: Kastenträger-Ring mit Fries und Geländer ----
+    wP = prof['etage1_oben'][1]
+    hole = half(zL1b) - legw(zL1b) - 0.05
+    hP = zL1b - zL1a
+    for sgn in (-1, 1):
+        mb.box((0, sgn * (wP + hole) / 2, zL1a + hP / 2), (2 * wP, wP - hole, hP), D)
+        mb.box((sgn * (wP + hole) / 2, 0, zL1a + hP / 2), (wP - hole, 2 * hole, hP), D)
+    n = 14
+    for k in range(n + 1):  # Friespfosten + Rundbogenfelder angedeutet
+        u = -wP + 2 * wP * k / n
+        for (x, y) in ((u, -wP - 0.015), (u, wP + 0.015), (-wP - 0.015, u), (wP + 0.015, u)):
+            mb.box((x, y, zL1a + hP / 2), (0.05, 0.05, hP * 0.9), M)
+    for (x0, y0, x1, y1) in ((-wP, -wP, wP, -wP), (wP, -wP, wP, wP), (wP, wP, -wP, wP), (-wP, wP, -wP, -wP)):
+        mb.beam((x0, y0, zL1b + 0.16), (x1, y1, zL1b + 0.16), 0.03, M)
+        mb.beam((x0, y0, zL1a + 0.06), (x1, y1, zL1a + 0.06), 0.06, M)
+        for k in range(13):
+            t = k / 12
+            x, y = x0 + (x1 - x0) * t, y0 + (y1 - y0) * t
+            mb.beam((x, y, zL1b), (x, y, zL1b + 0.16), 0.02, M)
+    # ---- 2. Etage ----
+    w2 = prof['etage2'][1]
+    mb.box((0, 0, zL2 - 0.08), (2 * w2, 2 * w2, 0.18), D)
+    for (x0, y0, x1, y1) in ((-w2, -w2, w2, -w2), (w2, -w2, w2, w2), (w2, w2, -w2, w2), (-w2, w2, -w2, -w2)):
+        mb.beam((x0, y0, zL2 + 0.12), (x1, y1, zL2 + 0.12), 0.025, M)
+        for k in range(9):
+            t = k / 8
+            mb.beam((x0 + (x1 - x0) * t, y0 + (y1 - y0) * t, zL2 + 0.01),
+                    (x0 + (x1 - x0) * t, y0 + (y1 - y0) * t, zL2 + 0.12), 0.018, M)
+    # ---- Schaft: jede Ecke ein eigener Gitterstiel, dazwischen Rauten ----
+    zs2 = [zL2 + (zL3a - zL2) * k / 26 for k in range(27)]
+    secs = [[V((-half(z), -half(z), z)), V((half(z), -half(z), z)), V((half(z), half(z), z)), V((-half(z), half(z), z))]
+            for z in zs2]
+    for k in range(len(secs) - 1):
+        A, B = secs[k], secs[k + 1]
+        for c in range(4):
+            d = (c + 1) % 4
+            mb.beam(A[c], B[c], chord * 0.9, M)
+            mb.beam(A[c], B[d], brace * 0.9, M)
+            mb.beam(A[d], B[c], brace * 0.9, M)
+            ia, ib = A[c] * 0.8, B[c] * 0.8
+            ia.z, ib.z = A[c].z, B[c].z
+            mb.beam(ia, ib, brace * 0.8, M)
+            if k % 3 == 0:
+                mb.beam(B[c], B[d], brace, M)
+    # ---- 3. Etage, Laterne, Kuppel, Antenne, Fahne ----
+    w3 = prof['etage3_oben'][1]
+    mb.box((0, 0, (zL3a + zL3b) / 2), (2 * w3, 2 * w3, zL3b - zL3a), D)
+    for (x0, y0, x1, y1) in ((-w3, -w3, w3, -w3), (w3, -w3, w3, w3), (w3, w3, -w3, w3), (-w3, w3, -w3, -w3)):
+        mb.beam((x0, y0, zL3b + 0.06), (x1, y1, zL3b + 0.06), 0.02, M)
+    zk = prof['kuppel'][0]
+    rk = prof['kuppel'][1]
+    mb.cylinder((0, 0, zL3b), rk * 0.92, (zk - zL3b) * 0.55, M, seg=16, r_top=rk * 0.88)
+    mb.cylinder((0, 0, zL3b + (zk - zL3b) * 0.55), rk, 0.05, D, seg=16)
+    mb.sphere((0, 0, zL3b + (zk - zL3b) * 0.6), rk * 0.85, M, seg=16, rings=10, scale=(1, 1, 0.75))
+    zt = prof['fahne'][0]
+    mb.cylinder((0, 0, zk), 0.07, 0.25, D, seg=8, r_top=0.05)
+    mb.cylinder((0, 0, zk + 0.25), 0.03, zt - zk - 0.3, D, seg=6, r_top=0.018)
+    mb.box((0.12, 0, zt - 0.06), (0.22, 0.015, 0.11), 'gold')
+    return mb.build(name, materials, collection, location=location)
