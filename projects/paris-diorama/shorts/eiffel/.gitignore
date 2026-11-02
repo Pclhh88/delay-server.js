@@ -4,3 +4,5 @@ stills/
 *.log
 eiffel_short.blend
 eiffel_short.blend1
+render*.log
+compose.log
