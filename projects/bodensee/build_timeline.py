@@ -135,8 +135,11 @@ def save(img, name):
 
 def build_assets():
     a = {}
-    for k in ("swiss", "austrian", "german"):
-        a["fig_" + k] = save(F.country_figure(k, 240, 420), "fig_" + k)
+    # Figuren und Häuser vom Nutzer (assets/user/), ersetzen die prozeduralen Platzhalter
+    for k, f in (("swiss", "man_ch"), ("austrian", "man_at"), ("german", "man_de")):
+        a["fig_" + k] = {"path": f"assets/user/{f}.png", "license": "vom Nutzer geliefert"}
+    for c in ("ch", "at", "de"):
+        a["house_" + c] = {"path": f"assets/user/house_{c}.png", "license": "vom Nutzer geliefert"}
     a["castle"] = save(F.castle(260, 260), "castle")
     a["church"] = save(F.church(220, 280), "church")
     a["town"] = save(F.town(300, 220), "town")
@@ -228,6 +231,30 @@ def pop(t0, t1, fade=0.3):
     return [K(t0, scale=0.2, opacity=0), K(t0 + 0.22, scale=1, opacity=1, ease="back_out"), K(t1 - fade, opacity=1), K(t1, opacity=0)]
 
 
+def alive(t0, t1, talk=(), seed=0, fade=0.3):
+    """Figur poppt auf, wippt danach leicht (Atmen) und wackelt beim Sprechen (größer + Hin-und-Her)."""
+    keys = [K(t0, scale=0.2, opacity=0, rot=0, dy=0), K(t0 + 0.25, scale=1, opacity=1, ease="back_out"),
+            K(t1 - fade, opacity=1), K(t1, opacity=0)]
+    ph = 0.37 * seed
+    t = t0 + 0.4 + ph
+    up = True
+    while t < t1 - 0.2:  # ruhiges Wippen, 0,9 s je Halbschwingung
+        if not any(a - 0.1 < t < b + 0.1 for a, b in talk):
+            keys.append(K(t, dy=-6 if up else 0, ease="inout"))
+            up = not up
+        t += 0.9
+    for a, b in talk:
+        keys += [K(a - 0.05, scale=1), K(a + 0.15, scale=1.18, ease="out3")]
+        u, k = a, 0
+        while u < b - 0.1:
+            keys.append(K(u, rot=(4 if k % 2 else -4), dy=(-14 if k % 2 else 0), ease="inout"))
+            u += 0.22
+            k += 1
+        keys += [K(b, rot=0, dy=0, ease="out"), K(b + 0.2, scale=1, ease="inout")]
+    keys.sort(key=lambda k: k["t"])
+    return keys
+
+
 def fade(t0, t1, d=0.3, op=1.0, **extra):
     return [K(t0, opacity=0, **extra), K(t0 + d, opacity=op), K(t1 - d, opacity=op), K(t1, opacity=0)]
 
@@ -271,6 +298,9 @@ def items():
              "glow": {"color": cols[c], "width": 10, "strength": 1.4}, "start": t0 - 0.1, "end": 15.0,
              "keys": [K(t0 - 0.1, opacity=0), K(t0 + 0.25, opacity=1), K(14.4, opacity=1), K(15.0, opacity=0)]})
         txt, (lo, la) = labels[c]
+        hx = {"DE": (9.47, 47.84), "AT": (9.86, 47.50), "CH": (9.20, 47.45)}[c]
+        add({"kind": "sprite", "asset": "house_" + c.lower(), "at": ll(*hx), "size": 200 if c != "AT" else 125,
+             "anchor": [0.5, 0.97], "start": t0 - 0.05, "end": 14.6, "keys": pop(t0 - 0.05, 14.6)})
         add({"kind": "label", "text": txt, "at": ll(lo, la), "size": 46, "start": t0, "end": 14.6, **WHITE,
              "glow": [0, 0, 0, 10, 0.35], "keys": pop(t0, 14.6)})
     # Grenze im See? – gestrichelte Linie zeichnet sich, zerfällt
@@ -282,9 +312,11 @@ def items():
     # ---- Früher: Burgen, Klöster, Städte (Papier) --------------------------------
     sites = [("castle", 9.08, 47.78, 19.25), ("castle", 9.62, 47.70, 19.45), ("castle", 9.25, 47.48, 19.6),
              ("church", 9.30, 47.66, 20.15), ("church", 9.05, 47.70, 20.3), ("church", 9.55, 47.46, 20.45),
-             ("town", 9.17, 47.66, 21.0), ("town", 9.68, 47.55, 21.15), ("town", 9.16, 47.77, 21.3), ("town", 9.48, 47.65, 21.45)]
+             ("house_de", 9.17, 47.66, 21.0), ("house_at", 9.73, 47.50, 21.15), ("house_de", 9.16, 47.77, 21.3),
+             ("house_ch", 9.38, 47.55, 21.45)]
     for a_, lo, la, t0 in sites:
-        add({"kind": "sprite", "asset": a_, "at": ll(lo, la), "size": 150, "anchor": [0.5, 0.9], "size_zoom": 0.7,
+        add({"kind": "sprite", "asset": a_, "at": ll(lo, la), "size": {"house_at": 70, "house_ch": 120, "house_de": 115}.get(a_, 110),
+             "anchor": [0.5, 0.9], "size_zoom": 0.7,
              "ref_mpp": 115, "start": t0, "end": 27.2, "keys": pop(t0, 27.2)})
     reich = [ll(*p) for p in ((6.0, 46.3), (13.5, 46.0), (14.5, 50.5), (5.5, 50.8), (4.8, 48.0))]
     add({"kind": "polygon", "points": reich, "start": 22.4, "end": 31.4, "fill": [140, 70, 170], "feather": 40,
@@ -300,9 +332,13 @@ def items():
                   K(34.0, fill_opacity=0.12), K(34.6, fill_opacity=0)]})
     add({"kind": "label", "text": "Schweiz", "at": ll(9.02, 47.47), "dy": -130, "size": 54, "start": 28.3, "end": 31.2, **SERIF,
          "color": [150, 20, 20], "keys": pop(28.3, 31.2)})
-    add({"kind": "sprite", "asset": "fig_swiss", "at": ll(9.38, 47.40), "size": 130, "anchor": [0.5, 0.95], "start": 28.2,
-         "end": 31.3, "keys": [K(28.2, scale=0.2, opacity=0), K(28.45, scale=1, opacity=1, ease="back_out"),
-                               K(29.6, dy=0), K(30.8, dy=60, opacity=1), K(31.2, opacity=0)]})
+    walk = [K(28.2, scale=0.2, opacity=0, dx=0, dy=0, rot=0), K(28.45, scale=1, opacity=1, ease="back_out")]
+    for i in range(10):  # Watscheln nach rechts unten, raus aus dem Reich
+        t = 28.8 + i * 0.22
+        walk.append(K(t, dx=26 * (i + 1), dy=18 * (i + 1) + (-10 if i % 2 else 0), rot=(5 if i % 2 else -5), ease="inout"))
+    walk += [K(31.0, opacity=1), K(31.3, opacity=0)]
+    add({"kind": "sprite", "asset": "fig_swiss", "at": ll(9.30, 47.47), "size": 210, "anchor": [0.5, 0.97], "start": 28.2,
+         "end": 31.3, "keys": walk})
     # ---- mehrere Staaten -------------------------------------------------------
     states = [("Baden", 9.02, 47.79, 32.6), ("Württemberg", 9.47, 47.70, 32.9), ("Bayern", 9.70, 47.60, 33.15),
               ("Österreich", 9.80, 47.46, 33.4), ("Schweiz", 9.30, 47.53, 33.65)]
@@ -324,9 +360,10 @@ def items():
                   K(40.95, dx=40, dy=-40, rot=-32), K(41.5, dx=900, dy=-700, rot=20, ease="in")]})
     # ---- drei Meinungen ----------------------------------------------------------
     figs = {"swiss": (9.37, 47.555, 42.3), "austrian": (9.74, 47.495, 42.6), "german": (9.47, 47.665, 42.9)}
-    for k, (lo, la, t0) in figs.items():
-        add({"kind": "sprite", "asset": "fig_" + k, "at": ll(lo, la), "size": 190, "anchor": [0.5, 0.95],
-             "size_zoom": 0.6, "ref_mpp": 50, "start": t0, "end": 59.2, "keys": pop(t0, 59.2)})
+    talks = {"swiss": [(46.1, 49.2)], "austrian": [(50.75, 53.5)], "german": [(55.1, 58.5)]}
+    for j, (k, (lo, la, t0)) in enumerate(figs.items()):
+        add({"kind": "sprite", "asset": "fig_" + k, "at": ll(lo, la), "size": 240, "anchor": [0.5, 0.97],
+             "size_zoom": 0.3, "ref_mpp": 50, "start": t0, "end": 59.2, "keys": alive(t0, 59.2, talks[k], seed=j)})
     # Schweiz: Grenze genau in der Mitte (rot, zeichnet sich)
     add({"kind": "path", "src": "midline", "start": 46.9, "end": 59.0, "core_width": 5, "core_color": [220, 30, 30],
          "glows": [{"width": 14, "blur": 5, "color": [255, 40, 40], "strength": 0.5}],
@@ -346,8 +383,8 @@ def items():
         add({"kind": "sprite", "asset": a_, "at": ll(lo, la), "size": 175, "start": t0, "end": 66.6, "keys": pop(t0, 66.6)})
     tri = [ll(9.37, 47.555), ll(9.74, 47.495), ll(9.47, 47.665), ll(9.37, 47.555)]
     for k, (lo, la, t0) in figs.items():
-        add({"kind": "sprite", "asset": "fig_" + k, "at": ll(lo, la), "size": 150, "anchor": [0.5, 0.95], "start": 64.3,
-             "end": 66.6, "keys": pop(64.3, 66.6)})
+        add({"kind": "sprite", "asset": "fig_" + k, "at": ll(lo, la), "size": 190, "anchor": [0.5, 0.97], "start": 64.3,
+             "end": 66.6, "keys": alive(64.3, 66.6, seed=len(k))})
     add({"kind": "path", "points": tri, "start": 64.6, "end": 66.6, "core_width": 4, "core_color": [255, 230, 80], "dash": [20, 12],
          "keys": [K(64.6, progress=0), K(65.8, progress=1, ease="inout"), K(66.2, opacity=1), K(66.6, opacity=0)]})
     add({"kind": "sprite", "asset": "question", "at": "camera", "size": 420, "start": 67.1, "end": 69.2, "keys": pop(67.1, 69.2)})

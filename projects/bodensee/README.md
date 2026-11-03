@@ -15,7 +15,7 @@
 * Ergebnis: `output/bodensee.mp4`
 
 ## Offen / Platzhalter
-* Figuren (Schweizer, Österreicher, Beamter) und Symbole sind einfache eigene Grafiken – Nutzer will ggf. eigene Modelle liefern.
+* Figuren (man_ch/at/de) und Häuser (house_ch/at/de) vom Nutzer in `assets/user/`; übrige Symbole (Burg, Kirche, Fisch, Schiff, Stempel) noch eigene Platzhalter.
 * Fakten vor Veröffentlichung prüfen (siehe `SKRIPT.md`, Abschnitt „Vor der Veröffentlichung prüfen").
 * Quellenangaben für die Beschreibung: Copernicus Sentinel data 2024/2025; © OpenStreetMap contributors, Overture Maps Foundation;
   AWS Terrain Tiles.
