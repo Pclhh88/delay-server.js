@@ -1,0 +1,11 @@
+{
+ "note": "Alle Bild-Assets dieses Projekts sind eigene Erzeugnisse aus freien Daten oder prozedural gezeichnet. Einzige Ausnahme: die Stimme.",
+ "maps/sat.jpg, maps/sat_wide.jpg": {"source": "Copernicus Sentinel-2 L2A, Szene S2B_18TWL_20241011 (AWS Open Data)", "license": "Copernicus-Lizenz, frei", "attribution": "Contains modified Copernicus Sentinel data 2024"},
+ "maps/paper.jpg, maps/paper_wide.jpg": {"source": "AWS Terrain Tiles (SRTM, USGS 3DEP) + Küste/Gewässer aus Overture Maps", "license": "frei / ODbL", "attribution": "© OpenStreetMap contributors, Overture Maps Foundation"},
+ "maps/vectors.json": {"source": "Overture Maps 2026-10-21.0 (Straßen, Land)", "license": "ODbL", "attribution": "© OpenStreetMap contributors"},
+ "gen/*.png": {"source": "shortsfactory.assets_gen.figures + build_timeline.py (eigene Grafiken)", "license": "eigen",
+               "hinweis": "card_*.png sind Platzhalter aus dem Sentinel-Bild; für echte Fotokarten freie Fotos einsetzen"},
+ "audio/voice_reference_proxy.flac": {"source": "per KI getrennte Sprecherspur des Originals", "license": "reference_proxy – NICHT veröffentlichen"},
+ "audio/music_bed.wav": {"source": "shortsfactory.audio.sfx.ambient_bed (eigene Komposition, wird erzeugt)", "license": "eigen"},
+ "fonts": {"Roboto": "Apache 2.0", "Playfair Display": "SIL OFL", "Great Vibes": "SIL OFL"}
+}

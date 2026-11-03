@@ -81,6 +81,7 @@ class Renderer:
         self.manifest = manifest
         self.text = TextRenderer(os.path.join(os.path.dirname(__file__), "..", "fonts"))
         self.allow_proxies = True
+        self._maps = None
 
     # ------------------------------------------------------------ assets
     def asset(self, aid, frame=None):
@@ -206,6 +207,14 @@ class Renderer:
                 col = np.array([r, g, b], np.float32) / 255.0
                 warped[..., :3] = warped[..., :3] * (1 - amt) + col * warped[..., 3:4] * amt
             self._composite(canvas, warped, blend, op)
+            return
+        if typ == "map":
+            if self._maps is None:
+                from .maplayer import MapRenderer
+                self._maps = MapRenderer(self)
+            rgb, a = self._maps.render(layer, p, t)
+            rgba = np.concatenate([rgb, a[..., None]], axis=2)
+            self._composite(canvas, rgba, blend, op)
             return
         if typ == "grade":
             if canvas.shape[2] == 3:

@@ -1,0 +1,15 @@
+{
+ "path": "assets/maps/sat_wide.jpg",
+ "crs": "EPSG:32618",
+ "transform": [
+  40.00457875457876,
+  0.0,
+  520970.0,
+  0.0,
+  -40.01228501228502,
+  4556200.0
+ ],
+ "w": 2184,
+ "h": 1628,
+ "attribution": "Contains modified Copernicus Sentinel data 2024"
+}

@@ -183,7 +183,56 @@ def wasted(dur=1.6):
     return _stereo(_norm(burst * 0.8 + boom * 0.7, 0.9), width=1.0, seed=13)
 
 
+def click(dur=0.08):
+    """Kurzer, trockener Klick (Fotokarte / Stempel)."""
+    n = int(SR * dur)
+    x = _bandpass(_noise(n, 21), 1800, 6000) * _env(n, 0.001, 0.015, 0.01)
+    t = _t(dur)
+    x += 0.5 * np.sin(2 * np.pi * 2400 * t) * np.exp(-t * 120)
+    return _stereo(_norm(x, 0.8), width=0.2, seed=21)
+
+
+def soft_whoosh(dur=0.7, seed=31):
+    """Weicher, langer Whoosh für Zeitsprünge / Übergänge (Karten-Doku)."""
+    return swoosh(dur=dur, up=True, seed=seed) * 0.8
+
+
+def ambient_bed(dur=60.0, bpm=84, seed=5):
+    """Eigenes ruhiges Musikbett (Pad + gezupfte Noten), keine Fremd-Samples.
+    Akkorde Am - F - C - G, je 2 Takte."""
+    rng = np.random.default_rng(seed)
+    n = int(SR * dur)
+    t = np.arange(n) / SR
+    out = np.zeros(n, np.float32)
+    beat = 60.0 / bpm
+    chords = [(220.0, 261.63, 329.63), (174.61, 220.0, 261.63), (130.81, 196.0, 261.63), (196.0, 246.94, 293.66)]
+    bar = beat * 4
+    for i in range(int(dur / (bar * 2)) + 1):
+        ch = chords[i % 4]
+        t0 = i * bar * 2
+        a, b = int(t0 * SR), min(n, int((t0 + bar * 2 + 0.5) * SR))
+        if a >= n:
+            break
+        tt = t[a:b] - t0
+        env = np.minimum(1, tt / 0.6) * np.minimum(1, np.maximum(0, (bar * 2 + 0.5 - tt) / 0.6))
+        for f in ch:
+            out[a:b] += 0.05 * env * (np.sin(2 * np.pi * f * tt) + 0.3 * np.sin(2 * np.pi * f * 2.003 * tt))
+        for k in range(8):  # gezupfte Arpeggio-Noten
+            ts = t0 + k * beat
+            s0 = int(ts * SR)
+            if s0 >= n:
+                break
+            f = ch[k % 3] * (2 if k % 4 == 3 else 1)
+            m = min(n - s0, int(SR * 1.2))
+            tn = np.arange(m) / SR
+            out[s0:s0 + m] += 0.06 * np.sin(2 * np.pi * f * tn) * np.exp(-tn * 4.5)
+    out = _lowpass(out, 3500)
+    return _stereo(_norm(out, 0.5), width=0.6, seed=seed)
+
+
 PRESETS = {
+    "click": click,
+    "soft_whoosh": soft_whoosh,
     "impact_low": impact_low,
     "swoosh": swoosh,
     "swoosh_down": lambda: swoosh(up=False, seed=7),

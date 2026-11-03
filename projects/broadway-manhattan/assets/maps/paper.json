@@ -1,0 +1,15 @@
+{
+ "path": "assets/maps/paper.jpg",
+ "crs": "EPSG:32618",
+ "transform": [
+  12.001460662991404,
+  0.0,
+  572415.0894758572,
+  0.0,
+  -12.001469781558663,
+  4530546.591273103
+ ],
+ "w": 2285,
+ "h": 2986,
+ "attribution": "Terrain: AWS Terrain Tiles (SRTM/USGS 3DEP); Coast: OSM/Overture"
+}

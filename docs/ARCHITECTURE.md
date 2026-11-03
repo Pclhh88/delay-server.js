@@ -12,12 +12,22 @@ shortsfactory/                      wiederverwendbarer Code
   render/keyframes.py               Keyframe-Interpolation + Easings
   render/shapes.py                  prozedurale Layer: stripes_bg, radial_bg, solid, arrow, glow, light_cone, polygon, text, grade
                                     (+ engine: image, sequence = animierte Bildfolge, group mit clip/isolate)
-  render/text.py                    Wort-für-Wort-Untertitel + Textlayer (League Spartan, OFL)
+  render/text.py                    Wort-für-Wort-Untertitel + Textlayer (League Spartan, OFL);
+                                    Phrasen-Untertitel (Roboto) mit fade_in + Varianten (kursiv)
+  render/maplayer.py                Karten-Ebene "map" (Stil map_doc): Kamera cx/cy/mpp/rot/tilt über einer
+                                    Weltkarte (UTM-Meter); Items raster/lines/path/polygon/sprite/label,
+                                    Neon-Glow, Zeichen-Animation (progress), Raster-Einblendung (reveal),
+                                    Tinten-Übergang (dissolve), Figuren an Weltpunkten oder auf Pfaden
+  geo/                              freie Kartendaten: sentinel.py (Sentinel-2 Echtfarbe, AWS),
+                                    overture.py (Straßen/Land/Wasser, OSM/ODbL), terrain.py (AWS Terrain Tiles),
+                                    style.py (Papier-Relief-Look, Rasterisieren)
+  assets_gen/figures.py             prozedurale Comic-Figuren/Requisiten (eigene Grafiken, frei)
   audio/sfx.py                      selbst synthetisierte Soundeffekte (keine Fremd-Samples)
   audio/mix.py                      Audio-Mix aus timeline["audio"]
   analysis/proxy_tools.py           Messwerkzeuge: SIFT-Kamera-Tracking, Sprite-Tracking (maskierte SSD),
                                     Mosaik aus Zoomstufen, Freistellen, Untertitel-Masken, Pfeil-Tracking
   analysis/compare.py               Render vs. Original: Metriken, Schnitterkennung, Vergleichsbilder
+  analysis/map_track.py             Kamera-Tracking für Karten-Videos (SIFT auf Atlas -> cx/cy/mpp/rot/tilt)
   fonts/                            League Spartan (SIL OFL)
 projects/bundeswehr-kennzeichen/
   analysis/                         Phase 1: Messdaten
@@ -85,3 +95,14 @@ der jeweilige Ersatz steht im Manifest unter `replace_with`.
 Python 3 mit `numpy`, `opencv-python-headless`, `pillow`; `ffmpeg`.
 Nur für die Analyse: `sherpa-onnx` (Whisper-ASR, Silero-VAD, UVR-Stimmtrennung);
 Modelle über `tools/setup_models.sh` (GitHub-Releases von k2-fsa/sherpa-onnx).
+
+## Stil-Profil map_doc (Referenz 3, `projects/broadway-manhattan/`)
+
+1. `reconstruction/build_maps.py` holt Sentinel-2, Overture (Straßen, Küste, Gewässer) und Höhendaten
+   und erzeugt `assets/maps/*` (Raster mit Geotransform + `vectors.json`), alles in EPSG:32618.
+2. `reconstruction/track_camera.py` verortet jeden 3. Frame des Originals auf dem Atlas
+   → `analysis/camera_track.json` (Kamera pro Zeitpunkt, Fehler < 1 px).
+3. `reconstruction/build_timeline.py` erzeugt Grafiken (`assets/gen/`) und `timeline.json`:
+   eine einzige Karten-Ebene über das ganze Video, Szenen = zeitlich begrenzte Items.
+   Für ein neues Thema ersetzt man Daten-Bounding-Box, Vektoren (z. B. andere Straße) und Items;
+   die Kamera kommt dann aus Keyframes statt aus dem Tracking.

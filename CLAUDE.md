@@ -19,8 +19,10 @@ Phasen: 1 Analyse → 2 Rekonstruktion → 3 Abgleich → 4 Template → 5 „Ne
   `projects/burj-khalifa/analysis/` (Sprechertext, Untertitel). Vergleich beider Videos =
   feste Stilregeln: Abschnitt „Abgleich mit Referenz 2" in `docs/STYLE_GUIDE.md`.
 * Referenz 3 `references/Broadway-Manhattan.mp4` = **zweiter Stil (Karten-Doku)**, Nutzer will
-  diesen Stil als Template. Phase 1 Analyse erledigt: `projects/broadway-manhattan/` (README mit Plan,
-  Datenquellen). Nächster Schritt: Rekonstruktion aller Szenenarten mit freien Kartendaten.
+  diesen Stil als Template. Phasen 1–3 erledigt (ganzes Video): `projects/broadway-manhattan/README.md`
+  (Pipeline, bekannte Abweichungen). Neue Bausteine: `shortsfactory/render/maplayer.py` (Karten-Ebene),
+  `shortsfactory/geo/` (freie Kartendaten), `shortsfactory/assets_gen/figures.py`, `analysis/map_track.py`.
+  Nächster Schritt: Template (Phase 4) für den Karten-Stil + Themen-Workflow (Phase 5).
 * Code: `shortsfactory/` (Renderer, Audio, Analyse-Tools). Doku: `docs/ARCHITECTURE.md`,
   Stilregeln: `docs/STYLE_GUIDE.md`.
 * 17 Bild-Assets + Stimme sind Referenz-Platzhalter (aus dem Original geschnitten),

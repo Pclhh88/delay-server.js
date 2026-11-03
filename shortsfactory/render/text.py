@@ -82,13 +82,21 @@ class TextRenderer:
             if w["start"] <= t < w["end"]:
                 txt = w["text"].upper() if style.get("uppercase") else w["text"]
                 size = style["sizes"].get(w.get("size"), style["size"]) if w.get("size") else style["size"]
-                img, (cx, cy) = self.render_word(txt, id_style(style), size, r.k)
+                st = style
+                if w.get("style") and w["style"] in style.get("variants", {}):
+                    st = dict(style)
+                    st.update(style["variants"][w["style"]])
+                img, (cx, cy) = self.render_word(txt, id_style(st), size, r.k)
                 x = w.get("x", 540) * r.k
                 y = w.get("y", style["y"]) * r.ky
                 M = np.array([[1, 0, x - cx], [0, 1, y - cy]], np.float64)
                 warped = cv2.warpAffine(img, M, (r.W, r.H), flags=cv2.INTER_LINEAR,
                                         borderMode=cv2.BORDER_CONSTANT, borderValue=(0, 0, 0, 0))
-                r._composite(canvas, warped, "normal", w.get("opacity", 1.0))
+                op = w.get("opacity", 1.0)
+                fi = style.get("fade_in", 0)
+                if fi > 0:
+                    op *= min(1.0, (t - w["start"]) / fi)
+                r._composite(canvas, warped, "normal", op)
 
     def draw_text_layer(self, r, layer, p, M):
         style = dict(DEFAULT_CAPTION_STYLE)
