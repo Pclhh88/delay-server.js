@@ -138,13 +138,8 @@ def build_assets():
     # Figuren und Häuser vom Nutzer (assets/user/), ersetzen die prozeduralen Platzhalter
     for k, f in (("swiss", "man_ch"), ("austrian", "man_at"), ("german", "man_de")):
         a["fig_" + k] = {"path": f"assets/user/{f}.png", "license": "vom Nutzer geliefert"}
-    for c in ("ch", "at", "de"):
-        a["house_" + c] = {"path": f"assets/user/house_{c}.png", "license": "vom Nutzer geliefert"}
-    a["castle"] = save(F.castle(260, 260), "castle")
-    a["church"] = save(F.church(220, 280), "church")
-    a["town"] = save(F.town(300, 220), "town")
-    a["fish"] = save(F.fish(260, 140), "fish")
-    a["ship"] = save(F.ship(320, 210), "ship")
+    for n in ("flag_ch", "flag_at", "flag_de", "schloss", "kloster", "reichsstadt", "fish", "boat"):
+        a[n] = {"path": f"assets/user/{n}.png", "license": "vom Nutzer geliefert"}
     a["drop"] = save(F.drop(150, 210), "drop")
     a["stamp"] = save(F.stamp("KEINE AUSSAGE", 760, 230), "stamp")
     a["question"] = save(F.question(320), "question")
@@ -299,8 +294,12 @@ def items():
              "keys": [K(t0 - 0.1, opacity=0), K(t0 + 0.25, opacity=1), K(14.4, opacity=1), K(15.0, opacity=0)]})
         txt, (lo, la) = labels[c]
         hx = {"DE": (9.47, 47.84), "AT": (9.86, 47.50), "CH": (9.20, 47.45)}[c]
-        add({"kind": "sprite", "asset": "house_" + c.lower(), "at": ll(*hx), "size": 200 if c != "AT" else 125,
-             "anchor": [0.5, 0.97], "start": t0 - 0.05, "end": 14.6, "keys": pop(t0 - 0.05, 14.6)})
+        fk = pop(t0 - 0.05, 14.6)
+        for i in range(int((14.3 - t0) / 0.6)):  # Flagge flattert leicht (Pendeln um den Mastfuß)
+            fk.append(K(t0 + 0.4 + i * 0.6, rot=(3 if i % 2 else -2), ease="inout"))
+        fk.sort(key=lambda k: k["t"])
+        add({"kind": "sprite", "asset": "flag_" + c.lower(), "at": ll(*hx), "size": 200,
+             "anchor": [0.06, 0.98], "start": t0 - 0.05, "end": 14.6, "keys": fk})
         add({"kind": "label", "text": txt, "at": ll(lo, la), "size": 46, "start": t0, "end": 14.6, **WHITE,
              "glow": [0, 0, 0, 10, 0.35], "keys": pop(t0, 14.6)})
     # Grenze im See? – gestrichelte Linie zeichnet sich, zerfällt
@@ -310,13 +309,11 @@ def items():
                   K(14.35, opacity=0.2), K(14.45, opacity=0.9), K(14.55, opacity=0.1), K(14.7, opacity=0)]})
     add({"kind": "sprite", "asset": "question", "at": "camera", "size": 330, "start": 15.3, "end": 16.8, "keys": pop(15.3, 16.8)})
     # ---- Früher: Burgen, Klöster, Städte (Papier) --------------------------------
-    sites = [("castle", 9.08, 47.78, 19.25), ("castle", 9.62, 47.70, 19.45), ("castle", 9.25, 47.48, 19.6),
-             ("church", 9.30, 47.66, 20.15), ("church", 9.05, 47.70, 20.3), ("church", 9.55, 47.46, 20.45),
-             ("house_de", 9.17, 47.66, 21.0), ("house_at", 9.73, 47.50, 21.15), ("house_de", 9.16, 47.77, 21.3),
-             ("house_ch", 9.38, 47.55, 21.45)]
+    # je ein Bild, im Takt der Wörter: Fürsten (Meersburg), Klöster (Reichenau/Salem), Reichsstädte (Lindau)
+    sites = [("schloss", 9.50, 47.80, 19.75), ("kloster", 8.98, 47.72, 20.6), ("reichsstadt", 9.72, 47.52, 21.1)]
     for a_, lo, la, t0 in sites:
-        add({"kind": "sprite", "asset": a_, "at": ll(lo, la), "size": {"house_at": 70, "house_ch": 120, "house_de": 115}.get(a_, 110),
-             "anchor": [0.5, 0.9], "size_zoom": 0.7,
+        add({"kind": "sprite", "asset": a_, "at": ll(lo, la), "size": 260,
+             "anchor": [0.5, 0.92], "size_zoom": 0.7,
              "ref_mpp": 115, "start": t0, "end": 27.2, "keys": pop(t0, 27.2)})
     reich = [ll(*p) for p in ((6.0, 46.3), (13.5, 46.0), (14.5, 50.5), (5.5, 50.8), (4.8, 48.0))]
     add({"kind": "polygon", "points": reich, "start": 22.4, "end": 31.4, "fill": [140, 70, 170], "feather": 40,
@@ -379,8 +376,9 @@ def items():
     add({"kind": "sprite", "asset": "stamp", "at": "camera", "dy": 260, "size": 560, "start": 57.0, "end": 59.4,
          "keys": [K(57.0, scale=2.6, opacity=0, rot=-14), K(57.25, scale=1, opacity=1, ease="in"), K(58.9, opacity=1), K(59.4, opacity=0)]})
     # ---- es funktioniert trotzdem: Fisch, Schiff, Wasser, Verbindungen -------------
-    for a_, lo, la, t0 in (("fish", 9.33, 47.63, 62.0), ("ship", 9.46, 47.60, 62.75), ("drop", 9.58, 47.56, 63.55)):
-        add({"kind": "sprite", "asset": a_, "at": ll(lo, la), "size": 175, "start": t0, "end": 66.6, "keys": pop(t0, 66.6)})
+    for a_, lo, la, t0 in (("fish", 9.33, 47.63, 61.85), ("boat", 9.46, 47.60, 62.8), ("drop", 9.58, 47.56, 63.15)):
+        add({"kind": "sprite", "asset": a_, "at": ll(lo, la), "size": {"fish": 230, "boat": 240}.get(a_, 150),
+             "start": t0, "end": 66.6, "keys": pop(t0, 66.6)})
     tri = [ll(9.37, 47.555), ll(9.74, 47.495), ll(9.47, 47.665), ll(9.37, 47.555)]
     for k, (lo, la, t0) in figs.items():
         add({"kind": "sprite", "asset": "fig_" + k, "at": ll(lo, la), "size": 190, "anchor": [0.5, 0.97], "start": 64.3,
@@ -409,8 +407,8 @@ def audio():
             out.append({"id": f"music_{t:.1f}", "src": "audio/music_bed.wav", "start": t, "trim": [t, a],
                         "gain_db": -18.0, "fade_out": 0.1})
         t = b
-    pops = [4.15, 4.35, 4.55, 9.75, 10.55, 11.35, 15.3, 19.25, 19.45, 19.6, 20.15, 20.3, 20.45, 21.0, 21.15, 21.3, 21.45,
-            28.2, 32.6, 32.9, 33.15, 33.4, 33.65, 36.6, 42.3, 42.6, 42.9, 62.0, 62.75, 63.55, 64.3, 67.1]
+    pops = [4.15, 4.35, 4.55, 9.75, 10.55, 11.35, 15.3, 19.75, 20.6, 21.1,
+            28.2, 32.6, 32.9, 33.15, 33.4, 33.65, 36.6, 42.3, 42.6, 42.9, 61.85, 62.8, 63.15, 64.3, 67.1]
     for s in pops:
         out.append({"src": "@sfx/pop", "start": round(s - 0.02, 3), "gain_db": -15})
     for s in (1.4, 16.7, 24.0, 35.0, 39.8, 59.2, 72.2):
