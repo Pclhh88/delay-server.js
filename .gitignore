@@ -8,3 +8,4 @@ projects/*/output/*.wav
 projects/*/analysis/contact/
 projects/*/cache/
 projects/*/audio/music_bed.wav
+projects/*/output/parts/
