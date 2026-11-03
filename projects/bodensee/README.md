@@ -12,7 +12,7 @@
   python3 -m shortsfactory.audio.mix projects/bodensee/build/timeline.json projects/bodensee/build/mix.wav
   python3 -m shortsfactory.render projects/bodensee/build/timeline.json projects/bodensee/build/bodensee.mp4 --audio projects/bodensee/build/mix.wav
   ```
-* Ergebnis: `output/bodensee_1080.mp4`
+* Ergebnis: `output/bodensee.mp4`
 
 ## Offen / Platzhalter
 * Figuren (Schweizer, Österreicher, Beamter) und Symbole sind einfache eigene Grafiken – Nutzer will ggf. eigene Modelle liefern.
