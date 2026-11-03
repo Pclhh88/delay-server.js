@@ -47,6 +47,7 @@ def water(bbox, out_path):
 def geometries(table, crs_to=None):
     """WKB-Spalte -> Liste shapely-Geometrien (optional in Ziel-CRS projiziert)."""
     import shapely
+    import shapely.ops
     geoms = shapely.from_wkb(table.column("geometry").to_pylist())
     if crs_to:
         from pyproj import Transformer

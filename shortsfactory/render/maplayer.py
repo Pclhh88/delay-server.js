@@ -280,6 +280,8 @@ class MapRenderer:
             else:
                 warped = warped * (1 - amt) + col * amt
         a = cov * ip.get("opacity", 1.0)
+        if m is not None and it.get("mask_alpha"):  # Maske begrenzt die Deckung (z. B. gültige Satellitenpixel)
+            a = a * m
         dis = ip.get("dissolve")
         if dis is not None:
             a *= self._dissolve_mask(dis, it)
@@ -414,10 +416,11 @@ class MapRenderer:
     def _polygon(self, canvas, alpha, md, H, it, ip, cam):
         r = self.r
         pts, idx, _ = self._geom(md, it)
-        q, w = project(H, pts[idx[0]:idx[1]])
+        q, w = project(H, pts)
         if (w <= 0).any():
             return
-        pl = [np.round(q * 4).astype(np.int32)]
+        # alle Ringe (Mehrfach-Polygone, z. B. Länder mit Inseln)
+        pl = [np.round(q[idx[i]:idx[i + 1]] * 4).astype(np.int32) for i in range(len(idx) - 1)]
         op = ip.get("opacity", 1.0)
         m = np.zeros((r.H, r.W), np.uint8)
         cv2.fillPoly(m, pl, 255, cv2.LINE_AA, shift=2)

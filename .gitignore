@@ -9,3 +9,7 @@ projects/*/analysis/contact/
 projects/*/cache/
 projects/*/audio/music_bed.wav
 projects/*/output/parts/
+projects/bodensee/cache/
+projects/bodensee/build/parts/
+projects/bodensee/build/*.wav
+projects/bodensee/audio/music_bed.wav

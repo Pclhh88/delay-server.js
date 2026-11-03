@@ -1,0 +1,15 @@
+{
+ "path": "assets/maps/region.jpg",
+ "crs": "EPSG:32632",
+ "transform": [
+  100.00238669628904,
+  0.0,
+  377680.81438849063,
+  0.0,
+  -100.01798528074015,
+  5418672.466647777
+ ],
+ "w": 2905,
+ "h": 2468,
+ "attribution": "Terrain: AWS Terrain Tiles; Gew\u00e4sser: OSM/Overture"
+}

@@ -22,7 +22,9 @@ Phasen: 1 Analyse → 2 Rekonstruktion → 3 Abgleich → 4 Template → 5 „Ne
   diesen Stil als Template. Phasen 1–3 erledigt (ganzes Video): `projects/broadway-manhattan/README.md`
   (Pipeline, bekannte Abweichungen). Neue Bausteine: `shortsfactory/render/maplayer.py` (Karten-Ebene),
   `shortsfactory/geo/` (freie Kartendaten), `shortsfactory/assets_gen/figures.py`, `analysis/map_track.py`.
-  Nächster Schritt: Template (Phase 4) für den Karten-Stil + Themen-Workflow (Phase 5).
+  Erstes eigenes Video im Karten-Stil: `projects/bodensee/` („Der See, der niemandem gehört", Stimme vom
+  Nutzer per ElevenLabs, Loop-Ende). Nutzer-Feedback: Linien einzeln zeichnen, bessere Animationen,
+  Figuren ggf. vom Nutzer geliefert; Themen brauchen starken Hook.
 * Code: `shortsfactory/` (Renderer, Audio, Analyse-Tools). Doku: `docs/ARCHITECTURE.md`,
   Stilregeln: `docs/STYLE_GUIDE.md`.
 * 17 Bild-Assets + Stimme sind Referenz-Platzhalter (aus dem Original geschnitten),
@@ -30,7 +32,7 @@ Phasen: 1 Analyse → 2 Rekonstruktion → 3 Abgleich → 4 Template → 5 „Ne
 
 ## Offene Entscheidungen (beim Nutzer nachfragen)
 * Nächster Schritt: Template herauslösen (Phase 4) und Themen-Workflow (Phase 5).
-* Stimme für neue Themen: eigene Aufnahme des Nutzers oder TTS-Dienst (hier keiner eingerichtet).
+* Stimme: Nutzer vertont selbst (ElevenLabs) und schickt MP3 – Skript daher ohne Regiezeichen liefern.
 * Bildquellen: freie Fotos / eigene Grafiken; bekannte Memes (Drake, Minecraft) rechtlich heikel.
 
 ## Nicht im Git (bei Bedarf neu erzeugen)

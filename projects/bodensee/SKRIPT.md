@@ -1,4 +1,30 @@
-# Skript „Der See, der niemandem gehört" (Bodensee) – Entwurf 1
+# Skript „Der See, der niemandem gehört" (Bodensee)
+
+## Endfassung (so vertont, 73,9 s)
+
+Mitten in Europa liegt ein See, bei dem bis heute niemand weiß, wem er eigentlich gehört.
+
+Das ist der Bodensee. Drei Länder liegen an seinem Ufer: Deutschland, Österreich und die Schweiz. Aber eine Grenze im See? Gibt es nicht.
+
+Wie kann das sein?
+
+Früher brauchte man keine. Rund um den See herrschten Fürsten, Klöster und Reichsstädte, alle unter dem Dach des Heiligen Römischen Reichs. Der See war einfach der See.
+
+Doch dann geht die Schweiz eigene Wege. Das Reich zerfällt. Und plötzlich teilen sich mehrere Staaten das Ufer. Für den kleinen Untersee zieht man 1854 eine Grenze. Für den großen Obersee? Nie.
+
+Und so hat heute jedes Land seine eigene Meinung.
+Die Schweiz sagt: Ganz klar, d'Gränze gaht genau i de Mitti dure.
+Österreich sagt: Geh bitte, der See g'hört uns doch olle zsamm.
+Und Deutschland? Dazu können wir zum jetzigen Zeitpunkt leider keine Aussage treffen.
+
+Das Verrückte: Es funktioniert trotzdem. Fischerei, Schifffahrt, Wasserschutz, alles regeln die drei Länder gemeinsam. Nur die eine Frage klären sie nie.
+
+Millionen Menschen trinken Wasser aus diesem See. Und trotzdem gilt bis heute:
+(→ Loop zurück zu „Mitten in Europa liegt ein See …")
+
+---
+
+## Entwurf 1 (mit Regiezeichen und Bildideen)
 
 Stil: Karten-Doku (map_doc, wie Referenz 3). Ziel ca. 65–70 s, ca. 190 Wörter (ruhiges Tempo ≈ 2,8 Wörter/s).
 `/` = kurze Pause, `//` = längere Pause, *kursiv* = Figuren-Zitat (etwas andere Stimme / augenzwinkernd).

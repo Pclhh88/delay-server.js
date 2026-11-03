@@ -325,3 +325,170 @@ def ellipse_stroke(w=300, h=900, color=(250, 230, 40), width=7, gap_deg=40):
         pts.append((w / 2 + math.cos(a) * (w / 2 - width) * wob, h / 2 + math.sin(a) * (h / 2 - width) * wob))
     c.line(pts, fill=color + (255,), width=width)
     return c.done()
+
+
+# --------------------------------------------------------------------------- Länderfiguren
+def country_figure(kind="swiss", w=240, h=420):
+    """Kegel-Figur mit Länder-Merkmal: swiss (rot, weißes Kreuz), austrian (Trachtenhut, grün),
+    german (Beamter: grauer Anzug, Krawatte, Brille, Aktenordner)."""
+    base = figure("dutch", w, h)  # Proportionen wiederverwenden, dann neu einfärben/übermalen
+    c = Canvas(w, h)
+    c.im = base.resize((w * SS, h * SS), Image.LANCZOS)
+    c.d = ImageDraw.Draw(c.im)
+    cx = w / 2
+    top, bot = h * 0.53, h * 0.97
+    r = w * 0.27
+    hy = h * 0.40
+    body = {"swiss": (212, 36, 40), "austrian": (70, 104, 64), "german": (120, 124, 132)}[kind]
+    left = _bezier((cx - w * 0.20, top), (cx - w * 0.30, h * 0.70), (cx - w * 0.36, bot))
+    right = _bezier((cx + w * 0.36, bot), (cx + w * 0.30, h * 0.70), (cx + w * 0.20, top))
+    bottom = _bezier((cx - w * 0.36, bot), (cx, bot + h * 0.04), (cx + w * 0.36, bot))
+    c.poly(left + bottom[1:-1] + right, fill=body + (255,))
+    sh = _bezier((cx + w * 0.10, top + 4), (cx + w * 0.20, h * 0.72), (cx + w * 0.22, bot))
+    c.poly(sh + right[::-1][1:], fill=_shade(body, 0.85), outline=None)
+    skin = (246, 224, 204)
+    # Kopf neu
+    c.ellipse((cx - r * 1.6, hy - r * 2.2, cx + r * 1.6, hy - r * 0.5), fill=(0, 0, 0, 0), outline=None)
+    c.d.rectangle([0, 0, w * SS, (hy + r * 0.2) * SS], fill=(0, 0, 0, 0))
+    c.ellipse((cx - r, hy - r, cx + r, hy + r), fill=skin + (255,))
+    c.ellipse((cx - r * 0.15, hy - r * 0.95, cx + r * 0.95, hy + r * 0.9), fill=_shade(skin, 0.94), outline=None)
+    c.ellipse((cx - r, hy - r, cx + r, hy + r), fill=None)
+    for dx in (-0.35, 0.35):
+        c.ellipse((cx + dx * r - 2.6 * w / 120, hy - 3.2 * w / 120, cx + dx * r + 2.6 * w / 120, hy + 2.6 * w / 120),
+                  fill=(30, 22, 20, 255), outline=None)
+    c.line(_bezier((cx - r * 0.2, hy + r * 0.4), (cx, hy + r * 0.52), (cx + r * 0.2, hy + r * 0.4), 6), width=1.6 * w / 120)
+    lw = w / 120
+    if kind == "swiss":
+        # weißes Kreuz auf der Brust, rote Mütze
+        bx, by, s = cx, top + h * 0.17, w * 0.10
+        c.poly([(bx - s, by - s * 0.35), (bx + s, by - s * 0.35), (bx + s, by + s * 0.35), (bx - s, by + s * 0.35)],
+               fill=(255, 255, 255, 255), outline=None)
+        c.poly([(bx - s * 0.35, by - s), (bx + s * 0.35, by - s), (bx + s * 0.35, by + s), (bx - s * 0.35, by + s)],
+               fill=(255, 255, 255, 255), outline=None)
+        c.d.chord([(cx - r * 1.02) * SS, (hy - r * 1.15) * SS, (cx + r * 1.02) * SS, (hy + r * 0.5) * SS], 180, 360,
+                  fill=(200, 30, 34, 255), outline=OUTLINE, width=int(2 * lw * SS))
+        c.ellipse((cx - r * 0.18, hy - r * 1.32, cx + r * 0.18, hy - r * 0.98), fill=(255, 255, 255, 255), width=1.5 * lw)
+    elif kind == "austrian":
+        c.d.chord([(cx - r) * SS, (hy - r) * SS, (cx + r) * SS, (hy + r * 0.85) * SS], 190, 350, fill=(110, 72, 40, 255))
+        c.ellipse((cx - r * 1.35, hy - r * 0.9, cx + r * 1.35, hy - r * 0.5), fill=(56, 82, 50, 255), width=2 * lw)
+        c.poly([(cx - r * 0.8, hy - r * 0.72), (cx - r * 0.6, hy - r * 1.75), (cx + r * 0.6, hy - r * 1.75),
+                (cx + r * 0.8, hy - r * 0.72)], fill=(66, 96, 58, 255), width=2 * lw)
+        c.line([(cx - r * 0.78, hy - r * 0.95), (cx + r * 0.78, hy - r * 0.95)], fill=(160, 40, 36, 255), width=3 * lw)
+        c.poly([(cx + r * 0.55, hy - r * 1.0), (cx + r * 1.15, hy - r * 2.35), (cx + r * 0.75, hy - r * 0.95)],
+               fill=(250, 248, 240, 255), width=1.5 * lw)  # Feder
+        # Hosenträger
+        for dx in (-0.12, 0.12):
+            c.line([(cx + dx * w, top + 2), (cx + dx * w * 1.3, bot - 6)], fill=(110, 72, 40, 255), width=4 * lw)
+        c.line([(cx - w * 0.14, top + h * 0.12), (cx + w * 0.14, top + h * 0.12)], fill=(110, 72, 40, 255), width=4 * lw)
+    elif kind == "german":
+        c.d.chord([(cx - r) * SS, (hy - r) * SS, (cx + r) * SS, (hy + r * 0.7) * SS], 185, 355, fill=(96, 70, 52, 255))
+        # Brille
+        for dx in (-0.35, 0.35):
+            c.ellipse((cx + dx * r - r * 0.24, hy - r * 0.22, cx + dx * r + r * 0.24, hy + r * 0.2), fill=None, width=1.8 * lw)
+        c.line([(cx - r * 0.11, hy - r * 0.02), (cx + r * 0.11, hy - r * 0.02)], width=1.8 * lw)
+        # Hemd + Krawatte
+        c.poly([(cx - w * 0.10, top + 2), (cx + w * 0.10, top + 2), (cx, top + h * 0.12)], fill=(250, 250, 250, 255), width=1.5 * lw)
+        c.poly([(cx - w * 0.025, top + h * 0.03), (cx + w * 0.025, top + h * 0.03), (cx + w * 0.04, top + h * 0.22),
+                (cx, top + h * 0.26), (cx - w * 0.04, top + h * 0.22)], fill=(40, 60, 120, 255), width=1.2 * lw)
+        # Aktenordner im Arm
+        c.poly([(cx + w * 0.08, top + h * 0.14), (cx + w * 0.40, top + h * 0.10), (cx + w * 0.42, top + h * 0.34),
+                (cx + w * 0.10, top + h * 0.38)], fill=(40, 90, 170, 255), width=2 * lw)
+        c.poly([(cx + w * 0.20, top + h * 0.18), (cx + w * 0.34, top + h * 0.16), (cx + w * 0.35, top + h * 0.22),
+                (cx + w * 0.21, top + h * 0.24)], fill=(250, 250, 250, 255), width=1 * lw)
+    return c.done()
+
+
+def castle(w=200, h=200):
+    c = Canvas(w, h)
+    stone, dark = (186, 176, 160, 255), (150, 140, 124, 255)
+    c.poly([(w * 0.15, h * 0.95), (w * 0.15, h * 0.45), (w * 0.85, h * 0.45), (w * 0.85, h * 0.95)], fill=stone)
+    for x0 in (0.05, 0.62):
+        c.poly([(w * x0, h * 0.95), (w * x0, h * 0.25), (w * (x0 + 0.33), h * 0.25), (w * (x0 + 0.33), h * 0.95)], fill=stone)
+        for k in range(3):
+            xa = w * (x0 + 0.01 + k * 0.11)
+            c.poly([(xa, h * 0.25), (xa, h * 0.17), (xa + w * 0.08, h * 0.17), (xa + w * 0.08, h * 0.25)], fill=stone)
+        c.poly([(w * (x0 + 0.13), h * 0.45), (w * (x0 + 0.2), h * 0.45), (w * (x0 + 0.2), h * 0.55), (w * (x0 + 0.13), h * 0.55)], fill=(60, 50, 44, 255))
+    c.d.chord([w * 0.4 * SS, h * 0.68 * SS, w * 0.6 * SS, h * 1.0 * SS], 180, 360, fill=(90, 60, 40, 255))
+    c.poly([(w * 0.4, h * 0.84), (w * 0.6, h * 0.84), (w * 0.6, h * 0.95), (w * 0.4, h * 0.95)], fill=(90, 60, 40, 255), outline=None)
+    c.line([(w * 0.21, h * 0.25), (w * 0.21, h * 0.03)], width=2)
+    c.poly([(w * 0.21, h * 0.03), (w * 0.36, h * 0.07), (w * 0.21, h * 0.12)], fill=(200, 40, 40, 255), width=1.5)
+    return c.done()
+
+
+def church(w=180, h=230):
+    c = Canvas(w, h)
+    wall, roof = (236, 226, 206, 255), (170, 70, 50, 255)
+    c.poly([(w * 0.1, h * 0.95), (w * 0.1, h * 0.55), (w * 0.62, h * 0.55), (w * 0.62, h * 0.95)], fill=wall)
+    c.poly([(w * 0.05, h * 0.57), (w * 0.36, h * 0.38), (w * 0.67, h * 0.57)], fill=roof)
+    c.poly([(w * 0.62, h * 0.95), (w * 0.62, h * 0.3), (w * 0.88, h * 0.3), (w * 0.88, h * 0.95)], fill=wall)
+    c.poly([(w * 0.6, h * 0.31), (w * 0.75, h * 0.08), (w * 0.9, h * 0.31)], fill=roof)
+    c.line([(w * 0.75, h * 0.08), (w * 0.75, h * 0.0)], width=2)
+    c.line([(w * 0.71, h * 0.03), (w * 0.79, h * 0.03)], width=2)
+    c.d.chord([w * 0.68 * SS, h * 0.4 * SS, w * 0.82 * SS, h * 0.52 * SS], 180, 360, fill=(70, 60, 60, 255))
+    c.d.chord([w * 0.28 * SS, h * 0.72 * SS, w * 0.44 * SS, h * 1.0 * SS], 180, 360, fill=(110, 70, 44, 255))
+    return c.done()
+
+
+def town(w=240, h=180):
+    c = Canvas(w, h)
+    cols = [(232, 214, 184), (220, 196, 160), (240, 228, 206), (226, 206, 176)]
+    xs = [0.05, 0.27, 0.49, 0.71]
+    for i, x in enumerate(xs):
+        top = h * (0.4 + 0.08 * (i % 2))
+        c.poly([(w * x, h * 0.95), (w * x, top), (w * (x + 0.22), top), (w * (x + 0.22), h * 0.95)], fill=cols[i] + (255,))
+        c.poly([(w * (x - 0.01), top + 1), (w * (x + 0.11), top - h * 0.2), (w * (x + 0.23), top + 1)], fill=(176, 72, 52, 255))
+        c.poly([(w * (x + 0.07), top + h * 0.12), (w * (x + 0.14), top + h * 0.12), (w * (x + 0.14), top + h * 0.22),
+                (w * (x + 0.07), top + h * 0.22)], fill=(80, 90, 110, 255), width=1)
+    c.poly([(0, h * 0.82), (w, h * 0.82), (w, h * 0.97), (0, h * 0.97)], fill=(170, 160, 146, 255))
+    return c.done()
+
+
+def fish(w=200, h=110):
+    c = Canvas(w, h)
+    c.poly([(w * 0.08, h * 0.5)] + _bezier((w * 0.08, h * 0.5), (w * 0.4, h * 0.0), (w * 0.75, h * 0.5))
+           + _bezier((w * 0.75, h * 0.5), (w * 0.4, h * 1.0), (w * 0.08, h * 0.5))[1:], fill=(120, 170, 200, 255))
+    c.poly([(w * 0.72, h * 0.5), (w * 0.97, h * 0.2), (w * 0.97, h * 0.8)], fill=(100, 150, 186, 255))
+    c.ellipse((w * 0.18, h * 0.38, w * 0.26, h * 0.48), fill=(20, 20, 20, 255), outline=None)
+    c.line(_bezier((w * 0.33, h * 0.3), (w * 0.38, h * 0.5), (w * 0.33, h * 0.7), 8), width=1.5)
+    return c.done()
+
+
+def ship(w=260, h=170):
+    c = Canvas(w, h)
+    c.poly([(w * 0.02, h * 0.6), (w * 0.98, h * 0.6), (w * 0.85, h * 0.9), (w * 0.12, h * 0.9)], fill=(240, 240, 240, 255))
+    c.poly([(w * 0.08, h * 0.74), (w * 0.92, h * 0.74), (w * 0.88, h * 0.82), (w * 0.11, h * 0.82)], fill=(40, 70, 130, 255), outline=None)
+    c.poly([(w * 0.22, h * 0.6), (w * 0.22, h * 0.38), (w * 0.72, h * 0.38), (w * 0.72, h * 0.6)], fill=(250, 250, 250, 255))
+    for i in range(5):
+        x = w * (0.26 + i * 0.09)
+        c.ellipse((x, h * 0.44, x + w * 0.05, h * 0.52), fill=(70, 110, 160, 255), width=1)
+    c.poly([(w * 0.42, h * 0.38), (w * 0.42, h * 0.18), (w * 0.52, h * 0.18), (w * 0.52, h * 0.38)], fill=(200, 50, 40, 255))
+    return c.done()
+
+
+def drop(w=120, h=170):
+    c = Canvas(w, h)
+    pts = _bezier((w * 0.5, h * 0.03), (w * 0.95, h * 0.62), (w * 0.5, h * 0.96), 20)[:-1] + \
+        _bezier((w * 0.5, h * 0.96), (w * 0.05, h * 0.62), (w * 0.5, h * 0.03), 20)
+    c.poly(pts, fill=(70, 150, 230, 255))
+    c.ellipse((w * 0.3, h * 0.5, w * 0.42, h * 0.7), fill=(200, 230, 255, 255), outline=None)
+    return c.done()
+
+
+def stamp(text="KEINE AUSSAGE", w=560, h=170, color=(210, 30, 30)):
+    """Roter Behördenstempel (leicht unregelmäßig)."""
+    import random
+    rnd = random.Random(4)
+    c = Canvas(w, h)
+    col = color + (235,)
+    c.d.rounded_rectangle([8 * SS, 8 * SS, (w - 8) * SS, (h - 8) * SS], radius=14 * SS, outline=col, width=9 * SS)
+    c.d.rounded_rectangle([22 * SS, 22 * SS, (w - 22) * SS, (h - 22) * SS], radius=8 * SS, outline=col, width=3 * SS)
+    c.text((w / 2, h / 2 + 4), text, "roboto-latin-700-normal", h * 0.36, col)
+    im = c.done()
+    # Stempel-Ausfransung
+    a = np.asarray(im).copy()
+    noise = np.array([[rnd.random() for _ in range(w)] for _ in range(h)])
+    a[..., 3] = (a[..., 3] * (noise > 0.12)).astype(np.uint8)
+    return Image.fromarray(a, "RGBA")
+
+
+import numpy as np  # noqa: E402  (für stamp)

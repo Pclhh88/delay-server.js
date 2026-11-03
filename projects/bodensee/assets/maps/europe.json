@@ -1,0 +1,15 @@
+{
+ "path": "assets/maps/europe.jpg",
+ "crs": "EPSG:32632",
+ "transform": [
+  2500.331430725781,
+  0.0,
+  -1337422.9523166304,
+  0.0,
+  -2502.0045968363456,
+  6945618.899389217
+ ],
+ "w": 1507,
+ "h": 1228,
+ "attribution": "Terrain: AWS Terrain Tiles; Gew\u00e4sser: OSM/Overture"
+}

@@ -1,0 +1,15 @@
+{
+ "path": "assets/maps/paper_wide.jpg",
+ "crs": "EPSG:32632",
+ "transform": [
+  80.00741761297704,
+  0.0,
+  377680.81438849063,
+  0.0,
+  -80.01438822459212,
+  5418672.466647777
+ ],
+ "w": 3631,
+ "h": 3085,
+ "attribution": "Terrain: AWS Terrain Tiles; Gew\u00e4sser: OSM/Overture"
+}

@@ -1,0 +1,380 @@
+{
+ "source": "Phrasen aus Skript, Zeiten aus ASR-Segmenten + Silbenverteilung",
+ "words": [
+  {
+   "text": "Mitten in Europa",
+   "start": 0.07,
+   "end": 1.3
+  },
+  {
+   "text": "liegt ein See,",
+   "start": 1.3,
+   "end": 2.08
+  },
+  {
+   "text": "bei dem bis heute",
+   "start": 2.08,
+   "end": 3.3
+  },
+  {
+   "text": "niemand weiß,",
+   "start": 3.3,
+   "end": 3.69
+  },
+  {
+   "text": "wem er eigentlich gehört.",
+   "start": 3.69,
+   "end": 5.83
+  },
+  {
+   "text": "Das ist",
+   "start": 5.83,
+   "end": 6.16
+  },
+  {
+   "text": "der Bodensee.",
+   "start": 6.16,
+   "end": 7.56
+  },
+  {
+   "text": "Drei Länder",
+   "start": 7.56,
+   "end": 8.11
+  },
+  {
+   "text": "liegen an seinem Ufer:",
+   "start": 8.11,
+   "end": 9.67
+  },
+  {
+   "text": "Deutschland,",
+   "start": 9.67,
+   "end": 10.32
+  },
+  {
+   "text": "Österreich",
+   "start": 10.32,
+   "end": 11.11
+  },
+  {
+   "text": "und die Schweiz.",
+   "start": 11.11,
+   "end": 12.39
+  },
+  {
+   "text": "Aber eine Grenze",
+   "start": 12.39,
+   "end": 13.41
+  },
+  {
+   "text": "im See?",
+   "start": 13.41,
+   "end": 14.25
+  },
+  {
+   "text": "Gibt es nicht.",
+   "start": 14.25,
+   "end": 15.31
+  },
+  {
+   "text": "Wie kann das sein?",
+   "start": 15.31,
+   "end": 16.78
+  },
+  {
+   "text": "Früher",
+   "start": 16.78,
+   "end": 17.18
+  },
+  {
+   "text": "brauchte man keine.",
+   "start": 17.18,
+   "end": 18.57
+  },
+  {
+   "text": "Rund um den See",
+   "start": 18.57,
+   "end": 19.68
+  },
+  {
+   "text": "herrschten Fürsten,",
+   "start": 19.68,
+   "end": 20.58
+  },
+  {
+   "text": "Klöster",
+   "start": 20.58,
+   "end": 21.02
+  },
+  {
+   "text": "und Reichsstädte,",
+   "start": 21.02,
+   "end": 22.41
+  },
+  {
+   "text": "alle unter dem Dach",
+   "start": 22.41,
+   "end": 23.39
+  },
+  {
+   "text": "des Heiligen",
+   "start": 23.39,
+   "end": 24.42
+  },
+  {
+   "text": "Römischen Reichs.",
+   "start": 24.42,
+   "end": 25.42
+  },
+  {
+   "text": "Der See",
+   "start": 25.42,
+   "end": 25.99
+  },
+  {
+   "text": "war einfach der See.",
+   "start": 25.99,
+   "end": 27.56
+  },
+  {
+   "text": "Doch dann",
+   "start": 27.56,
+   "end": 28.06
+  },
+  {
+   "text": "geht die Schweiz",
+   "start": 28.06,
+   "end": 28.65
+  },
+  {
+   "text": "eigene Wege.",
+   "start": 28.65,
+   "end": 30.06
+  },
+  {
+   "text": "Das Reich zerfällt.",
+   "start": 30.06,
+   "end": 31.56
+  },
+  {
+   "text": "Und plötzlich",
+   "start": 31.56,
+   "end": 32.32
+  },
+  {
+   "text": "teilen sich",
+   "start": 32.32,
+   "end": 32.87
+  },
+  {
+   "text": "mehrere Staaten",
+   "start": 32.87,
+   "end": 33.78
+  },
+  {
+   "text": "das Ufer.",
+   "start": 33.78,
+   "end": 34.89
+  },
+  {
+   "text": "Für den kleinen Untersee",
+   "start": 34.89,
+   "end": 36.89
+  },
+  {
+   "text": "zieht man 1854",
+   "start": 36.89,
+   "end": 37.63
+  },
+  {
+   "text": "eine Grenze.",
+   "start": 37.63,
+   "end": 39.27
+  },
+  {
+   "text": "Für den großen",
+   "start": 39.27,
+   "end": 39.93
+  },
+  {
+   "text": "Obersee?",
+   "start": 39.93,
+   "end": 40.91
+  },
+  {
+   "text": "Nie.",
+   "start": 40.91,
+   "end": 41.71
+  },
+  {
+   "text": "Und so hat heute",
+   "start": 41.71,
+   "end": 42.76
+  },
+  {
+   "text": "jedes Land",
+   "start": 42.76,
+   "end": 43.24
+  },
+  {
+   "text": "seine eigene Meinung.",
+   "start": 43.24,
+   "end": 44.87
+  },
+  {
+   "text": "Die Schweiz sagt:",
+   "start": 44.87,
+   "end": 46.06
+  },
+  {
+   "text": "Ganz klar,",
+   "start": 46.06,
+   "end": 46.92,
+   "style": "quote_italic"
+  },
+  {
+   "text": "d'Gränze gaht genau",
+   "start": 46.92,
+   "end": 48.01,
+   "style": "quote_italic"
+  },
+  {
+   "text": "i de Mitti dure.",
+   "start": 48.01,
+   "end": 49.45,
+   "style": "quote_italic"
+  },
+  {
+   "text": "Österreich sagt:",
+   "start": 49.45,
+   "end": 50.7
+  },
+  {
+   "text": "Geh bitte,",
+   "start": 50.7,
+   "end": 51.58,
+   "style": "quote_italic"
+  },
+  {
+   "text": "der See g'hört uns",
+   "start": 51.58,
+   "end": 52.32,
+   "style": "quote_italic"
+  },
+  {
+   "text": "doch olle zsamm.",
+   "start": 52.32,
+   "end": 53.83,
+   "style": "quote_italic"
+  },
+  {
+   "text": "Und Deutschland?",
+   "start": 53.83,
+   "end": 55.08
+  },
+  {
+   "text": "Dazu können wir",
+   "start": 55.08,
+   "end": 55.78,
+   "style": "quote_italic"
+  },
+  {
+   "text": "zum jetzigen Zeitpunkt",
+   "start": 55.78,
+   "end": 56.9,
+   "style": "quote_italic"
+  },
+  {
+   "text": "leider keine Aussage",
+   "start": 56.9,
+   "end": 58.08,
+   "style": "quote_italic"
+  },
+  {
+   "text": "treffen.",
+   "start": 58.08,
+   "end": 58.92,
+   "style": "quote_italic"
+  },
+  {
+   "text": "Das Verrückte:",
+   "start": 58.92,
+   "end": 60.01
+  },
+  {
+   "text": "Es funktioniert",
+   "start": 60.01,
+   "end": 60.79
+  },
+  {
+   "text": "trotzdem.",
+   "start": 60.79,
+   "end": 61.8
+  },
+  {
+   "text": "Fischerei,",
+   "start": 61.8,
+   "end": 62.79
+  },
+  {
+   "text": "Schifffahrt,",
+   "start": 62.79,
+   "end": 63.1
+  },
+  {
+   "text": "Wasserschutz,",
+   "start": 63.1,
+   "end": 64.23
+  },
+  {
+   "text": "alles regeln",
+   "start": 64.23,
+   "end": 65.06
+  },
+  {
+   "text": "die drei Länder",
+   "start": 65.06,
+   "end": 65.61
+  },
+  {
+   "text": "gemeinsam.",
+   "start": 65.61,
+   "end": 66.67
+  },
+  {
+   "text": "Nur die eine Frage",
+   "start": 66.67,
+   "end": 67.93
+  },
+  {
+   "text": "klären sie nie.",
+   "start": 67.93,
+   "end": 69.16
+  },
+  {
+   "text": "Millionen Menschen",
+   "start": 69.16,
+   "end": 70.26
+  },
+  {
+   "text": "trinken Wasser",
+   "start": 70.26,
+   "end": 71.16
+  },
+  {
+   "text": "aus diesem See.",
+   "start": 71.16,
+   "end": 72.17
+  },
+  {
+   "text": "Und trotzdem",
+   "start": 72.17,
+   "end": 72.98
+  },
+  {
+   "text": "gilt bis heute:",
+   "start": 72.98,
+   "end": 73.86
+  }
+ ]
+}
