@@ -18,6 +18,9 @@ Phasen: 1 Analyse → 2 Rekonstruktion → 3 Abgleich → 4 Template → 5 „Ne
 * Referenz 2 `references/Burj-Khalifa.mp4` ausgewertet (nicht nachgebaut):
   `projects/burj-khalifa/analysis/` (Sprechertext, Untertitel). Vergleich beider Videos =
   feste Stilregeln: Abschnitt „Abgleich mit Referenz 2" in `docs/STYLE_GUIDE.md`.
+* Referenz 3 `references/Broadway-Manhattan.mp4` = **zweiter Stil (Karten-Doku)**, Nutzer will
+  diesen Stil als Template. Phase 1 Analyse erledigt: `projects/broadway-manhattan/` (README mit Plan,
+  Datenquellen). Nächster Schritt: Rekonstruktion aller Szenenarten mit freien Kartendaten.
 * Code: `shortsfactory/` (Renderer, Audio, Analyse-Tools). Doku: `docs/ARCHITECTURE.md`,
   Stilregeln: `docs/STYLE_GUIDE.md`.
 * 17 Bild-Assets + Stimme sind Referenz-Platzhalter (aus dem Original geschnitten),
@@ -31,4 +34,5 @@ Phasen: 1 Analyse → 2 Rekonstruktion → 3 Abgleich → 4 Template → 5 „Ne
 ## Nicht im Git (bei Bedarf neu erzeugen)
 * Referenzframes: `ffmpeg -i references/Bundeswehr-Kennzeichen.mp4 -map 0:v:0 projects/bundeswehr-kennzeichen/analysis/frames/f%04d.png`
 * Analyse-Modelle (ASR, Stimmtrennung): `tools/setup_models.sh` (+ `pip install sherpa-onnx opencv-python-headless`)
-* Netz: HuggingFace und Wikimedia waren in der Umgebung gesperrt; GitHub, PyPI und npm gehen.
+* Netz: HuggingFace, Wikimedia, OSM-Tiles, NASA GIBS gesperrt; GitHub, PyPI, npm und AWS S3
+  (Sentinel-2 `sentinel-cogs`, Overture Maps, Terrain Tiles) gehen.

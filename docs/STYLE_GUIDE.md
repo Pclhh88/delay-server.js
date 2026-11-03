@@ -75,3 +75,25 @@ gehört (in beiden Videos gleich) und was **pro Thema wechselt**:
 | Soundeffekte | ~7 pro 10 s | ~8 pro 10 s | fest: 7–8 Effekte pro 10 s |
 | Lautheit | −16,2 dB | −14,4 dB | Stimme dominant, Effekte ~15 dB leiser |
 | Zahlen im Untertitel | Ziffern | kurze Zahlen als Wort (ZEHN), große als Ziffern | Regel: ≤ 12 als Wort, sonst Ziffern |
+
+## Zweiter Stil: Karten-Doku (Referenz 3 „Broadway", 78,3 s)
+
+Ausgewertet in `projects/broadway-manhattan/analysis/`. **Eigener Stil**, kein Teil der Meme-Regeln oben.
+Das Template bekommt deshalb zwei Stil-Profile: `meme` (Bundeswehr/Burj) und `map_doc` (Broadway).
+
+| Merkmal | Messwert / Regel `map_doc` |
+|---|---|
+| Format | 9:16, 30 fps; Original 720×1280 (Template 1080×1920) |
+| Länge / Tempo | 78 s, 2,8 Wörter/s – ruhiger Erzähler, Englisch |
+| Untertitel | Phrasen à 1–5 Wörter, Satzschreibung, Roboto Bold, Farbe ≈ #EBEBE1, weicher Schlagschatten, zentriert bei y ≈ 71 % (912/1280), Versalhöhe ≈ 25 px@720, Einblendung = Fade über 3 Frames, kein Ausblenden (harter Wechsel) |
+| Figuren-Zitate | Untertitel **kursiv**, Musik setzt aus (Comedy-Beat) |
+| Hintergründe | 3 Kartenwelten: (1) Satellit dunkel (Insel hervorgehoben), (2) Satellit hell mit weißem Straßenraster, (3) Papier-Reliefkarte (Land beige #D9B48F-artig, Wasser grau-blau, Schummerung) |
+| Hervorhebung | Neon-Linie: weißer Kern + rote Glow-Hülle (zeichnet sich entlang des Pfads); Flächen blau getönt mit Glow-Rand; gelbe Freihand-Ellipse; gelbe „?" |
+| Beschriftung | Ortsnamen: weiß, fett, Schlagschatten, schräg entlang der Geometrie; Historisches: Serifen (Jahreszahlen, „Broad way"); Kommentare: Handschrift + geschwungener Pfeil |
+| Figuren | flache Comic-Figuren (Kegelkörper, großer Kopf), poppen mit Überschwinger ein; Requisiten (Zelte, Bäume, Felsen, Schild, Fässer) gleicher Stil |
+| Kamera | **durchgehende Fahrt statt Schnitte**: Zoom/Drift über eine große Karte, oft mit 3D-Neigung (~30°) entlang einer Linie |
+| Übergänge | Crossfade Satellit→Papier (~1 s, mit Zoom), „Tinten-Fleck"-Wipe zurück zum Satellit, große Jahreszahl zoomt herein |
+| Schnitte | fast keine harten Schnitte (Szenenerkennung findet 0 bei Schwelle 0,25) |
+| Soundeffekte | ~5 pro 10 s: Pop (Figur/Objekt erscheint), Whoosh (Zeitsprung/Zoom), Klick (Fotokarte) |
+| Musik | ruhiges Bett ~16 dB unter der Stimme; Lautheit Mix −17,3 LUFS |
+| Dramaturgie | Hook „Look at X" → Widerspruch → Leitfrage (≤ 10 s) → Kurzantwort → Zeitreise in Epochen → Running Gag → Auflösung → Payoff mit Rückkehr ins Satellitenbild (siehe `SPRECHERTEXT.md`) |

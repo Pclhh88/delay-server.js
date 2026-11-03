@@ -1,0 +1,643 @@
+{
+ "source": "eingebrannte Untertitel; Wechsel per lokaler Bilddifferenz erkannt (Band y=895-975), Text abgelesen, Lücken per Sichtprüfung ergänzt. Genauigkeit ca. ±2 Frames.",
+ "fps": 30,
+ "unit": "phrase",
+ "note": "Phrasen von 1-5 Wörtern, Satzschreibung, kein Großbuchstaben-Stil. Einblendung = Fade ~3 Frames.",
+ "words": [
+  {
+   "text": "Look at Manhattan",
+   "frame_start": 2,
+   "frame_end": 37,
+   "start": 0.067,
+   "end": 1.233
+  },
+  {
+   "text": "almost every street",
+   "frame_start": 37,
+   "frame_end": 73,
+   "start": 1.233,
+   "end": 2.433
+  },
+  {
+   "text": "forms a perfect grid",
+   "frame_start": 73,
+   "frame_end": 110,
+   "start": 2.433,
+   "end": 3.667
+  },
+  {
+   "text": "But through all this",
+   "frame_start": 110,
+   "frame_end": 139,
+   "start": 3.667,
+   "end": 4.633
+  },
+  {
+   "text": "perfect order",
+   "frame_start": 139,
+   "frame_end": 162,
+   "start": 4.633,
+   "end": 5.4
+  },
+  {
+   "text": "like a giant crack",
+   "frame_start": 162,
+   "frame_end": 197,
+   "start": 5.4,
+   "end": 6.567
+  },
+  {
+   "text": "runs Broadway",
+   "frame_start": 197,
+   "frame_end": 227,
+   "start": 6.567,
+   "end": 7.567
+  },
+  {
+   "text": "cutting diagonally",
+   "frame_start": 227,
+   "frame_end": 252,
+   "start": 7.567,
+   "end": 8.4
+  },
+  {
+   "text": "across Manhattan",
+   "frame_start": 252,
+   "frame_end": 287,
+   "start": 8.4,
+   "end": 9.567
+  },
+  {
+   "text": "So how did",
+   "frame_start": 287,
+   "frame_end": 299,
+   "start": 9.567,
+   "end": 9.967
+  },
+  {
+   "text": "this happen",
+   "frame_start": 299,
+   "frame_end": 323,
+   "start": 9.967,
+   "end": 10.767
+  },
+  {
+   "text": "Well Broadway",
+   "frame_start": 323,
+   "frame_end": 343,
+   "start": 10.767,
+   "end": 11.433
+  },
+  {
+   "text": "is the oldest",
+   "frame_start": 343,
+   "frame_end": 363,
+   "start": 11.433,
+   "end": 12.1
+  },
+  {
+   "text": "street in the city",
+   "frame_start": 363,
+   "frame_end": 388,
+   "start": 12.1,
+   "end": 12.933
+  },
+  {
+   "text": "its history goes back",
+   "frame_start": 388,
+   "frame_end": 414,
+   "start": 12.933,
+   "end": 13.8
+  },
+  {
+   "text": "long before",
+   "frame_start": 414,
+   "frame_end": 437,
+   "start": 13.8,
+   "end": 14.567
+  },
+  {
+   "text": "Europeans arrived",
+   "frame_start": 437,
+   "frame_end": 466,
+   "start": 14.567,
+   "end": 15.533
+  },
+  {
+   "text": "to a time when",
+   "frame_start": 466,
+   "frame_end": 485,
+   "start": 15.533,
+   "end": 16.167
+  },
+  {
+   "text": "the Indigenous Lenape",
+   "frame_start": 485,
+   "frame_end": 511,
+   "start": 16.167,
+   "end": 17.033
+  },
+  {
+   "text": "people lived here",
+   "frame_start": 511,
+   "frame_end": 541,
+   "start": 17.033,
+   "end": 18.033
+  },
+  {
+   "text": "And the Lenape",
+   "frame_start": 541,
+   "frame_end": 561,
+   "start": 18.033,
+   "end": 18.7
+  },
+  {
+   "text": "had settlements",
+   "frame_start": 561,
+   "frame_end": 577,
+   "start": 18.7,
+   "end": 19.233
+  },
+  {
+   "text": "scattered",
+   "frame_start": 577,
+   "frame_end": 589,
+   "start": 19.233,
+   "end": 19.633
+  },
+  {
+   "text": "all across Manhattan",
+   "frame_start": 589,
+   "frame_end": 622,
+   "start": 19.633,
+   "end": 20.733
+  },
+  {
+   "text": "and far beyond it",
+   "frame_start": 622,
+   "frame_end": 658,
+   "start": 20.733,
+   "end": 21.933
+  },
+  {
+   "text": "To get from one",
+   "frame_start": 658,
+   "frame_end": 679,
+   "start": 21.933,
+   "end": 22.633
+  },
+  {
+   "text": "to another",
+   "frame_start": 679,
+   "frame_end": 700,
+   "start": 22.633,
+   "end": 23.333
+  },
+  {
+   "text": "they chose",
+   "frame_start": 700,
+   "frame_end": 712,
+   "start": 23.333,
+   "end": 23.733
+  },
+  {
+   "text": "the easiest path",
+   "frame_start": 712,
+   "frame_end": 747,
+   "start": 23.733,
+   "end": 24.9
+  },
+  {
+   "text": "around swamps",
+   "frame_start": 747,
+   "frame_end": 775,
+   "start": 24.9,
+   "end": 25.833
+  },
+  {
+   "text": "rocks",
+   "frame_start": 775,
+   "frame_end": 785,
+   "start": 25.833,
+   "end": 26.167
+  },
+  {
+   "text": "and steep slopes",
+   "frame_start": 785,
+   "frame_end": 816,
+   "start": 26.167,
+   "end": 27.2
+  },
+  {
+   "text": "through thick forests",
+   "frame_start": 816,
+   "frame_end": 850,
+   "start": 27.2,
+   "end": 28.333
+  },
+  {
+   "text": "and along",
+   "frame_start": 850,
+   "frame_end": 860,
+   "start": 28.333,
+   "end": 28.667
+  },
+  {
+   "text": "the natural shape",
+   "frame_start": 860,
+   "frame_end": 883,
+   "start": 28.667,
+   "end": 29.433
+  },
+  {
+   "text": "of the island",
+   "frame_start": 883,
+   "frame_end": 912,
+   "start": 29.433,
+   "end": 30.4
+  },
+  {
+   "text": "Over time",
+   "frame_start": 912,
+   "frame_end": 935,
+   "start": 30.4,
+   "end": 31.167
+  },
+  {
+   "text": "the route turned into",
+   "frame_start": 935,
+   "frame_end": 955,
+   "start": 31.167,
+   "end": 31.833
+  },
+  {
+   "text": "a well-worn trail",
+   "frame_start": 955,
+   "frame_end": 992,
+   "start": 31.833,
+   "end": 33.067
+  },
+  {
+   "text": "becoming known",
+   "frame_start": 992,
+   "frame_end": 1017,
+   "start": 33.067,
+   "end": 33.9
+  },
+  {
+   "text": "as the Wickquasgeck Trail",
+   "frame_start": 1017,
+   "frame_end": 1068,
+   "start": 33.9,
+   "end": 35.6
+  },
+  {
+   "text": "But then",
+   "frame_start": 1068,
+   "frame_end": 1104,
+   "start": 35.6,
+   "end": 36.8
+  },
+  {
+   "text": "the Dutch arrive",
+   "frame_start": 1104,
+   "frame_end": 1123,
+   "start": 36.8,
+   "end": 37.433
+  },
+  {
+   "text": "establish",
+   "frame_start": 1123,
+   "frame_end": 1142,
+   "start": 37.433,
+   "end": 38.067
+  },
+  {
+   "text": "New Amsterdam",
+   "frame_start": 1142,
+   "frame_end": 1169,
+   "start": 38.067,
+   "end": 38.967
+  },
+  {
+   "text": "look at the trail",
+   "frame_start": 1169,
+   "frame_end": 1190,
+   "start": 38.967,
+   "end": 39.667
+  },
+  {
+   "text": "and think",
+   "frame_start": 1190,
+   "frame_end": 1202,
+   "start": 39.667,
+   "end": 40.067
+  },
+  {
+   "text": "Cool",
+   "frame_start": 1202,
+   "frame_end": 1221,
+   "start": 40.067,
+   "end": 40.7,
+   "style": "quote_italic"
+  },
+  {
+   "text": "they built us a road",
+   "frame_start": 1221,
+   "frame_end": 1254,
+   "start": 40.7,
+   "end": 41.8,
+   "style": "quote_italic"
+  },
+  {
+   "text": "So they simply",
+   "frame_start": 1254,
+   "frame_end": 1285,
+   "start": 41.8,
+   "end": 42.833
+  },
+  {
+   "text": "widen it",
+   "frame_start": 1285,
+   "frame_end": 1304,
+   "start": 42.833,
+   "end": 43.467
+  },
+  {
+   "text": "Forty years later",
+   "frame_start": 1304,
+   "frame_end": 1352,
+   "start": 43.467,
+   "end": 45.067
+  },
+  {
+   "text": "the British come",
+   "frame_start": 1352,
+   "frame_end": 1383,
+   "start": 45.067,
+   "end": 46.1
+  },
+  {
+   "text": "Cool",
+   "frame_start": 1383,
+   "frame_end": 1402,
+   "start": 46.1,
+   "end": 46.733,
+   "style": "quote_italic"
+  },
+  {
+   "text": "they built us a city",
+   "frame_start": 1402,
+   "frame_end": 1434,
+   "start": 46.733,
+   "end": 47.8,
+   "style": "quote_italic"
+  },
+  {
+   "text": "And a road",
+   "frame_start": 1434,
+   "frame_end": 1464,
+   "start": 47.8,
+   "end": 48.8,
+   "style": "quote_italic"
+  },
+  {
+   "text": "So they rename",
+   "frame_start": 1464,
+   "frame_end": 1485,
+   "start": 48.8,
+   "end": 49.5
+  },
+  {
+   "text": "the city",
+   "frame_start": 1485,
+   "frame_end": 1498,
+   "start": 49.5,
+   "end": 49.933
+  },
+  {
+   "text": "New York",
+   "frame_start": 1498,
+   "frame_end": 1515,
+   "start": 49.933,
+   "end": 50.5
+  },
+  {
+   "text": "and give the road",
+   "frame_start": 1515,
+   "frame_end": 1541,
+   "start": 50.5,
+   "end": 51.367
+  },
+  {
+   "text": "a very creative name",
+   "frame_start": 1541,
+   "frame_end": 1585,
+   "start": 51.367,
+   "end": 52.833
+  },
+  {
+   "text": "Broad",
+   "frame_start": 1585,
+   "frame_end": 1600,
+   "start": 52.833,
+   "end": 53.333
+  },
+  {
+   "text": "Way",
+   "frame_start": 1600,
+   "frame_end": 1620,
+   "start": 53.333,
+   "end": 54.0
+  },
+  {
+   "text": "In 1811",
+   "frame_start": 1620,
+   "frame_end": 1649,
+   "start": 54.0,
+   "end": 54.967
+  },
+  {
+   "text": "the city approves",
+   "frame_start": 1649,
+   "frame_end": 1671,
+   "start": 54.967,
+   "end": 55.7
+  },
+  {
+   "text": "the Commissioners' Plan",
+   "frame_start": 1671,
+   "frame_end": 1703,
+   "start": 55.7,
+   "end": 56.767
+  },
+  {
+   "text": "a plan to turn",
+   "frame_start": 1703,
+   "frame_end": 1724,
+   "start": 56.767,
+   "end": 57.467
+  },
+  {
+   "text": "Manhattan",
+   "frame_start": 1724,
+   "frame_end": 1740,
+   "start": 57.467,
+   "end": 58.0
+  },
+  {
+   "text": "into a perfect grid",
+   "frame_start": 1740,
+   "frame_end": 1778,
+   "start": 58.0,
+   "end": 59.267
+  },
+  {
+   "text": "But by that point",
+   "frame_start": 1778,
+   "frame_end": 1804,
+   "start": 59.267,
+   "end": 60.133
+  },
+  {
+   "text": "Broadway is already",
+   "frame_start": 1804,
+   "frame_end": 1828,
+   "start": 60.133,
+   "end": 60.933
+  },
+  {
+   "text": "far too important",
+   "frame_start": 1828,
+   "frame_end": 1854,
+   "start": 60.933,
+   "end": 61.8
+  },
+  {
+   "text": "as a transportation",
+   "frame_start": 1854,
+   "frame_end": 1884,
+   "start": 61.8,
+   "end": 62.8
+  },
+  {
+   "text": "and commercial artery",
+   "frame_start": 1884,
+   "frame_end": 1911,
+   "start": 62.8,
+   "end": 63.7
+  },
+  {
+   "text": "to get rid of",
+   "frame_start": 1911,
+   "frame_end": 1934,
+   "start": 63.7,
+   "end": 64.467
+  },
+  {
+   "text": "So they simply",
+   "frame_start": 1934,
+   "frame_end": 1953,
+   "start": 64.467,
+   "end": 65.1
+  },
+  {
+   "text": "lay the grid",
+   "frame_start": 1953,
+   "frame_end": 1974,
+   "start": 65.1,
+   "end": 65.8
+  },
+  {
+   "text": "right over it",
+   "frame_start": 1974,
+   "frame_end": 2000,
+   "start": 65.8,
+   "end": 66.667
+  },
+  {
+   "text": "And as a result",
+   "frame_start": 2000,
+   "frame_end": 2029,
+   "start": 66.667,
+   "end": 67.633
+  },
+  {
+   "text": "unusual spaces appear",
+   "frame_start": 2029,
+   "frame_end": 2071,
+   "start": 67.633,
+   "end": 69.033
+  },
+  {
+   "text": "where Broadway crosses",
+   "frame_start": 2071,
+   "frame_end": 2099,
+   "start": 69.033,
+   "end": 69.967
+  },
+  {
+   "text": "the city's straight streets",
+   "frame_start": 2099,
+   "frame_end": 2143,
+   "start": 69.967,
+   "end": 71.433
+  },
+  {
+   "text": "and over time",
+   "frame_start": 2143,
+   "frame_end": 2167,
+   "start": 71.433,
+   "end": 72.233
+  },
+  {
+   "text": "some of them",
+   "frame_start": 2167,
+   "frame_end": 2181,
+   "start": 72.233,
+   "end": 72.7
+  },
+  {
+   "text": "become famous",
+   "frame_start": 2181,
+   "frame_end": 2202,
+   "start": 72.7,
+   "end": 73.4
+  },
+  {
+   "text": "around the world",
+   "frame_start": 2202,
+   "frame_end": 2229,
+   "start": 73.4,
+   "end": 74.3
+  },
+  {
+   "text": "like Times Square",
+   "frame_start": 2229,
+   "frame_end": 2255,
+   "start": 74.3,
+   "end": 75.167
+  },
+  {
+   "text": "Herald Square",
+   "frame_start": 2255,
+   "frame_end": 2278,
+   "start": 75.167,
+   "end": 75.933
+  },
+  {
+   "text": "Union Square",
+   "frame_start": 2278,
+   "frame_end": 2301,
+   "start": 75.933,
+   "end": 76.7
+  },
+  {
+   "text": "and Madison Square",
+   "frame_start": 2301,
+   "frame_end": 2348,
+   "start": 76.7,
+   "end": 78.267
+  }
+ ]
+}
