@@ -42,7 +42,7 @@ const cliff = (outline: [number, number][], y0: number, y1: number, seed: number
     for (let k = 0; k < n; k++) samples.push({ x: x + ((x2 - x) * k) / n, z: z + ((z2 - z) * k) / n, nx, nz, s: s + (L * k) / n });
     s += L;
   });
-  const rows = [y0, 2, 7, 13, 19, y1 - 1.5, y1];
+  const rows = y1 > 10 ? [y0, 2, 7, 13, 19, y1 - 1.5, y1] : [y0, 0.5, y1 - 0.8, y1];
   const P = samples.map((q, i) => rows.map((y, j) => {
     const jit = (noise(i + seed, j) - 0.5) * 2.6 + (j === rows.length - 1 ? -0.6 : 0) + (j === 0 ? 1.5 : 0);
     return V(q.x + q.nx * jit, y + (j > 0 && j < rows.length - 1 ? (noise(i, j + seed) - 0.5) * 1.5 : 0), q.z + q.nz * jit);
@@ -233,8 +233,11 @@ export class World {
     b.add(new THREE.CircleGeometry(5.6, 9).rotateX(-Math.PI / 2), M.grass, new THREE.Matrix4().makeTranslation(-46, 28.05, 146));
 
     // Unterland shelf, quay walls, harbour mole
-    b.add(boxGeo(V(30, -3, -112), V(100, UNTER, -16), 6), M.quay);
-    b.add(boxGeo(V(30, UNTER - 0.02, -112), V(100, UNTER + 0.01, -16), 4), M.cobble);
+    // Unterland: a low terrace of the same red sandstone with grass on top, cobbled streets between the houses
+    { const low = cliff([[30, -112], [62, -116], [92, -108], [101, -88], [102, -50], [97, -24], [70, -14], [34, -12]], -3, UNTER, 5);
+      b.add(low.g, M.sand); b.add(cap(low.top, UNTER), M.grass); }
+    b.add(boxGeo(V(53.5, UNTER - 0.02, -112), V(70.5, UNTER + 0.04, -18), 4), M.cobble);
+    b.add(boxGeo(V(70.5, UNTER - 0.02, -62), V(101, UNTER + 0.04, -54), 4), M.cobble);
     b.add(boxGeo(V(100, -3, -64), V(140, UNTER, -54), 6), M.quay);
     b.add(boxGeo(V(100, UNTER - 0.02, -64), V(140, UNTER + 0.01, -54), 4), M.cobble);
     // Unterland houses: two rows along the street x 54..70
@@ -288,8 +291,10 @@ export class World {
     this.plunger.traverse((o) => { o.castShadow = true; o.receiveShadow = true; });
     R.add(this.plunger);
     // the cable: from the bunker hill across the Oberland, over the east cliff and out to sea toward the ship
-    const cpts = [V(0, TOP + 3.3, -100), V(10, TOP + 0.1, -92), V(20, TOP + 0.1, -80), V(27, TOP + 0.1, -66), V(31.5, TOP - 1, -60), V(33, 6, -58), V(40, 0.2, -66), V(120, 0.2, -140), V(SX - 30, 0.2, SZ)];
-    const cg = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(cpts), 200, 0.09, 6);
+    const cpts = [V(0, TOP + 3.35, -100), V(3, TOP + 3.25, -97.6), V(6, TOP + 0.3, -95.5), V(12, TOP + 0.3, -90), V(18, TOP + 0.3, -82), V(23, TOP + 0.3, -73), V(27, TOP + 0.3, -66.5),
+      V(30.5, TOP + 0.6, -63.5), V(33.5, TOP - 2, -62.5), V(35.5, 14, -61.5), V(36.5, UNTER + 1.5, -60.5), V(38, UNTER + 0.3, -59.5), V(60, UNTER + 0.3, -58.5),
+      V(100, UNTER + 0.3, -58.5), V(138, UNTER + 0.3, -58.8), V(141.5, 1.0, -60), V(150, 0.15, -75), V(230, 0.15, -170), V(SX - 30, 0.15, SZ)];
+    const cg = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(cpts, false, "centripetal"), 600, 0.1, 6);
     const cm = new THREE.Mesh(cg, M.cable); cm.castShadow = true; this.cable.add(cm);
     R.add(this.cable);
 
@@ -376,6 +381,9 @@ export class World {
     const bh = new THREE.SphereGeometry(1, 16, 8, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2); bh.scale(2.3, 0.55, 0.75);
     const boatM = lam("boat", () => ({ color: "#8a4f2e", side: THREE.DoubleSide }));
     const bmesh = new THREE.Mesh(bh, boatM); bmesh.position.y = 0.32; bmesh.castShadow = true; this.boat.add(bmesh);
+    // floorboards close the hull above the waterline, so the sea never shows inside the boat
+    const floor = new THREE.Mesh(new THREE.CircleGeometry(1, 24).rotateX(-Math.PI / 2).scale(2.05, 1, 0.62), lam("boatFloor", () => ({ map: beam() })));
+    floor.position.y = 0.16; this.boat.add(floor);
     const rim = new THREE.Mesh(new THREE.TorusGeometry(1, 0.05, 6, 24).rotateX(Math.PI / 2).scale(2.3, 1, 0.75), lam("boatRim", () => ({ color: "#e8d8b0" })));
     rim.position.y = 0.32; this.boat.add(rim);
     for (const s of [-1, 1]) {
@@ -452,7 +460,7 @@ export class World {
     this.glass.visible = f < PUNCH_GLASS + 3;
     const bp = boatAt(f);
     this.boat.visible = id === 16 && f < 2244; this.boat.position.set(...bp);
-    this.boat.position.y = 0.05 * Math.sin(t * 2.1);
+    this.boat.position.y = 0.06 + 0.04 * Math.sin(t * 2.1);
     this.oars.forEach((o, i) => { o.rotation.y = 0.5 * Math.sin(t * 4.2) * (i ? -1 : 1); o.rotation.x = 0.15 * Math.cos(t * 4.2) * (i ? -1 : 1); });
     // ---- cast + effects ----
     const right = V(0, 0, 0).setFromMatrixColumn(cam.matrixWorld, 0);

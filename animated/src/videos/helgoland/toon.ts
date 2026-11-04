@@ -612,7 +612,7 @@ export const bodyFront = (p: Pen, o: Outfit, opts: FrontOpts) => {
     } else if (prop === "flag") {
       p.band([[hx, hy + 18 * u], [hx, hy - 70 * u]], "#8a5a34", 3 * u, 1.2 * u, "round");
       const fy = hy - 70 * u;
-      for (const [k, c] of [[0, "#2f8a4f"], [1, "#d23b3b"], [2, "#f7f1e1"]] as const) p.poly([[hx, fy + k * 10 * u], [hx + 46 * u, fy + 3 * u + k * 10 * u], [hx + 46 * u, fy + 13 * u + k * 10 * u], [hx, fy + 10 * u + k * 10 * u]], c, 0);
+      for (const [k, c] of [[0, "#1d1b1e"], [1, "#d23b3b"], [2, "#f2c230"]] as const) p.poly([[hx, fy + k * 10 * u], [hx + 46 * u, fy + 3 * u + k * 10 * u], [hx + 46 * u, fy + 13 * u + k * 10 * u], [hx, fy + 10 * u + k * 10 * u]], c, 0);
       p.poly([[hx, fy], [hx + 46 * u, fy + 3 * u], [hx + 46 * u, fy + 33 * u], [hx, fy + 30 * u]], null, 2 * u);
       p.dot(hx, hy, 5.5 * u);
     } else if (Array.isArray(prop)) {

@@ -164,15 +164,15 @@ export const stage = (id: number, f: number, cam: CamInfo, light: "day" | "golde
     }
     case 16: {
       if (f < 2244) {
-        const [bx, , bz] = boatAt(f), bob = 0.05 * Math.sin(t * 2.1);
-        out.places.push(person(cam, who(50, STUDENT_A, "stA"), bx + 0.55, 0.12 + bob, bz, { side: false, mirror: false }, { mode: "sit", expr: "stern", blink: lidAt(t, 50) }, {}));
-        out.places.push(person(cam, who(51, STUDENT_B, "stB"), bx - 0.6, 0.12 + bob, bz + 0.05, { side: false, mirror: false }, { mode: "sit", expr: f > 2206 ? "grin" : "nervous", blink: lidAt(t, 51) }, {}));
+        const [bx, , bz] = boatAt(f), bob = 0.06 + 0.04 * Math.sin(t * 2.1);
+        out.places.push(person(cam, who(50, STUDENT_A, "stA"), bx + 0.55, 0.16 + bob, bz, { side: false, mirror: false }, { mode: "sit", expr: "stern", blink: lidAt(t, 50) }, {}));
+        out.places.push(person(cam, who(51, STUDENT_B, "stB"), bx - 0.6, 0.16 + bob, bz + 0.05, { side: false, mirror: false }, { mode: "sit", expr: f > 2206 ? "grin" : "nervous", blink: lidAt(t, 51) }, {}));
         gulls(out, t, [bx + 20, 14, bz - 6], 3, 12, 1.0);
       } else {
         still(cam, out, who(52, STUDENT_A, "stA"), -19.0, TOP, 38.3, { expr: "grin", prop: "flag" }, t);
         still(cam, out, who(53, STUDENT_B, "stB"), -20.4, TOP, 38.7, { expr: f > FLAG_UP ? "laugh" : "grin", wave: q(Math.sin(t * 9), 20) }, t);
         const up = smooth((f - 2262) / (FLAG_UP + 12 - 2262));
-        flag(out, cam, "helgoland", -21.6, TOP + 1.3 + 3.7 * up, 39.6, 1.6, t);
+        flag(out, cam, "germany", -21.6, TOP + 1.3 + 3.7 * up, 39.6, 1.6, t);
       }
       break;
     }
@@ -197,7 +197,7 @@ export const stage = (id: number, f: number, cam: CamInfo, light: "day" | "golde
       }
       const down = smooth((f - 2449) / 30), up = smooth((f - 2484) / 28);
       if (f < 2481) flag(out, cam, "uk", 72, UNTER + 8.3 - 6.5 * down, -58, 2.0, t);
-      else flag(out, cam, "helgoland", 72, UNTER + 1.8 + 6.5 * up, -58, 2.0, t);
+      else flag(out, cam, "germany", 72, UNTER + 1.8 + 6.5 * up, -58, 2.0, t);
       gulls(out, t, [75, 18, -60], 4, 14, 1.0);
       break;
     }
