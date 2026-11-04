@@ -116,8 +116,8 @@ const rolled = (s: (f: number) => Shot, roll: number) => (f: number): Shot => ({
 const SX = SHIP[0], SZ = SHIP[2], RX = ROOM[0], RZ = ROOM[2];
 const CAMS: Record<number, Key[]> = {
   1: [
-    { f: 0, s: (f) => zoom([190, 34, -360], [0, 22, -100], 34, pushK(f, 0, 0.0018)) },
-    { f: 100, dur: 40, s: (f) => zoom([190, 34, -360], [0, 30, -100], 30, pushK(f, 100, 0.002), { roll: -0.03 }) },
+    { f: 0, s: (f) => zoom([190, 34, -360], [0, 30, -100], 36, pushK(f, 0, 0.0012)) },
+    { f: 40, dur: 40, s: (f) => zoom([190, 34, -360], [0, 70, -100], 46, pushK(f, 40, 0.0012), { roll: -0.03 }) },
   ],
   2: [
     { f: 155, s: (f) => dolly([150, 30, -270], [0, 18, -60], pushK(f, 155, 0.002, 0.006, 30), { fov: 40 }) },

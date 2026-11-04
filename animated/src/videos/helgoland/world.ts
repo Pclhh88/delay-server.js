@@ -11,9 +11,10 @@ import { TONE, CHAR, LFB, twoTone, untone } from "./shade";
 import { NOINK } from "./ink";
 import { Pool, Actor, Fx } from "./castcore";
 import { stage } from "./cast";
+import { Boom } from "./boom";
 import {
   FPS, SHOTS, camAt, V3, ShotDef, TOP, BLAST, SHIP, DECK, BX, SET_Y, ROOM, MX, PRESS, PUNCH_SOFT, PUNCH_GLASS, FLAG_UP, HANDOVER,
-  boatAt, SUN_SHOT, smooth, clamp01, ground, STREET_X,
+  boatAt, SUN_SHOT, smooth, clamp01, ground, STREET_X, BOOM, BOOM_HOOK,
 } from "./story";
 
 export const loadKit = () => Promise.resolve({} as Kit);
@@ -149,6 +150,7 @@ export class World {
   private cable = new THREE.Group();
   private plunger = new THREE.Group(); private cushion: THREE.Mesh; private glass: THREE.Mesh;
   private boat = new THREE.Group(); private oars: THREE.Mesh[] = [];
+  private boom!: Boom;
   private frustum = new THREE.Frustum();
   private m4 = new THREE.Matrix4(); private v = new THREE.Vector3(); private sph = new THREE.Sphere();
 
@@ -255,6 +257,8 @@ export class World {
       bb.add(g, M.sand, new THREE.Matrix4().compose(V(-28 + 56 * r(), 1 + 9 * r(), -86 - 30 * r()), new THREE.Quaternion().setFromEuler(new THREE.Euler(r() * 3, r() * 3, 0)), V(1, 0.8, 1)));
     }
     bi.build(this.intact); bb.build(this.blown);
+    this.boom = new Boom(lam("rockDark", () => ({ color: "#8a3a2a" })));
+    R.add(this.boom.group);
     R.add(this.intact, this.blown);
 
     // the town on the plateau: one street along z (x 8..16), houses either side, a small square at the north end
@@ -470,6 +474,12 @@ export class World {
     W.wShade.value.set(...wc.shade); W.wTime.value = t;
     // ---- story state ----
     const bl = s.blown(f);
+    { const cl = (a: number, b: number) => Math.max(0, Math.min(1, (f - a) / (b - a)));
+      if (id === 1) this.boom.update((f - BOOM_HOOK) / FPS, BLAST, 0);
+      else if (id === 2) this.boom.update((f - BOOM_HOOK) / FPS, BLAST, cl(160, 236));
+      else if (id === 9) this.boom.update((f - BOOM) / FPS, BLAST, 0);
+      else if (id === 10) this.boom.update((f - BOOM) / FPS, BLAST, cl(1188, 1295));
+      else this.boom.update(-1, BLAST); }
     this.intact.visible = !bl; this.blown.visible = bl;
     this.today.visible = id >= 19;
     this.cable.visible = id >= 6 && id <= 9 && !bl;

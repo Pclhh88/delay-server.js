@@ -59,11 +59,9 @@ export const stage = (id: number, f: number, cam: CamInfo, light: "day" | "golde
   const t = f / FPS;
   switch (id) {
     case 1:
-      mushroom(out, f, BOOM_HOOK, BLAST, 1.0);
       gulls(out, t, [40, 40, -160], 5, 30, 1.6);
       break;
     case 2:
-      smoke(out, f, 120, 260, BLAST, 10, 34);
       break;
     case 3:
       gulls(out, t, [0, 45, -20], 6, 60, 2.2);
@@ -99,12 +97,9 @@ export const stage = (id: number, f: number, cam: CamInfo, light: "day" | "golde
       break;
     }
     case 9:
-      mushroom(out, f, BOOM, BLAST, 1.25);
       for (let i = 0; i < 3; i++) still(cam, out, who(30 + i, SAILOR(i), `sa${i}`), SX + 3 + i * 1.2, DECK, SZ - 2.5 - i * 0.6, { expr: f > BOOM + 4 ? "shock" : "neutral" }, t);
       break;
     case 10:
-      mushroom(out, f, BOOM, BLAST, 1.25, 1183, 50);
-      smoke(out, f, 1183, 1300, BLAST, 12, 40);
       if (f > 1290) gulls(out, t, [0, 50, -30], 5, 60, 2.2);
       break;
     case 11: {
