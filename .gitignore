@@ -5,3 +5,6 @@ projects/*/output/*.video.mp4
 projects/*/output/compare_frames/
 models/
 projects/*/output/*.wav
+animated/node_modules/
+animated/out/
+animated/audio/__pycache__/
