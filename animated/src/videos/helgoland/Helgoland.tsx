@@ -6,7 +6,7 @@
 // source; the grade is display-referred, so it comes after tone mapping. Every pixel-sized parameter is specified at
 // 1080x1920 and scaled with the output size, so stills at --scale 0.5 and the 1440x2560 final match.
 // Place changes crossfade by stacking a second canvas for the fade frames; the hook ends on a 4-frame white flash.
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import * as THREE from "three";
 import { AbsoluteFill, continueRender, delayRender, getInputProps, useCurrentFrame } from "remotion";
 import { ThreeCanvas } from "@remotion/three";
@@ -38,6 +38,14 @@ const makeBloom = () => {
 };
 
 const fwd = new THREE.Vector3(), fpt = new THREE.Vector3();
+const PROF = !!(getInputProps() as { prof?: boolean }).prof;
+const T = { render: 0, n: 0, upd: 0 };
+if (PROF) {
+  const orig = THREE.WebGLRenderer.prototype.render;
+  THREE.WebGLRenderer.prototype.render = function (this: THREE.WebGLRenderer, s: THREE.Object3D, c: THREE.Camera) {
+    const t0 = performance.now(); orig.call(this, s, c); this.getContext().finish(); T.render += performance.now() - t0; T.n++;
+  };
+}
 
 const useKit = () => {
   const [kit, setKit] = useState<Kit | null>(null);
@@ -48,7 +56,8 @@ const useKit = () => {
 
 const Inner: React.FC<{ id: number; kit: Kit }> = ({ id, kit }) => {
   const f = useCurrentFrame();
-  const { camera, scene } = useThree();
+  const { camera, scene, gl } = useThree();
+  const advance = useThree((st) => st.advance);
   const world = useMemo(() => new World(kit), [kit]);
   const target = useMemo(() => new THREE.Vector3(), []);
   const on = useMemo(toggles, []);
@@ -73,7 +82,10 @@ const Inner: React.FC<{ id: number; kit: Kit }> = ({ id, kit }) => {
     </EffectComposer>
   ), [fx, on]);
   const cam = camera as THREE.PerspectiveCamera;
+  if (PROF) { gl.info.autoReset = false; console.warn(`PROF prev-frame tris ${gl.info.render.triangles} calls ${gl.info.render.calls}`); gl.info.reset(); }
+  const tu = performance.now();
   target.copy(world.update(id, f, cam, scene));
+  if (PROF) { T.upd += performance.now() - tu; console.warn(`PROF f${f} upd ${(performance.now() - tu).toFixed(0)}ms tris ${gl.info.render.triangles} calls ${gl.info.render.calls} geos ${gl.info.memory.geometries} tex ${gl.info.memory.textures} progs ${gl.info.programs?.length}`); }
   noInkFallback(world.root);
   // thin-lens focus: distance along the view axis to the shot's focus point (default: the camera's look target)
   const d = dofAt(f);
@@ -83,6 +95,7 @@ const Inner: React.FC<{ id: number; kit: Kit }> = ({ id, kit }) => {
   fx.lens.cInf = d.cInf;
   gradeFor(fx.grade, SHOTS[id - 1].light);
   fx.grain.seed = f; // deterministic per frame
+  useLayoutEffect(() => { const h = delayRender("draw " + f); advance(performance.now()); continueRender(h); }, [f, advance]);
   return (
     <>
       <primitive object={world.root} dispose={null} />
@@ -95,7 +108,7 @@ const Inner: React.FC<{ id: number; kit: Kit }> = ({ id, kit }) => {
 const dprOverride = () => (getInputProps() as { post?: { dpr?: number } }).post?.dpr;
 const ShotView: React.FC<{ id: number; kit: Kit; alpha: number }> = ({ id, kit, alpha }) => (
   <AbsoluteFill style={{ opacity: alpha }}>
-    <ThreeCanvas width={1080} height={1920} {...(dprOverride() ? { dpr: dprOverride() } : {})} shadows gl={{ antialias: false, stencil: false, powerPreference: "high-performance", toneMappingExposure: 1.0 }}
+    <ThreeCanvas frameloop="never" width={1080} height={1920} {...(dprOverride() ? { dpr: dprOverride() } : {})} shadows gl={{ antialias: false, stencil: false, powerPreference: "high-performance", toneMappingExposure: 1.0 }}
       camera={{ fov: 40, near: 0.2, far: 1500 }}>
       <Inner id={id} kit={kit} />
     </ThreeCanvas>
