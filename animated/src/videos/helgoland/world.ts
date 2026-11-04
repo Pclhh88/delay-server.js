@@ -12,8 +12,8 @@ import { NOINK } from "./ink";
 import { Pool, Actor, Fx } from "./castcore";
 import { stage } from "./cast";
 import {
-  FPS, SHOTS, camAt, V3, ShotDef, TOP, UNTER, BLAST, SHIP, DECK, BX, SET_Y, ROOM, MX, PRESS, PUNCH_SOFT, PUNCH_GLASS, FLAG_UP, HANDOVER,
-  boatAt, SUN_SHOT, smooth, clamp01,
+  FPS, SHOTS, camAt, V3, ShotDef, TOP, BLAST, SHIP, DECK, BX, SET_Y, ROOM, MX, PRESS, PUNCH_SOFT, PUNCH_GLASS, FLAG_UP, HANDOVER,
+  boatAt, SUN_SHOT, smooth, clamp01, ground, STREET_X,
 } from "./story";
 
 export const loadKit = () => Promise.resolve({} as Kit);
@@ -42,11 +42,16 @@ const cliff = (outline: [number, number][], y0: number, y1: number, seed: number
     for (let k = 0; k < n; k++) samples.push({ x: x + ((x2 - x) * k) / n, z: z + ((z2 - z) * k) / n, nx, nz, s: s + (L * k) / n });
     s += L;
   });
-  const rows = y1 > 10 ? [y0, 2, 7, 13, 19, y1 - 1.5, y1] : [y0, 0.5, y1 - 0.8, y1];
-  const P = samples.map((q, i) => rows.map((y, j) => {
-    const jit = (noise(i + seed, j) - 0.5) * 2.6 + (j === rows.length - 1 ? -0.6 : 0) + (j === 0 ? 1.5 : 0);
-    return V(q.x + q.nx * jit, y + (j > 0 && j < rows.length - 1 ? (noise(i, j + seed) - 0.5) * 1.5 : 0), q.z + q.nz * jit);
-  }));
+  const P = samples.map((q, i) => {
+    const top = ground(q.x, q.z), rows = [y0, 1.5, 5, 9.5, 13.5, Math.min(17, top - 5), Math.min(20, top - 3.2), top - 1.6, top];
+    const gully = noise(Math.floor(i / 3), seed + 7) < 0.22 ? -2.2 : 0, bulge = 1.6 * Math.sin(i * 0.37 + seed);
+    return rows.map((y, j) => {
+      const last = j === rows.length - 1, ledge = j === 3 || j === 5 ? 1.1 : 0;
+      const jit = last ? -0.3 : (noise(i + seed, j) - 0.5) * 3.4 + gully * (j > 1 ? 1 : 0.4) + bulge * 0.5 + ledge + (j === 0 ? 2.5 : 0);
+      return V(q.x + q.nx * jit, y + (j > 0 && !last ? (noise(i, j + seed) - 0.5) * 1.6 : 0), q.z + q.nz * jit);
+    });
+  });
+  const rows = P[0];
   const pos: number[] = [], uv: number[] = [];
   const N = samples.length;
   for (let i = 0; i < N; i++) {
@@ -64,16 +69,44 @@ const cliff = (outline: [number, number][], y0: number, y1: number, seed: number
   g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
   g.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
   g.computeVertexNormals();
-  const top = P.map((r) => r[rows.length - 1]);
+  const top = P.map((r) => r[r.length - 1]);
   return { g, top };
 };
 /** flat cap through a ring of points at height y, uv in metres / 14 */
-const cap = (ring: THREE.Vector3[], y: number) => {
-  const shape = new THREE.Shape(ring.map((p) => new THREE.Vector2(p.x, -p.z)));
-  const g = new THREE.ShapeGeometry(shape);
-  g.rotateX(-Math.PI / 2); g.translate(0, y, 0);
-  const p = g.attributes.position, uv = g.attributes.uv;
-  for (let i = 0; i < p.count; i++) uv.setXY(i, p.getX(i) / 9 + 0.37 * Math.sin(p.getZ(i) / 23), p.getZ(i) / 9 + 0.37 * Math.sin(p.getX(i) / 19));
+const cap = (ring: THREE.Vector3[], _y = 0) => {
+  // concentric rings from the cliff rim to the centre, every vertex on the terrain height (the island is star-shaped)
+  const cx = ring.reduce((a, p) => a + p.x, 0) / ring.length, cz = ring.reduce((a, p) => a + p.z, 0) / ring.length, K = 28, N = ring.length;
+  const pos: number[] = [], idx: number[] = [];
+  for (let k = 0; k <= K; k++) for (let i = 0; i < N; i++) {
+    const u = 1 - k / K, x = cx + (ring[i].x - cx) * u, z = cz + (ring[i].z - cz) * u;
+    pos.push(x, k === 0 ? ring[i].y : ground(x, z), z);
+  }
+  for (let k = 0; k < K; k++) for (let i = 0; i < N; i++) {
+    const a = k * N + i, b = k * N + ((i + 1) % N), c = (k + 1) * N + ((i + 1) % N), d = (k + 1) * N + i;
+    idx.push(a, d, c, a, c, b);
+  }
+  let g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx);
+  // face up: flip the winding if the ring runs clockwise seen from above
+  g.computeVertexNormals();
+  if ((g.attributes.normal as THREE.BufferAttribute).getY(N * 5) < 0) { idx.reverse(); g.setIndex(idx); g.computeVertexNormals(); }
+  const uv: number[] = [];
+  for (let i = 0; i < pos.length; i += 3) uv.push(pos[i] / 9 + 0.37 * Math.sin(pos[i + 2] / 23), pos[i + 2] / 9 + 0.37 * Math.sin(pos[i] / 19));
+  g.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
+  g = g.toNonIndexed(); g.computeVertexNormals();
+  return g;
+};
+/** a ribbon of cobbles lying on the terrain along z (x0..x1, z0..z1) */
+const groundStrip = (x0: number, x1: number, z0: number, z1: number) => {
+  const pos: number[] = [], uv: number[] = [];
+  const P = (x: number, z: number) => [x, ground(x, z) + 0.05, z];
+  for (let z = z0; z < z1; z += 2) for (let x = x0; x < x1; x += 2) {
+    const a = P(x, z), b = P(x + 2, z), c = P(x + 2, z + 2), d = P(x, z + 2);
+    for (const v of [a, d, c, a, c, b]) { pos.push(...v); uv.push(v[0] / 4, v[2] / 4); }
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
+  g.computeVertexNormals();
   return g;
 };
 
@@ -202,11 +235,12 @@ export class World {
     const b = new Batch();
     const full = cliff(FULL, -3, TOP, 0), cut = cliff(CUT, -3, TOP, 0);
     const bi = new Batch(), bb = new Batch();
-    bi.add(full.g, M.sand); bi.add(cap(full.top, TOP), M.grass);
-    bb.add(cut.g, M.sand); bb.add(cap(cut.top, TOP), M.grass);
+    bi.add(full.g, M.sand); bi.add(cap(full.top), M.grass);
+    bb.add(cut.g, M.sand); bb.add(cap(cut.top), M.grass);
     // intact: the bunker hill on the south tip (concrete blocks, a dark gate in the cliff)
-    bi.add(boxGeo(V(-10, TOP - 0.5, -112), V(8, TOP + 3.2, -96), 3), M.conc);
-    bi.add(boxGeo(V(-4, TOP + 3.2, -108), V(3, TOP + 5.5, -100), 3), M.conc);
+    { const gb = ground(-1, -104);
+      bi.add(boxGeo(V(-10, gb - 2.5, -112), V(8, gb + 3.2, -96), 3), M.conc);
+      bi.add(boxGeo(V(-4, gb + 3.2, -108), V(3, gb + 5.5, -100), 3), M.conc); }
     bi.add(boxGeo(V(-3, 2, -121.5), V(3, 7, -119.5), 3), M.conc);
     bi.add(boxGeo(V(-1.6, 2, -121.8), V(1.6, 5.4, -121.4)), lam("gate", () => ({ color: "#232126" })));
     // blown: a rubble slope down to the sea where the tip was, boulders
@@ -223,39 +257,25 @@ export class World {
     bi.build(this.intact); bb.build(this.blown);
     R.add(this.intact, this.blown);
 
-    // Lange Anna: the sea stack off the north-west tip
-    const stack = new THREE.CylinderGeometry(5.2, 7.5, 34, 9, 4); stack.translate(0, 14, 0);
-    const sp = stack.attributes.position;
-    for (let i = 0; i < sp.count; i++) { const k = 0.85 + 0.3 * noise(i % 10, Math.floor(i / 10)); sp.setX(i, sp.getX(i) * k); sp.setZ(i, sp.getZ(i) * k); }
-    stack.computeVertexNormals();
-    const stackUv = stack.attributes.uv; for (let i = 0; i < stackUv.count; i++) stackUv.setXY(i, stackUv.getX(i) * 3, sp.getY(i) / 12);
-    b.add(stack, M.sand, new THREE.Matrix4().makeTranslation(-46, -3, 146));
-    b.add(new THREE.CircleGeometry(5.6, 9).rotateX(-Math.PI / 2), M.grass, new THREE.Matrix4().makeTranslation(-46, 28.05, 146));
-
-    // Unterland shelf, quay walls, harbour mole
-    // Unterland: a low terrace of the same red sandstone with grass on top, cobbled streets between the houses
-    { const low = cliff([[30, -112], [62, -116], [92, -108], [101, -88], [102, -50], [97, -24], [70, -14], [34, -12]], -3, UNTER, 5);
-      b.add(low.g, M.sand); b.add(cap(low.top, UNTER), M.grass); }
-    b.add(boxGeo(V(53.5, UNTER - 0.02, -112), V(70.5, UNTER + 0.04, -18), 4), M.cobble);
-    b.add(boxGeo(V(70.5, UNTER - 0.02, -62), V(101, UNTER + 0.04, -54), 4), M.cobble);
-    b.add(boxGeo(V(100, -3, -64), V(140, UNTER, -54), 6), M.quay);
-    b.add(boxGeo(V(100, UNTER - 0.02, -64), V(140, UNTER + 0.01, -54), 4), M.cobble);
-    // Unterland houses: two rows along the street x 54..70
+    // the town on the plateau: one street along z (x 8..16), houses either side, a small square at the north end
+    b.add(groundStrip(8, 16, -48, 64), M.cobble);
+    b.add(groundStrip(4, 22, 64, 78), M.cobble);
     let k = 0;
-    for (let z = -106; z < -24; z += 9.5) {
-      house(b, 50, z, Math.PI / 2, 8, 8, [7, 8.4, 9.8][k % 3], k * 3 + 1, UNTER);
-      house(b, 74.5, z + 3, -Math.PI / 2, 8, 8, [8.4, 7, 9.8][k % 3], k * 5 + 2, UNTER);
+    for (let z = -42; z < 60; z += 9.5) {
+      house(b, 0, z, Math.PI / 2, 8, 8, [7, 8.4, 9.8][k % 3], k * 3 + 1, Math.min(ground(-4, z), ground(4, z)) - 0.4);
+      house(b, 24, z + 3, -Math.PI / 2, 8, 8, [8.4, 7, 9.8][k % 3], k * 5 + 2, Math.min(ground(20, z + 3), ground(28, z + 3)) - 0.4);
       k++;
     }
-    // a few houses on the Oberland (east side) and a path
-    let ok = 0;
-    for (const [x, z, yaw] of [[18, 4, -Math.PI / 2], [19, 14, -Math.PI / 2], [17, 24, -Math.PI / 2], [7, 9, Math.PI / 2], [6, 19, Math.PI / 2], [20, -10, -Math.PI / 2], [16, 52, Math.PI]] as const)
-      house(b, x, z, yaw, 7, 7, [7, 8.4][ok % 2], ok++ * 7 + 3, TOP);
-    b.add(boxGeo(V(10.5, TOP + 0.01, -40), V(14.5, TOP + 0.03, 60), 3), M.cobble);
-    // flag pole on the mole (1952)
-    b.add(new THREE.CylinderGeometry(0.09, 0.12, 9, 8).translate(0, 4.5, 0), M.pole, new THREE.Matrix4().makeTranslation(72, UNTER, -58));
-    // students' flag pole on the Oberland
-    b.add(new THREE.CylinderGeometry(0.05, 0.07, 5.5, 8).translate(0, 2.75, 0), M.wood, new THREE.Matrix4().makeTranslation(-21.6, TOP, 39.6));
+    for (const [x, z, yaw] of [[4, 84, Math.PI], [20, 84, Math.PI], [12, 86, Math.PI]] as const) house(b, x, z, yaw, 7, 7, 8.4, k++ * 7 + 3, ground(x, z) - 0.6);
+    // flag pole on the square (1952)
+    b.add(new THREE.CylinderGeometry(0.09, 0.12, 9, 8).translate(0, 4.5, 0), M.pole, new THREE.Matrix4().makeTranslation(12, ground(12, 70) - 0.1, 70));
+    // students' flag pole on the west side
+    b.add(new THREE.CylinderGeometry(0.05, 0.07, 5.5, 8).translate(0, 2.75, 0), M.wood, new THREE.Matrix4().makeTranslation(-21.6, ground(-21.6, 39.6) - 0.1, 39.6));
+    // a few sandstone outcrops on the grass (not in the town)
+    for (const [x, z, s2] of [[-25, -30, 2.2], [-30, 10, 1.6], [-18, 70, 2.6], [-8, 100, 1.8], [28, 95, 2.0], [-32, -60, 1.5]] as const) {
+      const g = new THREE.DodecahedronGeometry(s2, 0);
+      b.add(g, M.sand, new THREE.Matrix4().compose(V(x, ground(x, z) + s2 * 0.3, z), new THREE.Quaternion().setFromEuler(new THREE.Euler(x, z, 0)), V(1.4, 0.7, 1.1)));
+    }
 
     // ---- the ship (bow toward -x) ----
     const hs = new THREE.Shape();
@@ -291,9 +311,11 @@ export class World {
     this.plunger.traverse((o) => { o.castShadow = true; o.receiveShadow = true; });
     R.add(this.plunger);
     // the cable: from the bunker hill across the Oberland, over the east cliff and out to sea toward the ship
-    const cpts = [V(0, TOP + 3.35, -100), V(3, TOP + 3.25, -97.6), V(6, TOP + 0.3, -95.5), V(12, TOP + 0.3, -90), V(18, TOP + 0.3, -82), V(23, TOP + 0.3, -73), V(27, TOP + 0.3, -66.5),
-      V(30.5, TOP + 0.6, -63.5), V(33.5, TOP - 2, -62.5), V(35.5, 14, -61.5), V(36.5, UNTER + 1.5, -60.5), V(38, UNTER + 0.3, -59.5), V(60, UNTER + 0.3, -58.5),
-      V(100, UNTER + 0.3, -58.5), V(138, UNTER + 0.3, -58.8), V(141.5, 1.0, -60), V(150, 0.15, -75), V(230, 0.15, -170), V(SX - 30, 0.15, SZ)];
+    const gb2 = ground(-1, -104);
+    const cpts = [V(0, gb2 + 3.35, -100), V(3, gb2 + 3.25, -97.6), V(5.5, gb2 + 1.0, -96)];
+    for (let u = 0; u <= 1.0001; u += 1 / 14) { const x = 7 + 23.5 * u, z = -94.5 + 31 * u; cpts.push(V(x, ground(x, z) + 0.28, z)); }
+    cpts.push(V(32, ground(30.5, -63.5) + 0.2, -62.8), V(33.6, ground(30.5, -63.5) - 2.2, -62.2), V(35.6, 14, -61.5), V(36.6, 5, -60.8), V(37.6, 0.6, -60.3), V(40, 0.15, -61),
+      V(80, 0.15, -95), V(230, 0.15, -170), V(SX - 30, 0.15, SZ));
     const cg = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(cpts, false, "centripetal"), 600, 0.1, 6);
     const cm = new THREE.Mesh(cg, M.cable); cm.castShadow = true; this.cable.add(cm);
     R.add(this.cable);
@@ -365,8 +387,8 @@ export class World {
     // ---- today: Hummerbuden along the street + the duty-free booth ----
     const hb = new Batch();
     let hi = 0;
-    for (const [x, yaw] of [[56.2, Math.PI / 2], [68.3, -Math.PI / 2]] as const) for (let z = -102; z < -66; z += 4.2) {
-      const col = HUMMER[hi++ % HUMMER.length], m = new THREE.Matrix4().makeRotationY(yaw).setPosition(x, UNTER, z);
+    for (const [x, yaw] of [[6, Math.PI / 2], [18, -Math.PI / 2]] as const) for (let z = -36; z < 10; z += 4.2) {
+      const col = HUMMER[hi++ % HUMMER.length], m = new THREE.Matrix4().makeRotationY(yaw).setPosition(x, ground(x, z) - 0.1, z);
       const wall = lam("hb" + col, () => ({ color: col }));
       hb.add(boxGeo(V(-1.6, 0, -1.4), V(1.6, 2.6, 1.4)), wall, m);
       hb.add(tri(V(-1.6, 2.6, 1.4), V(1.6, 2.6, 1.4), V(0, 3.5, 1.4)), wall, m);

@@ -19,6 +19,17 @@ export const MX = -1500;               // mainland town square set
 export const BOAT0: V3 = [-150, 0, 22];
 
 export const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
+const sstep = (a: number, b: number, x: number) => { const u = Math.max(0, Math.min(1, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
+/** town on the plateau: a street along z at x 8..16, houses at x 0 and 24, a small square at z 64..76 */
+export const STREET_X = 12;
+/** plateau height: rises gently to the north, rolling hills, flattened where the town stands */
+export const ground = (x: number, z: number) => {
+  const town = sstep(-12, -4, x) * (1 - sstep(30, 38, x)) * sstep(-52, -42, z) * (1 - sstep(80, 90, z));
+  const hills = 5.5 * Math.sin(x / 24 + 0.7) * Math.sin(z / 29 + 0.3) + 1.6 * Math.sin(x / 9.3 + 2) * Math.cos(z / 12.7) + 0.6 * Math.sin(x / 3.9 + z / 5.1)
+    + 4.5 * Math.exp(-(((x + 22) / 14) ** 2 + ((z - 95) / 20) ** 2)) + 3.5 * Math.exp(-(((x + 28) / 12) ** 2 + ((z + 40) / 16) ** 2));
+  return TOP + 10 * sstep(-80, 130, z) + hills * (1 - 0.9 * town);
+};
+const gy = (x: number, z: number, dy: number) => ground(x, z) + dy;
 export const smooth = (x: number) => { const u = clamp01(x); return u * u * (3 - 2 * u); };
 export const easeOut = (u: number) => 1 - (1 - clamp01(u)) ** 4;
 
@@ -117,7 +128,7 @@ const CAMS: Record<number, Key[]> = {
     { f: 308, cut: true, s: (f) => dolly([250, 70, 80], [0, 14, -5], pushK(f, 308, 0.0025), { fov: 44, roll: 0.03 }) },
   ],
   4: [
-    { f: 368, s: (f) => dolly([58, UNTER + 1.8, -104], [64, UNTER + 2.2, -66], pushK(f, 368, 0.003), { fov: 42 }) },
+    { f: 368, s: (f) => dolly([12, gy(12, -44, 1.8), -44], [12.6, gy(12.6, -6, 2.4), -6], pushK(f, 368, 0.003), { fov: 42 }) },
   ],
   5: [
     { f: 436, s: (f) => dolly([BX + 0.6, SET_Y + 1.8, -27], [BX, SET_Y + 1.4, 0], pushK(f, 436, 0.004), { fov: 44 }) },
@@ -169,21 +180,21 @@ const CAMS: Record<number, Key[]> = {
   16: [
     { f: 2088, s: (f) => { const b = boatAt(f); return dolly([b[0] - 13, 2.4, b[2] + 7], [b[0] + 0.5, 1.0, b[2]], pushK(f, 2088, 0.0018), { fov: 40 }); } },
     { f: 2150, dur: 30, s: (f) => { const b = boatAt(f); return dolly([b[0] - 6, 2.6, b[2] + 9], [b[0] + 1, 1.0, b[2] - 0.5], pushK(f, 2150, 0.002), { fov: 42 }); } },
-    { f: 2244, cut: true, s: (f) => dolly([-15.5, TOP + 1.8, 31], [-20, TOP + 2.6, 38.5], pushK(f, 2244, 0.0025, 0.006, 30), { fov: 42 }) },
+    { f: 2244, cut: true, s: (f) => dolly([-15.5, gy(-15.5, 31, 1.8), 31], [-20, gy(-20, 38.5, 2.6), 38.5], pushK(f, 2244, 0.0025, 0.006, 30), { fov: 42 }) },
   ],
   17: [
     { f: 2320, s: (f) => dolly([MX + 0.6, SET_Y + 1.7, -7.5], [MX, SET_Y + 1.6, 0], pushK(f, 2320, 0.003, 0.006, 30), { fov: 42 }) },
   ],
   18: [
-    { f: 2412, s: (f) => dolly([84, UNTER + 3.0, -38], [72, UNTER + 4.5, -58], pushK(f, 2412, 0.0025), { fov: 42 }) },
-    { f: 2488, dur: 26, s: (f) => dolly([80, UNTER + 2.4, -45], [72, UNTER + 5.0, -58], pushK(f, 2488, 0.002), { fov: 44, roll: 0.03 }) },
+    { f: 2412, s: (f) => dolly([21, gy(21, 50, 3.0), 50], [12, gy(12, 70, 4.5), 70], pushK(f, 2412, 0.0025), { fov: 42 }) },
+    { f: 2488, dur: 26, s: (f) => dolly([18.5, gy(18.5, 55, 2.4), 55], [12, gy(12, 70, 5.0), 70], pushK(f, 2488, 0.002), { fov: 44, roll: 0.03 }) },
   ],
   19: [
-    { f: 2526, s: (f) => dolly([60, UNTER + 1.8, -112], [66, UNTER + 1.8, -86], pushK(f, 2526, 0.0025), { fov: 42 }) },
-    { f: 2643, cut: true, s: (f) => dolly([61.0, UNTER + 1.8, -82], [66.2, UNTER + 1.4, -73.8], pushK(f, 2643, 0.0025, 0.006, 30), { fov: 40, roll: 0.03 }) },
+    { f: 2526, s: (f) => dolly([12, gy(12, -46, 1.8), -46], [13, gy(13, -18, 1.8), -18], pushK(f, 2526, 0.0025), { fov: 42 }) },
+    { f: 2643, cut: true, s: (f) => dolly([10.2, gy(10.2, -3.5, 1.8), -3.5], [15.6, gy(15.6, 5.8, 1.4), 5.8], pushK(f, 2643, 0.0025, 0.006, 30), { fov: 40, roll: 0.03 }) },
   ],
   20: [
-    { f: 2726, s: (f) => { const u = glide((f - 2726) / 150); return { pos: [100 + 205 * u, 22 + 70 * u, -96 + 176 * u] as V3, look: [40 - 40 * u, 8 + 8 * u, -60 + 60 * u] as V3, fov: 44, roll: 0 }; } },
+    { f: 2726, s: (f) => { const u = glide((f - 2726) / 150); return { pos: [12 + 293 * u, ground(12, -56) + 10 + 74 * u, -56 + 136 * u] as V3, look: [12 - 12 * u, ground(12, -12) + 2 + 8 * u, -12 + 12 * u] as V3, fov: 44, roll: 0 }; } },
   ],
 };
 
@@ -220,7 +231,7 @@ export const DOF: Dof[] = [
   { f: 1768, cInf: 12 },                                               // sofa / glass
   { f: 1916, cInf: 0 },
   { f: 2088, cInf: 10, focus: (f) => boatAt(f) },                       // boat
-  { f: 2244, cInf: 12, focus: () => [-20, TOP + 1.6, 38.5] },           // students + flag
+  { f: 2244, cInf: 12, focus: () => [-20, ground(-20, 38.5) + 1.6, 38.5] },           // students + flag
   { f: 2320, cInf: 12, focus: () => [MX, SET_Y + 1.6, -2.2] },          // newspaper readers
   { f: 2412, cInf: 7 },
   { f: 2526, cInf: 8 },

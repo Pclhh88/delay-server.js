@@ -5,14 +5,17 @@ import {
   fxMushroom, fxSmoke, fxGull, fxWatch, fxFist, fxPoof, fxCracks, fxShard, fxPlane, fxBomb, fxPore, fxShock, fxPuffSmall, fxFlag, fxBubble, fxShelf, fxSheet,
 } from "./fx";
 import {
-  FPS, V3, TOP, UNTER, BLAST, SHIP, DECK, BX, SET_Y, ROOM, MX, BOOM_HOOK, BOOM, PRESS, PORES, HOLES, WAVE, PUNCH_SOFT, PUNCH_GLASS, FLAG_UP,
+  FPS, V3, TOP, BLAST, ground, SHIP, DECK, BX, SET_Y, ROOM, MX, BOOM_HOOK, BOOM, PRESS, PORES, HOLES, WAVE, PUNCH_SOFT, PUNCH_GLASS, FLAG_UP,
   boatAt, smooth, clamp01,
 } from "./story";
 
 const SX = SHIP[0], SZ = SHIP[2];
 const who = (i: number, o: Outfit, key: string): Who => ({ i, o, okey: key });
 const still = (cam: CamInfo, out: Stage, w: Who, x: number, y: number, z: number, fo: FrontOpts, t: number, sc = 1, shadow = true) => {
-  out.places.push(person(cam, w, x, y, z, { side: false, mirror: false }, { mode: "stand", blink: lidAt(t, w.i), ...fo }, {}, sc));
+  const pl = person(cam, w, x, y, z, { side: false, mirror: false }, { mode: "stand", blink: lidAt(t, w.i), ...fo }, {}, sc);
+  pl.roll = 0.018 * Math.sin(t * 1.7 + w.i * 1.3) + 0.008 * Math.sin(t * 3.1 + w.i);
+  pl.scale = sc * (1 + 0.006 * Math.sin(t * 2.4 + w.i * 0.7));
+  out.places.push(pl);
   if (shadow) blob(out, x, y, z, sc);
 };
 const fx = (out: Stage, p: FxPlace) => out.fx.push(p);
@@ -20,7 +23,7 @@ const fx = (out: Stage, p: FxPlace) => out.fx.push(p);
 // ---- effects ----
 const mushroom = (out: Stage, f: number, f0: number, at: V3, sc: number, fadeFrom = 1e9, fadeLen = 60) => {
   if (f < f0) return;
-  const u = q(clamp01((f - f0) / 100), 30), fade = q(clamp01((f - fadeFrom) / fadeLen), 12);
+  const u = q(clamp01((f - f0) / 100), 100), fade = q(clamp01((f - fadeFrom) / fadeLen), 60);
   if (fade >= 1) return;
   const w = 110 * sc, h = 154 * sc;
   fx(out, { key: `mush${u}|${fade}`, cw: 700, ch: 980, draw: (p) => { p.g.scale(0.7, 0.7); fxMushroom(p, u, fade); }, x: at[0], y: at[1] - 8 + h / 2, z: at[2], w, h, soft: true });
@@ -33,19 +36,19 @@ const smoke = (out: Stage, f: number, f0: number, f1: number, at: V3, n: number,
   for (let i = 0; i < n; i++) {
     const a = clamp01(1 - (f - f0) / (f1 - f0)) * (0.6 + 0.4 * hh(i, 3));
     if (a < 0.04) continue;
-    const ak = q(a, 10), seed = i % 4, drift = (f - f0) * 0.06;
+    const ak = q(a, 60), seed = i % 4, drift = (f - f0) * 0.06;
     fx(out, { key: `smoke${seed}|${ak}`, cw: 256, ch: 256, draw: (p) => { p.g.scale(0.5, 0.5); p.g.globalAlpha = ak; fxSmoke(p, seed); p.g.globalAlpha = 1; },
       x: at[0] + (hh(i, 1) - 0.5) * 70 + drift * 2, y: at[1] + 8 + hh(i, 2) * 40 + drift, z: at[2] + (hh(i, 4) - 0.5) * 50, w: size * (0.7 + 0.6 * hh(i, 5)), h: size * (0.7 + 0.6 * hh(i, 5)), soft: true });
   }
 };
 const gulls = (out: Stage, t: number, c: V3, n: number, r: number, s = 1) => {
   for (let i = 0; i < n; i++) {
-    const a = t * (0.25 + 0.1 * hh(i)) + i * 2.1, wf = q(Math.sin(t * 7 + i * 1.3), 4);
+    const a = t * (0.25 + 0.1 * hh(i)) + i * 2.1, wf = q(Math.sin(t * 7 + i * 1.3), 20);
     fx(out, { key: `gull${wf}`, cw: 200, ch: 120, draw: (p) => fxGull(p, wf), x: c[0] + Math.cos(a) * r * (0.6 + 0.4 * hh(i, 2)), y: c[1] + 6 * Math.sin(t * 0.7 + i), z: c[2] + Math.sin(a) * r * (0.6 + 0.4 * hh(i, 2)), w: 1.6 * s, h: 0.96 * s });
   }
 };
 const flag = (out: Stage, cam: CamInfo, kind: "helgoland" | "germany" | "uk", x: number, y: number, z: number, w: number, t: number) => {
-  const wv = q((t * 5) % (Math.PI * 2), 3);
+  const wv = q((t * 5) % (Math.PI * 2), 8);
   fx(out, { key: `flag${kind}${wv}`, cw: 300, ch: 200, draw: (p) => fxFlag(p, kind, wv), x: x + cam.right.x * w * 0.5, y, z: z + cam.right.z * w * 0.5, w, h: w * 0.66 });
 };
 
@@ -68,7 +71,7 @@ export const stage = (id: number, f: number, cam: CamInfo, light: "day" | "golde
     case 4: {
       gulls(out, t, [62, 16, -70], 4, 10, 0.9);
       const u = (f - 368) / 68;
-      fx(out, { key: "sheet", cw: 300, ch: 220, draw: fxSheet, x: 61 + 3 * u, y: UNTER + 0.25 + 0.5 * Math.abs(Math.sin(u * 7)), z: -92 + 8 * u, w: 0.7, h: 0.5, rot: u * 6 });
+      fx(out, { key: "sheet", cw: 300, ch: 220, draw: fxSheet, x: 11 + 3 * u, y: ground(12, -30 + 8 * u) + 0.25 + 0.5 * Math.abs(Math.sin(u * 7)), z: -30 + 8 * u, w: 0.7, h: 0.5, rot: u * 6 });
       break;
     }
     case 6:
@@ -77,7 +80,7 @@ export const stage = (id: number, f: number, cam: CamInfo, light: "day" | "golde
         still(cam, out, who(2, SAILOR(1), "sa1"), BX + 0.55, SET_Y, 18.4, { expr: "neutral", look: 1 }, t);
       } else {
         [[10, -92], [18, -82], [25, -70]].forEach(([x, z], i) =>
-          out.places.push(person(cam, who(3 + i, SAILOR(i + 2), `sa${i + 2}`), x + 0.6, TOP, z, { side: false, mirror: false }, { mode: "stroll", phase: q(((t * 0.8 + i * 0.3) % 1), 60), expr: "stern", blink: lidAt(t, i + 3) }, {}, 1.4)));
+          out.places.push(person(cam, who(3 + i, SAILOR(i + 2), `sa${i + 2}`), x + 0.6, ground(x + 0.6, z), z, { side: false, mirror: false }, { mode: "stroll", phase: q(((t * 0.8 + i * 0.3) % 1), 60), expr: "stern", blink: lidAt(t, i + 3) }, {}, 1.4)));
       }
       break;
     case 7:
@@ -115,14 +118,14 @@ export const stage = (id: number, f: number, cam: CamInfo, light: "day" | "golde
       const N = 26;
       for (let i = 0; i < N; i++) {
         const start = i < 14 ? PORES + i * 2 : HOLES + (i - 14) * 2;
-        const open = q(smooth((f - start) / 8), 10);
+        const open = q(smooth((f - start) / 8), 30);
         if (open <= 0) continue;
-        const y = 11 + 6 * hh(i, 1), z = -2.6 + 5.2 * hh(i, 2), s = 0.35 + 0.5 * hh(i, 3);
-        fx(out, { key: `pore${i % 6}|${open}`, cw: 200, ch: 200, draw: (p) => fxPore(p, i % 6, open), x: -44.6, y, z, w: s, h: s });
+        const y = 11.6 + 5 * hh(i, 1), z = -1.7 + 3.4 * hh(i, 2), s = 0.3 + 0.4 * hh(i, 3);
+        fx(out, { key: `pore${i % 6}|${open}`, cw: 200, ch: 200, draw: (p) => fxPore(p, i % 6, open), x: -48.2, y, z, w: s, h: s });
         if (id === 13) { // the shock front passes, every pore swallows a bit of it
-          const sz = -4 + 8 * clamp01((f - WAVE) / 70), dt = (f - WAVE) / 70 * 8 - (z + 4);
-          if (dt > 0 && dt < 3) { const u = q(dt / 3, 10); fx(out, { key: `puffS${u}`, cw: 300, ch: 300, draw: (p) => fxPuffSmall(p, u), x: -44.8, y, z, w: s * 1.6, h: s * 1.6, soft: true }); }
-          if (i === 0 && f >= WAVE) { const k = q(clamp01((f - WAVE) / 70), 20); fx(out, { key: `shock${k}`, cw: 600, ch: 600, draw: (p) => fxShock(p, k), x: -45.0, y: 14, z: sz, w: 4.5 * (1 - 0.5 * k), h: 4.5 * (1 - 0.5 * k), soft: true }); }
+          const sz = -2.6 + 5.2 * clamp01((f - WAVE) / 70), dt = (f - WAVE) / 70 * 5.2 - (z + 2.6);
+          if (dt > 0 && dt < 3) { const u = q(dt / 3, 30); fx(out, { key: `puffS${u}`, cw: 300, ch: 300, draw: (p) => fxPuffSmall(p, u), x: -48.4, y, z, w: s * 1.6, h: s * 1.6, soft: true }); }
+          if (i === 0 && f >= WAVE) { const k = q(clamp01((f - WAVE) / 70), 70); fx(out, { key: `shock${k}`, cw: 600, ch: 600, draw: (p) => fxShock(p, k), x: -48.6, y: 14, z: sz, w: 3.2 * (1 - 0.5 * k), h: 3.2 * (1 - 0.5 * k), soft: true }); }
         }
       }
       break;
@@ -156,9 +159,9 @@ export const stage = (id: number, f: number, cam: CamInfo, light: "day" | "golde
       }
       ([[1996, [12, -30]], [2018, [0, 0]], [2040, [18, 25]]] as [number, [number, number]][]).forEach(([fr, [x, z]]) => {
         const d = f - fr;
-        if (d >= 0 && d < 22) fx(out, { key: "bomb", cw: 120, ch: 240, draw: fxBomb, x, y: TOP + 26 * (1 - (d / 22) ** 2), z, w: 1.8, h: 3.6 });
-        if (d >= 22 && d < 34) { const u = q((d - 22) / 12, 12); fx(out, { key: `burstB${u}`, cw: 500, ch: 500, draw: (p) => fxBurst(p, u, "#ffd27a"), x, y: TOP + 4, z, w: 16, h: 16 }); }
-        if (d >= 26) smoke(out, f, fr + 26, fr + 140, [x, TOP - 6, z], 2, 14);
+        if (d >= 0 && d < 22) fx(out, { key: "bomb", cw: 120, ch: 240, draw: fxBomb, x, y: ground(x, z) + 26 * (1 - (d / 22) ** 2), z, w: 1.8, h: 3.6 });
+        if (d >= 22 && d < 34) { const u = q((d - 22) / 12, 12); fx(out, { key: `burstB${u}`, cw: 500, ch: 500, draw: (p) => fxBurst(p, u, "#ffd27a"), x, y: ground(x, z) + 4, z, w: 16, h: 16 }); }
+        if (d >= 26) smoke(out, f, fr + 26, fr + 140, [x, ground(x, z) - 6, z], 2, 14);
       });
       break;
     }
@@ -169,10 +172,10 @@ export const stage = (id: number, f: number, cam: CamInfo, light: "day" | "golde
         out.places.push(person(cam, who(51, STUDENT_B, "stB"), bx - 0.6, 0.16 + bob, bz + 0.05, { side: false, mirror: false }, { mode: "sit", expr: f > 2206 ? "grin" : "nervous", blink: lidAt(t, 51) }, {}));
         gulls(out, t, [bx + 20, 14, bz - 6], 3, 12, 1.0);
       } else {
-        still(cam, out, who(52, STUDENT_A, "stA"), -19.0, TOP, 38.3, { expr: "grin", prop: "flag" }, t);
-        still(cam, out, who(53, STUDENT_B, "stB"), -20.4, TOP, 38.7, { expr: f > FLAG_UP ? "laugh" : "grin", wave: q(Math.sin(t * 9), 20) }, t);
+        still(cam, out, who(52, STUDENT_A, "stA"), -19.0, ground(-19, 38.3), 38.3, { expr: "grin", prop: "flag" }, t);
+        still(cam, out, who(53, STUDENT_B, "stB"), -20.4, ground(-20.4, 38.7), 38.7, { expr: f > FLAG_UP ? "laugh" : "grin", wave: q(Math.sin(t * 9), 20) }, t);
         const up = smooth((f - 2262) / (FLAG_UP + 12 - 2262));
-        flag(out, cam, "germany", -21.6, TOP + 1.3 + 3.7 * up, 39.6, 1.6, t);
+        flag(out, cam, "germany", -21.6, ground(-21.6, 39.6) + 1.3 + 3.7 * up, 39.6, 1.6, t);
       }
       break;
     }
@@ -193,33 +196,34 @@ export const stage = (id: number, f: number, cam: CamInfo, light: "day" | "golde
       for (let i = 0; i < 8; i++) {
         const o = { ...townsfolk(i + 3), hat: i % 3 ? "hair" : "cap", cap: "#4a4a52", hair: ["#3a2a20", "#8a5a34", "#c9c4bc", "#e0b45a"][i % 4] } as Outfit;
         const cheer = f > 2500;
-        still(cam, out, who(80 + i, o, `isl${i}`), 68.5 + (i % 4) * 1.8 + hh(i) * 0.6, UNTER, -55.5 + Math.floor(i / 4) * 1.7, { expr: cheer ? (i % 2 ? "laugh" : "grin") : "smile", wave: cheer && i % 2 ? q(Math.sin(t * 9 + i), 20) : undefined, prop: i === 2 ? "flag" : null }, t);
+        still(cam, out, who(80 + i, o, `isl${i}`), ...(() => { const x = 8.5 + (i % 4) * 2.0 + hh(i) * 0.6, z = 63 + Math.floor(i / 4) * 1.8; return [x, ground(x, z), z] as const; })(), { expr: cheer ? (i % 2 ? "laugh" : "grin") : "smile", wave: cheer && i % 2 ? q(Math.sin(t * 9 + i), 20) : undefined, prop: i === 2 ? "flag" : null }, t);
       }
       const down = smooth((f - 2449) / 30), up = smooth((f - 2484) / 28);
-      if (f < 2481) flag(out, cam, "uk", 72, UNTER + 8.3 - 6.5 * down, -58, 2.0, t);
-      else flag(out, cam, "germany", 72, UNTER + 1.8 + 6.5 * up, -58, 2.0, t);
-      gulls(out, t, [75, 18, -60], 4, 14, 1.0);
+      const gp = ground(12, 70);
+      if (f < 2481) flag(out, cam, "uk", 12, gp + 8.3 - 6.5 * down, 70, 2.0, t);
+      else flag(out, cam, "germany", 12, gp + 1.8 + 6.5 * up, 70, 2.0, t);
+      gulls(out, t, [12, 46, 70], 4, 14, 1.0);
       break;
     }
     case 19: {
       if (f < 2643) {
         for (let i = 0; i < 12; i++) {
-          const sp = 0.6 + 0.4 * hh(i), x = 58.5 + 7 * hh(i, 2), z = -100 + 30 * hh(i, 3) + (i % 2 ? 1 : -1) * sp * (t - 84);
-          out.places.push(person(cam, who(100 + i, tourist(i), `tu${i}`), x, UNTER, z, { side: false, mirror: false },
+          const sp = 0.6 + 0.4 * hh(i), x = 9 + 6 * hh(i, 2), z = -36 + ((((32 * hh(i, 3) + (i % 2 ? 1 : -1) * sp * (t - 84)) % 32) + 32) % 32);
+          out.places.push(person(cam, who(100 + i, tourist(i), `tu${i}`), x, ground(x, z), z, { side: false, mirror: false },
             { mode: "stroll", phase: q(((t * sp * 1.4 + hh(i, 5)) % 1), 60), expr: (["smile", "grin", "smile_closed", "laugh"] as Expr[])[i % 4], prop: i % 3 === 2 ? null : "bag", blink: lidAt(t, 100 + i), look: i % 3 - 1 }, {}));
-          blob(out, x, UNTER, z);
+          blob(out, x, ground(x, z), z);
         }
-        gulls(out, t, [64, 14, -80], 4, 10, 0.9);
+        gulls(out, t, [12, 44, -20], 4, 10, 0.9);
       } else {
-        fx(out, { key: "shelf", cw: 800, ch: 600, draw: fxShelf, x: 66.7, y: UNTER + 1.3, z: -72.6, w: 2.2, h: 1.65 });
-        still(cam, out, who(120, tourist(0), "tu0"), 65.2, UNTER, -75.6, { expr: "grin", prop: "bag" }, t);
-        still(cam, out, who(121, tourist(4), "tu4"), 66.2, UNTER, -76.9, { expr: "laugh", prop: "bag" }, t);
-        still(cam, out, who(122, tourist(6), "tu6"), 64.0, UNTER, -77.0, { expr: "smile", prop: "bag", look: 1 }, t);
+        fx(out, { key: "shelf", cw: 800, ch: 600, draw: fxShelf, x: 16.35, y: ground(16.3, 6) + 1.3, z: 6.0, w: 2.2, h: 1.65 });
+        still(cam, out, who(120, tourist(0), "tu0"), 14.0, ground(14, 3.0), 3.0, { expr: "grin", prop: "bag" }, t);
+        still(cam, out, who(121, tourist(4), "tu4"), 15.0, ground(15, 1.6), 1.6, { expr: "laugh", prop: "bag" }, t);
+        still(cam, out, who(122, tourist(6), "tu6"), 12.8, ground(12.8, 1.0), 1.0, { expr: "smile", prop: "bag", look: 1 }, t);
       }
       break;
     }
     case 20:
-      for (let i = 0; i < 10; i++) still(cam, out, who(130 + i, tourist(i + 2), `tu${i + 2}`), 104 + i * 3.2, UNTER, -59.5 + hh(i) * 4, { expr: "smile" }, t, 1, false);
+      for (let i = 0; i < 10; i++) { const z = -30 + i * 6 + hh(i) * 3, x = 9.5 + 5 * hh(i, 2); still(cam, out, who(130 + i, tourist(i + 2), `tu${i + 2}`), x, ground(x, z), z, { expr: "smile" }, t, 1, false); }
       gulls(out, t, [40, 40, -20], 6, 50, 2.2);
       break;
   }
