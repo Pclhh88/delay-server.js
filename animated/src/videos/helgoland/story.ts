@@ -180,10 +180,10 @@ const CAMS: Record<number, Key[]> = {
   ],
   19: [
     { f: 2526, s: (f) => dolly([60, UNTER + 1.8, -112], [66, UNTER + 1.8, -86], pushK(f, 2526, 0.0025), { fov: 42 }) },
-    { f: 2643, cut: true, s: (f) => dolly([61.6, UNTER + 1.8, -81], [67.4, UNTER + 1.4, -73.5], pushK(f, 2643, 0.0025, 0.006, 30), { fov: 40, roll: 0.03 }) },
+    { f: 2643, cut: true, s: (f) => dolly([61.0, UNTER + 1.8, -82], [66.2, UNTER + 1.4, -73.8], pushK(f, 2643, 0.0025, 0.006, 30), { fov: 40, roll: 0.03 }) },
   ],
   20: [
-    { f: 2726, s: (f) => { const u = glide((f - 2726) / 150); return { pos: [95 + 210 * u, 12 + 80 * u, -70 + 150 * u] as V3, look: [40 - 40 * u, 8 + 8 * u, -60 + 60 * u] as V3, fov: 44, roll: 0 }; } },
+    { f: 2726, s: (f) => { const u = glide((f - 2726) / 150); return { pos: [100 + 205 * u, 22 + 70 * u, -96 + 176 * u] as V3, look: [40 - 40 * u, 8 + 8 * u, -60 + 60 * u] as V3, fov: 44, roll: 0 }; } },
   ],
 };
 

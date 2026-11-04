@@ -2,6 +2,7 @@
 // Unterland houses + Hummerbuden, Lange Anna, the Royal Navy ship, and three side sets far away (bunker tunnel,
 // living room, mainland square). update(id, f, camera) poses everything for shot `id` at frame f.
 import * as THREE from "three";
+import { getInputProps } from "remotion";
 import { Batch, boxGeo, V, lam, house, quad, tri, Kit, Ray, setSight } from "./build";
 import { ctex, rep, grassHD, cobbleHD, planksHD, beam, waterNear, waterFar, cloudHD, sandstoneHD, concreteHD, wallpaper, fabric, hullHD, stoneHD, rng } from "./paint";
 import { Pen } from "./toon";
@@ -79,7 +80,7 @@ const cap = (ring: THREE.Vector3[], y: number) => {
 // ---------------- sight lines (houses in front of a lens are left out) ----------------
 const sightLines = (): Ray[] => {
   const out: Ray[] = [];
-  for (const s of SHOTS) for (let f = s.a - 6; f < s.b + 6; f += 3) {
+  for (const s of SHOTS.filter((x) => x.id === 18)) for (let f = s.a - 6; f < s.b + 6; f += 3) {
     const c = camAt(s.id, Math.max(0, f)), o = V(...c.pos), look = V(...c.look);
     const fw = look.clone().sub(o), len = Math.min(fw.length(), 40);
     fw.normalize();
@@ -138,7 +139,8 @@ export class World {
     this.sunDisc.frustumCulled = false; this.sunDisc.layers.set(NOINK); R.add(this.sunDisc);
     this.hemi = new THREE.HemisphereLight("#cfe6ff", "#6c5c8c", 1.1);
     this.sun = new THREE.DirectionalLight("#fff0d6", 2.6);
-    this.sun.castShadow = true; this.sun.shadow.mapSize.set(4096, 4096);
+    const SM = (getInputProps() as { shadow?: number }).shadow ?? 4096;
+    this.sun.castShadow = true; this.sun.shadow.mapSize.set(SM, SM);
     R.add(this.hemi, this.sun, this.sun.target);
     this.cloudMaps = { day: [0, 1, 2, 3].map((k) => cloudHD(k, LOOK.day.cloud)), golden: [0, 1, 2, 3].map((k) => cloudHD(k, LOOK.golden.cloud)) };
     for (let i = 0; i < 12; i++) {

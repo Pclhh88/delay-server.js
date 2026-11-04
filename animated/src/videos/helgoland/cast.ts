@@ -211,10 +211,10 @@ export const stage = (id: number, f: number, cam: CamInfo, light: "day" | "golde
         }
         gulls(out, t, [64, 14, -80], 4, 10, 0.9);
       } else {
-        fx(out, { key: "shelf", cw: 800, ch: 600, draw: fxShelf, x: 68.6, y: UNTER + 1.45, z: -72.2, w: 2.4, h: 1.8 });
-        still(cam, out, who(120, tourist(0), "tu0"), 66.4, UNTER, -74.8, { expr: "grin", prop: "bag" }, t);
-        still(cam, out, who(121, tourist(4), "tu4"), 67.6, UNTER, -75.9, { expr: "laugh", prop: "bag" }, t);
-        still(cam, out, who(122, tourist(6), "tu6"), 65.4, UNTER, -76.4, { expr: "smile", prop: "bag", look: 1 }, t);
+        fx(out, { key: "shelf", cw: 800, ch: 600, draw: fxShelf, x: 66.7, y: UNTER + 1.3, z: -72.6, w: 2.2, h: 1.65 });
+        still(cam, out, who(120, tourist(0), "tu0"), 65.2, UNTER, -75.6, { expr: "grin", prop: "bag" }, t);
+        still(cam, out, who(121, tourist(4), "tu4"), 66.2, UNTER, -76.9, { expr: "laugh", prop: "bag" }, t);
+        still(cam, out, who(122, tourist(6), "tu6"), 64.0, UNTER, -77.0, { expr: "smile", prop: "bag", look: 1 }, t);
       }
       break;
     }
