@@ -14,6 +14,6 @@ let last = 0;
 await renderMedia({
   composition, serveUrl, inputProps, codec: "h264", outputLocation: out, crf: 16, scale: Number(scale), frameRange: [Number(a), end],
   browserExecutable, chromiumOptions, concurrency: Number(conc), timeoutInMilliseconds: 600000, muted: true,
-  onProgress: ({ renderedFrames }) => { if (renderedFrames - last >= 30) { last = renderedFrames; console.log(`frames ${renderedFrames} ${((Date.now() - t0) / 1000).toFixed(0)}s`); } },
+  onProgress: ({ renderedFrames }) => { if (renderedFrames - last >= (Number(process.env.EVERY) || 30)) { last = renderedFrames; console.log(`frames ${renderedFrames} ${((Date.now() - t0) / 1000).toFixed(0)}s`); } },
 });
 console.log("done", ((Date.now() - t0) / 1000).toFixed(0) + "s");
