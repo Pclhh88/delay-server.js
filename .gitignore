@@ -8,3 +8,4 @@ projects/*/output/*.wav
 animated/node_modules/
 animated/out/
 animated/audio/__pycache__/
+projects/*/output/*.mp4
