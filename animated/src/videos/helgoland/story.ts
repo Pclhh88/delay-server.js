@@ -199,7 +199,7 @@ const CAMS: Record<number, Key[]> = {
 };
 
 // impact kicks: (frame, gain)
-const KICKS: [number, number][] = [[BOOM_HOOK + 2, 1.2], [PRESS, 0.5], [BOOM + 1, 1.8], [BOOM + 14, 0.8], [PUNCH_GLASS, 0.9], [2040, 0.4], [2062, 0.4]];
+const KICKS: [number, number][] = [[BOOM_HOOK + 2, 1.2], [PRESS, 0.5], [BOOM + 1, 1.8], [BOOM + 14, 0.8], [PUNCH_GLASS, 0.9], [2012, 0.5], [2034, 0.5], [2056, 0.6]];
 export const kickAt = (f: number) => {
   let a = 0;
   for (const [f0, g] of KICKS) { const n = Math.floor(f - f0 + 1e-6); if (n >= 0 && n < 7) a += g * (n % 2 ? -1 : 1) * (1 - n / 7) ** 1.5; }
@@ -245,6 +245,16 @@ export const dofAt = (f: number) => {
   return { cInf: p.cInf + (d.cInf - p.cInf) * k, focus: d.focus };
 };
 
+/** the practice-bomb run (shot 15): two planes fly over the island toward -z, the lead plane drops three bombs */
+export const planeAt = (i: number, f: number): V3 => [15 + i * 16, 52 + i * 6, 130 - (f - 1916) * 1.5 - i * 30];
+export const BOMB_DROPS: [number][] = [[1990], [2012], [2034]];
+export const BOMB_FALL = 22;
+/** a bomb leaves the lead plane with its forward speed and falls onto the plateau */
+export const bombAt = (i: number, f: number): V3 => {
+  const fr = BOMB_DROPS[i][0], d = Math.max(0, Math.min(BOMB_FALL, f - fr)), p = planeAt(0, fr), u = d / BOMB_FALL;
+  const gz = ground(p[0], p[2] - 1.05 * BOMB_FALL);
+  return [p[0], p[1] - 2 + (gz - p[1] + 2) * u * u, p[2] - 1.05 * d];
+};
 /** the students' rowing boat: glides toward the island's west cliff */
 export const boatAt = (f: number): V3 => {
   const t = (f - 2088) / FPS;

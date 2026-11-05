@@ -68,7 +68,7 @@ export class Boom {
   private ring: THREE.Mesh;
   private c = new THREE.Color();
 
-  constructor(rockMat: THREE.Material) {
+  constructor(rockMat: THREE.Material, private scale = 1) {
     const puffs = [0, 1, 2, 3].map(puffTex), fire = fireTex();
     const add = (kind: P["kind"], n: number) => {
       for (let i = 0; i < n; i++) {
@@ -97,7 +97,9 @@ export class Boom {
   update(tau: number, at: V3, clear = 0) {
     this.group.visible = tau >= 0 && clear < 1;
     if (!this.group.visible) return;
-    const [cx, cy, cz] = at, keep = 1 - sm(0, 1, clear);
+    // everything is built around a local origin at the blast point, scaled as a whole
+    this.group.position.set(...at); const K = this.scale;
+    const sea = -at[1] / this.scale, cx = 0, cy = 0, cz = 0, keep = 1 - sm(0, 1, clear);
     const H = 135 * ease(tau, 1.35), capY = cy + H, capR = 14 + 46 * ease(tau, 1.6);
     const drift = 3.5 * tau; // wind to +x
     for (const p of this.ps) {
@@ -129,7 +131,7 @@ export class Boom {
         op = sm(0.15, 0.6, tau - r1 * 0.3);
       } else if (p.kind === "surge") {
         const a = (i / 18) * 6.28 + r1 * 0.3, d = (10 + 48 * ease(tau, 1.1)) * (0.8 + 0.4 * r2);
-        x = cx + Math.cos(a) * d + drift * 0.6; z = cz + Math.sin(a) * d; y = Math.max(cy * 0.35, 4) * (1 - 0.6 * ease(tau, 1.5)) + 4 * r3;
+        x = cx + Math.cos(a) * d + drift * 0.6; z = cz + Math.sin(a) * d; y = Math.max(sea + 4, 2 + 4 * r3 - 2 * ease(tau, 1.5));
         size = (10 + 15 * ease(tau, 1.2)) * (0.8 + 0.4 * r3);
         col.copy(DUST).lerp(SMOKE_LIT, sm(1, 4, tau) * 0.6);
         op = sm(0.05, 0.3, tau);
@@ -140,8 +142,8 @@ export class Boom {
         col.set("#ffffff");
         op = y > 0.5 ? 1 : 0;
       }
-      s.position.set(x, y, z);
-      s.scale.setScalar(size);
+      s.position.set(x * K, y * K, z * K);
+      s.scale.setScalar(size * K);
       m.color.copy(col);
       m.opacity = op * keep * (p.kind === "fire" ? 1 : 1 - 0.25 * sm(5, 9, tau));
       m.rotation = r1 * 6.28 + tau * 0.15 * (r2 - 0.5);
@@ -150,13 +152,13 @@ export class Boom {
     for (let i = 0; i < this.rocks.length; i++) {
       const { m, v, w } = this.rocks[i], tt = Math.min(tau, 6);
       const y = cy + 4 + v.y * tt - 4.9 * 2.2 * tt * tt;
-      m.visible = y > -1 && keep > 0;
-      m.position.set(cx + v.x * tt, Math.max(-1, y), cz + v.z * tt);
+      m.visible = y > sea - 1 && keep > 0;
+      m.position.set((cx + v.x * tt) * K, Math.max(sea - 1, y) * K, (cz + v.z * tt) * K);
       m.rotation.set(w.x * tt, w.y * tt, 0);
-      m.scale.setScalar(0.8 + 1.8 * rnd(i, 6));
+      m.scale.setScalar((0.8 + 1.8 * rnd(i, 6)) * K);
     }
     const R = 20 + 190 * ease(tau, 1.6);
-    this.ring.position.set(cx, 0.08, cz); this.ring.scale.set(R * 2, 1, R * 2);
+    this.ring.position.set(0, sea * K + 0.08, 0); this.ring.scale.set(R * 2 * K, 1, R * 2 * K);
     (this.ring.material as THREE.MeshBasicMaterial).opacity = (1 - sm(0.5, 3.5, tau)) * keep;
   }
 }

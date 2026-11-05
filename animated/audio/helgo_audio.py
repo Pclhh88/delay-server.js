@@ -222,7 +222,7 @@ def render_sfx(r):
     pn = np.interp(np.arange(len(pl)) / SR, [0, pd], [-0.8, 0.8])
     stereo = np.stack([pl * env * np.cos((pn + 1) * np.pi / 4), pl * env * np.sin((pn + 1) * np.pi / 4)]) * np.sqrt(2)
     place(out, stereo, F(1916), 0.16)
-    for fr in (1996, 2018, 2040):
+    for fr in (1990, 2012, 2034):
         place(out, st(bomb_whistle(r)), F(fr), 0.25)
         place(out, boom(r, 0.45, 2.5), F(fr + 22), 0.55)
     # ---- the rowing boat ----

@@ -14,7 +14,7 @@ import { stage } from "./cast";
 import { Boom } from "./boom";
 import {
   FPS, SHOTS, camAt, V3, ShotDef, TOP, BLAST, SHIP, DECK, BX, SET_Y, ROOM, MX, PRESS, PUNCH_SOFT, PUNCH_GLASS, FLAG_UP, HANDOVER,
-  boatAt, SUN_SHOT, smooth, clamp01, ground, STREET_X, BOOM, BOOM_HOOK,
+  boatAt, SUN_SHOT, smooth, clamp01, ground, STREET_X, BOOM, BOOM_HOOK, BOMB_DROPS, BOMB_FALL, bombAt,
 } from "./story";
 
 export const loadKit = () => Promise.resolve({} as Kit);
@@ -150,7 +150,7 @@ export class World {
   private cable = new THREE.Group();
   private plunger = new THREE.Group(); private cushion: THREE.Mesh; private glass: THREE.Mesh;
   private boat = new THREE.Group(); private oars: THREE.Mesh[] = [];
-  private boom!: Boom;
+  private boom!: Boom; private bombs: Boom[] = []; private boards = new THREE.Group();
   private frustum = new THREE.Frustum();
   private m4 = new THREE.Matrix4(); private v = new THREE.Vector3(); private sph = new THREE.Sphere();
 
@@ -259,18 +259,37 @@ export class World {
     bi.build(this.intact); bb.build(this.blown);
     this.boom = new Boom(lam("rockDark", () => ({ color: "#8a3a2a" })));
     R.add(this.boom.group);
+    for (let i = 0; i < 3; i++) { const bm = new Boom(lam("rockDark", () => ({ color: "#8a3a2a" })), 0.3); this.bombs.push(bm); R.add(bm.group); }
     R.add(this.intact, this.blown);
 
     // the town on the plateau: one street along z (x 8..16), houses either side, a small square at the north end
     b.add(groundStrip(8, 16, -48, 64), M.cobble);
     b.add(groundStrip(4, 22, 64, 78), M.cobble);
+    const lowest = (x: number, z: number, r: number) => { let m = Infinity; for (const dx of [-r, 0, r]) for (const dz of [-r, 0, r]) m = Math.min(m, ground(x + dx, z + dz)); return m; };
+    const bb2 = new Batch(), boardM = lam("boardWood", () => ({ color: "#8a6a48" })), boardD = lam("boardDark", () => ({ color: "#5d4632" }));
+    const town = (x: number, z: number, yaw: number, w: number, h: number, si: number) => {
+      const y = lowest(x, z, w / 2) - 0.25;
+      house(b, x, z, yaw, w, 8, h, si, y);
+      b.add(boxGeo(V(x - w / 2 - 0.12, y - 6, z - w / 2 - 0.12), V(x + w / 2 + 0.12, y + 0.3, z + w / 2 + 0.12), 2), M.quay); // foundation into the rock
+      // boarded-up windows on the front facade (the island stands empty 1945-1952)
+      const m = new THREE.Matrix4().makeRotationY(yaw).setPosition(x, y, z), n = Math.max(1, Math.floor(w / 2.2)), floors = Math.max(1, Math.floor(h / 2.8));
+      for (let fl = 0; fl < floors; fl++) for (let i = 0; i < n; i++) {
+        if (fl === 0 && i === Math.floor(n / 2)) { // door: three planks across
+          for (let k2 = 0; k2 < 3; k2++) bb2.add(new THREE.BoxGeometry(1.6, 0.16, 0.06).rotateZ((k2 - 1) * 0.12), k2 % 2 ? boardD : boardM, m.clone().multiply(new THREE.Matrix4().makeTranslation(-w / 2 + ((i + 0.5) / n) * w, 0.7 + k2 * 0.55, 8 / 2 + 0.1)));
+          continue;
+        }
+        const ux = -w / 2 + ((i + 0.5) / n) * w, uy = fl * 2.8 + 0.9 + 0.62;
+        for (const r of [0.55, -0.48]) bb2.add(new THREE.BoxGeometry(1.45, 0.17, 0.06).rotateZ(r + 0.05 * Math.sin(i * 3 + fl)), r > 0 ? boardM : boardD, m.clone().multiply(new THREE.Matrix4().makeTranslation(ux, uy, 8 / 2 + 0.1)));
+      }
+    };
     let k = 0;
     for (let z = -42; z < 60; z += 9.5) {
-      house(b, 0, z, Math.PI / 2, 8, 8, [7, 8.4, 9.8][k % 3], k * 3 + 1, Math.min(ground(-4, z), ground(4, z)) - 0.4);
-      house(b, 24, z + 3, -Math.PI / 2, 8, 8, [8.4, 7, 9.8][k % 3], k * 5 + 2, Math.min(ground(20, z + 3), ground(28, z + 3)) - 0.4);
+      town(0, z, Math.PI / 2, 8, [7, 8.4, 9.8][k % 3], k * 3 + 1);
+      town(24, z + 3, -Math.PI / 2, 8, [8.4, 7, 9.8][k % 3], k * 5 + 2);
       k++;
     }
-    for (const [x, z, yaw] of [[4, 84, Math.PI], [20, 84, Math.PI], [12, 86, Math.PI]] as const) house(b, x, z, yaw, 7, 7, 8.4, k++ * 7 + 3, ground(x, z) - 0.6);
+    for (const [x, z, yaw] of [[4, 84, Math.PI], [20, 84, Math.PI], [12, 86, Math.PI]] as const) town(x, z, yaw, 8, 8.4, k++ * 7 + 3);
+    bb2.build(this.boards); R.add(this.boards);
     // flag pole on the square (1952)
     b.add(new THREE.CylinderGeometry(0.09, 0.12, 9, 8).translate(0, 4.5, 0), M.pole, new THREE.Matrix4().makeTranslation(12, ground(12, 70) - 0.1, 70));
     // students' flag pole on the west side
@@ -479,9 +498,12 @@ export class World {
       else if (id === 2) this.boom.update((f - BOOM_HOOK) / FPS, BLAST, cl(160, 236));
       else if (id === 9) this.boom.update((f - BOOM) / FPS, BLAST, 0);
       else if (id === 10) this.boom.update((f - BOOM) / FPS, BLAST, cl(1188, 1295));
-      else this.boom.update(-1, BLAST); }
+      else this.boom.update(-1, BLAST);
+      BOMB_DROPS.forEach(([fr], i) => { const p = bombAt(i, fr + BOMB_FALL), at: V3 = [p[0], ground(p[0], p[2]), p[2]];
+        this.bombs[i].update(id === 15 ? (f - fr - BOMB_FALL) / FPS : -1, at, id === 15 ? Math.max(0, (f - fr - BOMB_FALL - 60) / 50) : 0); }); }
     this.intact.visible = !bl; this.blown.visible = bl;
     this.today.visible = id >= 19;
+    this.boards.visible = id <= 16;
     this.cable.visible = id >= 6 && id <= 9 && !bl;
     const press = smooth((f - (PRESS - 4)) / 4);
     this.plunger.position.y = DECK + 1.1 - 0.32 * (id === 8 ? press : id > 8 ? 1 : 0);

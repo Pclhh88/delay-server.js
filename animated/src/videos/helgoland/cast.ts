@@ -6,7 +6,7 @@ import {
 } from "./fx";
 import {
   FPS, V3, TOP, BLAST, ground, SHIP, DECK, BX, SET_Y, ROOM, MX, BOOM_HOOK, BOOM, PRESS, PORES, HOLES, WAVE, PUNCH_SOFT, PUNCH_GLASS, FLAG_UP,
-  boatAt, smooth, clamp01,
+  boatAt, smooth, clamp01, planeAt, bombAt, BOMB_DROPS, BOMB_FALL,
 } from "./story";
 
 const SX = SHIP[0], SZ = SHIP[2];
@@ -149,14 +149,12 @@ export const stage = (id: number, f: number, cam: CamInfo, light: "day" | "golde
     }
     case 15: {
       for (let i = 0; i < 2; i++) {
-        const z = 130 - (f - 1916) * 1.5 - i * 30, pr = q((f * 1.7) % 6.28, 4);
-        fx(out, { key: `plane${pr}`, cw: 640, ch: 300, draw: (p) => fxPlane(p, pr), x: 70 + i * 16, y: 52 + i * 6, z, w: -24, h: 11.2 });
+        const [x, y, z] = planeAt(i, f), pr = q((f * 1.7) % 6.28, 8);
+        fx(out, { key: `plane${pr}`, cw: 640, ch: 300, draw: (p) => fxPlane(p, pr), x, y, z, w: -24, h: 11.2 });
       }
-      ([[1996, [12, -30]], [2018, [0, 0]], [2040, [18, 25]]] as [number, [number, number]][]).forEach(([fr, [x, z]]) => {
+      BOMB_DROPS.forEach(([fr], i) => {
         const d = f - fr;
-        if (d >= 0 && d < 22) fx(out, { key: "bomb", cw: 120, ch: 240, draw: fxBomb, x, y: ground(x, z) + 26 * (1 - (d / 22) ** 2), z, w: 1.8, h: 3.6 });
-        if (d >= 22 && d < 34) { const u = q((d - 22) / 12, 12); fx(out, { key: `burstB${u}`, cw: 500, ch: 500, draw: (p) => fxBurst(p, u, "#ffd27a"), x, y: ground(x, z) + 4, z, w: 16, h: 16 }); }
-        if (d >= 26) smoke(out, f, fr + 26, fr + 140, [x, ground(x, z) - 6, z], 2, 14);
+        if (d >= 0 && d < BOMB_FALL) { const [x, y, z] = bombAt(i, f); fx(out, { key: "bomb", cw: 120, ch: 240, draw: fxBomb, x, y, z, w: 1.8, h: 3.6, rot: 0.25 - 0.5 * (d / BOMB_FALL) }); }
       });
       break;
     }
@@ -203,7 +201,7 @@ export const stage = (id: number, f: number, cam: CamInfo, light: "day" | "golde
     case 19: {
       if (f < 2643) {
         for (let i = 0; i < 12; i++) {
-          const sp = 0.6 + 0.4 * hh(i), x = 9 + 6 * hh(i, 2), z = -36 + ((((32 * hh(i, 3) + (i % 2 ? 1 : -1) * sp * (t - 84)) % 32) + 32) % 32);
+          const sp = 0.6 + 0.4 * hh(i), x = 9 + 6 * hh(i, 2), z = (i % 2 ? -34 : -27) + 24 * hh(i, 3) + (i % 2 ? 1 : -1) * sp * (t - 84);
           out.places.push(person(cam, who(100 + i, tourist(i), `tu${i}`), x, ground(x, z), z, { side: false, mirror: false },
             { mode: "stroll", phase: q(((t * sp * 1.4 + hh(i, 5)) % 1), 60), expr: (["smile", "grin", "smile_closed", "laugh"] as Expr[])[i % 4], prop: i % 3 === 2 ? null : "bag", blink: lidAt(t, 100 + i), look: i % 3 - 1 }, {}));
           blob(out, x, ground(x, z), z);

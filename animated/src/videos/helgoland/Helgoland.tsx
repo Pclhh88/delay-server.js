@@ -49,8 +49,13 @@ if (PROF) {
 
 const useKit = () => {
   const [kit, setKit] = useState<Kit | null>(null);
-  const [handle] = useState(() => delayRender("helgoland kit"));
-  useEffect(() => { loadKit().then((k) => { setKit(k); continueRender(handle); }); }, [handle]);
+  // the hold is created and always released inside the effect (also on unmount), so a remount can never leave it dangling
+  useEffect(() => {
+    const h = delayRender("helgoland kit");
+    let alive = true;
+    loadKit().then((k) => { if (alive) setKit(k); continueRender(h); });
+    return () => { alive = false; continueRender(h); };
+  }, []);
   return kit;
 };
 
