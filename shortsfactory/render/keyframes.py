@@ -41,6 +41,8 @@ def ease(name, p):
 
 
 def _lerp(a, b, p):
+    if a is None or b is None or isinstance(a, str) or isinstance(b, str):
+        return a if p < 1.0 else b  # non-numeric values switch at the key
     if isinstance(a, (list, tuple)):
         return [x + (y - x) * p for x, y in zip(a, b)]
     return a + (b - a) * p

@@ -1,0 +1,344 @@
+{
+ "meta": {
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "duration": 6.0
+ },
+ "assets": {},
+ "layers": [
+  {
+   "id": "camera",
+   "type": "group",
+   "pivot": [
+    540,
+    1195.75
+   ],
+   "keys": [
+    {
+     "t": 0.0,
+     "scale": 1.0,
+     "x": 540,
+     "y": 1195.75
+    },
+    {
+     "t": 3.72,
+     "scale": 1.0,
+     "x": 540,
+     "y": 1195.75
+    },
+    {
+     "t": 3.79,
+     "scale": 1.32,
+     "x": 540,
+     "y": 1195.75
+    },
+    {
+     "t": 5.2,
+     "scale": 1.32,
+     "x": 540,
+     "y": 1195.75
+    },
+    {
+     "t": 5.27,
+     "scale": 1.0,
+     "x": 540,
+     "y": 1195.75
+    }
+   ],
+   "children": [
+    {
+     "id": "street",
+     "type": "scene_street",
+     "ground": 1880,
+     "keys": [
+      {
+       "t": 0.0,
+       "pan": 0.0
+      },
+      {
+       "t": 2.0,
+       "pan": 260.0,
+       "ease": "out"
+      }
+     ]
+    },
+    {
+     "id": "voigt",
+     "type": "stickman",
+     "character": "characters/voigt_zivil.json",
+     "auto": {
+      "blink": true,
+      "breathe": true,
+      "talk": [
+       [
+        3.75,
+        5.1
+       ]
+      ],
+      "seed": 3
+     },
+     "keys": [
+      {
+       "t": 0.0,
+       "x": -160,
+       "y": 1880,
+       "scale": 0.85,
+       "walk": 1.0,
+       "facing": 1,
+       "look": 0.55,
+       "expression": "grim",
+       "arm_r": 9,
+       "elbow_r": 4,
+       "arm_l": 9,
+       "lean": 3,
+       "head_rot": 0,
+       "handshape_r": "open",
+       "thought": 0.0
+      },
+      {
+       "t": 1.85,
+       "walk": 1.0
+      },
+      {
+       "t": 2.0,
+       "x": 540,
+       "ease": "out"
+      },
+      {
+       "t": 2.0,
+       "look": 0.55
+      },
+      {
+       "t": 2.1,
+       "facing": 0
+      },
+      {
+       "t": 2.15,
+       "walk": 0.0,
+       "lean": 0,
+       "ease": "out"
+      },
+      {
+       "t": 2.25,
+       "look": 0.0,
+       "ease": "out"
+      },
+      {
+       "t": 2.35,
+       "arm_r": 9,
+       "elbow_r": 4,
+       "expression": "grim",
+       "head_rot": 0,
+       "thought": 0.0
+      },
+      {
+       "t": 2.5,
+       "thought": 0.0
+      },
+      {
+       "t": 2.65,
+       "arm_r": -67.72710708134176,
+       "elbow_r": 216.69076869750222,
+       "head_rot": -7,
+       "ease": "back_out"
+      },
+      {
+       "t": 2.75,
+       "thought": 1.0,
+       "ease": "back_out"
+      },
+      {
+       "t": 3.05,
+       "expression": "sly",
+       "look": 0.0
+      },
+      {
+       "t": 3.35,
+       "look": 0.35,
+       "ease": "inout"
+      },
+      {
+       "t": 3.55,
+       "thought": 1.0
+      },
+      {
+       "t": 3.6,
+       "arm_r": -67.72710708134176,
+       "elbow_r": 216.69076869750222,
+       "head_rot": -7,
+       "lean": 0
+      },
+      {
+       "t": 3.68,
+       "thought": 0.0,
+       "ease": "in"
+      },
+      {
+       "t": 3.7,
+       "expression": "angry",
+       "handshape_r": "point"
+      },
+      {
+       "t": 3.72,
+       "arm_r": 84,
+       "elbow_r": 2,
+       "head_rot": 5,
+       "lean": -4,
+       "look": 0.45,
+       "ease": "out3"
+      },
+      {
+       "t": 5.0,
+       "head_rot": 5
+      },
+      {
+       "t": 5.15,
+       "expression": "angry"
+      },
+      {
+       "t": 5.25,
+       "head_rot": 0,
+       "lean": 0,
+       "ease": "inout"
+      },
+      {
+       "t": 5.3,
+       "expression": "sly"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "captions": {
+  "style": {
+   "font": "league-spartan-700",
+   "size": 64,
+   "sizes": {
+    "big": 96
+   },
+   "y": 961,
+   "fill": [
+    255,
+    255,
+    255
+   ],
+   "stroke": [
+    25,
+    25,
+    25
+   ],
+   "stroke_w": 2.25,
+   "shadow": {
+    "dx": 2.5,
+    "dy": 3.5,
+    "blur": 1.5,
+    "color": [
+     0,
+     0,
+     0
+    ],
+    "alpha": 0.8
+   },
+   "uppercase": true
+  },
+  "words": [
+   {
+    "text": "WILHELM",
+    "start": 0.25,
+    "end": 0.7
+   },
+   {
+    "text": "VOIGT.",
+    "start": 0.7,
+    "end": 1.2
+   },
+   {
+    "text": "SCHUSTER.",
+    "start": 1.3,
+    "end": 1.8
+   },
+   {
+    "text": "PLEITE.",
+    "start": 1.85,
+    "end": 2.3,
+    "size": "big"
+   },
+   {
+    "text": "UND",
+    "start": 2.45,
+    "end": 2.62
+   },
+   {
+    "text": "DANN",
+    "start": 2.62,
+    "end": 2.85
+   },
+   {
+    "text": "HAT",
+    "start": 2.85,
+    "end": 3.0
+   },
+   {
+    "text": "ER",
+    "start": 3.0,
+    "end": 3.12
+   },
+   {
+    "text": "'NE",
+    "start": 3.12,
+    "end": 3.3
+   },
+   {
+    "text": "IDEE.",
+    "start": 3.3,
+    "end": 3.62,
+    "size": "big"
+   },
+   {
+    "text": "IHR",
+    "start": 3.75,
+    "end": 4.0
+   },
+   {
+    "text": "KOMMT",
+    "start": 4.0,
+    "end": 4.3
+   },
+   {
+    "text": "JETZT",
+    "start": 4.3,
+    "end": 4.62
+   },
+   {
+    "text": "MIT!",
+    "start": 4.62,
+    "end": 5.15,
+    "size": "big"
+   }
+  ]
+ },
+ "audio": [
+  {
+   "src": "@sfx/swoosh",
+   "start": 0.0,
+   "gain_db": -16
+  },
+  {
+   "src": "@sfx/pop",
+   "start": 2.55,
+   "gain_db": -8
+  },
+  {
+   "src": "@sfx/swoosh",
+   "start": 3.62,
+   "gain_db": -10
+  },
+  {
+   "src": "@sfx/impact_low",
+   "start": 3.72,
+   "gain_db": -6
+  }
+ ]
+}

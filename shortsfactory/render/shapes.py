@@ -199,6 +199,17 @@ DRAWERS = {
 }
 
 
+def _stickman_drawers():
+    try:
+        from ..stickman import layer as sm
+    except ImportError:  # skia-python not installed
+        return {}
+    return {"stickman": sm.stickman, "scene_street": sm.scene_street}
+
+
+DRAWERS.update(_stickman_drawers())
+
+
 def draw(typ, layer, p, t, M, r):
     if typ not in DRAWERS:
         raise ValueError(f"unknown layer type {typ}")

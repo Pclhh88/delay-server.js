@@ -1,0 +1,11 @@
+{
+  "name": "Wilhelm Voigt (Zivil – Schuster)",
+  "source": "characters/voigt_zivil_sheet.png (Charakterblatt vom Nutzer)",
+  "outline": [20, 16, 14], "outline_w": 8.0,
+  "skin": [250, 238, 222],
+  "cap": [150, 117, 90], "cap_shade": [128, 98, 74],
+  "mustache": [137, 104, 78],
+  "jacket": [149, 115, 89], "jacket_shade": [128, 97, 74],
+  "shirt": [234, 213, 190], "shorts": [74, 71, 70], "boots": [125, 94, 73],
+  "headwear": "flatcap", "buttons": 4
+}
