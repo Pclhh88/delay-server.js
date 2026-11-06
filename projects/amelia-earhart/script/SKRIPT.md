@@ -1,6 +1,6 @@
 Amelia Earhart. Die berühmteste Pilotin der Welt. Einer ihrer letzten Funksprüche: „Wir müssten über euch sein, aber wir sehen euch nicht. Das Benzin wird knapp."
 
-1937, auf ihrem Flug um die Welt. Ihr Ziel: Howland Island. Eine winzige Insel, flach wie ein Pfannkuchen, mitten im Pazifik. Ohne GPS. Nur Kompass, Uhr und ein Sextant für die Sterne.
+1937, auf ihrem Flug um die Welt. Ihr Ziel: Howland Island. Eine winzige Insel, flach wie ein Pfannkuchen, mitten im Pazifik. Ohne Navi. Nur Kompass, Uhr und ein Sextant für die Sterne.
 
 Ein Schiff funkt ihr den Weg. Doch Amelia hört es nicht. Dann bricht der Funk ab.
 
