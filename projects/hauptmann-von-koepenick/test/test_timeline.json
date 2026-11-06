@@ -3,7 +3,7 @@
   "fps": 30,
   "width": 1080,
   "height": 1920,
-  "duration": 6.0
+  "duration": 5.0
  },
  "assets": {},
  "layers": [
@@ -22,25 +22,25 @@
      "y": 1195.75
     },
     {
-     "t": 3.72,
+     "t": 3.162,
      "scale": 1.0,
      "x": 540,
      "y": 1195.75
     },
     {
-     "t": 3.79,
+     "t": 3.221,
      "scale": 1.32,
      "x": 540,
      "y": 1195.75
     },
     {
-     "t": 5.2,
+     "t": 4.42,
      "scale": 1.32,
      "x": 540,
      "y": 1195.75
     },
     {
-     "t": 5.27,
+     "t": 4.479,
      "scale": 1.0,
      "x": 540,
      "y": 1195.75
@@ -57,7 +57,7 @@
        "pan": 0.0
       },
       {
-       "t": 2.0,
+       "t": 1.7,
        "pan": 260.0,
        "ease": "out"
       }
@@ -72,8 +72,8 @@
       "breathe": true,
       "talk": [
        [
-        3.75,
-        5.1
+        3.1875,
+        4.335
        ]
       ],
       "seed": 3
@@ -94,38 +94,39 @@
        "lean": 3,
        "head_rot": 0,
        "handshape_r": "open",
-       "thought": 0.0
+       "thought": 0.0,
+       "walk_rate": 1.0588235294117647
       },
       {
-       "t": 1.85,
+       "t": 1.573,
        "walk": 1.0
       },
       {
-       "t": 2.0,
+       "t": 1.7,
        "x": 540,
        "ease": "out"
       },
       {
-       "t": 2.0,
+       "t": 1.7,
        "look": 0.55
       },
       {
-       "t": 2.1,
+       "t": 1.785,
        "facing": 0
       },
       {
-       "t": 2.15,
+       "t": 1.827,
        "walk": 0.0,
        "lean": 0,
        "ease": "out"
       },
       {
-       "t": 2.25,
+       "t": 1.912,
        "look": 0.0,
        "ease": "out"
       },
       {
-       "t": 2.35,
+       "t": 1.998,
        "arm_r": 9,
        "elbow_r": 4,
        "expression": "grim",
@@ -133,54 +134,54 @@
        "thought": 0.0
       },
       {
-       "t": 2.5,
+       "t": 2.125,
        "thought": 0.0
       },
       {
-       "t": 2.65,
+       "t": 2.252,
        "arm_r": -67.72710708134176,
        "elbow_r": 216.69076869750222,
        "head_rot": -7,
        "ease": "back_out"
       },
       {
-       "t": 2.75,
+       "t": 2.337,
        "thought": 1.0,
        "ease": "back_out"
       },
       {
-       "t": 3.05,
+       "t": 2.592,
        "expression": "sly",
        "look": 0.0
       },
       {
-       "t": 3.35,
+       "t": 2.848,
        "look": 0.35,
        "ease": "inout"
       },
       {
-       "t": 3.55,
+       "t": 3.017,
        "thought": 1.0
       },
       {
-       "t": 3.6,
+       "t": 3.06,
        "arm_r": -67.72710708134176,
        "elbow_r": 216.69076869750222,
        "head_rot": -7,
        "lean": 0
       },
       {
-       "t": 3.68,
+       "t": 3.128,
        "thought": 0.0,
        "ease": "in"
       },
       {
-       "t": 3.7,
+       "t": 3.145,
        "expression": "angry",
        "handshape_r": "point"
       },
       {
-       "t": 3.72,
+       "t": 3.162,
        "arm_r": 84,
        "elbow_r": 2,
        "head_rot": 5,
@@ -189,21 +190,21 @@
        "ease": "out3"
       },
       {
-       "t": 5.0,
+       "t": 4.25,
        "head_rot": 5
       },
       {
-       "t": 5.15,
+       "t": 4.378,
        "expression": "angry"
       },
       {
-       "t": 5.25,
+       "t": 4.462,
        "head_rot": 0,
        "lean": 0,
        "ease": "inout"
       },
       {
-       "t": 5.3,
+       "t": 4.505,
        "expression": "sly"
       }
      ]
@@ -246,75 +247,75 @@
   "words": [
    {
     "text": "WILHELM",
-    "start": 0.25,
-    "end": 0.7
+    "start": 0.212,
+    "end": 0.595
    },
    {
     "text": "VOIGT.",
-    "start": 0.7,
-    "end": 1.2
+    "start": 0.595,
+    "end": 1.02
    },
    {
     "text": "SCHUSTER.",
-    "start": 1.3,
-    "end": 1.8
+    "start": 1.105,
+    "end": 1.53
    },
    {
     "text": "PLEITE.",
-    "start": 1.85,
-    "end": 2.3,
+    "start": 1.573,
+    "end": 1.955,
     "size": "big"
    },
    {
     "text": "UND",
-    "start": 2.45,
-    "end": 2.62
+    "start": 2.083,
+    "end": 2.227
    },
    {
     "text": "DANN",
-    "start": 2.62,
-    "end": 2.85
+    "start": 2.227,
+    "end": 2.422
    },
    {
     "text": "HAT",
-    "start": 2.85,
-    "end": 3.0
+    "start": 2.422,
+    "end": 2.55
    },
    {
     "text": "ER",
-    "start": 3.0,
-    "end": 3.12
+    "start": 2.55,
+    "end": 2.652
    },
    {
     "text": "'NE",
-    "start": 3.12,
-    "end": 3.3
+    "start": 2.652,
+    "end": 2.805
    },
    {
     "text": "IDEE.",
-    "start": 3.3,
-    "end": 3.62,
+    "start": 2.805,
+    "end": 3.077,
     "size": "big"
    },
    {
     "text": "IHR",
-    "start": 3.75,
-    "end": 4.0
+    "start": 3.188,
+    "end": 3.4
    },
    {
     "text": "KOMMT",
-    "start": 4.0,
-    "end": 4.3
+    "start": 3.4,
+    "end": 3.655
    },
    {
     "text": "JETZT",
-    "start": 4.3,
-    "end": 4.62
+    "start": 3.655,
+    "end": 3.927
    },
    {
     "text": "MIT!",
-    "start": 4.62,
-    "end": 5.15,
+    "start": 3.927,
+    "end": 4.378,
     "size": "big"
    }
   ]
@@ -327,17 +328,17 @@
   },
   {
    "src": "@sfx/pop",
-   "start": 2.55,
+   "start": 2.167,
    "gain_db": -8
   },
   {
    "src": "@sfx/swoosh",
-   "start": 3.62,
+   "start": 3.077,
    "gain_db": -10
   },
   {
    "src": "@sfx/impact_low",
-   "start": 3.72,
+   "start": 3.162,
    "gain_db": -6
   }
  ]

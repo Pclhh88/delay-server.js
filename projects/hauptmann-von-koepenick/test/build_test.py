@@ -1,4 +1,4 @@
-"""Stickman-Test (≈6 s, 9:16): Voigt läuft ins Bild, hat eine Idee, zeigt: „Ihr kommt jetzt mit!"
+"""Stickman-Test (5 s, 9:16): Voigt läuft ins Bild, hat eine Idee, zeigt: „Ihr kommt jetzt mit!"
 
 python3 projects/hauptmann-von-koepenick/test/build_test.py
 python3 -m shortsfactory.audio.mix projects/hauptmann-von-koepenick/test/test_timeline.json /tmp/mix.wav
@@ -82,7 +82,7 @@ words = [  # (text, start, end, size)
 ]
 
 tl = {
-    "meta": {"fps": 30, "width": 1080, "height": 1920, "duration": 6.0},
+    "meta": {"fps": 30, "width": 1080, "height": 1920, "duration": 5.0},
     "assets": {},
     "layers": [
         {"id": "camera", "type": "group", "pivot": list(HEAD),
@@ -105,6 +105,24 @@ tl = {
         {"src": "@sfx/impact_low", "start": 3.72, "gain_db": -6},
     ],
 }
+
+# Zeitachse auf 5 s stauchen (Handlung endet bei 5,3 s * 0,85 = 4,5 s, danach kurz stehen)
+K = 0.85
+for k in voigt_keys + camera:
+    k["t"] = round(k["t"] * K, 3)
+for k in tl["layers"][0]["keys"]:
+    k["t"] = round(k["t"] * K, 3)
+for k in tl["layers"][0]["children"][0]["keys"]:
+    k["t"] = round(k["t"] * K, 3)
+vo = tl["layers"][0]["children"][1]
+vo["auto"]["talk"] = [[a * K, b * K] for a, b in vo["auto"]["talk"]]
+for k in vo["keys"]:
+    if "walk" in k and k["t"] == 0:
+        k["walk_rate"] = 0.9 / K
+for w in tl["captions"]["words"]:
+    w["start"], w["end"] = round(w["start"] * K, 3), round(w["end"] * K, 3)
+for a in tl["audio"]:
+    a["start"] = round(a["start"] * K, 3)
 
 # keys must be time-sorted for the interpolator
 tl["layers"][0]["children"][1]["keys"].sort(key=lambda k: k["t"])
