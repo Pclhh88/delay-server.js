@@ -29,6 +29,17 @@ def w(text, after=0.0, which="start"):
     raise KeyError(text)
 
 
+def rec(name, t, gain=-8.0, trim=None, fade=None, peak=0.0):
+    """Recorded effect from audio/sfx_prepared (ElevenLabs). `peak` = time of the
+    loudest moment inside the (trimmed) sound, placed exactly on t."""
+    a = {"src": f"audio/sfx_prepared/{name}.wav", "start": round(t - peak, 3), "gain_db": gain}
+    if trim:
+        a["trim"] = trim
+    if fade:
+        a["fade_out"] = fade
+    audio.append(a)
+
+
 def sfx(name, t, gain=-10.0):
     audio.append({"src": f"@sfx/{name}", "start": round(t, 3), "gain_db": gain})
 
@@ -185,13 +196,13 @@ layers.append(image("burst", "burst_orange", T_BERUEHMT, T_S1_OUT + 0.4, fix_key
     {"t": T_BERUEHMT + 0.3, "scale": burst_s * 1.05, "ease": "back_out"},
     {"t": T_S1_OUT, "scale": burst_s * 1.12, "rot": 8},
     {"t": T_S1_OUT + 0.3, "scale": 0.0, "ease": "in"}]), jitter=False))
-sfx("pop", T_BERUEHMT, -12)
+rec("map_whoosh", T_BERUEHMT, -14, peak=0.38)
 
 ns = scale_for("newspaper", 430)
 layers.append(image("newspaper", "newspaper", T_DIE, T_S1_OUT + 0.4, fix_keys(
     slide_in(T_DIE, -400, 1500, 230, 1330, ns, -25, 8) +
     [{"t": T_S1_OUT, "x": 230, "y": 1330}, exit_to(T_S1_OUT, -500, 1450, 0.3, rot=-10)])))
-sfx("swoosh", T_DIE - 0.1, -12)
+rec("paper_slide", T_DIE + 0.2, -6, peak=0.42)
 
 ps = scale_for("st_portrait", 700)
 portrait_keys = pop_in(T_AMELIA, 540, 1000, ps, rot=-2, dur=0.32) + [
@@ -201,7 +212,7 @@ portrait_keys = pop_in(T_AMELIA, 540, 1000, ps, rot=-2, dur=0.32) + [
     exit_to(T_1937 - 0.25, -400, 400, 0.3, rot=-20),
 ]
 layers.append(image("portrait", "st_portrait", 0, T_1937 + 0.2, fix_keys(portrait_keys)))
-sfx("paper_slap", T_AMELIA, -6)
+rec("paper_drop", T_AMELIA + 0.1, -3)
 
 for i, (lid, t, x, y, rot) in enumerate([("lbl_amelia", T_AMELIA + 0.05, 330, 330, -3),
                                           ("lbl_earhart", T_EARHART, 740, 360, 2)]):
@@ -209,7 +220,7 @@ for i, (lid, t, x, y, rot) in enumerate([("lbl_amelia", T_AMELIA + 0.05, 330, 33
     keys = pop_in(t, x, y, s, rot=rot, dur=0.26) + [
         {"t": T_S1_OUT, "x": x, "y": y}, exit_to(T_S1_OUT, x, -300, 0.3)]
     layers.append(image(lid, lid, t, T_S1_OUT + 0.35, fix_keys(keys)))
-    sfx("pop", t, -9)
+    rec("cardboard_hit", t + 0.08, -9 - 2 * i)
 
 # plane crossing on "Pilotin" with an orange dashed trail
 es = scale_for("st_electra", 560)
@@ -223,7 +234,7 @@ layers.append({"id": "trail1", "type": "dashed_path", "start": T_PL0, "end": T_E
 layers.append(image("electra1", "st_electra", T_PL0, T_PL1, [
     {"t": T_PL0, "x": p0[0], "y": p0[1], "scale": es, "rot": ang},
     {"t": T_PL1, "x": p1[0], "y": p1[1]}]))
-sfx("engine_pass", T_PL0 + 0.1, -13)
+rec("plane_flyby", T_PILOTIN + 0.7, -7, trim=[1.6, 5.4], fade=0.6, peak=3.59 - 1.6)
 
 # ---------------------------------------------------------------- scene 2: radio + quote
 T_RADIO = T_EINER
@@ -238,7 +249,7 @@ radio_keys = pop_in(T_RADIO, 600, 1060, rs, rot=3, dur=0.3) + [
     exit_to(T_S2_OUT, 1500, 1200, 0.3, rot=25),
 ]
 layers.append(image("radio", "st_radio", T_RADIO, T_S2_OUT + 0.35, fix_keys(radio_keys)))
-sfx("paper_slap", T_RADIO, -7)
+rec("paper_drop", T_RADIO + 0.1, -4)
 sfx("morse_beeps", T_RADIO + 0.35, -22)
 
 # radio waves: arcs growing from the radio's top-right, stop on "nicht"
@@ -268,11 +279,12 @@ for k, wd in enumerate(qwords, 1):
     s0 = wd["start"]
     e0 = qwords[k]["start"] if k < qn else T_S2_OUT + 0.35
     layers.append(image(f"strip_{k:02d}", f"quote_{k:02d}", s0, e0, strip_keys))
-    sfx("type_click", s0, -9)
-sfx("swoosh", T_STRIP, -13)
+    rec("typewriter_key", s0, -5)
+rec("paper_slide", T_STRIP + 0.15, -8, peak=0.42)
+rec("typewriter_bell", T_KNAPP + 0.3, -13)
 
 # ---------------------------------------------------------------- scene 3: 1937 world flight
-sfx("swoosh_down", T_S2_OUT, -10)
+rec("paper_tear", T_S2_OUT, -9)
 layers.append({"id": "dim", "type": "solid", "start": T_1937 - 0.3, "end": T_ZOOM + 0.4,
                "color": [20, 24, 22], "keys": [{"t": T_1937 - 0.3, "opacity": 0.0},
                                                {"t": T_1937, "opacity": 0.28},
@@ -282,8 +294,8 @@ ls = scale_for("lbl_1937", 470)
 layers.append(image("lbl_1937", "lbl_1937", T_1937, T_ZOOM + 0.35, fix_keys(
     pop_in(T_1937, 540, 560, ls, rot=-4, dur=0.3) + [
         {"t": T_ZOOM, "x": 540, "y": 560}, exit_to(T_ZOOM, 540, -300, 0.3)])))
-sfx("paper_slap", T_1937, -6)
-sfx("impact_low", T_1937, -14)
+rec("cardboard_hit", T_1937 + 0.08, -5)
+rec("suspense_hit", T_1937 + 0.05, -10)
 
 wc = META["world_card"]
 cds = 1060 / wc["w"]
@@ -335,17 +347,18 @@ layers.append({
         {"id": "electra2", "type": "image", "asset": "st_electra", "start": T_R0 - 0.1,
          "anchor": META["st_electra"]["anchor"], "keys": plane_keys},
     ]})
-sfx("paper_slap", T_CARD + 0.3, -9)
-sfx("engine_pass", T_R0, -15)
+rec("paper_drop", T_CARD + 0.35, -6)
+rec("pen_scribble", T_R0, -11, trim=[0.0, T_R1 - T_R0 + 0.2], fade=0.3)
+rec("plane_distant", T_R0, -17, trim=[0.0, T_R1 - T_R0 + 0.5], fade=0.5)
 
 # ---------------------------------------------------------------- scene 4: Howland zoom
-sfx("swoosh_down", T_ZOOM, -11)
-sfx("swoosh", T_ZOOM + 0.25, -14)
-sfx("pop", T_ZIEL + 0.05, -10)
+rec("map_whoosh", T_ZOOM + 0.5, -4, peak=0.38)
+rec("ocean_wind", T_ZOOM, -22, trim=[0.0, 12.0], fade=1.0)
+rec("cardboard_hit", T_ZIEL + 0.08, -16)
 hs = scale_for("lbl_howland", 640)
 layers.append(image("lbl_howland", "lbl_howland", T_HOWLAND, TEST_END + 5,
                     pop_in(T_HOWLAND, 540, 600, hs, rot=-2, dur=0.28)))
-sfx("pop", T_HOWLAND, -8)
+rec("cardboard_hit", T_HOWLAND + 0.08, -8)
 mg = META["st_magnifier"]
 f_, ox, oy = mg["src_map"]
 lens = mg["lens"]   # glass centre in the sticker (build_assets.glass_window)
@@ -353,7 +366,7 @@ mgs = scale_for("st_magnifier", 620)
 T_MAG = T_HOWLAND + 0.2
 layers.append(image("magnifier", "st_magnifier", T_MAG, TEST_END + 5, fix_keys(
     slide_in(T_MAG, 1300, 1700, 540, 960, mgs, -35, -12, 0.42)), anchor=list(lens)))
-sfx("swoosh", T_MAG, -12)
+rec("paper_slide", T_MAG + 0.2, -8, peak=0.42)
 
 # ---------------------------------------------------------------- page texture on top
 layers.append({"id": "page", "type": "multiply_image", "asset": "page", "keys": []})
