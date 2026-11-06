@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(PROJ)))
 
 from shortsfactory.collage import graphics as g  # noqa: E402
 from shortsfactory.collage.sticker import sticker_file  # noqa: E402
-from shortsfactory.collage.vmap import VintageMap  # noqa: E402
+from shortsfactory.collage.vmap import THEMES, VintageMap  # noqa: E402
 
 CUT = os.path.join(PROJ, "assets", "cutouts")
 OUT = os.path.join(HERE, "assets")
@@ -117,14 +117,15 @@ def main():
 
     # big Pacific map (camera background)
     m = VintageMap(90, 300, 60, -50, ppd=24)
-    img = m.render(labels=MAP_LABELS)
+    img = m.render(labels=MAP_LABELS, theme=THEMES["retro_teal"],
+                   roses=[(205, -20, 5), (152, 28, 3.5), (250, 15, 3)])
     save("map_pacific", img, meta, proj=m.params(), howland=list(m.xy(*HOWLAND)),
          lae=list(m.xy(147.0, -6.7)))
     print("map_pacific", img.shape)
 
     # world card: small landscape map on torn paper with the flown route
     wm = VintageMap(-140, 220, 72, -50, ppd=6)
-    card = wm.render(grid=30, folds=(4, 2), labels=[
+    card = wm.render(grid=30, folds=(4, 2), theme=THEMES["retro_teal"], labels=[
         dict(text="1937", lon=-100, lat=-38, size=6, style="serif", alpha=150)])
     a = g.torn_mask(card.shape[1], card.shape[0], depth=10, seed=4, soft=1.2)
     card[..., 3] = (a * 255).astype(np.uint8)
