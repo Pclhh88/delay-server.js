@@ -2938,39 +2938,44 @@
    "gain_db": 0.0
   },
   {
-   "src": "@sfx/pop",
-   "start": 1.887,
-   "gain_db": -12
+   "src": "audio/sfx_prepared/map_whoosh.wav",
+   "start": 1.507,
+   "gain_db": -14
   },
   {
-   "src": "@sfx/swoosh",
-   "start": 1.58,
-   "gain_db": -12
-  },
-  {
-   "src": "@sfx/paper_slap",
-   "start": 0.09,
+   "src": "audio/sfx_prepared/paper_slide.wav",
+   "start": 1.46,
    "gain_db": -6
   },
   {
-   "src": "@sfx/pop",
-   "start": 0.14,
+   "src": "audio/sfx_prepared/paper_drop.wav",
+   "start": 0.19,
+   "gain_db": -3
+  },
+  {
+   "src": "audio/sfx_prepared/cardboard_hit.wav",
+   "start": 0.22,
    "gain_db": -9
   },
   {
-   "src": "@sfx/pop",
-   "start": 0.879,
-   "gain_db": -9
+   "src": "audio/sfx_prepared/cardboard_hit.wav",
+   "start": 0.959,
+   "gain_db": -11
   },
   {
-   "src": "@sfx/engine_pass",
-   "start": 2.665,
-   "gain_db": -13
+   "src": "audio/sfx_prepared/plane_flyby.wav",
+   "start": 1.425,
+   "gain_db": -7,
+   "trim": [
+    1.6,
+    5.4
+   ],
+   "fade_out": 0.6
   },
   {
-   "src": "@sfx/paper_slap",
-   "start": 4.32,
-   "gain_db": -7
+   "src": "audio/sfx_prepared/paper_drop.wav",
+   "start": 4.42,
+   "gain_db": -4
   },
   {
    "src": "@sfx/morse_beeps",
@@ -2983,129 +2988,154 @@
    "gain_db": -20
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 6.64,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 6.843,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 7.249,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 7.654,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 7.857,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 8.06,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 8.466,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 8.669,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 9.074,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 9.277,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 9.64,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 9.864,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 10.312,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/type_click",
+   "src": "audio/sfx_prepared/typewriter_key.wav",
    "start": 10.536,
-   "gain_db": -9
+   "gain_db": -5
   },
   {
-   "src": "@sfx/swoosh",
-   "start": 6.39,
-   "gain_db": -13
-  },
-  {
-   "src": "@sfx/swoosh_down",
-   "start": 11.16,
-   "gain_db": -10
-  },
-  {
-   "src": "@sfx/paper_slap",
-   "start": 11.41,
-   "gain_db": -6
-  },
-  {
-   "src": "@sfx/impact_low",
-   "start": 11.41,
-   "gain_db": -14
-  },
-  {
-   "src": "@sfx/paper_slap",
-   "start": 11.81,
-   "gain_db": -9
-  },
-  {
-   "src": "@sfx/engine_pass",
-   "start": 11.96,
-   "gain_db": -15
-  },
-  {
-   "src": "@sfx/swoosh_down",
-   "start": 14.87,
-   "gain_db": -11
-  },
-  {
-   "src": "@sfx/swoosh",
-   "start": 15.12,
-   "gain_db": -14
-  },
-  {
-   "src": "@sfx/pop",
-   "start": 15.42,
-   "gain_db": -10
-  },
-  {
-   "src": "@sfx/pop",
-   "start": 15.98,
+   "src": "audio/sfx_prepared/paper_slide.wav",
+   "start": 6.12,
    "gain_db": -8
   },
   {
-   "src": "@sfx/swoosh",
-   "start": 16.18,
-   "gain_db": -12
+   "src": "audio/sfx_prepared/typewriter_bell.wav",
+   "start": 10.836,
+   "gain_db": -13
+  },
+  {
+   "src": "audio/sfx_prepared/paper_tear.wav",
+   "start": 11.16,
+   "gain_db": -9
+  },
+  {
+   "src": "audio/sfx_prepared/cardboard_hit.wav",
+   "start": 11.49,
+   "gain_db": -5
+  },
+  {
+   "src": "audio/sfx_prepared/suspense_hit.wav",
+   "start": 11.46,
+   "gain_db": -10
+  },
+  {
+   "src": "audio/sfx_prepared/paper_drop.wav",
+   "start": 11.86,
+   "gain_db": -6
+  },
+  {
+   "src": "audio/sfx_prepared/pen_scribble.wav",
+   "start": 11.96,
+   "gain_db": -11,
+   "trim": [
+    0.0,
+    2.9099999999999993
+   ],
+   "fade_out": 0.3
+  },
+  {
+   "src": "audio/sfx_prepared/plane_distant.wav",
+   "start": 11.96,
+   "gain_db": -17,
+   "trim": [
+    0.0,
+    3.209999999999999
+   ],
+   "fade_out": 0.5
+  },
+  {
+   "src": "audio/sfx_prepared/map_whoosh.wav",
+   "start": 14.99,
+   "gain_db": -4
+  },
+  {
+   "src": "audio/sfx_prepared/ocean_wind.wav",
+   "start": 14.87,
+   "gain_db": -22,
+   "trim": [
+    0.0,
+    12.0
+   ],
+   "fade_out": 1.0
+  },
+  {
+   "src": "audio/sfx_prepared/cardboard_hit.wav",
+   "start": 15.45,
+   "gain_db": -16
+  },
+  {
+   "src": "audio/sfx_prepared/cardboard_hit.wav",
+   "start": 16.06,
+   "gain_db": -8
+  },
+  {
+   "src": "audio/sfx_prepared/paper_slide.wav",
+   "start": 15.96,
+   "gain_db": -8
   }
  ]
 }
