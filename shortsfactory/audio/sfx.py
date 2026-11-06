@@ -183,7 +183,50 @@ def wasted(dur=1.6):
     return _stereo(_norm(burst * 0.8 + boom * 0.7, 0.9), width=1.0, seed=13)
 
 
+def type_click(dur=0.09, seed=4):
+    """Typewriter key: short bright click + small body thunk."""
+    t = _t(dur)
+    click = _bandpass(_noise(len(t), seed), 1500, 9000) * np.exp(-t / 0.006)
+    body = np.sin(2 * np.pi * 180 * t) * np.exp(-t / 0.025)
+    return _stereo(_norm(click * 0.9 + body * 0.5, 0.7))
+
+
+def paper_slap(dur=0.22, seed=5):
+    """Paper/cardboard landing on a table (for stickers that drop in)."""
+    t = _t(dur)
+    n = _noise(len(t), seed)
+    x = (_lowpass(n, 2500) - _lowpass(n, 300)) * np.exp(-t / 0.035)
+    thump = np.sin(2 * np.pi * 110 * t) * np.exp(-t / 0.04)
+    return _stereo(_norm(x + 0.6 * thump, 0.75), width=0.5, seed=seed)
+
+
+def radio_static(dur=1.2, seed=6):
+    """Old radio: crackly band-limited noise with a faint carrier whine."""
+    t = _t(dur)
+    n = _bandpass(_noise(len(t), seed), 400, 3500)
+    crackle = (np.random.default_rng(seed).random(len(t)) > 0.9985) * _noise(len(t), seed + 1) * 3
+    whine = 0.15 * np.sin(2 * np.pi * 1180 * t + 0.4 * np.sin(2 * np.pi * 3 * t))
+    x = n * (0.6 + 0.4 * np.sin(2 * np.pi * 7 * t) ** 2) + crackle + whine
+    return _stereo(_norm(x * _env(len(t), 0.05, None, 0.2), 0.6), width=0.8, seed=seed)
+
+
+def morse_beeps(dur=1.0):
+    """Short radio beeps (di-di-dah) at 800 Hz."""
+    t = _t(dur)
+    pattern = [(0.0, 0.07), (0.12, 0.07), (0.24, 0.2), (0.55, 0.07), (0.67, 0.2)]
+    gate = np.zeros(len(t))
+    for a, d in pattern:
+        i0, i1 = int(a * SR), int((a + d) * SR)
+        gate[i0:i1] = 1
+    gate = np.convolve(gate, np.ones(80) / 80, mode="same")
+    return _stereo(_norm(np.sin(2 * np.pi * 800 * t) * gate, 0.5))
+
+
 PRESETS = {
+    "type_click": type_click,
+    "paper_slap": paper_slap,
+    "radio_static": radio_static,
+    "morse_beeps": morse_beeps,
     "impact_low": impact_low,
     "swoosh": swoosh,
     "swoosh_down": lambda: swoosh(up=False, seed=7),

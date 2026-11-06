@@ -12,6 +12,7 @@ import math
 import os
 import subprocess
 import sys
+import zlib
 
 import cv2
 import numpy as np
@@ -146,10 +147,27 @@ class Renderer:
         s = p.get("scale", 1.0)
         return translate(x, y) @ rotate(p.get("rot", 0.0)) @ scale(s * p.get("sx", 1.0), s * p.get("sy", 1.0))
 
+    def _jitter(self, layer, p, t):
+        """Stop-motion wobble: a small random offset that changes `fps` times a
+        second (deterministic per layer).  jitter = {"pos": px, "rot": deg, "fps": 12}"""
+        j = layer["jitter"]
+        step = int(t * j.get("fps", 12))
+        seed = (zlib.crc32(layer.get("id", "").encode()) & 0xFFFF) * 7919 + step
+        rng = np.random.default_rng(seed)
+        p = dict(p)
+        if p.get("x") is not None:
+            p["x"] += rng.uniform(-1, 1) * j.get("pos", 2.0)
+        if p.get("y") is not None:
+            p["y"] += rng.uniform(-1, 1) * j.get("pos", 2.0)
+        p["rot"] = p.get("rot", 0.0) + rng.uniform(-1, 1) * j.get("rot", 0.3)
+        return p
+
     def render_layer(self, canvas, layer, t, parent_M, parent_op):
         if t < layer.get("start", -1e9) or t >= layer.get("end", 1e9):
             return
         p = props_at(layer.get("keys", []), t, layer.get("props"))
+        if layer.get("jitter"):
+            p = self._jitter(layer, p, t)
         op = parent_op * p.get("opacity", 1.0)
         if op <= 0.001:
             return
@@ -206,6 +224,16 @@ class Renderer:
                 col = np.array([r, g, b], np.float32) / 255.0
                 warped[..., :3] = warped[..., :3] * (1 - amt) + col * warped[..., 3:4] * amt
             self._composite(canvas, warped, blend, op)
+            return
+        if typ == "multiply_image":
+            # full-frame texture multiplied onto the canvas (paper grain, vignette)
+            a = self.asset(layer["asset"])
+            key = ("_mul", layer["asset"], self.W, self.H)
+            if key not in self.assets:
+                self.assets[key] = cv2.resize(a.levels[0][..., :3], (self.W, self.H),
+                                              interpolation=cv2.INTER_AREA)
+            m = self.assets[key]
+            canvas[:] = canvas * (1 - op + op * m)
             return
         if typ == "grade":
             if canvas.shape[2] == 3:

@@ -186,7 +186,47 @@ def text(r, layer, p, t, M):
     return r.text.draw_text_layer(r, layer, p, M)
 
 
+def dashed_path(r, layer, p, t, M):
+    """Dashed polyline drawn up to `progress` (0..1) of its length.
+    points: design coords in the parent space; width/dash/gap in design units."""
+    pts = np.asarray(layer["points"], np.float64)
+    prog = float(p.get("progress", 1.0))
+    if prog <= 0 or len(pts) < 2:
+        return None
+    seg = np.linalg.norm(np.diff(pts, axis=0), axis=1)
+    cum = np.concatenate([[0], np.cumsum(seg)])
+    total = cum[-1] * min(prog, 1.0)
+    dash, gap = layer.get("dash", 30.0), layer.get("gap", 20.0)
+    Mo = M @ _local(r, layer, p)
+    sc = math.sqrt(abs(np.linalg.det(Mo[:2, :2])))
+    width = max(1.0, layer.get("width", 10.0) * sc)
+
+    def at(d):
+        i = min(np.searchsorted(cum, d, side="right") - 1, len(seg) - 1)
+        f = (d - cum[i]) / seg[i] if seg[i] > 0 else 0
+        return pts[i] + (pts[i + 1] - pts[i]) * f
+
+    ss = 2
+    mask = np.zeros((r.H * ss, r.W * ss), np.uint8)
+    d0 = 0.0
+    lines = []
+    while d0 < total:
+        d1 = min(d0 + dash, total)
+        n = max(2, int((d1 - d0) / 8) + 2)
+        poly = np.array([at(d) for d in np.linspace(d0, d1, n)])
+        lines.append(np.round(_apply(Mo, poly) * ss * 4).astype(np.int32))
+        d0 += dash + gap
+    cv2.polylines(mask, lines, False, 255, int(round(width * ss)), cv2.LINE_AA, shift=2)
+    mask = cv2.resize(mask, (r.W, r.H), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
+    col = np.array(layer.get("color", [232, 112, 58])[:3], np.float32) / 255
+    out = np.empty((r.H, r.W, 4), np.float32)
+    out[..., :3] = col * mask[..., None]
+    out[..., 3] = mask
+    return out
+
+
 DRAWERS = {
+    "dashed_path": dashed_path,
     "stripes_bg": stripes_bg,
     "radial_bg": radial_bg,
     "solid": solid,

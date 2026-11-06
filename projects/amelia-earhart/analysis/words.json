@@ -1,0 +1,672 @@
+[
+ {
+  "text": "Amelia",
+  "start": 0.09,
+  "end": 0.879
+ },
+ {
+  "text": "Earhart.",
+  "start": 0.879,
+  "end": 1.47
+ },
+ {
+  "text": "Die",
+  "start": 1.68,
+  "end": 1.887
+ },
+ {
+  "text": "berühmteste",
+  "start": 1.887,
+  "end": 2.715
+ },
+ {
+  "text": "Pilotin",
+  "start": 2.715,
+  "end": 3.336
+ },
+ {
+  "text": "der",
+  "start": 3.336,
+  "end": 3.543
+ },
+ {
+  "text": "Welt.",
+  "start": 3.543,
+  "end": 3.75
+ },
+ {
+  "text": "Einer",
+  "start": 4.32,
+  "end": 4.709
+ },
+ {
+  "text": "ihrer",
+  "start": 4.709,
+  "end": 5.098
+ },
+ {
+  "text": "letzten",
+  "start": 5.098,
+  "end": 5.487
+ },
+ {
+  "text": "Funksprüche:",
+  "start": 5.487,
+  "end": 6.07
+ },
+ {
+  "text": "„Wir",
+  "start": 6.64,
+  "end": 6.843
+ },
+ {
+  "text": "müssten",
+  "start": 6.843,
+  "end": 7.249
+ },
+ {
+  "text": "über",
+  "start": 7.249,
+  "end": 7.654
+ },
+ {
+  "text": "euch",
+  "start": 7.654,
+  "end": 7.857
+ },
+ {
+  "text": "sein,",
+  "start": 7.857,
+  "end": 8.06
+ },
+ {
+  "text": "aber",
+  "start": 8.06,
+  "end": 8.466
+ },
+ {
+  "text": "wir",
+  "start": 8.466,
+  "end": 8.669
+ },
+ {
+  "text": "sehen",
+  "start": 8.669,
+  "end": 9.074
+ },
+ {
+  "text": "euch",
+  "start": 9.074,
+  "end": 9.277
+ },
+ {
+  "text": "nicht.",
+  "start": 9.277,
+  "end": 9.48
+ },
+ {
+  "text": "Das",
+  "start": 9.64,
+  "end": 9.864
+ },
+ {
+  "text": "Benzin",
+  "start": 9.864,
+  "end": 10.312
+ },
+ {
+  "text": "wird",
+  "start": 10.312,
+  "end": 10.536
+ },
+ {
+  "text": "knapp.\"",
+  "start": 10.536,
+  "end": 10.76
+ },
+ {
+  "text": "1937,",
+  "start": 11.41,
+  "end": 13.18
+ },
+ {
+  "text": "auf",
+  "start": 13.29,
+  "end": 13.494
+ },
+ {
+  "text": "ihrem",
+  "start": 13.494,
+  "end": 13.903
+ },
+ {
+  "text": "Flug",
+  "start": 13.903,
+  "end": 14.107
+ },
+ {
+  "text": "um",
+  "start": 14.107,
+  "end": 14.311
+ },
+ {
+  "text": "die",
+  "start": 14.311,
+  "end": 14.516
+ },
+ {
+  "text": "Welt.",
+  "start": 14.516,
+  "end": 14.72
+ },
+ {
+  "text": "Ihr",
+  "start": 15.08,
+  "end": 15.37
+ },
+ {
+  "text": "Ziel:",
+  "start": 15.37,
+  "end": 15.66
+ },
+ {
+  "text": "Howland",
+  "start": 15.98,
+  "end": 16.5
+ },
+ {
+  "text": "Island.",
+  "start": 16.5,
+  "end": 17.02
+ },
+ {
+  "text": "Eine",
+  "start": 17.45,
+  "end": 17.878
+ },
+ {
+  "text": "winzige",
+  "start": 17.878,
+  "end": 18.521
+ },
+ {
+  "text": "Insel,",
+  "start": 18.521,
+  "end": 18.949
+ },
+ {
+  "text": "flach",
+  "start": 18.949,
+  "end": 19.164
+ },
+ {
+  "text": "wie",
+  "start": 19.164,
+  "end": 19.378
+ },
+ {
+  "text": "ein",
+  "start": 19.378,
+  "end": 19.592
+ },
+ {
+  "text": "Pfannkuchen,",
+  "start": 19.592,
+  "end": 20.235
+ },
+ {
+  "text": "mitten",
+  "start": 20.235,
+  "end": 20.663
+ },
+ {
+  "text": "im",
+  "start": 20.663,
+  "end": 20.877
+ },
+ {
+  "text": "Pazifik.",
+  "start": 20.877,
+  "end": 21.52
+ },
+ {
+  "text": "Ohne",
+  "start": 21.84,
+  "end": 22.45
+ },
+ {
+  "text": "GPS.",
+  "start": 22.45,
+  "end": 23.06
+ },
+ {
+  "text": "Nur",
+  "start": 23.44,
+  "end": 23.708
+ },
+ {
+  "text": "Kompass,",
+  "start": 23.708,
+  "end": 24.242
+ },
+ {
+  "text": "Uhr",
+  "start": 24.242,
+  "end": 24.51
+ },
+ {
+  "text": "und",
+  "start": 24.51,
+  "end": 24.778
+ },
+ {
+  "text": "ein",
+  "start": 24.778,
+  "end": 25.045
+ },
+ {
+  "text": "Sextant",
+  "start": 25.045,
+  "end": 25.58
+ },
+ {
+  "text": "für",
+  "start": 25.58,
+  "end": 25.848
+ },
+ {
+  "text": "die",
+  "start": 25.848,
+  "end": 26.115
+ },
+ {
+  "text": "Sterne.",
+  "start": 26.115,
+  "end": 26.65
+ },
+ {
+  "text": "Ein",
+  "start": 26.98,
+  "end": 27.258
+ },
+ {
+  "text": "Schiff",
+  "start": 27.258,
+  "end": 27.537
+ },
+ {
+  "text": "funkt",
+  "start": 27.537,
+  "end": 27.815
+ },
+ {
+  "text": "ihr",
+  "start": 27.815,
+  "end": 28.093
+ },
+ {
+  "text": "den",
+  "start": 28.093,
+  "end": 28.372
+ },
+ {
+  "text": "Weg.",
+  "start": 28.372,
+  "end": 28.65
+ },
+ {
+  "text": "Doch",
+  "start": 29.11,
+  "end": 29.285
+ },
+ {
+  "text": "Amelia",
+  "start": 29.285,
+  "end": 29.985
+ },
+ {
+  "text": "hört",
+  "start": 29.985,
+  "end": 30.16
+ },
+ {
+  "text": "es",
+  "start": 30.16,
+  "end": 30.335
+ },
+ {
+  "text": "nicht.",
+  "start": 30.335,
+  "end": 30.51
+ },
+ {
+  "text": "Dann",
+  "start": 30.86,
+  "end": 31.09
+ },
+ {
+  "text": "bricht",
+  "start": 31.09,
+  "end": 31.32
+ },
+ {
+  "text": "der",
+  "start": 31.32,
+  "end": 31.55
+ },
+ {
+  "text": "Funk",
+  "start": 31.55,
+  "end": 31.78
+ },
+ {
+  "text": "ab.",
+  "start": 31.78,
+  "end": 32.01
+ },
+ {
+  "text": "Die",
+  "start": 32.61,
+  "end": 32.855
+ },
+ {
+  "text": "Navy",
+  "start": 32.855,
+  "end": 33.346
+ },
+ {
+  "text": "sucht",
+  "start": 33.346,
+  "end": 33.591
+ },
+ {
+  "text": "zwei",
+  "start": 33.591,
+  "end": 33.837
+ },
+ {
+  "text": "Wochen,",
+  "start": 33.837,
+  "end": 34.327
+ },
+ {
+  "text": "mit",
+  "start": 34.327,
+  "end": 34.573
+ },
+ {
+  "text": "Flugzeugträger",
+  "start": 34.573,
+  "end": 35.554
+ },
+ {
+  "text": "und",
+  "start": 35.554,
+  "end": 35.799
+ },
+ {
+  "text": "Schlachtschiff.",
+  "start": 35.799,
+  "end": 36.29
+ },
+ {
+  "text": "Kein",
+  "start": 36.72,
+  "end": 37.027
+ },
+ {
+  "text": "Flugzeug.",
+  "start": 37.027,
+  "end": 37.64
+ },
+ {
+  "text": "Kein",
+  "start": 37.9,
+  "end": 38.22
+ },
+ {
+  "text": "Wrack.",
+  "start": 38.22,
+  "end": 38.54
+ },
+ {
+  "text": "Nichts.",
+  "start": 38.93,
+  "end": 39.44
+ },
+ {
+  "text": "Drei",
+  "start": 39.93,
+  "end": 40.127
+ },
+ {
+  "text": "Jahre",
+  "start": 40.127,
+  "end": 40.52
+ },
+ {
+  "text": "später,",
+  "start": 40.52,
+  "end": 40.913
+ },
+ {
+  "text": "auf",
+  "start": 40.913,
+  "end": 41.11
+ },
+ {
+  "text": "einer",
+  "start": 41.23,
+  "end": 41.65
+ },
+ {
+  "text": "einsamen",
+  "start": 41.65,
+  "end": 42.28
+ },
+ {
+  "text": "Insel:",
+  "start": 42.28,
+  "end": 42.7
+ },
+ {
+  "text": "ein",
+  "start": 43.13,
+  "end": 43.37
+ },
+ {
+  "text": "Skelett.",
+  "start": 43.37,
+  "end": 43.85
+ },
+ {
+  "text": "Daneben",
+  "start": 44.28,
+  "end": 44.871
+ },
+ {
+  "text": "ein",
+  "start": 44.871,
+  "end": 45.069
+ },
+ {
+  "text": "Frauenschuh.",
+  "start": 45.069,
+  "end": 45.66
+ },
+ {
+  "text": "Und",
+  "start": 46.12,
+  "end": 46.333
+ },
+ {
+  "text": "eine",
+  "start": 46.333,
+  "end": 46.759
+ },
+ {
+  "text": "leere",
+  "start": 46.759,
+  "end": 47.185
+ },
+ {
+  "text": "Sextanten-Kiste.",
+  "start": 47.185,
+  "end": 48.25
+ },
+ {
+  "text": "Ein",
+  "start": 48.78,
+  "end": 49.066
+ },
+ {
+  "text": "Arzt",
+  "start": 49.066,
+  "end": 49.352
+ },
+ {
+  "text": "sagt:",
+  "start": 49.352,
+  "end": 49.639
+ },
+ {
+  "text": "eindeutig",
+  "start": 49.639,
+  "end": 50.498
+ },
+ {
+  "text": "ein",
+  "start": 50.498,
+  "end": 50.784
+ },
+ {
+  "text": "Mann.",
+  "start": 50.784,
+  "end": 51.07
+ },
+ {
+  "text": "Fall",
+  "start": 51.32,
+  "end": 51.568
+ },
+ {
+  "text": "erledigt.",
+  "start": 51.568,
+  "end": 52.31
+ },
+ {
+  "text": "Bis",
+  "start": 52.83,
+  "end": 53.076
+ },
+ {
+  "text": "2018",
+  "start": 53.076,
+  "end": 54.305
+ },
+ {
+  "text": "ein",
+  "start": 54.305,
+  "end": 54.551
+ },
+ {
+  "text": "Forscher",
+  "start": 54.551,
+  "end": 55.043
+ },
+ {
+  "text": "nachrechnet:",
+  "start": 55.043,
+  "end": 55.78
+ },
+ {
+  "text": "Die",
+  "start": 56.09,
+  "end": 56.28
+ },
+ {
+  "text": "Knochen",
+  "start": 56.28,
+  "end": 56.66
+ },
+ {
+  "text": "passen",
+  "start": 56.66,
+  "end": 57.04
+ },
+ {
+  "text": "erstaunlich",
+  "start": 57.04,
+  "end": 57.61
+ },
+ {
+  "text": "gut",
+  "start": 57.61,
+  "end": 57.8
+ },
+ {
+  "text": "zu",
+  "start": 57.8,
+  "end": 57.99
+ },
+ {
+  "text": "Amelia.",
+  "start": 57.99,
+  "end": 58.75
+ },
+ {
+  "text": "Also",
+  "start": 59.2,
+  "end": 59.588
+ },
+ {
+  "text": "nochmal",
+  "start": 59.588,
+  "end": 59.975
+ },
+ {
+  "text": "untersuchen?",
+  "start": 59.975,
+  "end": 60.75
+ },
+ {
+  "text": "Geht",
+  "start": 61.23,
+  "end": 61.43
+ },
+ {
+  "text": "nicht.",
+  "start": 61.43,
+  "end": 61.63
+ },
+ {
+  "text": "Die",
+  "start": 61.63,
+  "end": 61.83
+ },
+ {
+  "text": "Knochen",
+  "start": 62.03,
+  "end": 62.473
+ },
+ {
+  "text": "sind",
+  "start": 62.473,
+  "end": 62.695
+ },
+ {
+  "text": "verschwunden.",
+  "start": 62.695,
+  "end": 63.36
+ },
+ {
+  "text": "Genau",
+  "start": 63.74,
+  "end": 64.32
+ },
+ {
+  "text": "wie",
+  "start": 64.32,
+  "end": 64.61
+ }
+]
