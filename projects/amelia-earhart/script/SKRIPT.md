@@ -1,16 +1,16 @@
 Amelia Earhart. Die berühmteste Pilotin der Welt. Einer ihrer letzten Funksprüche: „Wir müssten direkt über euch sein, aber wir sehen euch nicht. Das Benzin wird knapp."
 
-Juli 1937. Sie hat drei Viertel ihrer Weltumrundung geschafft. Es fehlt nur noch der Pazifik.
+Juli 1937. Amelia will als erste Frau einmal um die ganze Welt fliegen. Drei Viertel hat sie geschafft. Es fehlt nur noch der Pazifik.
 
-Ihr Ziel: eine Insel, so winzig, dass du sie auf keiner Karte findest. Zweieinhalb Kilometer, mitten im Ozean, ohne GPS.
+Ihr Ziel: Howland Island. Zweieinhalb Kilometer lang, flach wie ein Pfannkuchen, mitten im Ozean. Davor: über 4.000 Kilometer nur Wasser. Kein GPS. Nur Kompass, Uhr und Sterne.
 
-Vor der Insel wartet ein Schiff und funkt ihr den Weg. Das Schiff hört Amelia. Aber Amelia hört das Schiff nicht.
+Vor der Insel wartet ein Schiff der Küstenwache und funkt ihr den Weg. Das Schiff hört Amelia. Aber Amelia hört das Schiff nicht.
 
 Dann bricht der Funk ab.
 
-Die Navy sucht zwei Wochen lang, mit Flugzeugträger und Schlachtschiff. Kein Flugzeug. Kein Wrack. Nichts.
+Die Navy sucht über zwei Wochen, mit Flugzeugträger und Schlachtschiff. Kosten: rund vier Millionen Dollar. Gefunden: kein Flugzeug. Kein Wrack. Nichts.
 
-Drei Jahre später, 650 Kilometer weiter, auf einer einsamen Insel: ein Skelett. Daneben ein Frauenschuh. Und die Kiste von einem Sextanten. Genau mit so einem Ding hat Amelias Navigator navigiert.
+Drei Jahre später, 650 Kilometer weiter südlich, auf einer einsamen Insel: ein Skelett. Daneben ein Frauenschuh. Und die Kiste von einem Sextanten. Mit so einem Gerät haben Navigatoren damals nach den Sternen navigiert.
 
 Ein Arzt untersucht die Knochen und sagt: eindeutig ein Mann. Fall erledigt.
 
