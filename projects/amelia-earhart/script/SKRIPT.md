@@ -1,6 +1,6 @@
-Das hier gehört zu den letzten Worten der berühmtesten Pilotin der Welt: „Wir müssten direkt über euch sein, aber wir sehen euch nicht. Das Benzin wird knapp."
+Amelia Earhart. Die berühmteste Pilotin der Welt. Einer ihrer letzten Funksprüche: „Wir müssten direkt über euch sein, aber wir sehen euch nicht. Das Benzin wird knapp."
 
-Juli 1937. Amelia Earhart hat drei Viertel ihrer Weltumrundung geschafft. Es fehlt nur noch der Pazifik.
+Juli 1937. Sie hat drei Viertel ihrer Weltumrundung geschafft. Es fehlt nur noch der Pazifik.
 
 Ihr Ziel: eine Insel, so winzig, dass du sie auf keiner Karte findest. Zweieinhalb Kilometer, mitten im Ozean, ohne GPS.
 
@@ -16,4 +16,4 @@ Ein Arzt untersucht die Knochen und sagt: eindeutig ein Mann. Fall erledigt.
 
 Bis 2018 ein Forscher die alten Messungen nachrechnet. Ergebnis: Die Knochen passen erstaunlich gut zu Amelia.
 
-Also einfach nochmal untersuchen? Geht nicht. Die Knochen sind verschwunden. Genau wie …
+Also einfach nochmal untersuchen? Geht nicht. Die Knochen sind verschwunden. Genau wie
