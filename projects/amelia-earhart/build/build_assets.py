@@ -185,7 +185,7 @@ def main():
 
     # big map (camera background): once around the world (430° so the 1937 route
     # Oakland -> ... -> Lae -> Howland stays continuous), Pacific in the middle-right
-    m = VintageMap(-155, 300, 60, -50, ppd=24)
+    m = VintageMap(-155, 300, 72, -72, ppd=24)
     img = m.render(labels=MAP_LABELS, theme=THEMES["retro_teal"], folds=(6, 2),
                    roses=[(205, -20, 5), (152, 28, 3.5), (250, 15, 3), (-30, -25, 4), (65, 5, 3.5)])
     save("map_pacific", img, meta, proj=m.params(), howland=list(m.xy(*HOWLAND)),
@@ -216,7 +216,8 @@ def main():
     save("lbl_nikumaroro", g.label("Nikumaroro", "petrol", 100, seed=11), meta)
     save("lbl_2018", g.label("2018", "orange", 190, seed=12), meta)
     save("stamp_mann", g.stamp("MANN", seed=1), meta)
-    save("lbl_25km", g.label("2,5 km", "petrol", 90, seed=13), meta)
+    save("lbl_25km", g.label("2,3 km", "petrol", 90, seed=13), meta)
+    save("lbl_stiller", g.label("Stiller Ozean", "black", 110, seed=15), meta)
     save("lbl_4000km", g.label("4.000 km", "orange", 95, seed=14), meta)
     save("bone1", g.bone(520, seed=1), meta)
     save("bone2", g.bone(380, seed=2), meta)

@@ -272,7 +272,7 @@ for k in range(n_steps + 1):
     plane_route_keys.append({"t": round(t, 3), "x": px_, "y": py_, "rot": ang})
 plane_route_keys[0]["scale"] = scale_for("st_electra", 210)
 
-S_FLY = 0.75
+S_FLY = 0.58
 FOLLOW = []
 for k in range(int((T_LEG1 - T_R0) * 10) + 1):
     t = T_R0 + k / 10
@@ -544,6 +544,11 @@ layers.append(image("pancake", "st_pancake", T_PFANN - 0.25, T_PAZ_END + 0.3, fi
 rec("paper_drop", T_PFANN - 0.15, -6)
 rec("cardboard_hit", T_PFANN + 0.1, -9)
 rec("map_whoosh", T_MITTEN + 0.35, -5, peak=0.38)
+sts = scale_for("lbl_stiller", 640)
+layers.append(image("lbl_stiller", "lbl_stiller", T_MITTEN + 0.45, T_OHNE + 0.1, fix_keys(
+    pop_in(T_MITTEN + 0.45, 540, 700, sts, rot=-3, dur=0.28) + [
+        {"t": T_OHNE - 0.2, "x": 540, "y": 700}, exit_to(T_OHNE - 0.2, 540, -300, 0.3)])))
+rec("cardboard_hit", T_MITTEN + 0.53, -9)
 
 # ---------------------------------------------------------------- scene 6: no GPS, compass, watch, sextant, stars
 phs = scale_for("st_phone", 520)
@@ -662,11 +667,12 @@ layers.append(image("lbl_2wochen", "lbl_2wochen", T_ZWEI, T_KEIN1, fix_keys(
         {"t": T_KEIN1 - 0.35, "x": 540, "y": 330}, exit_to(T_KEIN1 - 0.35, 540, -250, 0.3)])))
 rec("cardboard_hit", T_ZWEI + 0.08, -8)
 lxs = scale_for("st_lexington", 700)
-layers.append(image("lexington", "st_lexington", T_TRAEGER - 0.1, T_S8_OUT + 0.4, fix_keys(
-    slide_in(T_TRAEGER - 0.1, -600, 760, 380, 700, lxs, -4, -3, 0.45) + [
+T_LEX = T_NAVY + 0.35
+layers.append(image("lexington", "st_lexington", T_LEX, T_S8_OUT + 0.4, fix_keys(
+    slide_in(T_LEX, -600, 760, 380, 700, lxs, -4, -3, 0.45) + [
         {"t": T_KEIN1 - 0.3, "x": 420, "y": 700},
         {"t": T_S8_OUT - 0.3, "x": 430, "y": 700}, exit_to(T_S8_OUT - 0.3, -700, 650, 0.3)])))
-rec("paper_slide", T_TRAEGER, -8, peak=0.42)
+rec("paper_slide", T_LEX + 0.1, -8, peak=0.42)
 cos_ = scale_for("st_colorado", 760)
 layers.append(image("colorado", "st_colorado", T_SCHLACHT - 0.1, T_S8_OUT + 0.4, fix_keys(
     slide_in(T_SCHLACHT - 0.1, 1700, 1300, 660, 1260, cos_, 4, 2, 0.45) + [
@@ -676,14 +682,14 @@ rec("ship_horn", T_SCHLACHT + 0.2, -16, trim=[0.0, 2.0], fade=0.6)
 for i, (lid, t, y, rot) in enumerate([("lbl_kein_flugzeug", T_KEIN1, 470, -3),
                                       ("lbl_kein_wrack", T_KEIN2, 1060, 2)]):
     sc = scale_for(lid, 640 if i == 0 else 560)
-    layers.append(image(lid, lid, t, T_S8_OUT + 0.4, fix_keys(
+    layers.append(image(lid, lid, t, T_NICHTS + 0.1, fix_keys(
         pop_in(t, 540, y, sc, rot=rot, dur=0.26) + [
-            {"t": T_S8_OUT - 0.1, "x": 540, "y": y}, exit_to(T_S8_OUT - 0.1, 540, -300 if i == 0 else 2300, 0.3)])))
+            {"t": T_NICHTS - 0.25, "x": 540, "y": y}, exit_to(T_NICHTS - 0.25, -700 if i == 0 else 1800, y, 0.22)])))
     rec("cardboard_hit", t + 0.08, -6)
-nsc = scale_for("lbl_nichts", 700)
+nsc = scale_for("lbl_nichts", 820)
 layers.append(image("lbl_nichts", "lbl_nichts", T_NICHTS, T_DREI + 0.3, fix_keys(
-    pop_in(T_NICHTS, 540, 780, nsc, rot=-2, dur=0.3) + [
-        {"t": T_DREI - 0.15, "x": 540, "y": 780}, exit_to(T_DREI - 0.15, 540, -300, 0.3)])))
+    pop_in(T_NICHTS, 540, 900, nsc, rot=-2, dur=0.3) + [
+        {"t": T_DREI - 0.15, "x": 540, "y": 900}, exit_to(T_DREI - 0.15, 540, -300, 0.3)])))
 layers.append({"id": "flash2", "type": "solid", "start": T_NICHTS - 0.02, "end": T_NICHTS + 0.6,
                "color": [168, 40, 45], "keys": [{"t": T_NICHTS - 0.02, "opacity": 0.0},
                                                {"t": T_NICHTS + 0.12, "opacity": 0.5},
