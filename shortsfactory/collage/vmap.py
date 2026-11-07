@@ -52,10 +52,18 @@ THEMES = {
 
 
 class VintageMap:
-    def __init__(self, lon_min, lon_max, lat_max, lat_min, ppd=20):
+    def __init__(self, lon_min, lon_max, lat_max, lat_min, ppd=20, style_ppd=None, extra_land=()):
+        """style_ppd: size of map ornaments (line widths, water lines, labels…) in
+        pixels per 'style degree' – keep it constant across zoom tiles so a detail
+        map looks like the overview.  extra_land: [[(lon, lat), …], …] extra
+        polygons (e.g. small islands missing from Natural Earth)."""
         self.lon_min, self.lon_max = lon_min, lon_max
         self.lat_max, self.lat_min = lat_max, lat_min
         self.ppd = ppd
+        self.u = style_ppd or ppd
+        # items: ring or (ring, is_hole); holes (lagoons, passages) are drawn after land
+        self.extra_land = [(np.asarray(r[0] if isinstance(r, tuple) else r, np.float64),
+                            bool(r[1]) if isinstance(r, tuple) else False) for r in extra_land]
         self.W = int(round((lon_max - lon_min) * ppd))
         self.H = int(round((lat_max - lat_min) * ppd))
 
@@ -100,10 +108,13 @@ class VintageMap:
             for poly in parts:
                 for ring_i, ring in enumerate(poly):
                     polys.append((ring_i, np.array(ring, np.float64)))
+        polys += [(1 if hole else 0, r) for r, hole in self.extra_land]
         for off in (-360, 0, 360):
             for ring_i, ring in polys:
                 lon = ring[:, 0] + off
-                if lon.max() < self.lon_min - 1 or lon.min() > self.lon_max + 1:
+                if lon.max() < self.lon_min - 0.05 or lon.min() > self.lon_max + 0.05:
+                    continue
+                if ring[:, 1].max() < self.lat_min - 0.05 or ring[:, 1].min() > self.lat_max + 0.05:
                     continue
                 x = (lon - self.lon_min) * self.ppd * ss
                 y = (self.lat_max - ring[:, 1]) * self.ppd * ss
@@ -111,7 +122,7 @@ class VintageMap:
                 cv2.fillPoly(mask, [pts], 0 if ring_i else 255, lineType=cv2.LINE_AA, shift=2)
         return cv2.resize(mask, (self.W, self.H), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
 
-    def render(self, labels=(), seed=3, grid=15, folds=(3, 2), water_lines=True, theme=None, roses=()):
+    def render(self, labels=(), seed=3, grid=15, folds=(3, 2), water_lines=True, theme=None, roses=(), feather=0.0):
         """theme: None (clean teal) or a dict from THEMES (retro looks).
         roses: [(lon, lat, radius_deg)] compass roses with rhumb lines."""
         th = dict(THEMES["clean"])
@@ -125,45 +136,45 @@ class VintageMap:
         img = sea[None, None] * (0.86 + 0.28 * n[..., None])
         # land: paler towards the interior, warm blotches
         dist_in = cv2.distanceTransform((land > 0.5).astype(np.uint8), cv2.DIST_L2, 5)
-        inner = np.clip(dist_in / (3.0 * self.ppd), 0, 1)[..., None]
+        inner = np.clip(dist_in / (3.0 * self.u), 0, 1)[..., None]
         land_col = lnd[None, None] * (0.9 + 0.2 * n[..., None]) * (0.94 + 0.08 * inner)
         img = img * (1 - land[..., None]) + land_col * land[..., None]
         # water lining (offshore ripple lines, classic engraved maps)
         if th.get("coast_wash"):
             # hand-tinted watercolour band along the coast, inside the land
-            band = np.clip(1 - dist_in / (0.55 * self.ppd), 0, 1) * (land > 0.5)
-            band = cv2.GaussianBlur(band.astype(np.float32), (0, 0), self.ppd * 0.12)[..., None]
+            band = np.clip(1 - dist_in / (0.55 * self.u), 0, 1) * (land > 0.5)
+            band = cv2.GaussianBlur(band.astype(np.float32), (0, 0), self.u * 0.12)[..., None]
             wash = np.array(th["coast_wash"], np.float32) / 255
             img = img * (1 - 0.55 * band) + wash * 0.55 * band
         if th.get("sea_hatch"):
             # engraved horizontal hatching on the water
             yy = np.arange(H, dtype=np.float32)[:, None]
-            per = th["sea_hatch"] * self.ppd
-            hatch = np.clip(1 - np.abs(((yy % per) - per / 2)) / max(0.6, self.ppd * 0.03), 0, 1)
+            per = th["sea_hatch"] * self.u
+            hatch = np.clip(1 - np.abs(((yy % per) - per / 2)) / max(0.6, self.u * 0.03), 0, 1)
             img -= (hatch * 0.05 * (1 - land))[..., None]
         if th["stipple"]:
             # engraved relief: dense dots inland, sparse near the coast
             rng = np.random.default_rng(seed + 20)
             dots = (rng.random((H, W)) < th["stipple"] * (0.3 + 0.7 * inner[..., 0]) * (land > 0.5))
-            dots = cv2.GaussianBlur(dots.astype(np.float32), (0, 0), max(0.5, self.ppd / 40))
+            dots = cv2.GaussianBlur(dots.astype(np.float32), (0, 0), max(0.5, self.u / 40))
             img -= np.clip(dots * 2.5, 0, 0.35)[..., None] * (1 - coast[None, None]) * 0.8
         if water_lines:
             dist_out = cv2.distanceTransform((land < 0.5).astype(np.uint8), cv2.DIST_L2, 5)
             n_lines = th["water_lines"]
             for k in range(n_lines):
-                dd = (0.18 + 0.22 * k * (1 + 0.15 * k)) * self.ppd
-                line = np.clip(1 - np.abs(dist_out - dd) / max(1.0, self.ppd * 0.035), 0, 1)
+                dd = (0.18 + 0.22 * k * (1 + 0.15 * k)) * self.u
+                line = np.clip(1 - np.abs(dist_out - dd) / max(1.0, self.u * 0.035), 0, 1)
                 img -= (line * th["water_ink"] * (1 - k / (n_lines + 1)))[..., None]
         # coastline ink
         edge = cv2.morphologyEx((land * 255).astype(np.uint8), cv2.MORPH_GRADIENT, np.ones((3, 3), np.uint8))
-        edge = cv2.GaussianBlur(edge.astype(np.float32) / 255, (0, 0), max(0.6, self.ppd / 30))
+        edge = cv2.GaussianBlur(edge.astype(np.float32) / 255, (0, 0), max(0.6, self.u / 30))
         edge = np.clip(edge * 1.6, 0, 1)[..., None]
         img = img * (1 - edge * 0.8) + coast[None, None] * edge * 0.8
         img = np.clip(img, 0, 1)
         pil = Image.fromarray((img * 255).astype(np.uint8), "RGB").convert("RGBA")
         ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
         d = ImageDraw.Draw(ov)
-        lw = max(1, int(self.ppd / 14))
+        lw = max(1, int(self.u / 14))
         gcol = tuple(th["grid"])
         for lon, lat, rdeg in roses:
             self._rose(d, lon, lat, rdeg, th)
@@ -175,8 +186,8 @@ class VintageMap:
         for lat in range(int(lat0), int(self.lat_min) - 1, -grid):
             y = (self.lat_max - lat) * self.ppd
             if lat == 0:
-                for x0 in range(0, W, int(self.ppd)):
-                    d.line([(x0, y), (x0 + self.ppd * 0.6, y)], fill=(70, 60, 45, 140), width=lw + 1)
+                for x0 in range(0, W, int(self.u)):
+                    d.line([(x0, y), (x0 + self.u * 0.6, y)], fill=(70, 60, 45, 140), width=lw + 1)
             else:
                 d.line([(0, y), (W, y)], fill=gcol, width=lw)
         for lab in labels:
@@ -187,12 +198,12 @@ class VintageMap:
         fx, fy = folds
         for i in range(1, fx):
             x = int(W * i / fx)
-            band = np.exp(-((np.arange(W) - x) / (self.ppd * 0.5)) ** 2)
+            band = np.exp(-((np.arange(W) - x) / (self.u * 0.5)) ** 2)
             img *= (1 - 0.07 * band)[None, :, None]
             img[:, x:x + max(1, lw)] = np.minimum(1, img[:, x:x + max(1, lw)] * 1.12)
         for i in range(1, fy):
             y = int(H * i / fy)
-            band = np.exp(-((np.arange(H) - y) / (self.ppd * 0.5)) ** 2)
+            band = np.exp(-((np.arange(H) - y) / (self.u * 0.5)) ** 2)
             img *= (1 - 0.07 * band)[:, None, None]
             img[y:y + max(1, lw)] = np.minimum(1, img[y:y + max(1, lw)] * 1.12)
         # aged paper: stains + grain + yellowing
@@ -203,9 +214,9 @@ class VintageMap:
             fox = np.zeros((H, W), np.float32)
             for _ in range(int(th["foxing"] * W * H / 1e6)):
                 x, y = rng.integers(0, W), rng.integers(0, H)
-                r = rng.uniform(0.05, 0.5) * self.ppd
+                r = rng.uniform(0.05, 0.5) * self.u
                 cv2.circle(fox, (int(x), int(y)), max(1, int(r)), float(rng.uniform(0.3, 1)), -1, cv2.LINE_AA)
-            fox = cv2.GaussianBlur(fox, (0, 0), max(1, self.ppd / 10))
+            fox = cv2.GaussianBlur(fox, (0, 0), max(1, self.u / 10))
             img = img * (1 - 0.25 * fox[..., None]) + np.array([0.45, 0.3, 0.15]) * 0.25 * fox[..., None]
         if th["sepia"]:
             lum = img @ np.array([0.299, 0.587, 0.114], np.float32)
@@ -217,16 +228,23 @@ class VintageMap:
         grain = np.random.default_rng(seed).normal(0, 0.025, (H, W)).astype(np.float32)
         img += grain[..., None]
         img = np.clip(img, 0, 1)
-        out = np.dstack([(img * 255).astype(np.uint8), np.full((H, W), 255, np.uint8)])
+        alpha = np.full((H, W), 255, np.uint8)
+        if feather > 0:
+            # soft edges so a detail tile blends into the map below it
+            fy = np.clip(np.minimum(np.arange(H), H - 1 - np.arange(H)) / (feather * H), 0, 1)
+            fx = np.clip(np.minimum(np.arange(W), W - 1 - np.arange(W)) / (feather * W), 0, 1)
+            f = np.outer(fy * fy * (3 - 2 * fy), fx * fx * (3 - 2 * fx))
+            alpha = (f * 255).astype(np.uint8)
+        out = np.dstack([(img * 255).astype(np.uint8), alpha])
         return out
 
     def _rose(self, d, lon, lat, rdeg, th):
         """Compass rose with 16 rhumb lines across the whole map (portolan style)."""
         cx, cy = self.xy(lon, lat)
-        r = rdeg * self.ppd
+        r = rdeg * self.u
         ink = tuple(th["coast"]) + (150,)
         L = max(self.W, self.H) * 2
-        lw = max(1, int(self.ppd / 16))
+        lw = max(1, int(self.u / 16))
         for k in range(16):
             a = math.radians(k * 22.5)
             d.line([(cx, cy), (cx + L * math.cos(a), cy + L * math.sin(a))],
@@ -248,7 +266,7 @@ class VintageMap:
 
     def _label(self, d, lab):
         """lab: {"text", "lon", "lat", "size" (deg), "style": serif|serif_italic, "spacing", "color"}"""
-        px = int(lab.get("size", 2.0) * self.ppd)
+        px = int(lab.get("size", 2.0) * self.u)
         f = ImageFont.truetype(font(lab.get("style", "serif_italic")), px)
         txt = lab["text"]
         sp = lab.get("spacing", 0.25) * px

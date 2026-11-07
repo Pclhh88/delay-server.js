@@ -72,8 +72,8 @@ ROUTE_FLOWN = [
     (147.0, -6.7),    # Lae
 ]
 ROUTE_PLANNED = [(147.0, -6.7), (-176.6, 0.8), (-157.9, 21.3), (-122.2, 37.7)]
-HOWLAND = (-176.6, 0.8)
-NIKUMARORO = (-174.5, -4.68)
+HOWLAND = (-176.6168, 0.8047)        # island centroid (OpenStreetMap)
+NIKUMARORO = (-174.5185, -4.6789)    # atoll centroid (OpenStreetMap)
 
 MAP_LABELS = [
     dict(text="STILLER OZEAN", lon=200, lat=14, size=3.2, spacing=0.35),
@@ -82,6 +82,67 @@ MAP_LABELS = [
     dict(text="ASIEN", lon=105, lat=45, size=2.4, style="serif"),
     dict(text="SÜDAMERIKA", lon=297, lat=-15, size=2.0, style="serif"),
     dict(text="Äquator", lon=225, lat=1.2, size=1.1, spacing=0.15),
+]
+
+
+def chaikin(pts, n=3):
+    pts = np.asarray(pts, np.float64)
+    for _ in range(n):
+        q = []
+        for a, b in zip(pts, np.roll(pts, -1, 0)):
+            q += [0.75 * a + 0.25 * b, 0.25 * a + 0.75 * b]
+        pts = np.array(q)
+    return pts
+
+
+def atoll(raw, rim=0.0034, passage=((-174.5405, -4.6655), 0.0017), k=40000):
+    """Atoll from a coarse outline: outer shore = smoothed hull of the OSM points,
+    lagoon = shore offset inwards by the land-rim width, plus one passage to the sea
+    (Nikumaroro: Tatiman Passage on the west side).  Simplified, not survey-exact."""
+    import cv2
+    pts = np.asarray(raw, np.float64)
+    hull = chaikin(cv2.convexHull(pts.astype(np.float32)).reshape(-1, 2).astype(np.float64), 3)
+    lon0, lat1 = hull[:, 0].min() - 0.01, hull[:, 1].max() + 0.01
+    W = int((hull[:, 0].max() + 0.01 - lon0) * k)
+    H = int((lat1 - hull[:, 1].min() + 0.01) * k)
+    m = np.zeros((H, W), np.uint8)
+    cv2.fillPoly(m, [np.round(np.c_[(hull[:, 0] - lon0) * k, (lat1 - hull[:, 1]) * k]).astype(np.int32)], 255)
+    r = int(rim * k)
+    lag = cv2.erode(m, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * r + 1, 2 * r + 1)))
+    cs, _ = cv2.findContours(lag, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    c = max(cs, key=cv2.contourArea).reshape(-1, 2).astype(np.float64)
+    lagoon = chaikin(np.c_[c[:, 0] / k + lon0, lat1 - c[:, 1] / k][::4], 2)
+    # passage: thin channel from the lagoon centre-west to the given shore point
+    (px, py), wdt = passage
+    cx, cy = lagoon[:, 0].mean() - 0.006, lagoon[:, 1].mean() + 0.003
+    d = np.array([px - cx, py - cy])
+    n = np.array([-d[1], d[0]]) / np.linalg.norm(d) * wdt / 2
+    ext = np.array([px, py]) + d / np.linalg.norm(d) * 0.005
+    channel = np.array([[cx, cy] + n, ext + n, ext - n, [cx, cy] - n])
+    return [hull, (lagoon, True), (channel, True)]
+
+
+def load_islands():
+    """Howland + Nikumaroro (positions/size/orientation from OpenStreetMap, ODbL).
+    Returns {name: [rings]} – a ring may be (ring, True) for water inside the land."""
+    gj = json.load(open(os.path.join(PROJ, "assets", "geo", "islands_osm.geojson"), encoding="utf-8"))
+    out = {}
+    for f in gj["features"]:
+        ring = f["geometry"]["coordinates"][0][:-1]
+        out[f["properties"]["name"]] = atoll(ring) if f["properties"]["name"] == "Nikumaroro" else [chaikin(ring, 3)]
+    return out
+
+
+# zoom tiles: (name, centre lon, centre lat, ppd, w, h) – all share the overview's style scale
+TILES = [
+    ("tile_mid", -175.5, -2.0, 120, 2400, 3600),
+    ("tile_h1", HOWLAND[0], HOWLAND[1], 600, 1800, 2700),
+    ("tile_h2", HOWLAND[0], HOWLAND[1], 3000, 1800, 2700),
+    ("tile_h25", HOWLAND[0], HOWLAND[1], 6000, 1800, 2700),
+    ("tile_h3", HOWLAND[0], HOWLAND[1], 15000, 1500, 2400),
+    ("tile_n1", NIKUMARORO[0], NIKUMARORO[1], 600, 1800, 2700),
+    ("tile_n2", NIKUMARORO[0], NIKUMARORO[1], 3000, 1800, 2700),
+    ("tile_n3", NIKUMARORO[0], NIKUMARORO[1], 7500, 1500, 2400),
 ]
 
 
@@ -124,6 +185,17 @@ def main():
          lae=list(m.xy(147.0, -6.7)), nikumaroro=list(m.xy(*NIKUMARORO)))
     print("map_pacific", img.shape)
 
+    # detail tiles (real island outlines), placed in overview-map pixels
+    islands = load_islands()
+    extra = [r for rings in islands.values() for r in rings]
+    for name, lon, lat, ppd, tw, th in TILES:
+        hw, hh = tw / 2 / ppd, th / 2 / ppd
+        tm = VintageMap(lon - hw, lon + hw, lat + hh, lat - hh, ppd=ppd, style_ppd=40, extra_land=extra)
+        timg = tm.render(theme=THEMES["retro_teal"], grid=15, folds=(1, 1), feather=0.14, seed=11)
+        x0, y0 = m.xy(lon - hw, lat + hh)
+        save(name, timg, meta, pos=[x0, y0], design_scale=m.ppd / ppd, ppd=ppd)
+        print(name, timg.shape)
+
     # world card: small landscape map on torn paper with the flown route
     wm = VintageMap(-140, 220, 72, -50, ppd=6)
     card = wm.render(grid=30, folds=(4, 2), theme=THEMES["retro_teal"], labels=[
@@ -147,6 +219,8 @@ def main():
     save("lbl_nikumaroro", g.label("Nikumaroro", "petrol", 100, seed=11), meta)
     save("lbl_2018", g.label("2018", "orange", 190, seed=12), meta)
     save("stamp_mann", g.stamp("MANN", seed=1), meta)
+    save("lbl_25km", g.label("2,5 km", "petrol", 90, seed=13), meta)
+    save("lbl_4000km", g.label("4.000 km", "orange", 95, seed=14), meta)
     save("bone1", g.bone(520, seed=1), meta)
     save("bone2", g.bone(380, seed=2), meta)
     save("star", g.star(150), meta)

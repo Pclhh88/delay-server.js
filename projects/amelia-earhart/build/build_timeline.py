@@ -10,9 +10,11 @@ words.json.
 import json
 import math
 import os
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROJ = os.path.dirname(HERE)
+sys.path.insert(0, os.path.dirname(os.path.dirname(PROJ)))
 META = json.load(open(os.path.join(HERE, "assets", "meta.json")))
 WORDS = json.load(open(os.path.join(PROJ, "analysis", "words.json"), encoding="utf-8"))
 VOICE = "audio/voice_v5_elevenlabs.mp3"
@@ -32,6 +34,8 @@ def w(text, after=0.0, which="start"):
 def rec(name, t, gain=-8.0, trim=None, fade=None, peak=0.0):
     """Recorded effect from audio/sfx_prepared (ElevenLabs). `peak` = time of the
     loudest moment inside the (trimmed) sound, placed exactly on t."""
+    if name == "paper_slide":
+        gain -= 9.0          # user feedback: slide sound too loud
     a = {"src": f"audio/sfx_prepared/{name}.wav", "start": round(t - peak, 3), "gain_db": gain}
     if trim:
         a["trim"] = trim
@@ -208,33 +212,96 @@ END = 64.76
 TEST_END = END
 
 
-CAM = [  # (t, focus x, focus y in map px, zoom, ease)
+from shortsfactory.render.keyframes import ease as _ease  # noqa: E402
+
+BASE_PPD = mp["proj"]["ppd"]
+lx, ly = map_xy(147.0, -6.7)   # Lae
+
+
+def S(ppd):
+    """camera zoom that shows the map at `ppd` design px per degree"""
+    return ppd / BASE_PPD
+
+
+S_HOW = S(7000)
+S_NIK = S(10000)
+CAM = [  # (t, focus x, focus y in overview-map px, zoom, ease)
     (0.0, fx0, fy0, 1.0, None),
     (T_1937 - 0.2, *map_xy(-168, 5), 1.12, "inout"),
-    (T_ZOOM, *map_xy(-168, 5), 1.06, "inout"),
-    (T_HOWLAND + 0.55, hx, hy, 3.4, "inout"),
-    (T_MITTEN - 0.05, hx, hy, 3.7, "linear"),
-    (T_PAZ_END + 0.1, *map_xy(-172, 2), 0.95, "inout"),
+    (T_ZOOM - 0.1, *map_xy(166, -2.5), 1.0, "inout"),
+    (T_EINE, *map_xy(170, -1.5), 1.06, "linear"),
+    (T_FLACH - 0.05, hx, hy, S(24000), "inout"),          # dive onto the real island
+    (T_MITTEN, hx, hy, S(26000), "linear"),
+    (T_PAZ_END, *map_xy(-172, 2), 0.95, "inout"),        # back out: "mitten im Pazifik"
     (T_SCHIFF - 0.3, *map_xy(-172, 3), 1.02, "linear"),
-    (T_SCHIFF + 0.4, hx, hy + 120, 1.45, "inout"),
-    (T_AB_END, hx, hy + 100, 1.55, "linear"),
-    (T_NAVY + 0.3, hx, hy + 60, 1.35, "inout"),
+    (T_SCHIFF + 0.6, hx + 250 / S_HOW, hy + 380 / S_HOW, S_HOW, "inout"),  # island upper left of the ship
+    (T_AB_END, hx + 250 / (S_HOW * 1.1), hy + 380 / (S_HOW * 1.1), S_HOW * 1.1, "linear"),
+    (T_NAVY + 0.4, hx, hy + 60, 1.35, "inout"),
     (T_NICHTS, hx, hy + 60, 1.45, "linear"),
     (T_DREI + 0.2, hx, hy + 60, 1.45, "linear"),
-    (T_EINSAM, (hx + nx) / 2, (hy + ny) / 2 + 40, 1.7, "inout"),
-    (T_SKELETT - 0.2, nx, ny + 60, 2.3, "inout"),
-    (T_BIS, nx, ny + 60, 2.45, "linear"),
-    (T_GENAU - 1.2, nx, ny + 60, 2.55, "linear"),
-    (END, nx, ny + 60, 2.8, "inout"),
+    (T_EINSAM - 0.1, (hx + nx) / 2, (hy + ny) / 2 + 40, 1.7, "inout"),
+    (T_SKELETT - 0.3, nx, ny + 140 / S_NIK, S_NIK, "inout"),  # dive onto Nikumaroro
+    (T_BIS, nx, ny + 140 / (S_NIK * 1.06), S_NIK * 1.06, "linear"),
+    (T_VERSCHW, nx, ny + 140 / (S_NIK * 1.12), S_NIK * 1.12, "linear"),
+    (END, fx0, fy0, 1.0, "inout"),                        # back to the opening view (loop)
 ]
-cam_scale, cam_pan = [], []
-for t, x, y, s, e in CAM:
-    k1 = {"t": round(t, 3), "scale": s}
-    k2 = {"t": round(t, 3), "x": 540 - x, "y": 960 - y}
-    if e:
-        k1["ease"] = k2["ease"] = e
-    cam_scale.append(k1)
-    cam_pan.append(k2)
+
+
+def cam_at(t):
+    """Zoom geometric, pan weighted by 1/zoom (screen-uniform 'fly-to')."""
+    if t <= CAM[0][0]:
+        return CAM[0][1:4]
+    for a, b in zip(CAM, CAM[1:]):
+        if a[0] <= t <= b[0]:
+            e = _ease(b[4] or "linear", (t - a[0]) / max(1e-6, b[0] - a[0]))
+            s0, s1 = a[3], b[3]
+            s_ = math.exp(math.log(s0) + (math.log(s1) - math.log(s0)) * e)
+            wgt = e if abs(s1 - s0) < 1e-9 else (1 / s0 - 1 / s_) / (1 / s0 - 1 / s1)
+            return a[1] + (b[1] - a[1]) * wgt, a[2] + (b[2] - a[2]) * wgt, s_
+    return CAM[-1][1:4]
+
+
+FPS = 30
+cam_scale, cam_pan, P_OF = [], [], []
+for n in range(int(END * FPS) + 2):
+    t = n / FPS
+    x, y, s_ = cam_at(t)
+    cam_scale.append({"t": round(t, 4), "scale": s_})
+    cam_pan.append({"t": round(t, 4), "x": 540 - x, "y": 960 - y})
+    P_OF.append((t, s_ * BASE_PPD))
+
+
+def zoom_fade(p_in0, p_in1, p_out0=None, p_out1=None, prop="opacity"):
+    """Opacity keys from the camera's map scale P (design px/deg): fade in between
+    p_in0..p_in1 and out between p_out0..p_out1 (log-smooth)."""
+    def f(P):
+        v = 1.0
+        if p_in0 is not None:
+            v *= min(1, max(0, (math.log(P) - math.log(p_in0)) / (math.log(p_in1) - math.log(p_in0))))
+        if p_out0 is not None:
+            v *= 1 - min(1, max(0, (math.log(P) - math.log(p_out0)) / (math.log(p_out1) - math.log(p_out0))))
+        return v * v * (3 - 2 * v)
+    keys, last = [], None
+    for t, P in P_OF:
+        v = round(f(P), 3)
+        if v != last:
+            if last is not None and keys and keys[-1]["t"] < t - 1 / FPS - 1e-6:
+                keys.append({"t": round(t - 1 / FPS, 4), prop: last})
+            keys.append({"t": round(t, 4), prop: v})
+            last = v
+    return keys
+
+
+tiles = []
+for name in ("tile_mid", "tile_h1", "tile_n1", "tile_h2", "tile_n2", "tile_h25", "tile_h3", "tile_n3"):
+    tm = META[name]
+    T = tm["ppd"]
+    # fade a tile in only once it covers the whole frame (no visible tile edges)
+    cover = T * 1920 / (tm["h"] * 0.72)
+    tiles.append({"id": name, "type": "image", "asset": name, "anchor": [0, 0],
+                  "props": {"x": tm["pos"][0], "y": tm["pos"][1], "scale": tm["design_scale"]},
+                  "keys": zoom_fade(cover, cover * 1.3)})
+MAP_ONLY = zoom_fade(None, None, 45, 90)   # map-space graphics vanish when we dive
 layers.append({
     "id": "cam", "type": "group", "pivot": [540, 960], "keys": cam_scale,
     "children": [{
@@ -242,16 +309,14 @@ layers.append({
         "children": [
             {"id": "map", "type": "image", "asset": "map_pacific", "anchor": [0, 0],
              "props": {"x": 0, "y": 0}, "keys": []},
-            {"id": "dot2", "type": "image", "asset": "dot", "start": T_EINSAM, "end": 999,
-             "keys": [{"t": T_EINSAM, "x": nx, "y": ny, "scale": 0.0},
-                      {"t": T_EINSAM + 0.15, "scale": 0.24, "ease": "out"},
-                      {"t": T_EINSAM + 0.3, "scale": 0.17, "ease": "inout"}]},
+            *tiles,
+            {"id": "dot2", "type": "image", "asset": "dot", "start": T_EINSAM - 0.6, "end": 999,
+             "props": {"x": nx, "y": ny, "scale": 0.17}, "keys": MAP_ONLY},
             {"id": "dot", "type": "image", "asset": "dot", "start": T_ZIEL, "end": 999,
-             "keys": [{"t": T_ZIEL, "x": hx, "y": hy, "scale": 0.0},
-                      {"t": T_ZIEL + 0.15, "scale": 0.30, "ease": "out"},
-                      {"t": T_ZIEL + 0.3, "scale": 0.22, "ease": "inout"}]},
+             "props": {"x": hx, "y": hy, "scale": 0.22}, "keys": MAP_ONLY},
         ]}],
 })
+MAP_CHILDREN = layers[-1]["children"][0]["children"]
 
 # ---------------------------------------------------------------- scene 1: name + portrait
 T_S1_OUT = T_EINER - 0.3
@@ -426,38 +491,67 @@ rec("paper_drop", T_CARD + 0.35, -6)
 rec("pen_scribble", T_R0, -11, trim=[0.0, T_R1 - T_R0 + 0.2], fade=0.3)
 rec("plane_distant", T_R0, -17, trim=[0.0, T_R1 - T_R0 + 0.5], fade=0.5)
 
-# ---------------------------------------------------------------- scene 4: Howland zoom
-rec("map_whoosh", T_ZOOM + 0.5, -4, peak=0.38)
+# ---------------------------------------------------------------- scene 4: last leg Lae -> Howland, dive onto the island
 rec("ocean_wind", T_ZOOM, -22, trim=[0.0, 12.0], fade=1.0)
-rec("cardboard_hit", T_ZIEL + 0.08, -16)
+T_LEG0, T_LEG1 = T_ZOOM + 0.1, T_EINE - 0.1
+MAP_CHILDREN.append({"id": "leg", "type": "dashed_path", "start": T_LEG0, "end": T_FLACH,
+                     "points": [[lx, ly], [hx, hy]], "props": {"x": 0, "y": 0}, "width": 6, "dash": 18, "gap": 12,
+                     "color": [232, 112, 58],
+                     "keys": [{"t": T_LEG0, "progress": 0.0}, {"t": T_LEG1, "progress": 0.97, "ease": "inout"}]
+                     + [dict(k) for k in MAP_ONLY if k["t"] > T_LEG1]})
+leg_ang = math.degrees(math.atan2(hy - ly, hx - lx))
+pl_keys = []
+for k in range(21):
+    f = k / 20
+    ff = 3 * f * f - 2 * f * f * f
+    pl_keys.append({"t": round(T_LEG0 + (T_LEG1 - T_LEG0) * f, 3), "x": lx + (hx - lx) * ff * 0.97,
+                    "y": ly + (hy - ly) * ff * 0.97})
+pl_keys[0].update({"scale": scale_for("st_electra", 150), "rot": leg_ang})
+pl_keys += [dict(k) for k in MAP_ONLY if k["t"] > T_LEG1]
+MAP_CHILDREN.append({"id": "electra_leg", "type": "image", "asset": "st_electra", "start": T_LEG0,
+                     "end": T_FLACH, "anchor": META["st_electra"]["anchor"], "keys": pl_keys})
+rec("plane_distant", T_LEG0, -15, trim=[1.0, 1.0 + T_LEG1 - T_LEG0 + 0.6], fade=0.6)
+km4 = scale_for("lbl_4000km", 420)
+layers.append(image("lbl_4000", "lbl_4000km", T_LEG0 + 0.4, T_ZIEL + 0.3, fix_keys(
+    pop_in(T_LEG0 + 0.4, 540, 1230, km4, rot=3, dur=0.26) + [
+        {"t": T_HOWLAND - 0.35, "x": 540, "y": 1230}, exit_to(T_HOWLAND - 0.35, 540, 2300, 0.3)])))
+rec("cardboard_hit", T_LEG0 + 0.48, -10)
 hs = scale_for("lbl_howland", 640)
 layers.append(image("lbl_howland", "lbl_howland", T_HOWLAND, T_PAZ_END + 0.4, fix_keys(
-    pop_in(T_HOWLAND, 540, 600, hs, rot=-2, dur=0.28) + [
-        {"t": T_MITTEN, "x": 540, "y": 600}, exit_to(T_MITTEN, 540, -250, 0.35)])))
+    pop_in(T_HOWLAND, 540, 420, hs, rot=-2, dur=0.28) + [
+        {"t": T_MITTEN, "x": 540, "y": 420}, exit_to(T_MITTEN, 540, -250, 0.35)])))
 rec("cardboard_hit", T_HOWLAND + 0.08, -8)
+rec("map_whoosh", T_EINE + 0.6, -3, peak=0.38)
+rec("map_whoosh", T_EINE + 1.2, -9, peak=0.38)
 mg = META["st_magnifier"]
-f_, ox, oy = mg["src_map"]
 lens = mg["lens"]   # glass centre in the sticker (build_assets.glass_window)
 mgs = scale_for("st_magnifier", 620)
-T_MAG = T_HOWLAND + 0.2
-layers.append(image("magnifier", "st_magnifier", T_MAG, T_FLACH + 0.4, fix_keys(
-    slide_in(T_MAG, 1300, 1700, 540, 960, mgs, -35, -12, 0.42) + [
-        {"t": T_FLACH - 0.1, "x": 540, "y": 960}, exit_to(T_FLACH - 0.1, 1400, 1900, 0.35, rot=-40)]),
-    anchor=list(lens)))
-rec("paper_slide", T_MAG + 0.2, -8, peak=0.42)
+# scale bar next to the real island (2.5 km)
+isl_h = 0.0212 * BASE_PPD * S(24000)          # island height on screen at the dive's end
+layers.append({"id": "scalebar", "type": "dashed_path", "start": T_FLACH - 0.1, "end": T_MITTEN + 0.3,
+               "points": [[700, 960 - isl_h / 2], [700, 960 + isl_h / 2]], "props": {"x": 0, "y": 0},
+               "width": 6, "dash": 16, "gap": 10, "color": [246, 240, 226],
+               "keys": [{"t": T_FLACH - 0.1, "progress": 0.0, "opacity": 1.0},
+                        {"t": T_FLACH + 0.25, "progress": 1.0, "ease": "out"},
+                        {"t": T_MITTEN, "opacity": 1.0}, {"t": T_MITTEN + 0.25, "opacity": 0.0}]})
+k25 = scale_for("lbl_25km", 300)
+layers.append(image("lbl_25km", "lbl_25km", T_FLACH + 0.1, T_MITTEN + 0.35, fix_keys(
+    pop_in(T_FLACH + 0.1, 870, 960, k25, rot=-3, dur=0.25) + [
+        {"t": T_MITTEN, "x": 870, "y": 960}, exit_to(T_MITTEN, 1500, 960, 0.3)])))
+rec("cardboard_hit", T_FLACH + 0.18, -11)
 
 
 # ---------------------------------------------------------------- scene 5: pancake, pull back
 pk = scale_for("st_pancake", 520)
-layers.append(image("pancake", "st_pancake", T_FLACH, T_PAZ_END + 0.3, fix_keys([
-    {"t": T_FLACH, "x": 540, "y": 960, "scale": 0.0, "sx": 1.0, "sy": 1.0, "rot": -4},
-    {"t": T_FLACH + 0.18, "scale": pk * 1.1, "ease": "back_out"},
+layers.append(image("pancake", "st_pancake", T_PFANN - 0.25, T_PAZ_END + 0.3, fix_keys([
+    {"t": T_PFANN - 0.25, "x": 800, "y": 1270, "scale": 0.0, "sx": 1.0, "sy": 1.0, "rot": -4},
+    {"t": T_PFANN - 0.07, "scale": pk * 0.75, "ease": "back_out"},
     {"t": T_PFANN - 0.05, "sy": 1.0, "sx": 1.0},
     {"t": T_PFANN + 0.1, "sy": 0.45, "sx": 1.25, "ease": "out"},
     {"t": T_PFANN + 0.35, "sy": 0.62, "sx": 1.15, "ease": "inout"},
-    {"t": T_MITTEN, "scale": pk * 1.0},
+    {"t": T_MITTEN, "scale": pk * 0.7},
     {"t": T_MITTEN + 0.45, "scale": 0.0, "ease": "in"}])))
-rec("paper_drop", T_FLACH + 0.1, -6)
+rec("paper_drop", T_PFANN - 0.15, -6)
 rec("cardboard_hit", T_PFANN + 0.1, -9)
 rec("map_whoosh", T_MITTEN + 0.35, -5, peak=0.38)
 
@@ -522,7 +616,7 @@ layers.append(image("itasca", "st_itasca", T_SCHIFF - 0.1, T_S7_OUT + 0.4, fix_k
 rec("ship_horn", T_SCHIFF + 0.05, -12, trim=[0.0, 2.8], fade=0.8)
 rec("paper_slide", T_SCHIFF, -9, peak=0.42)
 # Amelia's plane, small, upper left
-PX, PY = 760, 330
+PX, PY = 920, 280
 layers.append(image("electra3", "st_electra", T_FUNKT, T_AB_END + 0.2, fix_keys([
     {"t": T_FUNKT, "x": 1400, "y": PY - 60, "scale": scale_for("st_electra", 380), "sx": -1, "rot": 6, "opacity": 1.0},
     {"t": T_FUNKT + 0.6, "x": PX, "y": PY, "ease": "out3"},
@@ -569,7 +663,7 @@ for k, rdeg in enumerate((2.0, 4.0, 6.5)):
                     "keys": [{"t": t0, "progress": 0.0, "opacity": 0.95},
                              {"t": t0 + 1.6, "progress": 1.0, "ease": "inout"},
                              {"t": T_S8_OUT, "opacity": 0.95}, {"t": T_S8_OUT + 0.3, "opacity": 0.0}]})
-layers[0]["children"][0]["children"] += circles
+MAP_CHILDREN.extend(circles)
 rec("sonar_ping", T_NAVY, -12)
 rec("sonar_ping", T_NAVY + 2.6, -16)
 ws = scale_for("lbl_2wochen", 520)
@@ -614,11 +708,12 @@ layers.append(image("lbl_1940", "lbl_1940", T_DREI, T_SKELETT, fix_keys(
     pop_in(T_DREI, 540, 330, l40, rot=-4, dur=0.3) + [
         {"t": T_SKELETT - 0.4, "x": 540, "y": 330}, exit_to(T_SKELETT - 0.4, 540, -300, 0.3)])))
 rec("cardboard_hit", T_DREI + 0.08, -6)
-layers[0]["children"][0]["children"].append({
-    "id": "to_niku", "type": "dashed_path", "start": T_DREI + 0.4, "end": END + 1,
+MAP_CHILDREN.append({
+    "id": "to_niku", "type": "dashed_path", "start": T_DREI + 0.4, "end": T_SKELETT,
     "points": [[hx, hy], [nx, ny]], "props": {"x": 0, "y": 0}, "width": 6, "dash": 20, "gap": 13,
     "color": [232, 112, 58], "keys": [{"t": T_DREI + 0.4, "progress": 0.0},
-                                      {"t": T_EINSAM, "progress": 1.0, "ease": "inout"}]})
+                                      {"t": T_EINSAM, "progress": 1.0, "ease": "inout"}]
+    + [dict(k) for k in MAP_ONLY if T_EINSAM < k["t"] < T_SKELETT]})
 rec("pen_scribble", T_DREI + 0.4, -12, trim=[0.0, T_EINSAM - T_DREI], fade=0.3)
 nks = scale_for("lbl_nikumaroro", 560)
 layers.append(image("lbl_niku", "lbl_nikumaroro", T_EINSAM + 0.1, T_SKELETT, fix_keys(
@@ -627,12 +722,12 @@ layers.append(image("lbl_niku", "lbl_nikumaroro", T_EINSAM + 0.1, T_SKELETT, fix
 rec("cardboard_hit", T_EINSAM + 0.18, -9)
 layers.append({"id": "dim2", "type": "solid", "start": T_SKELETT - 0.3, "end": T_GENAU + 0.6,
                "color": [20, 24, 22], "keys": [{"t": T_SKELETT - 0.3, "opacity": 0.0},
-                                               {"t": T_SKELETT, "opacity": 0.3},
-                                               {"t": T_VERSCHW, "opacity": 0.3},
+                                               {"t": T_SKELETT, "opacity": 0.12},
+                                               {"t": T_VERSCHW, "opacity": 0.12},
                                                {"t": T_GENAU + 0.4, "opacity": 0.0}]})
-b1, b2 = scale_for("bone1", 520), scale_for("bone2", 380)
-for i, (aid, sc, x, y, rot, dt) in enumerate([("bone1", b1, 520, 760, -18, 0.0), ("bone2", b2, 640, 900, 24, 0.12),
-                                              ("bone2", b2, 400, 940, 70, 0.22)]):
+b1, b2 = scale_for("bone1", 330), scale_for("bone2", 240)
+for i, (aid, sc, x, y, rot, dt) in enumerate([("bone1", b1, 560, 520, -18, 0.0), ("bone2", b2, 760, 600, 24, 0.12),
+                                              ("bone2", b2, 400, 600, 70, 0.22)]):
     layers.append(image(f"bones{i}", aid, T_SKELETT + dt, T_S9_OUT + 0.4, fix_keys(
         pop_in(T_SKELETT + dt, x, y, sc, rot=rot, dur=0.26) + [
             {"t": T_S9_OUT, "x": x, "y": y}, exit_to(T_S9_OUT, x, -400, 0.3)])))
