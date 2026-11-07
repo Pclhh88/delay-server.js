@@ -12,3 +12,13 @@
 | Explosion befürchtet → alle ins Boot | **Theorie** (als Frage formuliert) | UCL 2006 |
 | 2006: Chemiker zündet Gas im nachgebauten Laderaum, Stichflamme ohne Brandspuren | Andrea Sella (UCL), Butangas, Papierwürfel statt Fässer; keine Ruß- oder Brandspuren | https://www.ucl.ac.uk/news/2006/may/solved-mystery-mary-celeste |
 | Boot nie gefunden, zehn Menschen nie gefunden | bestätigt | Britannica, History.com |
+
+## Düstere Fassung (SKRIPT_duester.md)
+
+| Aussage | Befund | Quelle |
+|---|---|---|
+| Finder (Dei Gratia) bringen das Schiff nach Gibraltar, wollen Bergelohn | bestätigt | https://www.historyhit.com/what-happened-to-the-mary-celeste/ |
+| „Staatsanwalt" findet Flecken auf einem Schwert und Kerben am Bug | Frederick Solly-Flood, Generalanwalt (Attorney General) von Gibraltar – „Staatsanwalt" vereinfacht | https://explorersweb.com/exploration-mysteries-the-mary-celeste/ |
+| Verdacht: Mord durch die Finder wegen des Geldes | Solly-Flood vermutete, Morehouse und Crew hätten das Schiff geentert und die Insassen getötet (als Verdacht formuliert) | https://explorersweb.com/?p=42601 |
+| Arzt: kein Blut, wahrscheinlich Rost | Dr. J. Patron: kein Blut nachweisbar, Eisenchlorid-Reaktion → meist als Rost gedeutet (nicht endgültig gesichert) | https://www.maryceleste.net/doctor.htm, https://www.straightdope.com/21343104/what-really-happened-to-the-em-mary-celeste-em |
+| Finder bekommen einen Teil des Geldes | bestätigt (Teil des Bergelohns) | https://www.historyhit.com/what-happened-to-the-mary-celeste/ |
