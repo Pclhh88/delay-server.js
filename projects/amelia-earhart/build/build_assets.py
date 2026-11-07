@@ -46,6 +46,7 @@ STICKERS = {
     "magnifier": "B11_lupe.png",
     "cloud1": "B12_wolke1.png",
     "cloud2": "B12b_wolke2.png",
+    "bones": "B13_knochen.png",
 }
 
 # 1937 world flight, eastbound (lon, lat)
@@ -81,6 +82,11 @@ MAP_LABELS = [
     dict(text="NORDAMERIKA", lon=255, lat=45, size=2.2, style="serif"),
     dict(text="ASIEN", lon=105, lat=45, size=2.4, style="serif"),
     dict(text="SÜDAMERIKA", lon=297, lat=-15, size=2.0, style="serif"),
+    dict(text="NORDAMERIKA", lon=-100, lat=45, size=2.2, style="serif"),
+    dict(text="AFRIKA", lon=20, lat=5, size=2.4, style="serif"),
+    dict(text="EUROPA", lon=15, lat=50, size=2.0, style="serif"),
+    dict(text="ATLANTISCHER OZEAN", lon=-38, lat=28, size=2.2, spacing=0.3),
+    dict(text="INDISCHER OZEAN", lon=78, lat=-22, size=2.4, spacing=0.3),
     dict(text="Äquator", lon=225, lat=1.2, size=1.1, spacing=0.15),
 ]
 
@@ -177,12 +183,14 @@ def main():
         meta[f"st_{name}"] = info
         print("sticker", name, info["w"], info["h"])
 
-    # big Pacific map (camera background)
-    m = VintageMap(90, 300, 60, -50, ppd=24)
-    img = m.render(labels=MAP_LABELS, theme=THEMES["retro_teal"],
-                   roses=[(205, -20, 5), (152, 28, 3.5), (250, 15, 3)])
+    # big map (camera background): once around the world (430° so the 1937 route
+    # Oakland -> ... -> Lae -> Howland stays continuous), Pacific in the middle-right
+    m = VintageMap(-155, 300, 60, -50, ppd=24)
+    img = m.render(labels=MAP_LABELS, theme=THEMES["retro_teal"], folds=(6, 2),
+                   roses=[(205, -20, 5), (152, 28, 3.5), (250, 15, 3), (-30, -25, 4), (65, 5, 3.5)])
     save("map_pacific", img, meta, proj=m.params(), howland=list(m.xy(*HOWLAND)),
-         lae=list(m.xy(147.0, -6.7)), nikumaroro=list(m.xy(*NIKUMARORO)))
+         lae=list(m.xy(147.0, -6.7)), nikumaroro=list(m.xy(*NIKUMARORO)),
+         route=[list(p) for p in m.route_xy(ROUTE_FLOWN + [HOWLAND])], route_lae_index=len(ROUTE_FLOWN) - 1)
     print("map_pacific", img.shape)
 
     # detail tiles (real island outlines), placed in overview-map pixels
@@ -195,17 +203,6 @@ def main():
         x0, y0 = m.xy(lon - hw, lat + hh)
         save(name, timg, meta, pos=[x0, y0], design_scale=m.ppd / ppd, ppd=ppd)
         print(name, timg.shape)
-
-    # world card: small landscape map on torn paper with the flown route
-    wm = VintageMap(-140, 220, 72, -50, ppd=6)
-    card = wm.render(grid=30, folds=(4, 2), theme=THEMES["retro_teal"], labels=[
-        dict(text="1937", lon=-100, lat=-38, size=6, style="serif", alpha=150)])
-    a = g.torn_mask(card.shape[1], card.shape[0], depth=10, seed=4, soft=1.2)
-    card[..., 3] = (a * 255).astype(np.uint8)
-    card = g.add_shadow(card, dx=8, dy=12, blur=10, op=0.45, pad=40)
-    flown = [(x + 40, y + 40) for x, y in wm.route_xy(ROUTE_FLOWN)]
-    planned = [(x + 40, y + 40) for x, y in wm.route_xy(ROUTE_PLANNED)]
-    save("world_card", card, meta, route=flown, planned=planned, proj=wm.params(), pad=40)
 
     save("lbl_amelia", g.label("Amelia", "black", 120, seed=1), meta)
     save("lbl_earhart", g.label("Earhart", "orange", 120, seed=2), meta)

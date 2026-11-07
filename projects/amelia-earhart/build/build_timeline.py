@@ -225,12 +225,69 @@ def S(ppd):
 
 S_HOW = S(7000)
 S_NIK = S(10000)
+# ---- the 1937 flight on the big map: route Oakland -> ... -> Lae -> (towards) Howland
+ROUTE = [tuple(p) for p in mp["route"]]
+LAE_I = mp["route_lae_index"]
+seg_len = [math.dist(a, b) for a, b in zip(ROUTE, ROUTE[1:])]
+L_ALL = sum(seg_len)
+L_LAE = sum(seg_len[:LAE_I])
+STOP = (L_LAE + 0.97 * seg_len[LAE_I]) / L_ALL       # plane stops just short of Howland
+ROUTE_DRAWN = [list(p) for p in ROUTE]
+T_R0 = T_1937 + 0.3
+T_LEG1 = T_EINE - 0.1
+
+
+def route_point(frac):
+    d = frac * L_ALL
+    for (a, b), sl in zip(zip(ROUTE, ROUTE[1:]), seg_len):
+        if d <= sl:
+            f = d / sl if sl else 0
+            return (a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f), math.degrees(math.atan2(b[1] - a[1], b[0] - a[0]))
+        d -= sl
+    a, b = ROUTE[-2], ROUTE[-1]
+    return b, math.degrees(math.atan2(b[1] - a[1], b[0] - a[0]))
+
+
+def route_frac(t):
+    u = min(1.0, max(0.0, (t - T_R0) / (T_LEG1 - T_R0)))
+    return STOP * (u * u * (3 - 2 * u))
+
+
+T_LAE = next(T_R0 + k * 0.01 for k in range(2000) if route_frac(T_R0 + k * 0.01) >= L_LAE / L_ALL)
+route_keys, plane_route_keys = [], []
+prev = None
+n_steps = int((T_LEG1 - T_R0) * 15)
+for k in range(n_steps + 1):
+    t = T_R0 + (T_LEG1 - T_R0) * k / n_steps
+    fr = route_frac(t)
+    (px_, py_), ang = route_point(fr)
+    if prev is not None:
+        while ang - prev > 180:
+            ang -= 360
+        while ang - prev < -180:
+            ang += 360
+        ang = prev * 0.7 + ang * 0.3
+    prev = ang
+    route_keys.append({"t": round(t, 3), "progress": round(fr, 5)})
+    plane_route_keys.append({"t": round(t, 3), "x": px_, "y": py_, "rot": ang})
+plane_route_keys[0]["scale"] = scale_for("st_electra", 210)
+
+S_FLY = 0.75
+FOLLOW = []
+for k in range(int((T_LEG1 - T_R0) * 10) + 1):
+    t = T_R0 + k / 10
+    (px_, py_), _ = route_point(route_frac(t + 0.25))
+    s_ = S_FLY if t < T_LAE else S_FLY + (1.06 - S_FLY) * min(1, (t - T_LAE) / (T_LEG1 - T_LAE))
+    half = 960 / s_
+    py_ = min(max(py_, half), mp["proj"]["h"] - half)
+    px_ = min(max(px_, 540 / s_), mp["proj"]["w"] - 540 / s_)
+    FOLLOW.append((t, px_, py_, s_, "inout" if k == 0 else "linear"))
+
 CAM = [  # (t, focus x, focus y in overview-map px, zoom, ease)
     (0.0, fx0, fy0, 1.0, None),
-    (T_1937 - 0.2, *map_xy(-168, 5), 1.12, "inout"),
-    (T_ZOOM - 0.1, *map_xy(166, -2.5), 1.0, "inout"),
-    (T_EINE, *map_xy(170, -1.5), 1.06, "linear"),
-    (T_FLACH - 0.05, hx, hy, S(24000), "inout"),          # dive onto the real island
+    (T_1937 - 0.25, *map_xy(-168, 5), 1.12, "inout"),
+    *FOLLOW,
+    (T_FLACH - 0.05, hx, hy, S(24000), "inout"),          # dive onto the real island (from the plane)
     (T_MITTEN, hx, hy, S(26000), "linear"),
     (T_PAZ_END, *map_xy(-172, 2), 0.95, "inout"),        # back out: "mitten im Pazifik"
     (T_SCHIFF - 0.3, *map_xy(-172, 3), 1.02, "linear"),
@@ -425,97 +482,30 @@ rec("typewriter_bell", T_KNAPP + 0.3, -13)
 
 # ---------------------------------------------------------------- scene 3: 1937 world flight
 rec("paper_tear", T_S2_OUT, -9)
-layers.append({"id": "dim", "type": "solid", "start": T_1937 - 0.3, "end": T_ZOOM + 0.4,
-               "color": [20, 24, 22], "keys": [{"t": T_1937 - 0.3, "opacity": 0.0},
-                                               {"t": T_1937, "opacity": 0.28},
-                                               {"t": T_ZOOM, "opacity": 0.28},
-                                               {"t": T_ZOOM + 0.35, "opacity": 0.0}]})
 ls = scale_for("lbl_1937", 470)
 layers.append(image("lbl_1937", "lbl_1937", T_1937, T_ZOOM + 0.35, fix_keys(
-    pop_in(T_1937, 540, 560, ls, rot=-4, dur=0.3) + [
-        {"t": T_ZOOM, "x": 540, "y": 560}, exit_to(T_ZOOM, 540, -300, 0.3)])))
+    pop_in(T_1937, 540, 1240, ls, rot=-4, dur=0.3) + [
+        {"t": T_ZOOM, "x": 540, "y": 1240}, exit_to(T_ZOOM, 540, 2300, 0.3)])))
 rec("cardboard_hit", T_1937 + 0.08, -5)
 rec("suspense_hit", T_1937 + 0.05, -10)
-
-wc = META["world_card"]
-cds = 1060 / wc["w"]
-cw, ch = wc["w"] * cds, wc["h"] * cds
-route = [[x * cds, y * cds] for x, y in wc["route"]]
-T_CARD = T_1937 + 0.1
-T_R0, T_R1 = T_1937 + 0.55, T_WELT2 - 0.05
-
-
-def along(pts, frac):
-    seg = [math.dist(a, b) for a, b in zip(pts, pts[1:])]
-    tot = sum(seg)
-    d = frac * tot
-    for (a, b), s in zip(zip(pts, pts[1:]), seg):
-        if d <= s or s == seg[-1]:
-            f = d / s if s else 0
-            return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f], math.degrees(math.atan2(b[1] - a[1], b[0] - a[0]))
-        d -= s
-    return pts[-1], 0.0
-
-
-plane_keys = []
-N = 40
-prev_ang = None
-for k in range(N + 1):
-    f = k / N
-    ff = 3 * f * f - 2 * f * f * f  # inout
-    pos, a = along(route, ff)
-    if prev_ang is not None:
-        while a - prev_ang > 180:
-            a -= 360
-        while a - prev_ang < -180:
-            a += 360
-    a = a if prev_ang is None else prev_ang * 0.6 + a * 0.4
-    prev_ang = a
-    plane_keys.append({"t": round(T_R0 + (T_R1 - T_R0) * f, 3), "x": pos[0], "y": pos[1], "rot": a})
-plane_keys[0]["scale"] = scale_for("st_electra", 110)
-layers.append({
-    "id": "card", "type": "group", "pivot": [cw / 2, ch / 2], "start": T_CARD, "end": T_ZOOM + 0.4,
-    "keys": fix_keys(slide_in(T_CARD, 540, 2300, 540, 1080, 1.0, 8, -2, 0.38) + [
-        {"t": T_ZOOM, "x": 540, "y": 1080}, exit_to(T_ZOOM, 540, 2400, 0.35, rot=6)]),
-    "jitter": JIT,
-    "children": [
-        {"id": "card_img", "type": "image", "asset": "world_card", "anchor": [0, 0],
-         "props": {"x": 0, "y": 0, "scale": cds}, "keys": []},
-        {"id": "route", "type": "dashed_path", "points": route, "props": {"x": 0, "y": 0}, "width": 6, "dash": 14, "gap": 9,
-         "color": [232, 112, 58], "keys": [{"t": T_R0, "progress": 0.0},
-                                           {"t": T_R1, "progress": 1.0, "ease": "inout"}]},
-        {"id": "electra2", "type": "image", "asset": "st_electra", "start": T_R0 - 0.1,
-         "anchor": META["st_electra"]["anchor"], "keys": plane_keys},
-    ]})
-rec("paper_drop", T_CARD + 0.35, -6)
-rec("pen_scribble", T_R0, -11, trim=[0.0, T_R1 - T_R0 + 0.2], fade=0.3)
-rec("plane_distant", T_R0, -17, trim=[0.0, T_R1 - T_R0 + 0.5], fade=0.5)
+# the flight itself is drawn on the big map (route + plane, camera follows): see FLIGHT above
+rec("pen_scribble", T_R0, -12, trim=[0.0, 3.8], fade=0.4)
+rec("plane_distant", T_R0, -14, trim=[0.0, T_LEG1 - T_R0 + 0.6], fade=0.8)
+route_keys += [dict(k) for k in MAP_ONLY if k["t"] > T_LEG1]
+plane_route_keys += [dict(k) for k in MAP_ONLY if k["t"] > T_LEG1]
+MAP_CHILDREN.append({"id": "route", "type": "dashed_path", "start": T_R0, "end": T_FLACH,
+                     "points": ROUTE_DRAWN, "props": {"x": 0, "y": 0}, "width": 6, "dash": 18, "gap": 12,
+                     "color": [232, 112, 58], "keys": route_keys})
+MAP_CHILDREN.append({"id": "electra_route", "type": "image", "asset": "st_electra", "start": T_R0,
+                     "end": T_FLACH, "anchor": META["st_electra"]["anchor"], "keys": plane_route_keys})
 
 # ---------------------------------------------------------------- scene 4: last leg Lae -> Howland, dive onto the island
 rec("ocean_wind", T_ZOOM, -22, trim=[0.0, 12.0], fade=1.0)
-T_LEG0, T_LEG1 = T_ZOOM + 0.1, T_EINE - 0.1
-MAP_CHILDREN.append({"id": "leg", "type": "dashed_path", "start": T_LEG0, "end": T_FLACH,
-                     "points": [[lx, ly], [hx, hy]], "props": {"x": 0, "y": 0}, "width": 6, "dash": 18, "gap": 12,
-                     "color": [232, 112, 58],
-                     "keys": [{"t": T_LEG0, "progress": 0.0}, {"t": T_LEG1, "progress": 0.97, "ease": "inout"}]
-                     + [dict(k) for k in MAP_ONLY if k["t"] > T_LEG1]})
-leg_ang = math.degrees(math.atan2(hy - ly, hx - lx))
-pl_keys = []
-for k in range(21):
-    f = k / 20
-    ff = 3 * f * f - 2 * f * f * f
-    pl_keys.append({"t": round(T_LEG0 + (T_LEG1 - T_LEG0) * f, 3), "x": lx + (hx - lx) * ff * 0.97,
-                    "y": ly + (hy - ly) * ff * 0.97})
-pl_keys[0].update({"scale": scale_for("st_electra", 150), "rot": leg_ang})
-pl_keys += [dict(k) for k in MAP_ONLY if k["t"] > T_LEG1]
-MAP_CHILDREN.append({"id": "electra_leg", "type": "image", "asset": "st_electra", "start": T_LEG0,
-                     "end": T_FLACH, "anchor": META["st_electra"]["anchor"], "keys": pl_keys})
-rec("plane_distant", T_LEG0, -15, trim=[1.0, 1.0 + T_LEG1 - T_LEG0 + 0.6], fade=0.6)
 km4 = scale_for("lbl_4000km", 420)
-layers.append(image("lbl_4000", "lbl_4000km", T_LEG0 + 0.4, T_ZIEL + 0.3, fix_keys(
-    pop_in(T_LEG0 + 0.4, 540, 1230, km4, rot=3, dur=0.26) + [
+layers.append(image("lbl_4000", "lbl_4000km", T_LAE + 0.1, T_HOWLAND, fix_keys(
+    pop_in(T_LAE + 0.1, 540, 1230, km4, rot=3, dur=0.26) + [
         {"t": T_HOWLAND - 0.35, "x": 540, "y": 1230}, exit_to(T_HOWLAND - 0.35, 540, 2300, 0.3)])))
-rec("cardboard_hit", T_LEG0 + 0.48, -10)
+rec("cardboard_hit", T_LAE + 0.18, -10)
 hs = scale_for("lbl_howland", 640)
 layers.append(image("lbl_howland", "lbl_howland", T_HOWLAND, T_PAZ_END + 0.4, fix_keys(
     pop_in(T_HOWLAND, 540, 420, hs, rot=-2, dur=0.28) + [
@@ -725,12 +715,10 @@ layers.append({"id": "dim2", "type": "solid", "start": T_SKELETT - 0.3, "end": T
                                                {"t": T_SKELETT, "opacity": 0.12},
                                                {"t": T_VERSCHW, "opacity": 0.12},
                                                {"t": T_GENAU + 0.4, "opacity": 0.0}]})
-b1, b2 = scale_for("bone1", 330), scale_for("bone2", 240)
-for i, (aid, sc, x, y, rot, dt) in enumerate([("bone1", b1, 560, 520, -18, 0.0), ("bone2", b2, 760, 600, 24, 0.12),
-                                              ("bone2", b2, 400, 600, 70, 0.22)]):
-    layers.append(image(f"bones{i}", aid, T_SKELETT + dt, T_S9_OUT + 0.4, fix_keys(
-        pop_in(T_SKELETT + dt, x, y, sc, rot=rot, dur=0.26) + [
-            {"t": T_S9_OUT, "x": x, "y": y}, exit_to(T_S9_OUT, x, -400, 0.3)])))
+bns = scale_for("st_bones", 600)
+layers.append(image("bones", "st_bones", T_SKELETT, T_S9_OUT + 0.4, fix_keys(
+    pop_in(T_SKELETT, 560, 520, bns, rot=-8, dur=0.28) + [
+        {"t": T_S9_OUT, "x": 560, "y": 520}, exit_to(T_S9_OUT, 560, -400, 0.3)])))
 rec("bones_rattle", T_SKELETT, -6)
 rec("heartbeat_low", T_SKELETT + 0.3, -10, trim=[0.0, 4.5], fade=0.8)
 shs = scale_for("st_shoe", 420)
