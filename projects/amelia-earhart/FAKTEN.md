@@ -14,3 +14,12 @@
 | „4.000 km" Lae–Howland | ~4.100 km (2.556 Meilen) | NHHC / gängige Angaben |
 
 Inselumrisse: © OpenStreetMap-Mitwirkende (ODbL); Nikumaroro-Lagune vereinfacht.
+
+## Erweiterung Kokoskrabben (Skript v6)
+
+| Aussage | Befund | Quelle |
+|---|---|---|
+| „Die Theorie: Amelia landete hier und überlebte noch eine Weile." | als **Theorie** formuliert (TIGHAR-Hypothese: Notlandung auf dem Riff von Nikumaroro) – nicht bewiesen | https://tighar.org/wiki/Bones |
+| „nur 13 Knochen" | 1940 wurden 13 Knochen unter einem Baum gefunden und nach Fidschi geschickt | https://www.smithsonianmag.com/smart-news/coconut-crabs-eat-everything-from-kittens-to-maybe-amelia-earhart-180948206/ |
+| Kokoskrabben auf der Insel, die größten der Welt | Kokoskrabbe = größter landlebender Gliederfüßer, bis ~1 m Beinspannweite, ~4 kg | https://www.csmonitor.com/Science/2016/1123/Could-this-crab-have-the-most-crushing-claws |
+| „Und die verschleppen Knochen." | Gallagher (1940): kleine Knochen von Kokoskrabben entfernt; TIGHAR-Schweine-Experiment 2007: Knochen teils bis ~18 m verschleppt (nicht peer-reviewed, Berichte uneinheitlich) | https://tighar.org/Projects/Earhart/Research/Bulletins/46_Crabexperiment/46_crabexp.html, https://www.mentalfloss.com/animals/coconut-crabs-role-in-amelia-earharts-mysterious-disappearance |

@@ -8,6 +8,8 @@ Die Navy sucht zwei Wochen, mit Flugzeugträger und Schlachtschiff. Kein Flugzeu
 
 Drei Jahre später, auf einer einsamen Insel: ein Skelett. Daneben ein Frauenschuh. Und eine leere Sextanten-Kiste.
 
+Die Theorie: Amelia landete hier und überlebte noch eine Weile. Aber warum nur 13 Knochen? Auf der Insel leben Kokoskrabben, die größten der Welt. Und die verschleppen Knochen.
+
 Ein Arzt sagt: eindeutig ein Mann. Fall erledigt.
 
 Bis 2018 ein Forscher nachrechnet: Die Knochen passen erstaunlich gut zu Amelia.
