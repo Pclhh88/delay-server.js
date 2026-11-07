@@ -242,3 +242,130 @@ def dot_marker(r=26, color="orange"):
     d.ellipse([s / 2 - r - 6, s / 2 - r - 6, s / 2 + r + 6, s / 2 + r + 6], fill=PALETTE["cream"] + (255,))
     d.ellipse([s / 2 - r, s / 2 - r, s / 2 + r, s / 2 + r], fill=col + (255,))
     return add_shadow(_rgba(img), dx=3, dy=5, blur=4, op=0.4)
+
+
+def stamp(text, color=(178, 40, 40), size=150, seed=0):
+    """Rubber stamp: double frame + caps, worn ink (random gaps)."""
+    f = ImageFont.truetype(font("label"), size)
+    bb = f.getbbox(text)
+    tw, th = bb[2] - bb[0], bb[3] - bb[1]
+    pad = int(size * 0.28)
+    w, h = tw + 2 * pad + 40, th + 2 * pad + 40
+    img = Image.new("L", (w, h), 0)
+    d = ImageDraw.Draw(img)
+    lw = max(4, size // 14)
+    d.rounded_rectangle([20, 20, w - 20, h - 20], radius=size // 8, outline=255, width=lw)
+    d.rounded_rectangle([20 + lw * 2, 20 + lw * 2, w - 20 - lw * 2, h - 20 - lw * 2], radius=size // 10,
+                        outline=255, width=max(2, lw // 2))
+    d.text((w / 2, h / 2), text, font=f, fill=255, anchor="mm")
+    m = np.asarray(img).astype(np.float32) / 255
+    wear = fractal_noise(h, w, seed, octaves=(40, 10, 3), weights=(0.4, 0.35, 0.25))
+    m *= np.clip((wear - 0.16) * 5, 0, 1) * 0.92
+    rgba = np.zeros((h, w, 4), np.uint8)
+    rgba[..., :3] = color
+    rgba[..., 3] = (m * 255).astype(np.uint8)
+    return rgba
+
+
+def bone(length=520, seed=0):
+    """Simple bone cut-out (cream, ink outline, halftone shading) on paper rim."""
+    s = 3
+    L, R = length * s, int(length * 0.11) * s
+    w, h = L + 6 * R, 6 * R
+    img = Image.new("L", (w, h), 0)
+    d = ImageDraw.Draw(img)
+    cy = h / 2
+    x0, x1 = 3 * R, w - 3 * R
+    d.rounded_rectangle([x0, cy - R * 0.62, x1, cy + R * 0.62], radius=R * 0.6, fill=255)
+    for x in (x0, x1):
+        for dy in (-0.8, 0.8):
+            d.ellipse([x - R * 1.15, cy + dy * R - R * 1.05, x + R * 1.15, cy + dy * R + R * 1.05], fill=255)
+    m = np.asarray(img.resize((w // s, h // s), Image.LANCZOS)).astype(np.float32) / 255
+    hh, ww = m.shape
+    rim = cv2.dilate((m > 0.5).astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (17, 17)))
+    edge = cv2.morphologyEx((m > 0.5).astype(np.uint8) * 255, cv2.MORPH_GRADIENT, np.ones((5, 5), np.uint8))
+    yy = np.linspace(-1, 1, hh)[:, None] * np.ones((1, ww))
+    shade = np.clip(yy * 0.9, 0, 1) * m
+    ht = halftone(shade, cell=7, color=(120, 100, 80), max_r=0.55)[..., 3].astype(np.float32) / 255
+    bone_col = np.array([236, 226, 200], np.float32) / 255
+    rgb = np.ones((hh, ww, 3), np.float32) * np.array(PALETTE["cream"], np.float32) / 255
+    rgb = rgb * (1 - m[..., None]) + bone_col * m[..., None]
+    rgb = rgb * (1 - 0.6 * ht[..., None]) + np.array([0.45, 0.38, 0.3]) * 0.6 * ht[..., None]
+    e = (edge.astype(np.float32) / 255)[..., None]
+    rgb = rgb * (1 - e) + np.array([0.2, 0.17, 0.14]) * e
+    a = np.maximum(rim.astype(np.float32), m)
+    out = (np.dstack([np.clip(rgb, 0, 1), a]) * 255).astype(np.uint8)
+    return add_shadow(out, dx=5, dy=8, blur=6, op=0.4)
+
+
+def star(size=160, color="orange"):
+    s = size * 3
+    img = Image.new("RGBA", (s, s), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    c = s / 2
+    pts = []
+    for k in range(10):
+        r = c * (0.95 if k % 2 == 0 else 0.4)
+        a = math.radians(-90 + k * 36)
+        pts.append((c + r * math.cos(a), c + r * math.sin(a)))
+    d.polygon(pts, fill=PALETTE["cream"] + (255,))
+    inner = [(c + (x - c) * 0.78, c + (y - c) * 0.78) for x, y in pts]
+    col = PALETTE[color] if isinstance(color, str) else color
+    d.polygon(inner, fill=col + (255,))
+    img = img.resize((size, size), Image.LANCZOS)
+    return add_shadow(_rgba(img), dx=3, dy=5, blur=4, op=0.35)
+
+
+def tape_x(size=700, color="orange", seed=0):
+    """Two crossed strips of coloured tape with torn ends (strike-out)."""
+    W = int(size * 1.15)
+    strip_w, strip_h = int(size * 1.05), int(size * 0.17)
+    canvas = Image.new("RGBA", (W, W), (0, 0, 0, 0))
+    col = PALETTE[color] if isinstance(color, str) else color
+    for k, ang in enumerate((40, -40)):
+        a = torn_mask(strip_w, strip_h, depth=6, seed=seed + k, sides="lr", soft=1.0)
+        n = fractal_noise(strip_h, strip_w, seed + k, octaves=(40, 8), weights=(0.6, 0.4))
+        rgb = np.array(col, np.float32)[None, None] / 255 * (0.92 + 0.12 * n[..., None])
+        st = Image.fromarray((np.dstack([np.clip(rgb, 0, 1), a * 0.96]) * 255).astype(np.uint8), "RGBA")
+        st = st.rotate(ang, expand=True, resample=Image.BICUBIC)
+        canvas.alpha_composite(st, ((W - st.width) // 2, (W - st.height) // 2))
+    return add_shadow(_rgba(canvas), dx=4, dy=6, blur=5, op=0.35)
+
+
+def ocean_strip(w=1300, h=420, seed=0):
+    """Torn strip of petrol halftone 'sea' (like the reference's water band)."""
+    base = np.zeros((h, w), np.float32) + 1.0
+    dots = halftone(base * 0.75, cell=16, color=(240, 236, 222), max_r=0.42, angle=45)
+    col = np.array(PALETTE["petrol"], np.float32) / 255
+    n = fractal_noise(h, w, seed, octaves=(120, 30), weights=(0.6, 0.4))
+    rgb = col[None, None] * (0.9 + 0.15 * n[..., None])
+    da = dots[..., 3:4].astype(np.float32) / 255
+    rgb = rgb * (1 - da * 0.55) + np.array([0.94, 0.93, 0.87]) * da * 0.55
+    a = torn_mask(w, h, depth=16, seed=seed, sides="tb", soft=1.2)
+    er = cv2.erode((a > 0.5).astype(np.uint8), np.ones((9, 9), np.uint8))
+    rim = ((a > 0.5) & (er == 0)).astype(np.float32)[..., None]
+    rgb = rgb * (1 - rim) + np.array(PALETTE["cream"], np.float32) / 255 * rim
+    out = (np.dstack([np.clip(rgb, 0, 1), a]) * 255).astype(np.uint8)
+    return add_shadow(out, dx=0, dy=-8, blur=8, op=0.35)
+
+
+def scribble_note(w=560, h=420, seed=0, lines=6):
+    """Paper note with handwritten-looking calculation scribbles (abstract)."""
+    img = Image.fromarray(paper(w, h, color="cream", seed=seed, depth=8), "RGBA")
+    d = ImageDraw.Draw(img)
+    rng = np.random.default_rng(seed)
+    ink = (40, 50, 90, 225)
+    y = h * 0.16
+    for i in range(lines):
+        x = w * 0.1
+        x_end = w * rng.uniform(0.55, 0.88)
+        pts = []
+        while x < x_end:
+            pts.append((x, y + rng.normal(0, 3) + 6 * math.sin(x * 0.18 + i)))
+            x += rng.uniform(4, 9)
+        d.line(pts, fill=ink, width=3, joint="curve")
+        if i == lines - 2:
+            d.line([(w * 0.1, y + 26), (w * 0.8, y + 26)], fill=ink, width=3)
+        y += (h * 0.7) / lines
+    d.ellipse([w * 0.58, y - 70, w * 0.9, y - 5], outline=PALETTE["orange"] + (230,), width=5)
+    return add_shadow(_rgba(img), dx=5, dy=9, blur=8, op=0.4)

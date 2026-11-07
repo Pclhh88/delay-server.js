@@ -73,6 +73,7 @@ ROUTE_FLOWN = [
 ]
 ROUTE_PLANNED = [(147.0, -6.7), (-176.6, 0.8), (-157.9, 21.3), (-122.2, 37.7)]
 HOWLAND = (-176.6, 0.8)
+NIKUMARORO = (-174.5, -4.68)
 
 MAP_LABELS = [
     dict(text="STILLER OZEAN", lon=200, lat=14, size=3.2, spacing=0.35),
@@ -120,7 +121,7 @@ def main():
     img = m.render(labels=MAP_LABELS, theme=THEMES["retro_teal"],
                    roses=[(205, -20, 5), (152, 28, 3.5), (250, 15, 3)])
     save("map_pacific", img, meta, proj=m.params(), howland=list(m.xy(*HOWLAND)),
-         lae=list(m.xy(147.0, -6.7)))
+         lae=list(m.xy(147.0, -6.7)), nikumaroro=list(m.xy(*NIKUMARORO)))
     print("map_pacific", img.shape)
 
     # world card: small landscape map on torn paper with the flown route
@@ -138,6 +139,21 @@ def main():
     save("lbl_earhart", g.label("Earhart", "orange", 120, seed=2), meta)
     save("lbl_1937", g.label("1937", "black", 190, seed=3), meta)
     save("lbl_howland", g.label("Howland Island", "petrol", 105, seed=5), meta)
+    save("lbl_2wochen", g.label("2 Wochen", "black", 130, seed=6), meta)
+    save("lbl_kein_flugzeug", g.label("Kein Flugzeug", "black", 110, seed=7), meta)
+    save("lbl_kein_wrack", g.label("Kein Wrack", "orange", 110, seed=8), meta)
+    save("lbl_nichts", g.label("Nichts.", "petrol", 170, seed=9), meta)
+    save("lbl_1940", g.label("1940", "black", 190, seed=10), meta)
+    save("lbl_nikumaroro", g.label("Nikumaroro", "petrol", 100, seed=11), meta)
+    save("lbl_2018", g.label("2018", "orange", 190, seed=12), meta)
+    save("stamp_mann", g.stamp("MANN", seed=1), meta)
+    save("bone1", g.bone(520, seed=1), meta)
+    save("bone2", g.bone(380, seed=2), meta)
+    save("star", g.star(150), meta)
+    save("tape_x", g.tape_x(700, seed=3), meta)
+    save("ocean_strip", g.ocean_strip(1300, 430, seed=4), meta)
+    save("scribble", g.scribble_note(seed=5), meta)
+    save("smoke", g.halftone_burst(320, cell=17, seed=7), meta)
     save("burst_orange", g.halftone_burst(900, seed=1), meta)
     save("arc_orange", g.halftone_arc(600, width=0.22, span=110, cell=15), meta)
     glass_window(os.path.join(OUT, "st_magnifier.png"), meta["st_magnifier"], (340, 420), 262)

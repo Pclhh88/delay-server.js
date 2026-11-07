@@ -133,7 +133,6 @@ T_WELT2 = w("Welt", T_1937, "end")
 T_ZIEL = w("Ziel")
 T_HOWLAND = w("Howland")
 T_ISLAND_END = w("Island", T_HOWLAND, "end")
-TEST_END = T_ISLAND_END + 0.45
 
 # ---------------------------------------------------------------- camera / map
 mp = META["map_pacific"]
@@ -150,20 +149,92 @@ def map_xy(lon, lat):
 
 fx0, fy0 = map_xy(-175, 8)
 T_ZOOM = T_WELT2 + 0.15
-cam_scale = [
-    {"t": 0.0, "scale": 1.0},
-    {"t": T_1937 - 0.2, "scale": 1.12, "ease": "inout"},
-    {"t": T_ZOOM, "scale": 1.06, "ease": "inout"},
-    {"t": T_HOWLAND + 0.55, "scale": 3.4, "ease": "inout"},
-    {"t": TEST_END + 3, "scale": 3.8, "ease": "linear"},
+nx, ny = mp["nikumaroro"]
+# word times for the rest of the video
+T_EINE = w("Eine", T_ISLAND_END)
+T_FLACH = w("flach")
+T_PFANN = w("Pfannkuchen")
+T_MITTEN = w("mitten")
+T_PAZ_END = w("Pazifik", T_MITTEN, "end")
+T_OHNE = w("Ohne")
+T_GPS = w("GPS")
+T_NUR = w("Nur")
+T_KOMPASS = w("Kompass")
+T_UHR = w("Uhr")
+T_SEXTANT = w("Sextant")
+T_STERNE = w("Sterne")
+T_STERNE_END = w("Sterne", T_STERNE, "end")
+T_SCHIFF = w("Schiff")
+T_FUNKT = w("funkt")
+T_DOCH = w("Doch")
+T_AMELIA2 = w("Amelia", T_DOCH)
+T_NICHT2 = w("nicht", T_DOCH)
+T_DANN = w("Dann")
+T_BRICHT = w("bricht")
+T_AB_END = w("ab", T_BRICHT, "end")
+T_NAVY = w("Navy")
+T_ZWEI = w("zwei")
+T_TRAEGER = w("Flugzeugträger")
+T_SCHLACHT = w("Schlachtschiff")
+T_KEIN1 = w("Kein", T_SCHLACHT)
+T_KEIN2 = w("Kein", T_KEIN1 + 0.1)
+T_NICHTS = w("Nichts")
+T_DREI = w("Drei")
+T_EINSAM = w("einsamen")
+T_SKELETT = w("Skelett")
+T_DANEBEN = w("Daneben")
+T_SCHUH = w("Frauenschuh")
+T_LEERE = w("leere")
+T_KISTE = w("Sextanten-Kiste")
+T_KISTE_END = w("Sextanten-Kiste", T_KISTE, "end")
+T_ARZT = w("Arzt")
+T_EINDEUTIG = w("eindeutig")
+T_MANN = w("Mann")
+T_FALL = w("Fall")
+T_ERLEDIGT_END = w("erledigt", T_FALL, "end")
+T_BIS = w("Bis")
+T_2018 = w("2018")
+T_FORSCHER = w("Forscher")
+T_KNOCHEN1 = w("Knochen")
+T_PASSEN = w("passen")
+T_AMELIA3 = w("Amelia", T_PASSEN)
+T_ALSO = w("Also")
+T_UNTERS = w("untersuchen")
+T_GEHT = w("Geht")
+T_KNOCHEN2 = w("Knochen", T_GEHT)
+T_VERSCHW = w("verschwunden")
+T_GENAU = w("Genau")
+END = 64.76
+TEST_END = END
+
+
+CAM = [  # (t, focus x, focus y in map px, zoom, ease)
+    (0.0, fx0, fy0, 1.0, None),
+    (T_1937 - 0.2, *map_xy(-168, 5), 1.12, "inout"),
+    (T_ZOOM, *map_xy(-168, 5), 1.06, "inout"),
+    (T_HOWLAND + 0.55, hx, hy, 3.4, "inout"),
+    (T_MITTEN - 0.05, hx, hy, 3.7, "linear"),
+    (T_PAZ_END + 0.1, *map_xy(-172, 2), 0.95, "inout"),
+    (T_SCHIFF - 0.3, *map_xy(-172, 3), 1.02, "linear"),
+    (T_SCHIFF + 0.4, hx, hy + 120, 1.45, "inout"),
+    (T_AB_END, hx, hy + 100, 1.55, "linear"),
+    (T_NAVY + 0.3, hx, hy + 60, 1.35, "inout"),
+    (T_NICHTS, hx, hy + 60, 1.45, "linear"),
+    (T_DREI + 0.2, hx, hy + 60, 1.45, "linear"),
+    (T_EINSAM, (hx + nx) / 2, (hy + ny) / 2 + 40, 1.7, "inout"),
+    (T_SKELETT - 0.2, nx, ny + 60, 2.3, "inout"),
+    (T_BIS, nx, ny + 60, 2.45, "linear"),
+    (T_GENAU - 1.2, nx, ny + 60, 2.55, "linear"),
+    (END, nx, ny + 60, 2.8, "inout"),
 ]
-fx1, fy1 = map_xy(-168, 5)
-cam_pan = [
-    {"t": 0.0, "x": 540 - fx0, "y": 960 - fy0},
-    {"t": T_1937 - 0.2, "x": 540 - fx1, "y": 960 - fy1, "ease": "inout"},
-    {"t": T_ZOOM, "x": 540 - fx1, "y": 960 - fy1},
-    {"t": T_HOWLAND + 0.55, "x": 540 - hx, "y": 960 - hy, "ease": "inout"},
-]
+cam_scale, cam_pan = [], []
+for t, x, y, s, e in CAM:
+    k1 = {"t": round(t, 3), "scale": s}
+    k2 = {"t": round(t, 3), "x": 540 - x, "y": 960 - y}
+    if e:
+        k1["ease"] = k2["ease"] = e
+    cam_scale.append(k1)
+    cam_pan.append(k2)
 layers.append({
     "id": "cam", "type": "group", "pivot": [540, 960], "keys": cam_scale,
     "children": [{
@@ -171,6 +242,10 @@ layers.append({
         "children": [
             {"id": "map", "type": "image", "asset": "map_pacific", "anchor": [0, 0],
              "props": {"x": 0, "y": 0}, "keys": []},
+            {"id": "dot2", "type": "image", "asset": "dot", "start": T_EINSAM, "end": 999,
+             "keys": [{"t": T_EINSAM, "x": nx, "y": ny, "scale": 0.0},
+                      {"t": T_EINSAM + 0.15, "scale": 0.24, "ease": "out"},
+                      {"t": T_EINSAM + 0.3, "scale": 0.17, "ease": "inout"}]},
             {"id": "dot", "type": "image", "asset": "dot", "start": T_ZIEL, "end": 999,
              "keys": [{"t": T_ZIEL, "x": hx, "y": hy, "scale": 0.0},
                       {"t": T_ZIEL + 0.15, "scale": 0.30, "ease": "out"},
@@ -356,24 +431,324 @@ rec("map_whoosh", T_ZOOM + 0.5, -4, peak=0.38)
 rec("ocean_wind", T_ZOOM, -22, trim=[0.0, 12.0], fade=1.0)
 rec("cardboard_hit", T_ZIEL + 0.08, -16)
 hs = scale_for("lbl_howland", 640)
-layers.append(image("lbl_howland", "lbl_howland", T_HOWLAND, TEST_END + 5,
-                    pop_in(T_HOWLAND, 540, 600, hs, rot=-2, dur=0.28)))
+layers.append(image("lbl_howland", "lbl_howland", T_HOWLAND, T_PAZ_END + 0.4, fix_keys(
+    pop_in(T_HOWLAND, 540, 600, hs, rot=-2, dur=0.28) + [
+        {"t": T_MITTEN, "x": 540, "y": 600}, exit_to(T_MITTEN, 540, -250, 0.35)])))
 rec("cardboard_hit", T_HOWLAND + 0.08, -8)
 mg = META["st_magnifier"]
 f_, ox, oy = mg["src_map"]
 lens = mg["lens"]   # glass centre in the sticker (build_assets.glass_window)
 mgs = scale_for("st_magnifier", 620)
 T_MAG = T_HOWLAND + 0.2
-layers.append(image("magnifier", "st_magnifier", T_MAG, TEST_END + 5, fix_keys(
-    slide_in(T_MAG, 1300, 1700, 540, 960, mgs, -35, -12, 0.42)), anchor=list(lens)))
+layers.append(image("magnifier", "st_magnifier", T_MAG, T_FLACH + 0.4, fix_keys(
+    slide_in(T_MAG, 1300, 1700, 540, 960, mgs, -35, -12, 0.42) + [
+        {"t": T_FLACH - 0.1, "x": 540, "y": 960}, exit_to(T_FLACH - 0.1, 1400, 1900, 0.35, rot=-40)]),
+    anchor=list(lens)))
 rec("paper_slide", T_MAG + 0.2, -8, peak=0.42)
+
+
+# ---------------------------------------------------------------- scene 5: pancake, pull back
+pk = scale_for("st_pancake", 520)
+layers.append(image("pancake", "st_pancake", T_FLACH, T_PAZ_END + 0.3, fix_keys([
+    {"t": T_FLACH, "x": 540, "y": 960, "scale": 0.0, "sx": 1.0, "sy": 1.0, "rot": -4},
+    {"t": T_FLACH + 0.18, "scale": pk * 1.1, "ease": "back_out"},
+    {"t": T_PFANN - 0.05, "sy": 1.0, "sx": 1.0},
+    {"t": T_PFANN + 0.1, "sy": 0.45, "sx": 1.25, "ease": "out"},
+    {"t": T_PFANN + 0.35, "sy": 0.62, "sx": 1.15, "ease": "inout"},
+    {"t": T_MITTEN, "scale": pk * 1.0},
+    {"t": T_MITTEN + 0.45, "scale": 0.0, "ease": "in"}])))
+rec("paper_drop", T_FLACH + 0.1, -6)
+rec("cardboard_hit", T_PFANN + 0.1, -9)
+rec("map_whoosh", T_MITTEN + 0.35, -5, peak=0.38)
+
+# ---------------------------------------------------------------- scene 6: no GPS, compass, watch, sextant, stars
+phs = scale_for("st_phone", 520)
+layers.append(image("phone", "st_phone", T_OHNE, T_NUR + 0.4, fix_keys(
+    pop_in(T_OHNE, 540, 980, phs, rot=6, dur=0.28) + [
+        {"t": T_NUR - 0.05, "x": 540, "y": 980}, exit_to(T_NUR - 0.05, 560, 2300, 0.3, rot=25)])))
+rec("paper_drop", T_OHNE + 0.1, -5)
+txs = scale_for("tape_x", 620)
+layers.append(image("tape_x1", "tape_x", T_GPS, T_NUR + 0.4, fix_keys([
+    {"t": T_GPS, "x": 540, "y": 980, "scale": txs * 1.6, "rot": -8, "opacity": 0.0},
+    {"t": T_GPS + 0.03, "opacity": 1.0},
+    {"t": T_GPS + 0.12, "scale": txs, "ease": "out"},
+    {"t": T_NUR - 0.05, "x": 540, "y": 980}, exit_to(T_NUR - 0.05, 560, 2300, 0.3, rot=10)])))
+rec("paper_tear", T_GPS + 0.05, -8)
+for i, (aid, t, x, y, wdt, rot) in enumerate([("st_compass", T_KOMPASS, 290, 820, 400, -8),
+                                              ("st_watch", T_UHR, 800, 860, 360, 7),
+                                              ("st_sextant", T_SEXTANT, 560, 1220, 600, -3)]):
+    sc = scale_for(aid, wdt)
+    layers.append(image(f"nav{i}", aid, t, T_STERNE_END + 0.6, fix_keys(
+        pop_in(t, x, y, sc, rot=rot, dur=0.28) + [
+            {"t": T_STERNE_END + 0.1, "x": x, "y": y}, exit_to(T_STERNE_END + 0.1, x, -400 if y < 1000 else 2400, 0.3)])))
+    rec("paper_drop", t + 0.1, -6 - i)
+st_s = scale_for("star", 90)
+for i, (x, y) in enumerate([(200, 420), (420, 330), (650, 400), (880, 330), (980, 520), (120, 600)]):
+    t = T_STERNE + i * 0.07
+    layers.append(image(f"star{i}", "star", t, T_STERNE_END + 0.5, fix_keys([
+        {"t": t, "x": x, "y": y, "scale": 0.0, "rot": i * 17},
+        {"t": t + 0.15, "scale": st_s * (1.3 if i % 2 else 1.0), "ease": "back_out"},
+        {"t": T_STERNE_END + 0.1, "scale": st_s * (1.3 if i % 2 else 1.0), "rot": i * 17 + 30},
+        {"t": T_STERNE_END + 0.4, "scale": 0.0, "ease": "in"}])))
+rec("typewriter_bell", T_STERNE + 0.05, -16)
+
+# ---------------------------------------------------------------- scene 7: Itasca radios, Amelia can't hear, radio dies
+T_S7 = T_SCHIFF - 0.25
+T_S7_OUT = T_NAVY - 0.3
+os_ = scale_for("ocean_strip", 1250)
+layers.append(image("ocean", "ocean_strip", T_S7, T_S7_OUT + 0.4, fix_keys(
+    slide_in(T_S7, 540, 2300, 540, 1290, os_, 0, -1.5, 0.35) + [
+        {"t": T_S7_OUT, "x": 540, "y": 1290}, exit_to(T_S7_OUT, 540, 2400, 0.35)]), jitter=False))
+its = scale_for("st_itasca", 760)
+it = META["st_itasca"]
+IX, IY = 560, 1110
+SHIP_PTS = {"funnel": (-124, -45), "mast": (-80, -290)}   # measured offsets from the ship centre
+
+
+def on_ship(name):
+    dx, dy = SHIP_PTS[name]
+    return IX + dx, IY + dy
+
+
+layers.append(image("smoke", "smoke", T_SCHIFF + 0.1, T_S7_OUT + 0.4, fix_keys([
+    {"t": T_SCHIFF + 0.1, "x": on_ship("funnel")[0], "y": on_ship("funnel")[1], "scale": 0.0, "rot": 0},
+    {"t": T_SCHIFF + 0.7, "x": on_ship("funnel")[0] - 60, "y": on_ship("funnel")[1] - 120,
+     "scale": scale_for("smoke", 230), "ease": "out"},
+    {"t": T_S7_OUT, "x": on_ship("funnel")[0] - 150, "y": on_ship("funnel")[1] - 230, "scale": scale_for("smoke", 330), "rot": 12},
+    {"t": T_S7_OUT + 0.3, "scale": 0.0, "ease": "in"}]), jitter=False))
+layers.append(image("itasca", "st_itasca", T_SCHIFF - 0.1, T_S7_OUT + 0.4, fix_keys(
+    slide_in(T_SCHIFF - 0.1, 1500, IY + 40, IX, IY, its, 6, 0, 0.45) + [
+        {"t": T_S7_OUT, "x": IX, "y": IY}, exit_to(T_S7_OUT, -600, IY + 100, 0.35, rot=-8)])))
+rec("ship_horn", T_SCHIFF + 0.05, -12, trim=[0.0, 2.8], fade=0.8)
+rec("paper_slide", T_SCHIFF, -9, peak=0.42)
+# Amelia's plane, small, upper left
+PX, PY = 760, 330
+layers.append(image("electra3", "st_electra", T_FUNKT, T_AB_END + 0.2, fix_keys([
+    {"t": T_FUNKT, "x": 1400, "y": PY - 60, "scale": scale_for("st_electra", 380), "sx": -1, "rot": 6, "opacity": 1.0},
+    {"t": T_FUNKT + 0.6, "x": PX, "y": PY, "ease": "out3"},
+    {"t": T_BRICHT, "x": PX - 120, "y": PY + 20},
+    {"t": T_BRICHT + 0.08, "opacity": 0.2}, {"t": T_BRICHT + 0.16, "opacity": 1.0},
+    {"t": T_BRICHT + 0.28, "opacity": 0.1}, {"t": T_BRICHT + 0.36, "opacity": 0.9},
+    {"t": T_BRICHT + 0.6, "opacity": 0.0, "x": PX - 160}])))
+rec("plane_distant", T_FUNKT, -20, trim=[2.0, 6.5], fade=0.8)
+# radio waves from the mast towards the plane; they stop short of it
+mx, my = on_ship("mast")
+ang_up = math.degrees(math.atan2(PY - my, PX - mx))
+t = T_FUNKT
+i = 0
+while t < T_NICHT2:
+    layers.append(image(f"swave{i}", "arc_orange", t, t + 1.3, [
+        {"t": t, "x": mx, "y": my, "scale": arc_s * 0.25, "rot": ang_up, "opacity": 1.0},
+        {"t": t + 0.9, "opacity": 0.9},
+        {"t": t + 1.3, "scale": arc_s * 1.55, "opacity": 0.0, "ease": "out"}], jitter=False))
+    t += 0.38
+    i += 1
+rec("morse_beeps", T_FUNKT, -20)
+# "hört es nicht": red flash
+layers.append({"id": "flash1", "type": "solid", "start": T_NICHT2 - 0.02, "end": T_NICHT2 + 0.6,
+               "color": [168, 40, 45], "keys": [{"t": T_NICHT2 - 0.02, "opacity": 0.0},
+                                               {"t": T_NICHT2 + 0.1, "opacity": 0.45},
+                                               {"t": T_NICHT2 + 0.55, "opacity": 0.0}]})
+rec("suspense_hit", T_NICHT2, -16)
+# "bricht der Funk ab": static, colour drains
+rec("radio_cutoff", T_DANN, -10, trim=[0.0, 2.2], fade=0.4)
+layers.append({"id": "drain", "type": "grade", "start": T_BRICHT, "end": T_NAVY + 0.3,
+               "keys": [{"t": T_BRICHT, "saturation": 1.0}, {"t": T_BRICHT + 0.5, "saturation": 0.15},
+                        {"t": T_NAVY - 0.1, "saturation": 0.15}, {"t": T_NAVY + 0.3, "saturation": 1.0}]})
+
+# ---------------------------------------------------------------- scene 8: Navy search
+T_S8_OUT = T_NICHTS + 0.45
+circles = []
+for k, rdeg in enumerate((2.0, 4.0, 6.5)):
+    r = rdeg * mp["proj"]["ppd"]
+    pts = [[hx + r * math.cos(a), hy + r * math.sin(a)] for a in [2 * math.pi * j / 90 for j in range(91)]]
+    t0 = T_NAVY + 0.2 + 0.5 * k
+    circles.append({"id": f"search{k}", "type": "dashed_path", "start": t0, "end": T_S8_OUT + 0.3,
+                    "points": pts, "props": {"x": 0, "y": 0}, "width": 7, "dash": 26, "gap": 18,
+                    "color": [245, 238, 220],
+                    "keys": [{"t": t0, "progress": 0.0, "opacity": 0.95},
+                             {"t": t0 + 1.6, "progress": 1.0, "ease": "inout"},
+                             {"t": T_S8_OUT, "opacity": 0.95}, {"t": T_S8_OUT + 0.3, "opacity": 0.0}]})
+layers[0]["children"][0]["children"] += circles
+rec("sonar_ping", T_NAVY, -12)
+rec("sonar_ping", T_NAVY + 2.6, -16)
+ws = scale_for("lbl_2wochen", 520)
+layers.append(image("lbl_2wochen", "lbl_2wochen", T_ZWEI, T_KEIN1, fix_keys(
+    pop_in(T_ZWEI, 540, 330, ws, rot=-3, dur=0.28) + [
+        {"t": T_KEIN1 - 0.35, "x": 540, "y": 330}, exit_to(T_KEIN1 - 0.35, 540, -250, 0.3)])))
+rec("cardboard_hit", T_ZWEI + 0.08, -8)
+lxs = scale_for("st_lexington", 700)
+layers.append(image("lexington", "st_lexington", T_TRAEGER - 0.1, T_S8_OUT + 0.4, fix_keys(
+    slide_in(T_TRAEGER - 0.1, -600, 760, 380, 700, lxs, -4, -3, 0.45) + [
+        {"t": T_KEIN1 - 0.3, "x": 420, "y": 700},
+        {"t": T_S8_OUT - 0.3, "x": 430, "y": 700}, exit_to(T_S8_OUT - 0.3, -700, 650, 0.3)])))
+rec("paper_slide", T_TRAEGER, -8, peak=0.42)
+cos_ = scale_for("st_colorado", 760)
+layers.append(image("colorado", "st_colorado", T_SCHLACHT - 0.1, T_S8_OUT + 0.4, fix_keys(
+    slide_in(T_SCHLACHT - 0.1, 1700, 1300, 660, 1260, cos_, 4, 2, 0.45) + [
+        {"t": T_S8_OUT - 0.3, "x": 640, "y": 1260}, exit_to(T_S8_OUT - 0.3, 1800, 1300, 0.3)])))
+rec("paper_slide", T_SCHLACHT, -8, peak=0.42)
+rec("ship_horn", T_SCHLACHT + 0.2, -16, trim=[0.0, 2.0], fade=0.6)
+for i, (lid, t, y, rot) in enumerate([("lbl_kein_flugzeug", T_KEIN1, 470, -3),
+                                      ("lbl_kein_wrack", T_KEIN2, 1060, 2)]):
+    sc = scale_for(lid, 640 if i == 0 else 560)
+    layers.append(image(lid, lid, t, T_S8_OUT + 0.4, fix_keys(
+        pop_in(t, 540, y, sc, rot=rot, dur=0.26) + [
+            {"t": T_S8_OUT - 0.1, "x": 540, "y": y}, exit_to(T_S8_OUT - 0.1, 540, -300 if i == 0 else 2300, 0.3)])))
+    rec("cardboard_hit", t + 0.08, -6)
+nsc = scale_for("lbl_nichts", 700)
+layers.append(image("lbl_nichts", "lbl_nichts", T_NICHTS, T_DREI + 0.3, fix_keys(
+    pop_in(T_NICHTS, 540, 780, nsc, rot=-2, dur=0.3) + [
+        {"t": T_DREI - 0.15, "x": 540, "y": 780}, exit_to(T_DREI - 0.15, 540, -300, 0.3)])))
+layers.append({"id": "flash2", "type": "solid", "start": T_NICHTS - 0.02, "end": T_NICHTS + 0.6,
+               "color": [168, 40, 45], "keys": [{"t": T_NICHTS - 0.02, "opacity": 0.0},
+                                               {"t": T_NICHTS + 0.12, "opacity": 0.5},
+                                               {"t": T_NICHTS + 0.55, "opacity": 0.0}]})
+rec("suspense_hit", T_NICHTS, -7)
+rec("paper_tear", T_S8_OUT - 0.25, -10)
+
+# ---------------------------------------------------------------- scene 9: 1940, Nikumaroro, finds
+T_S9_OUT = T_ARZT - 0.4
+l40 = scale_for("lbl_1940", 440)
+layers.append(image("lbl_1940", "lbl_1940", T_DREI, T_SKELETT, fix_keys(
+    pop_in(T_DREI, 540, 330, l40, rot=-4, dur=0.3) + [
+        {"t": T_SKELETT - 0.4, "x": 540, "y": 330}, exit_to(T_SKELETT - 0.4, 540, -300, 0.3)])))
+rec("cardboard_hit", T_DREI + 0.08, -6)
+layers[0]["children"][0]["children"].append({
+    "id": "to_niku", "type": "dashed_path", "start": T_DREI + 0.4, "end": END + 1,
+    "points": [[hx, hy], [nx, ny]], "props": {"x": 0, "y": 0}, "width": 6, "dash": 20, "gap": 13,
+    "color": [232, 112, 58], "keys": [{"t": T_DREI + 0.4, "progress": 0.0},
+                                      {"t": T_EINSAM, "progress": 1.0, "ease": "inout"}]})
+rec("pen_scribble", T_DREI + 0.4, -12, trim=[0.0, T_EINSAM - T_DREI], fade=0.3)
+nks = scale_for("lbl_nikumaroro", 560)
+layers.append(image("lbl_niku", "lbl_nikumaroro", T_EINSAM + 0.1, T_SKELETT, fix_keys(
+    pop_in(T_EINSAM + 0.1, 540, 1260, nks, rot=2, dur=0.28) + [
+        {"t": T_SKELETT - 0.4, "x": 540, "y": 1260}, exit_to(T_SKELETT - 0.4, 540, 2300, 0.3)])))
+rec("cardboard_hit", T_EINSAM + 0.18, -9)
+layers.append({"id": "dim2", "type": "solid", "start": T_SKELETT - 0.3, "end": T_GENAU + 0.6,
+               "color": [20, 24, 22], "keys": [{"t": T_SKELETT - 0.3, "opacity": 0.0},
+                                               {"t": T_SKELETT, "opacity": 0.3},
+                                               {"t": T_VERSCHW, "opacity": 0.3},
+                                               {"t": T_GENAU + 0.4, "opacity": 0.0}]})
+b1, b2 = scale_for("bone1", 520), scale_for("bone2", 380)
+for i, (aid, sc, x, y, rot, dt) in enumerate([("bone1", b1, 520, 760, -18, 0.0), ("bone2", b2, 640, 900, 24, 0.12),
+                                              ("bone2", b2, 400, 940, 70, 0.22)]):
+    layers.append(image(f"bones{i}", aid, T_SKELETT + dt, T_S9_OUT + 0.4, fix_keys(
+        pop_in(T_SKELETT + dt, x, y, sc, rot=rot, dur=0.26) + [
+            {"t": T_S9_OUT, "x": x, "y": y}, exit_to(T_S9_OUT, x, -400, 0.3)])))
+rec("bones_rattle", T_SKELETT, -6)
+rec("heartbeat_low", T_SKELETT + 0.3, -10, trim=[0.0, 4.5], fade=0.8)
+shs = scale_for("st_shoe", 420)
+layers.append(image("shoe", "st_shoe", T_SCHUH, T_S9_OUT + 0.4, fix_keys(
+    pop_in(T_SCHUH, 300, 1200, shs, rot=-10, dur=0.28) + [
+        {"t": T_S9_OUT, "x": 300, "y": 1200}, exit_to(T_S9_OUT, -500, 1300, 0.3)])))
+rec("paper_drop", T_SCHUH + 0.1, -5)
+bxs = scale_for("st_box_empty", 470)
+layers.append(image("box", "st_box_empty", T_LEERE, T_S9_OUT + 0.4, fix_keys(
+    pop_in(T_LEERE, 770, 1220, bxs, rot=6, dur=0.28) + [
+        {"t": T_S9_OUT, "x": 770, "y": 1220}, exit_to(T_S9_OUT, 1600, 1300, 0.3)])))
+rec("box_open", T_LEERE + 0.05, -6, trim=[0.0, 1.2], fade=0.3)
+# callback: ghost of the sextant from the navigation scene rises from the box
+gs = scale_for("st_sextant", 380)
+layers.append(image("ghost_sextant", "st_sextant", T_KISTE + 0.2, T_S9_OUT + 0.1, [
+    {"t": T_KISTE + 0.2, "x": 770, "y": 1180, "scale": gs * 0.6, "rot": 0, "opacity": 0.0},
+    {"t": T_KISTE + 0.5, "opacity": 0.55, "y": 1020, "scale": gs, "ease": "out"},
+    {"t": T_KISTE_END + 0.3, "opacity": 0.0, "y": 960}], jitter=False))
+rec("map_whoosh", T_KISTE + 0.3, -14, peak=0.38)
+
+# ---------------------------------------------------------------- scene 10: doctor, stamp, case closed
+T_S10_OUT = T_BIS - 0.2
+ds_ = scale_for("st_doctor", 560)
+layers.append(image("doctor", "st_doctor", T_ARZT - 0.1, T_S10_OUT + 0.4, fix_keys(
+    slide_in(T_ARZT - 0.1, -500, 900, 300, 880, ds_, -10, -3, 0.4) + [
+        {"t": T_S10_OUT, "x": 300, "y": 880}, exit_to(T_S10_OUT, -600, 900, 0.3)])))
+rec("paper_slide", T_ARZT, -6, peak=0.42)
+fs_ = scale_for("st_folder", 520)
+FX, FY = 760, 1180
+folder_keys = fix_keys(pop_in(T_EINDEUTIG, FX, FY, fs_, rot=5, dur=0.28) + [
+    {"t": T_FALL, "x": FX, "y": FY, "rot": 5},
+    {"t": T_FALL + 0.15, "y": FY + 25, "rot": 3, "ease": "out"},
+    {"t": T_FALL + 0.3, "y": FY, "rot": 5, "ease": "inout"},
+    {"t": T_ALSO - 0.1, "x": FX, "y": FY},
+    {"t": T_ALSO + 0.3, "x": 540, "y": 1050, "scale": fs_ * 1.25, "rot": 2, "ease": "inout"}])
+layers.append(image("folder", "st_folder", T_EINDEUTIG, T_UNTERS, folder_keys))
+rec("paper_drop", T_EINDEUTIG + 0.1, -6)
+sm = scale_for("stamp_mann", 380)
+
+
+def stamp_keys(t0):
+    return [{"t": t0, "x": FX, "y": FY - 30, "scale": sm * 2.2, "rot": -14, "opacity": 0.0},
+            {"t": t0 + 0.03, "opacity": 1.0},
+            {"t": t0 + 0.1, "scale": sm, "ease": "in"}]
+
+
+stamp_k = fix_keys(stamp_keys(T_MANN) + [
+    {"t": T_FALL, "y": FY - 30}, {"t": T_FALL + 0.15, "y": FY - 5, "ease": "out"},
+    {"t": T_FALL + 0.3, "y": FY - 30, "ease": "inout"},
+    {"t": T_ALSO - 0.1, "x": FX, "y": FY - 30, "scale": sm}, exit_to(T_ALSO - 0.1, FX + 900, FY - 200, 0.3)])
+layers.append(image("stamp", "stamp_mann", T_MANN, T_ALSO + 0.3, stamp_k))
+rec("stamp", T_MANN + 0.08, -3)
+rec("file_close", T_FALL + 0.1, -5)
+
+# ---------------------------------------------------------------- scene 11: 2018 recalculation
+l18 = scale_for("lbl_2018", 440)
+layers.append(image("lbl_2018", "lbl_2018", T_2018, T_ALSO, fix_keys(
+    pop_in(T_2018, 540, 330, l18, rot=3, dur=0.3) + [
+        {"t": T_ALSO - 0.4, "x": 540, "y": 330}, exit_to(T_ALSO - 0.4, 540, -300, 0.3)])))
+rec("cardboard_hit", T_2018 + 0.08, -5)
+rec("suspense_hit", T_2018 + 0.05, -12)
+scs = scale_for("scribble", 460)
+layers.append(image("scribble", "scribble", T_FORSCHER, T_ALSO, fix_keys(
+    slide_in(T_FORSCHER, -500, 900, 290, 860, scs, -15, -6, 0.35) + [
+        {"t": T_ALSO - 0.3, "x": 290, "y": 860}, exit_to(T_ALSO - 0.3, -600, 900, 0.3)])))
+rec("paper_slide", T_FORSCHER + 0.1, -8, peak=0.42)
+rec("pen_scribble", T_FORSCHER + 0.35, -9, trim=[0.0, 1.6], fade=0.3)
+# strike the stamp through with an orange line
+layers.append({"id": "strike", "type": "dashed_path", "start": T_KNOCHEN1, "end": T_ALSO,
+               "points": [[FX - 230, FY - 10], [FX + 230, FY - 70]], "props": {"x": 0, "y": 0},
+               "width": 16, "dash": 2000, "gap": 1, "color": [232, 112, 58],
+               "keys": [{"t": T_KNOCHEN1, "progress": 0.0}, {"t": T_KNOCHEN1 + 0.3, "progress": 1.0, "ease": "out"}]})
+rec("pen_scribble", T_KNOCHEN1, -12, trim=[2.8, 3.3], fade=0.1)
+p2s = scale_for("st_portrait2", 400)
+layers.append(image("burst2", "burst_orange", T_AMELIA3 - 0.15, T_UNTERS, fix_keys([
+    {"t": T_AMELIA3 - 0.15, "x": 300, "y": 880, "scale": 0.0, "rot": 0},
+    {"t": T_AMELIA3 + 0.2, "scale": scale_for("burst_orange", 640), "ease": "back_out"},
+    {"t": T_UNTERS - 0.3, "rot": 10},
+    {"t": T_UNTERS, "scale": 0.0, "ease": "in"}]), jitter=False))
+layers.append(image("portrait2", "st_portrait2", T_AMELIA3 - 0.1, T_VERSCHW + 0.5, fix_keys(
+    pop_in(T_AMELIA3 - 0.1, 290, 900, p2s, rot=-4, dur=0.3) + [
+        {"t": T_VERSCHW, "x": 290, "y": 900, "opacity": 1.0},
+        {"t": T_VERSCHW + 0.08, "opacity": 0.3}, {"t": T_VERSCHW + 0.16, "opacity": 0.9},
+        {"t": T_VERSCHW + 0.45, "opacity": 0.0}])))
+rec("paper_drop", T_AMELIA3, -5)
+
+# ---------------------------------------------------------------- scene 12: examine again? gone.
+layers.append(image("folder_open", "st_folder_open", T_UNTERS, T_GENAU + 0.2, fix_keys([
+    {"t": T_UNTERS, "x": 560, "y": 1080, "scale": scale_for("st_folder_open", 600), "rot": 2},
+    {"t": T_VERSCHW, "x": 560, "y": 1080},
+    exit_to(T_VERSCHW, 560, 2400, 0.4, rot=15)])))
+rec("box_open", T_UNTERS, -8, trim=[0.0, 1.0], fade=0.3)
+layers.append(image("magnifier2", "st_magnifier", T_ALSO + 0.1, T_VERSCHW + 0.5, fix_keys(
+    slide_in(T_ALSO + 0.1, 1400, 1700, 620, 1060, mgs, -40, -15, 0.45) + [
+        {"t": T_UNTERS + 0.3, "x": 600, "y": 1100},
+        {"t": T_GEHT, "x": 560, "y": 1060, "ease": "inout"},
+        exit_to(T_VERSCHW, 1500, 2000, 0.35, rot=-40)]), anchor=list(lens)))
+rec("paper_slide", T_ALSO + 0.2, -9, peak=0.42)
+layers.append({"id": "flash3", "type": "solid", "start": T_GEHT - 0.02, "end": T_GEHT + 0.6,
+               "color": [168, 40, 45], "keys": [{"t": T_GEHT - 0.02, "opacity": 0.0},
+                                               {"t": T_GEHT + 0.12, "opacity": 0.45},
+                                               {"t": T_GEHT + 0.55, "opacity": 0.0}]})
+rec("suspense_hit", T_GEHT, -9)
+rec("paper_tear", T_VERSCHW, -6)
+rec("ocean_wind", T_VERSCHW, -20, trim=[0.0, END - T_VERSCHW], fade=0.15)
 
 # ---------------------------------------------------------------- page texture on top
 layers.append({"id": "page", "type": "multiply_image", "asset": "page", "keys": []})
 
 # ---------------------------------------------------------------- captions
 HIDE = [(0.0, T_EARHART + 0.6), (T_QUOTE - 0.05, T_KNAPP + 0.5), (T_1937 - 0.05, T_1937 + 1.2),
-        (T_HOWLAND - 0.05, T_ISLAND_END + 0.1)]
+        (T_HOWLAND - 0.05, T_ISLAND_END + 0.1), (T_KEIN1 - 0.05, T_DREI - 0.05),
+        (T_2018 - 0.05, T_2018 + 1.0)]
 BIG = {"berühmteste", "nicht.", "gps.", "nichts.", "skelett.", "mann.", "verschwunden.", "knapp."}
 caps = []
 for i, x in enumerate(WORDS):
