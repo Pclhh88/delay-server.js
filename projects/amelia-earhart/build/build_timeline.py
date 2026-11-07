@@ -543,7 +543,7 @@ while t < T_NICHT2:
         {"t": t + 1.3, "scale": arc_s * 1.55, "opacity": 0.0, "ease": "out"}], jitter=False))
     t += 0.38
     i += 1
-rec("morse_beeps", T_FUNKT, -20)
+sfx("morse_beeps", T_FUNKT, -20)
 # "hört es nicht": red flash
 layers.append({"id": "flash1", "type": "solid", "start": T_NICHT2 - 0.02, "end": T_NICHT2 + 0.6,
                "color": [168, 40, 45], "keys": [{"t": T_NICHT2 - 0.02, "opacity": 0.0},

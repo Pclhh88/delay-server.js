@@ -6996,7 +6996,7 @@
    "fade_out": 0.8
   },
   {
-   "src": "audio/sfx_prepared/morse_beeps.wav",
+   "src": "@sfx/morse_beeps",
    "start": 27.537,
    "gain_db": -20
   },
