@@ -1,0 +1,757 @@
+[
+ {
+  "text": "Die",
+  "start": 0.06,
+  "end": 0.298
+ },
+ {
+  "text": "Mary",
+  "start": 0.298,
+  "end": 0.775
+ },
+ {
+  "text": "Celeste.",
+  "start": 0.775,
+  "end": 1.49
+ },
+ {
+  "text": "Ein",
+  "start": 1.84,
+  "end": 2.054
+ },
+ {
+  "text": "Schiff",
+  "start": 2.054,
+  "end": 2.268
+ },
+ {
+  "text": "ohne",
+  "start": 2.268,
+  "end": 2.695
+ },
+ {
+  "text": "einen",
+  "start": 2.695,
+  "end": 3.123
+ },
+ {
+  "text": "einzigen",
+  "start": 3.123,
+  "end": 3.765
+ },
+ {
+  "text": "Menschen",
+  "start": 3.765,
+  "end": 4.192
+ },
+ {
+  "text": "an",
+  "start": 4.192,
+  "end": 4.406
+ },
+ {
+  "text": "Bord.",
+  "start": 4.406,
+  "end": 4.62
+ },
+ {
+  "text": "Gefunden",
+  "start": 4.99,
+  "end": 5.583
+ },
+ {
+  "text": "im",
+  "start": 5.583,
+  "end": 5.78
+ },
+ {
+  "text": "Dezember",
+  "start": 5.78,
+  "end": 6.373
+ },
+ {
+  "text": "1872,",
+  "start": 6.373,
+  "end": 7.954
+ },
+ {
+  "text": "mitten",
+  "start": 7.954,
+  "end": 8.35
+ },
+ {
+  "text": "im",
+  "start": 8.35,
+  "end": 8.547
+ },
+ {
+  "text": "Atlantik.",
+  "start": 8.547,
+  "end": 9.14
+ },
+ {
+  "text": "Die",
+  "start": 9.46,
+  "end": 9.696
+ },
+ {
+  "text": "Segel",
+  "start": 9.696,
+  "end": 10.169
+ },
+ {
+  "text": "gesetzt,",
+  "start": 10.169,
+  "end": 10.642
+ },
+ {
+  "text": "die",
+  "start": 10.642,
+  "end": 10.878
+ },
+ {
+  "text": "Ladung",
+  "start": 10.878,
+  "end": 11.351
+ },
+ {
+  "text": "fast",
+  "start": 11.351,
+  "end": 11.587
+ },
+ {
+  "text": "komplett,",
+  "start": 11.587,
+  "end": 12.06
+ },
+ {
+  "text": "Essen",
+  "start": 12.31,
+  "end": 12.73
+ },
+ {
+  "text": "für",
+  "start": 12.73,
+  "end": 12.94
+ },
+ {
+  "text": "sechs",
+  "start": 12.94,
+  "end": 13.15
+ },
+ {
+  "text": "Monate.",
+  "start": 13.15,
+  "end": 13.78
+ },
+ {
+  "text": "Gestartet",
+  "start": 14.18,
+  "end": 14.777
+ },
+ {
+  "text": "ist",
+  "start": 14.777,
+  "end": 14.976
+ },
+ {
+  "text": "sie",
+  "start": 14.976,
+  "end": 15.175
+ },
+ {
+  "text": "im",
+  "start": 15.175,
+  "end": 15.374
+ },
+ {
+  "text": "November",
+  "start": 15.374,
+  "end": 15.971
+ },
+ {
+  "text": "in",
+  "start": 15.971,
+  "end": 16.17
+ },
+ {
+  "text": "New",
+  "start": 16.24,
+  "end": 16.527
+ },
+ {
+  "text": "York.",
+  "start": 16.527,
+  "end": 17.1
+ },
+ {
+  "text": "An",
+  "start": 17.34,
+  "end": 17.538
+ },
+ {
+  "text": "Bord:",
+  "start": 17.538,
+  "end": 17.735
+ },
+ {
+  "text": "Kapitän",
+  "start": 17.735,
+  "end": 18.328
+ },
+ {
+  "text": "Benjamin",
+  "start": 18.328,
+  "end": 18.92
+ },
+ {
+  "text": "Briggs,",
+  "start": 19.07,
+  "end": 19.245
+ },
+ {
+  "text": "seine",
+  "start": 19.245,
+  "end": 19.595
+ },
+ {
+  "text": "Frau,",
+  "start": 19.595,
+  "end": 19.77
+ },
+ {
+  "text": "ihre",
+  "start": 19.85,
+  "end": 20.226
+ },
+ {
+  "text": "zweijährige",
+  "start": 20.226,
+  "end": 20.977
+ },
+ {
+  "text": "Tochter",
+  "start": 20.977,
+  "end": 21.353
+ },
+ {
+  "text": "und",
+  "start": 21.353,
+  "end": 21.541
+ },
+ {
+  "text": "sieben",
+  "start": 21.541,
+  "end": 21.916
+ },
+ {
+  "text": "Seeleute.",
+  "start": 21.916,
+  "end": 22.48
+ },
+ {
+  "text": "Ladung:",
+  "start": 22.8,
+  "end": 23.34
+ },
+ {
+  "text": "über",
+  "start": 23.56,
+  "end": 24.027
+ },
+ {
+  "text": "1.700",
+  "start": 24.027,
+  "end": 24.962
+ },
+ {
+  "text": "Fässer",
+  "start": 24.962,
+  "end": 25.429
+ },
+ {
+  "text": "Alkohol.",
+  "start": 25.429,
+  "end": 26.13
+ },
+ {
+  "text": "Vier",
+  "start": 26.54,
+  "end": 26.744
+ },
+ {
+  "text": "Wochen",
+  "start": 26.744,
+  "end": 27.153
+ },
+ {
+  "text": "später",
+  "start": 27.153,
+  "end": 27.562
+ },
+ {
+  "text": "entdeckt",
+  "start": 27.562,
+  "end": 27.97
+ },
+ {
+  "text": "ein",
+  "start": 27.97,
+  "end": 28.175
+ },
+ {
+  "text": "anderes",
+  "start": 28.175,
+  "end": 28.788
+ },
+ {
+  "text": "Schiff,",
+  "start": 28.788,
+  "end": 28.992
+ },
+ {
+  "text": "die",
+  "start": 28.992,
+  "end": 29.197
+ },
+ {
+  "text": "Dei",
+  "start": 29.197,
+  "end": 29.401
+ },
+ {
+  "text": "Gratia,",
+  "start": 29.401,
+  "end": 30.014
+ },
+ {
+  "text": "sie",
+  "start": 30.014,
+  "end": 30.218
+ },
+ {
+  "text": "vor",
+  "start": 30.218,
+  "end": 30.423
+ },
+ {
+  "text": "den",
+  "start": 30.423,
+  "end": 30.627
+ },
+ {
+  "text": "Azoren.",
+  "start": 30.627,
+  "end": 31.24
+ },
+ {
+  "text": "Persönliche",
+  "start": 31.55,
+  "end": 32.144
+ },
+ {
+  "text": "Sachen",
+  "start": 32.144,
+  "end": 32.441
+ },
+ {
+  "text": "liegen",
+  "start": 32.441,
+  "end": 32.739
+ },
+ {
+  "text": "noch",
+  "start": 32.739,
+  "end": 32.887
+ },
+ {
+  "text": "in",
+  "start": 32.887,
+  "end": 33.036
+ },
+ {
+  "text": "den",
+  "start": 33.036,
+  "end": 33.184
+ },
+ {
+  "text": "Kabinen.",
+  "start": 33.184,
+  "end": 33.63
+ },
+ {
+  "text": "Nur",
+  "start": 33.98,
+  "end": 34.243
+ },
+ {
+  "text": "das",
+  "start": 34.243,
+  "end": 34.507
+ },
+ {
+  "text": "Rettungsboot",
+  "start": 34.507,
+  "end": 35.297
+ },
+ {
+  "text": "fehlt.",
+  "start": 35.297,
+  "end": 35.56
+ },
+ {
+  "text": "Und",
+  "start": 35.88,
+  "end": 36.2
+ },
+ {
+  "text": "der",
+  "start": 36.27,
+  "end": 36.513
+ },
+ {
+  "text": "Sextant.",
+  "start": 36.513,
+  "end": 37.0
+ },
+ {
+  "text": "Die",
+  "start": 37.38,
+  "end": 37.558
+ },
+ {
+  "text": "Finder",
+  "start": 37.558,
+  "end": 37.914
+ },
+ {
+  "text": "schleppen",
+  "start": 37.914,
+  "end": 38.271
+ },
+ {
+  "text": "sie",
+  "start": 38.271,
+  "end": 38.449
+ },
+ {
+  "text": "nach",
+  "start": 38.449,
+  "end": 38.627
+ },
+ {
+  "text": "Gibraltar",
+  "start": 38.627,
+  "end": 39.161
+ },
+ {
+  "text": "und",
+  "start": 39.161,
+  "end": 39.339
+ },
+ {
+  "text": "wollen",
+  "start": 39.339,
+  "end": 39.696
+ },
+ {
+  "text": "Bergelohn.",
+  "start": 39.696,
+  "end": 40.23
+ },
+ {
+  "text": "Doch",
+  "start": 40.59,
+  "end": 40.812
+ },
+ {
+  "text": "der",
+  "start": 40.812,
+  "end": 41.034
+ },
+ {
+  "text": "Staatsanwalt",
+  "start": 41.034,
+  "end": 41.701
+ },
+ {
+  "text": "findet",
+  "start": 41.701,
+  "end": 42.146
+ },
+ {
+  "text": "Flecken",
+  "start": 42.146,
+  "end": 42.59
+ },
+ {
+  "text": "auf",
+  "start": 42.59,
+  "end": 42.812
+ },
+ {
+  "text": "einem",
+  "start": 42.812,
+  "end": 43.257
+ },
+ {
+  "text": "Schwert",
+  "start": 43.257,
+  "end": 43.479
+ },
+ {
+  "text": "und",
+  "start": 43.479,
+  "end": 43.701
+ },
+ {
+  "text": "Kerben",
+  "start": 43.701,
+  "end": 44.146
+ },
+ {
+  "text": "am",
+  "start": 44.146,
+  "end": 44.368
+ },
+ {
+  "text": "Bug.",
+  "start": 44.368,
+  "end": 44.59
+ },
+ {
+  "text": "Sein",
+  "start": 44.88,
+  "end": 45.123
+ },
+ {
+  "text": "Verdacht:",
+  "start": 45.123,
+  "end": 45.61
+ },
+ {
+  "text": "Mord.",
+  "start": 45.89,
+  "end": 46.13
+ },
+ {
+  "text": "Die",
+  "start": 46.13,
+  "end": 46.37
+ },
+ {
+  "text": "Finder",
+  "start": 46.66,
+  "end": 47.11
+ },
+ {
+  "text": "haben",
+  "start": 47.11,
+  "end": 47.56
+ },
+ {
+  "text": "alle",
+  "start": 47.56,
+  "end": 48.01
+ },
+ {
+  "text": "getötet,",
+  "start": 48.01,
+  "end": 48.685
+ },
+ {
+  "text": "für",
+  "start": 48.685,
+  "end": 48.91
+ },
+ {
+  "text": "das",
+  "start": 48.91,
+  "end": 49.135
+ },
+ {
+  "text": "Geld.",
+  "start": 49.135,
+  "end": 49.36
+ },
+ {
+  "text": "Ein",
+  "start": 49.68,
+  "end": 49.935
+ },
+ {
+  "text": "Arzt",
+  "start": 49.935,
+  "end": 50.19
+ },
+ {
+  "text": "untersucht",
+  "start": 50.19,
+  "end": 50.955
+ },
+ {
+  "text": "die",
+  "start": 50.955,
+  "end": 51.21
+ },
+ {
+  "text": "Flecken:",
+  "start": 51.21,
+  "end": 51.72
+ },
+ {
+  "text": "kein",
+  "start": 51.72,
+  "end": 51.975
+ },
+ {
+  "text": "Blut.",
+  "start": 51.975,
+  "end": 52.23
+ },
+ {
+  "text": "Wahrscheinlich",
+  "start": 52.48,
+  "end": 53.245
+ },
+ {
+  "text": "Rost.",
+  "start": 53.245,
+  "end": 53.5
+ },
+ {
+  "text": "Die",
+  "start": 53.8,
+  "end": 54.004
+ },
+ {
+  "text": "Finder",
+  "start": 54.004,
+  "end": 54.411
+ },
+ {
+  "text": "bekommen",
+  "start": 54.411,
+  "end": 55.022
+ },
+ {
+  "text": "einen",
+  "start": 55.022,
+  "end": 55.429
+ },
+ {
+  "text": "Teil",
+  "start": 55.429,
+  "end": 55.633
+ },
+ {
+  "text": "ihres",
+  "start": 55.633,
+  "end": 56.04
+ },
+ {
+  "text": "Geldes.",
+  "start": 56.29,
+  "end": 56.68
+ },
+ {
+  "text": "Nur:",
+  "start": 56.87,
+  "end": 57.102
+ },
+ {
+  "text": "Rost",
+  "start": 57.102,
+  "end": 57.333
+ },
+ {
+  "text": "erklärt",
+  "start": 57.333,
+  "end": 57.796
+ },
+ {
+  "text": "nicht,",
+  "start": 57.796,
+  "end": 58.028
+ },
+ {
+  "text": "wo",
+  "start": 58.028,
+  "end": 58.259
+ },
+ {
+  "text": "zehn",
+  "start": 58.259,
+  "end": 58.491
+ },
+ {
+  "text": "Menschen",
+  "start": 58.491,
+  "end": 58.954
+ },
+ {
+  "text": "geblieben",
+  "start": 58.954,
+  "end": 59.648
+ },
+ {
+  "text": "sind.",
+  "start": 59.648,
+  "end": 59.88
+ },
+ {
+  "text": "Das",
+  "start": 60.18,
+  "end": 60.408
+ },
+ {
+  "text": "Boot",
+  "start": 60.408,
+  "end": 60.635
+ },
+ {
+  "text": "wurde",
+  "start": 60.635,
+  "end": 61.09
+ },
+ {
+  "text": "nie",
+  "start": 61.09,
+  "end": 61.318
+ },
+ {
+  "text": "gefunden.",
+  "start": 61.318,
+  "end": 62.0
+ },
+ {
+  "text": "Was",
+  "start": 62.34,
+  "end": 62.596
+ },
+ {
+  "text": "bleibt,",
+  "start": 62.596,
+  "end": 62.851
+ },
+ {
+  "text": "ist",
+  "start": 62.851,
+  "end": 63.107
+ },
+ {
+  "text": "nur",
+  "start": 63.107,
+  "end": 63.363
+ },
+ {
+  "text": "ein",
+  "start": 63.363,
+  "end": 63.619
+ },
+ {
+  "text": "Name:",
+  "start": 63.619,
+  "end": 64.13
+ }
+]

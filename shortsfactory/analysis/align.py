@@ -23,6 +23,8 @@ NUM_WORDS = {
     "1937": "neunzehnhundertsiebenunddreissig",
     "2018": "zweitausendachtzehn",
     "GPS": "gepeess",
+    "1872": "achtzehnhundertzweiundsiebzig",
+    "1.700": "siebzehnhundert",
 }
 
 
