@@ -369,3 +369,27 @@ def scribble_note(w=560, h=420, seed=0, lines=6):
         y += (h * 0.7) / lines
     d.ellipse([w * 0.58, y - 70, w * 0.9, y - 5], outline=PALETTE["orange"] + (230,), width=5)
     return add_shadow(_rgba(img), dx=5, dy=9, blur=8, op=0.4)
+
+
+def city_label(name, size=44, ink=(64, 46, 28), halo=(246, 240, 226)):
+    """Map city marker: ringed dot + serif name with a paper halo.
+    Returns (rgba, anchor) – anchor (0..1) is the dot centre."""
+    f = ImageFont.truetype(font("serif"), size)
+    r = max(4, int(size * 0.24))
+    tw = f.getlength(name)
+    asc, desc = f.getmetrics()
+    pad = int(size * 0.45)
+    Wd = int(2 * pad + 2 * r + size * 0.35 + tw)
+    Hd = int(2 * pad + max(asc + desc, 2 * r))
+    img = Image.new("RGBA", (Wd, Hd), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    cx, cy = pad + r, Hd / 2
+    d.ellipse([cx - r - 3, cy - r - 3, cx + r + 3, cy + r + 3], fill=tuple(halo) + (255,))
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=tuple(ink) + (255,))
+    d.ellipse([cx - r * 0.55, cy - r * 0.55, cx + r * 0.55, cy + r * 0.55], fill=PALETTE["orange"] + (255,))
+    d.text((cx + r + size * 0.35, cy), name, font=f, fill=tuple(ink) + (255,), anchor="lm",
+           stroke_width=max(2, size // 11), stroke_fill=tuple(halo) + (235,))
+    blur, dx, dy = 3, 2, 3
+    pad_s = int(blur * 3 + max(dx, dy))
+    out = add_shadow(_rgba(img), dx=dx, dy=dy, blur=blur, op=0.3, pad=pad_s)
+    return out, [(cx + pad_s) / out.shape[1], (cy + pad_s) / out.shape[0]]
