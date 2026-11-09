@@ -1,7 +1,8 @@
 """Timeline renderer.
 
 Renders a timeline JSON (see docs/TIMELINE_SCHEMA.md) into an MP4.
-All coordinates in the timeline are *design units* on a 1080x1920 canvas;
+All coordinates in the timeline are *design units* on a 1080x1920 canvas
+(or the canvas given in timeline meta "design", e.g. [1920, 1080] for 16:9);
 the output resolution is free (e.g. 480x854 for comparison against the
 reference, 1080x1920 for publishing).
 
@@ -74,8 +75,10 @@ class Renderer:
         self.tl = timeline
         self.base = base_dir
         self.W, self.H = out_w, out_h
-        self.k = out_w / DESIGN_W
-        self.ky = out_h / DESIGN_H
+        # design canvas: 1080x1920 (Shorts) by default, or timeline meta "design": [w, h]
+        self.DW, self.DH = timeline["meta"].get("design", [DESIGN_W, DESIGN_H])
+        self.k = out_w / self.DW
+        self.ky = out_h / self.DH
         self.fps = timeline["meta"].get("fps", 30)
         self.assets = {}
         manifest = timeline.get("assets", {})
@@ -141,9 +144,9 @@ class Renderer:
         x = p.get("x")
         y = p.get("y")
         if x is None:
-            x = layer.get("pivot", [DESIGN_W / 2, DESIGN_H / 2])[0]
+            x = layer.get("pivot", [self.DW / 2, self.DH / 2])[0]
         if y is None:
-            y = layer.get("pivot", [DESIGN_W / 2, DESIGN_H / 2])[1]
+            y = layer.get("pivot", [self.DW / 2, self.DH / 2])[1]
         s = p.get("scale", 1.0)
         return translate(x, y) @ rotate(p.get("rot", 0.0)) @ scale(s * p.get("sx", 1.0), s * p.get("sy", 1.0))
 
@@ -174,7 +177,7 @@ class Renderer:
         typ = layer["type"]
         blend = layer.get("blend", "normal")
         if typ == "group":
-            pivot = layer.get("pivot", [DESIGN_W / 2, DESIGN_H / 2])
+            pivot = layer.get("pivot", [self.DW / 2, self.DH / 2])
             M = parent_M @ self._local_matrix(layer, p) @ translate(-pivot[0], -pivot[1])
             if layer.get("isolate"):
                 buf = np.zeros(canvas.shape[:2] + (4,), np.float32)

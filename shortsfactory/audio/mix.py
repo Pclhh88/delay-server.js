@@ -47,6 +47,11 @@ def mix(timeline, base_dir, start=0.0, end=None):
             a, b = item["trim"]
             x = x[int(a * SR):int(b * SR)]
         x = x * (10 ** (item.get("gain_db", 0.0) / 20))
+        fi = item.get("fade_in")
+        if fi:
+            k = min(int(fi * SR), len(x))
+            x = x.copy()
+            x[:k] *= np.linspace(0, 1, k)[:, None]
         fo = item.get("fade_out")
         if fo:
             k = min(int(fo * SR), len(x))

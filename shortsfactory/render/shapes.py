@@ -84,7 +84,7 @@ def radial_bg(r, layer, p, t, M):
     inner = np.array(layer.get("inner", [52, 52, 52]), np.float32) / 255
     outer = np.array(layer.get("outer", [8, 8, 8]), np.float32) / 255
     gamma = layer.get("gamma", 1.0)
-    Mi = np.linalg.inv(M @ _local(r, layer, p) @ np.array([[1, 0, -540], [0, 1, -960], [0, 0, 1]]))
+    Mi = np.linalg.inv(M @ _local(r, layer, p) @ np.array([[1, 0, -r.DW / 2], [0, 1, -r.DH / 2], [0, 0, 1]]))
     ys, xs = np.mgrid[0:r.H, 0:r.W].astype(np.float32)
     dx = Mi[0, 0] * xs + Mi[0, 1] * ys + Mi[0, 2]
     dy = Mi[1, 0] * xs + Mi[1, 1] * ys + Mi[1, 2]
@@ -97,9 +97,9 @@ def radial_bg(r, layer, p, t, M):
 
 
 def solid(r, layer, p, t, M):
-    x, y, w, h = layer.get("rect", [0, 0, 1080, 1920])
+    x, y, w, h = layer.get("rect", [0, 0, r.DW, r.DH])
     pts = [[x, y], [x + w, y], [x + w, y + h], [x, y + h]]
-    Mt = M @ _local(r, layer, p) @ np.array([[1, 0, -540], [0, 1, -960], [0, 0, 1]])
+    Mt = M @ _local(r, layer, p) @ np.array([[1, 0, -r.DW / 2], [0, 1, -r.DH / 2], [0, 0, 1]])
     col = list(layer.get("color", [255, 255, 255]))
     if len(col) == 3:
         col.append(1.0)
@@ -138,7 +138,7 @@ def glow(r, layer, p, t, M):
 
 
 def polygon(r, layer, p, t, M):
-    Mt = M @ _local(r, layer, p) @ np.array([[1, 0, -540], [0, 1, -960], [0, 0, 1]])
+    Mt = M @ _local(r, layer, p) @ np.array([[1, 0, -r.DW / 2], [0, 1, -r.DH / 2], [0, 0, 1]])
     col = list(layer.get("color", [255, 255, 255]))
     if len(col) == 3:
         col.append(1.0)

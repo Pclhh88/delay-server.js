@@ -27,7 +27,10 @@ NUM_WORDS = {
 
 
 def syllables(word):
-    w = NUM_WORDS.get(word.strip(".,:;!?„“\"…"), word).lower()
+    core = word.strip(".,:;!?„“\"…")
+    if core not in NUM_WORDS and any(c.isdigit() for c in core):
+        return max(2, round(2.2 * sum(c.isdigit() for c in core)))
+    w = NUM_WORDS.get(core, word).lower()
     w = re.sub(r"[^a-zäöüß]", "", w)
     if not w:
         return 1

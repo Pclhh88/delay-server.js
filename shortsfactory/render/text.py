@@ -74,16 +74,77 @@ class TextRenderer:
         self._cache[key] = res
         return res
 
+    def render_phrase(self, words, active, style, k):
+        """One caption line (several words) as RGBA; the active word gets the
+        highlight colour.  Cached per (phrase, active word)."""
+        key = ("phrase", tuple(words), active, id(style), k)
+        if key in self._cache:
+            return self._cache[key]
+        px = style["size"] * k
+        f = self.font(style["font"], px)
+        sw = max(1, int(round(style.get("stroke_w", 0) * k)))
+        space = f.getlength(" ")
+        widths = [f.getlength(wd) for wd in words]
+        total = sum(widths) + space * (len(words) - 1)
+        pad = int(px * 0.5 + sw * 2 + 8 * k)
+        asc, desc = f.getmetrics()
+        W, H = int(total + 2 * pad), int(asc + desc + 2 * pad)
+        layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        box = style.get("box")
+        if box:
+            d0 = ImageDraw.Draw(layer)
+            bp = box.get("pad", 14) * k
+            d0.rounded_rectangle([pad - bp, pad - bp * 0.6, pad + total + bp, pad + asc + desc + bp * 0.6],
+                                 radius=box.get("radius", 10) * k, fill=tuple(box["color"]) + (int(255 * box.get("alpha", 0.6)),))
+        sh = style.get("shadow") or {}
+        if sh:
+            shadow = Image.new("L", (W, H), 0)
+            ds = ImageDraw.Draw(shadow)
+            x = pad
+            for wd, wdt in zip(words, widths):
+                ds.text((x + sh.get("dx", 0) * k, pad + sh.get("dy", 0) * k), wd, font=f, fill=255,
+                        stroke_width=sw, stroke_fill=255)
+                x += wdt + space
+            shadow = shadow.filter(ImageFilter.GaussianBlur(sh.get("blur", 2) * k))
+            sl = Image.new("RGBA", (W, H), tuple(sh.get("color", [0, 0, 0])) + (0,))
+            sl.putalpha(shadow.point(lambda v: int(v * sh.get("alpha", 0.7))))
+            layer = Image.alpha_composite(layer, sl)
+        d = ImageDraw.Draw(layer)
+        x = pad
+        for i, (wd, wdt) in enumerate(zip(words, widths)):
+            col = style.get("highlight", style["fill"]) if i == active else style["fill"]
+            d.text((x, pad), wd, font=f, fill=tuple(col), stroke_width=sw, stroke_fill=tuple(style.get("stroke", [0, 0, 0])))
+            x += wdt + space
+        a = np.asarray(layer).astype(np.float32) / 255
+        a[..., :3] *= a[..., 3:4]
+        res = (a, (W / 2, H / 2))
+        self._cache[key] = res
+        return res
+
     def draw_caption(self, r, canvas, cap, t):
         style = dict(DEFAULT_CAPTION_STYLE)
         style.update(cap.get("style", {}))
         cap["style_resolved"] = style
+        if style.get("mode") == "phrase":
+            # cap["phrases"] = [{"start", "end", "words": [{"text","start","end"}]}]
+            for ph in cap["phrases"]:
+                if ph["start"] <= t < ph["end"]:
+                    texts = [w["text"].upper() if style.get("uppercase") else w["text"] for w in ph["words"]]
+                    active = max([i for i, w in enumerate(ph["words"]) if w["start"] <= t] or [-1])
+                    img, (cx, cy) = self.render_phrase(texts, active, id_style(style), r.k)
+                    x = style.get("x", r.DW / 2) * r.k
+                    y = style["y"] * r.ky
+                    M = np.array([[1, 0, x - cx], [0, 1, y - cy]], np.float64)
+                    warped = cv2.warpAffine(img, M, (r.W, r.H), flags=cv2.INTER_LINEAR,
+                                            borderMode=cv2.BORDER_CONSTANT, borderValue=(0, 0, 0, 0))
+                    r._composite(canvas, warped, "normal", 1.0)
+            return
         for w in cap["words"]:
             if w["start"] <= t < w["end"]:
                 txt = w["text"].upper() if style.get("uppercase") else w["text"]
                 size = style["sizes"].get(w.get("size"), style["size"]) if w.get("size") else style["size"]
                 img, (cx, cy) = self.render_word(txt, id_style(style), size, r.k)
-                x = w.get("x", 540) * r.k
+                x = w.get("x", r.DW / 2) * r.k
                 y = w.get("y", style["y"]) * r.ky
                 M = np.array([[1, 0, x - cx], [0, 1, y - cy]], np.float64)
                 warped = cv2.warpAffine(img, M, (r.W, r.H), flags=cv2.INTER_LINEAR,
