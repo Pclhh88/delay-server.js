@@ -60,6 +60,7 @@ LABELS = [
 
 def main():
     AB.OUT = OUT                       # build the Short's assets into this project
+    AB.DETAIL_TILES = True             # close-up island look (reef, lagoon, vegetation)
     AB.main()
     meta = json.load(open(os.path.join(OUT, "meta.json")))
     for i, (name, src) in enumerate(STICKERS.items()):

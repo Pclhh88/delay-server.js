@@ -101,7 +101,7 @@ def chaikin(pts, n=3):
     return pts
 
 
-def atoll(raw, rim=0.0034, passage=((-174.5405, -4.6655), 0.0017), k=40000):
+def atoll(raw, rim=0.0045, passage=((-174.5405, -4.6655), 0.0017), k=40000):
     """Atoll from a coarse outline: outer shore = smoothed hull of the OSM points,
     lagoon = shore offset inwards by the land-rim width, plus one passage to the sea
     (Nikumaroro: Tatiman Passage on the west side).  Simplified, not survey-exact."""
@@ -152,6 +152,9 @@ TILES = [
 ]
 
 
+DETAIL_TILES = False   # close-up island look for zoom tiles (the long version switches it on)
+
+
 def save(name, arr, meta, **extra):
     Image.fromarray(arr, "RGBA" if arr.shape[2] == 4 else "RGB").save(os.path.join(OUT, name + ".png"))
     meta[name] = dict(w=arr.shape[1], h=arr.shape[0], **extra)
@@ -199,7 +202,7 @@ def main():
     for name, lon, lat, ppd, tw, th in TILES:
         hw, hh = tw / 2 / ppd, th / 2 / ppd
         tm = VintageMap(lon - hw, lon + hw, lat + hh, lat - hh, ppd=ppd, style_ppd=40, extra_land=extra)
-        timg = tm.render(theme=THEMES["retro_teal"], grid=15, folds=(1, 1), feather=0.14, seed=11)
+        timg = tm.render(theme=dict(THEMES["retro_teal"], detail=DETAIL_TILES), grid=15, folds=(1, 1), feather=0.14, seed=11)
         x0, y0 = m.xy(lon - hw, lat + hh)
         save(name, timg, meta, pos=[x0, y0], design_scale=m.ppd / ppd, ppd=ppd)
         print(name, timg.shape)

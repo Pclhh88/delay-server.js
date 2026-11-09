@@ -214,8 +214,8 @@ S.sticker("l10min", "lbl_10min", T1["zehn"], T1["Danach"] - 0.2, 1400, 180, 380,
 S.sticker("lla", "lbl_la", T1["Los"], T1["Danach"] - 0.2, 760, 700, 360, -2, exit=(760, 1400), sound="cardboard_hit", gain=-10)
 vs = S.scale_for("st_vega", 300)
 S.image("vega_loop", "st_vega", T1["zehn"] - 0.2, T1["Danach"] + 0.2, [
-    {"t": T1["zehn"] - 0.2, "x": -300, "y": 470, "scale": vs, "rot": -8},
-    {"t": T1["Danach"] + 0.2, "x": 2250, "y": 380, "rot": -14}])
+    {"t": T1["zehn"] - 0.2, "x": -300, "y": 470, "scale": vs, "sx": -1, "rot": 8},
+    {"t": T1["Danach"] + 0.2, "x": 2250, "y": 380, "rot": 2}])
 rec("plane_flyby", T1["zehn"] + 0.8, -10, trim=[1.6, 5.0], fade=0.6, peak=2.0)
 S.sticker("ljobbt", "lbl_jobbt", T1["jobbt"], T1["1928"] - 0.3, 960, 170, 460, -2, exit=(960, -250), sound="cardboard_hit", gain=-8)
 S.sticker("vega_buy", "st_vega", T1["gebrauchtes"], T1["1928"] - 0.3, 1050, 560, 620, -4, exit=(2500, 500), gain=-5)
@@ -237,7 +237,7 @@ S.sticker("l1932", "lbl_1932", T1["1932"], T1["Weltstar"] - 0.3, 960, 160, 300, 
 r32 = [list(HGR), [(HGR[0] + CUL[0]) / 2, (HGR[1] + CUL[1]) / 2 - 70], list(CUL)]
 T32A, T32B = T1["fliegt32"], T1["zweiter"] + 0.2
 vk, vprog = path_keys([tuple(p) for p in r32], T32A, T32B)
-vk[0].update({"scale": S.scale_for("st_vega", 210) / 1.3, "rot": -6})
+vk[0].update({"scale": S.scale_for("st_vega", 210) / 1.3, "sx": -1, "rot": 6})   # Vega's nose points left: mirror for eastbound
 MAP_EXTRA.append({"id": "route32", "type": "dashed_path", "start": T32A, "end": T1["Aber"] + 0.5, "points": r32,
                   "props": {"x": 0, "y": 0}, "width": 6 / 1.3, "dash": 18 / 1.3, "gap": 11 / 1.3,
                   "color": [232, 112, 58], "keys": vprog})
@@ -306,11 +306,11 @@ S.audio += [
 ]
 
 HIDE = [(0.0, T_QEND + 0.3)]
-caps = phrase_captions(WORDS, hide=HIDE)
+caps = None                      # no subtitles in the long version (user feedback)
 assets = {name: {"path": f"build/assets/{name}.png", "license": "own"} for name, m in M.items()
           if isinstance(m, dict) and "w" in m}
 timeline = {"meta": {"fps": 30, "width": W, "height": H, "design": [W, H], "duration": round(END, 3)},
-            "assets": assets, "layers": S.layers, "captions": caps,
+            "assets": assets, "layers": S.layers,
             "audio": [{"id": "voice", "src": "audio/voice_komplett.mp3", "start": 0.0, "gain_db": 0.0}] + S.audio}
 out = os.path.join(HERE, "timeline.json")
 json.dump(timeline, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)

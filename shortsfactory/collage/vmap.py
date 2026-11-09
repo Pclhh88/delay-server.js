@@ -122,6 +122,64 @@ class VintageMap:
                 cv2.fillPoly(mask, [pts], 0 if ring_i else 255, lineType=cv2.LINE_AA, shift=2)
         return cv2.resize(mask, (self.W, self.H), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
 
+    def hole_mask(self, ss=2):
+        """Water inside extra land (lagoons, passages) as 0..1 mask."""
+        mask = np.zeros((self.H * ss, self.W * ss), np.uint8)
+        for ring, hole in self.extra_land:
+            if not hole:
+                continue
+            x = (ring[:, 0] - self.lon_min) * self.ppd * ss
+            y = (self.lat_max - ring[:, 1]) * self.ppd * ss
+            cv2.fillPoly(mask, [np.round(np.c_[x, y] * 4).astype(np.int32)], 255, lineType=cv2.LINE_AA, shift=2)
+        return cv2.resize(mask, (self.W, self.H), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
+
+    def _detail(self, img, land, th, seed):
+        """Close-up island look (theme key "detail"): rough coastline, reef flat with
+        surf line, turquoise lagoon, sand beach and stippled vegetation.
+        Feature sizes are in degrees, so they scale correctly across zoom tiles."""
+        H, W, ppd = self.H, self.W, self.ppd
+        sig = max(0.6, 0.0003 * ppd)
+        octs = tuple(max(4, int(f * ppd)) for f in (0.006, 0.002, 0.0007))
+        rn = fractal_noise(H, W, seed + 40, octaves=octs, weights=(0.5, 0.3, 0.2))
+        rn2 = fractal_noise(H, W, seed + 41, octaves=octs, weights=(0.5, 0.3, 0.2))
+        m = cv2.GaussianBlur(land, (0, 0), sig)
+        land = np.clip((m - 0.5 + (rn - 0.5) * 0.8) * 4 + 0.5, 0, 1)
+        lag = cv2.GaussianBlur(self.hole_mask(), (0, 0), sig) * (1 - land)
+        dist_in = cv2.distanceTransform((land > 0.5).astype(np.uint8), cv2.DIST_L2, 5)
+        dist_out = cv2.distanceTransform((land < 0.5).astype(np.uint8), cv2.DIST_L2, 5)
+        reef_w = 0.0028 * ppd * (0.7 + 0.6 * rn2)
+        beach_w = 0.0007 * ppd
+        outside = (1 - lag) * (1 - land)
+        shallow = np.array(th.get("shallow", (150, 192, 170)), np.float32) / 255
+        reef = np.clip((reef_w - dist_out) / (0.3 * reef_w + 1), 0, 1) * outside
+        img = img * (1 - reef[..., None] * 0.8) + shallow * (0.92 + 0.16 * rn[..., None]) * reef[..., None] * 0.8
+        surf = np.exp(-((dist_out - reef_w) / (0.1 * reef_w + 0.8)) ** 2) * outside
+        img = img * (1 - surf[..., None] * 0.55) + np.array([0.96, 0.95, 0.9]) * surf[..., None] * 0.55
+        lagc = np.array(th.get("lagoon", (138, 196, 182)), np.float32) / 255
+        img = img * (1 - lag[..., None]) + lagc * (0.9 + 0.2 * rn2[..., None]) * lag[..., None]
+        sand = np.array(th.get("sand", (234, 216, 170)), np.float32) / 255
+        veg = np.array(th.get("veg", (112, 124, 74)), np.float32) / 255
+        vegm = np.clip((dist_in - beach_w) / (0.6 * beach_w + 1), 0, 1)
+        land_c = sand * (1 - vegm[..., None]) + veg * (0.85 + 0.3 * rn[..., None]) * vegm[..., None]
+        # tree crowns: dark dots with a light rim, only where there is vegetation
+        r = max(2, int(round(0.00022 * ppd))) if ppd >= 2500 else 0
+        if r >= 2:
+            rng = np.random.default_rng(seed + 42)
+            ys, xs = np.nonzero(vegm > 0.6)
+            if len(xs):
+                n_trees = int(len(xs) / (r * r * 3.5))
+                pick = rng.integers(0, len(xs), min(n_trees, 60000))
+                shade = np.zeros((H, W), np.float32)
+                for x, y in zip(xs[pick], ys[pick]):
+                    rr = int(r * rng.uniform(0.7, 1.3))
+                    cv2.circle(shade, (int(x), int(y)), rr, 1.0, -1, cv2.LINE_AA)
+                    cv2.circle(shade, (int(x - rr * 0.35), int(y - rr * 0.35)), max(1, rr // 3), 0.35, -1, cv2.LINE_AA)
+                shade = cv2.GaussianBlur(shade, (0, 0), max(0.6, r * 0.25))
+                land_c = land_c * (1 - 0.35 * np.clip(shade, 0, 1)[..., None])
+        img = img * (1 - land[..., None]) + land_c * land[..., None]
+        th["coast_alpha"] = 0.35
+        return img, land
+
     def render(self, labels=(), seed=3, grid=15, folds=(3, 2), water_lines=True, theme=None, roses=(), feather=0.0):
         """theme: None (clean teal) or a dict from THEMES (retro looks).
         roses: [(lon, lat, radius_deg)] compass roses with rhumb lines."""
@@ -139,6 +197,9 @@ class VintageMap:
         inner = np.clip(dist_in / (3.0 * self.u), 0, 1)[..., None]
         land_col = lnd[None, None] * (0.9 + 0.2 * n[..., None]) * (0.94 + 0.08 * inner)
         img = img * (1 - land[..., None]) + land_col * land[..., None]
+        if th.get("detail"):
+            img, land = self._detail(img, land, th, seed)
+            th["coast_wash"], th["stipple"] = None, 0.0
         # water lining (offshore ripple lines, classic engraved maps)
         if th.get("coast_wash"):
             # hand-tinted watercolour band along the coast, inside the land
@@ -169,7 +230,8 @@ class VintageMap:
         edge = cv2.morphologyEx((land * 255).astype(np.uint8), cv2.MORPH_GRADIENT, np.ones((3, 3), np.uint8))
         edge = cv2.GaussianBlur(edge.astype(np.float32) / 255, (0, 0), max(0.6, self.u / 30))
         edge = np.clip(edge * 1.6, 0, 1)[..., None]
-        img = img * (1 - edge * 0.8) + coast[None, None] * edge * 0.8
+        ca = th.get("coast_alpha", 0.8)
+        img = img * (1 - edge * ca) + coast[None, None] * edge * ca
         img = np.clip(img, 0, 1)
         pil = Image.fromarray((img * 255).astype(np.uint8), "RGB").convert("RGBA")
         ov = Image.new("RGBA", (W, H), (0, 0, 0, 0))
