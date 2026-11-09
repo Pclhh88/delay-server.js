@@ -35,6 +35,36 @@ STICKERS = {
     "tv": "D13_fernseher.png", "house": "D14_haus.png", "court": "D15_gerichtsakte.png",
 }
 
+# optional user images; until they exist a generated stand-in is used
+OPTIONAL = {
+    "sonar": "E1_sonarbild.png",
+    "news1928": "N1_zeitung_1928.png", "news1932": "N2_zeitung_1932.png",
+    "news1937": "N3_zeitung_1937.png", "news2024": "N4_zeitung_2024.png",
+}
+NEWS_FALLBACK = {
+    "news1928": ("FIRST WOMAN\nFLIES ATLANTIC", "JUNE 1928"), "news1932": ("AMELIA FLIES\nATLANTIC ALONE", "MAY 1932"),
+    "news1937": ("EARHART LOST\nAT SEA", "JULY 1937"), "news2024": ("EARHART PLANE\nFOUND?", "JAN 2024"),
+}
+
+
+def optional(meta):
+    """(re)build only the optional user images – fast, no map rendering"""
+    for i, (name, src) in enumerate(OPTIONAL.items()):
+        path = os.path.join(CUT, src)
+        if os.path.exists(path):
+            meta[f"st_{name}"] = sticker_file(path, os.path.join(OUT, f"st_{name}.png"), seed=300 + i)
+            print("sticker", name)
+        elif name in NEWS_FALLBACK:
+            hl, d = NEWS_FALLBACK[name]
+            arr = g.newspaper(headline=hl, date=d, seed=20 + i)
+            Image.fromarray(arr, "RGBA").save(os.path.join(OUT, f"st_{name}.png"))
+            meta[f"st_{name}"] = dict(w=arr.shape[1], h=arr.shape[0])
+            print("stand-in", name)
+        else:                                   # sonar: stand-in = the rock (darkened later in the timeline)
+            meta[f"st_{name}"] = dict(meta["st_rock"], file="st_rock")
+            print("stand-in", name, "(rock)")
+
+
 # (lon, lat) – lon given in the copy of the 455°-wide map that the scene uses
 PLACES = {
     "atchison": (-95.12, 39.56, "Atchison"), "los_angeles": (-118.24, 34.05, "Los Angeles"),
@@ -167,9 +197,15 @@ def main():
     for k, (_, _, name) in PLACES.items():
         arr, anc = g.city_label(name)
         save("city_" + k, arr, anchor=anc)
+    optional(meta)
     json.dump(meta, open(os.path.join(OUT, "meta.json"), "w"), indent=1)
     print("done ->", OUT)
 
 
 if __name__ == "__main__":
-    main()
+    if "--optional" in sys.argv:              # only the user images (fast)
+        m = json.load(open(os.path.join(OUT, "meta.json")))
+        optional(m)
+        json.dump(m, open(os.path.join(OUT, "meta.json"), "w"), indent=1)
+    else:
+        main()

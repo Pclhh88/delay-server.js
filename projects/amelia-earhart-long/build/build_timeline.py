@@ -226,7 +226,7 @@ MAP_EXTRA.append({"id": "route28", "type": "dashed_path", "start": T1["fliegt28"
                            {"t": T1["fliegt28"] + 2.0, "progress": 1.0, "ease": "inout"},
                            {"t": T1["fliegt32"], "opacity": 1.0}, {"t": T1["fliegt32"] + 0.4, "opacity": 0.0}]})
 rec("pen_scribble", T1["fliegt28"], -13, trim=[0.0, 2.2], fade=0.3)
-S.sticker("news28", "newspaper_1928", T1["fliegt28"] + 0.4, T1["Das2"] - 0.3, 420, 560, 360, -6, exit=(-400, 600), sound="newspaper", gain=-8)
+S.sticker("news28", "st_news1928", T1["fliegt28"] + 0.4, T1["Das2"] - 0.3, 420, 560, 360, -6, exit=(-400, 600), sound="newspaper", gain=-8)
 S.sticker("lpass", "lbl_passagierin", T1["Passagierin"], T1["Das2"] - 0.3, 1400, 330, 520, 3, exit=(2400, 330), sound="cardboard_hit", gain=-6)
 S.sticker("potatoes", "st_potatoes", T1["Sack"] - 0.15, T1["Das2"] - 0.3, 1420, 700, 340, -5, exit=(2400, 700), sound="paper_drop", gain=-4)
 # 1932 solo
@@ -250,7 +250,7 @@ S.flash("flash_star", T1["Weltstar"], color=(255, 250, 235), peak=0.7)
 rec("camera_flash", T1["Weltstar"] - 0.02, -6)
 rec("camera_flash", T1["Weltstar"] + 0.35, -10)
 rec("crowd_cheer", T1["Weltstar"] - 0.1, -14, trim=[0.0, 4.5], fade=1.5)
-S.sticker("news32", "newspaper", T1["Weltstar"], T1["Aber"] - 0.3, 420, 540, 360, -5, exit=(-400, 540), sound="newspaper", gain=-9)
+S.sticker("news32", "st_news1932", T1["Weltstar"], T1["Aber"] - 0.3, 420, 540, 360, -5, exit=(-400, 540), sound="newspaper", gain=-9)
 S.sticker("portrait1", "st_portrait", T1["Weltstar"] + 0.1, T1["Aber"] - 0.3, 960, 500, 380, 2, exit=(960, 1500), gain=-6)
 S.sticker("lstar", "lbl_weltstar", T1["Weltstar"] + 0.05, T1["Bücher"] - 0.2, 960, 150, 420, -3, exit=(960, -250), sound="cardboard_hit", gain=-6)
 S.sticker("book", "st_book", T1["Bücher"], T1["Aber"] - 0.3, 1480, 330, 330, 6, exit=(2400, 330), gain=-7)
@@ -695,6 +695,7 @@ mobj("search_area", "burst_orange", T4["600"], T4["1939"] + 0.5, [
     {"t": T4["600"] + 0.6, "scale": bs, "ease": "out"}, {"t": T4["1939"], "opacity": 0.5}, {"t": T4["1939"] + 0.5, "opacity": 0.0}])
 L("l600", "lbl_600k", T4["600"], T4["Gefunden"] - 0.2, 960, 170, 520, -2)
 L("lteuer", "lbl_teuer", T4["teuerste"], T4["Gefunden"] - 0.2, 960, 900, 500, 2)
+P("news37", "st_news1937", T4["600"] + 0.9, T4["Gefunden"] - 0.2, 1480, 560, 400, 5, sound="newspaper", gain=-14)
 L("lnichts4", "lbl_nichts", T4["nichts"], T4["1939"] - 0.2, 960, 540, 520, -2, gain=-5)
 S.flash("fl4", T4["nichts"], peak=0.45)
 rec("suspense_hit", T4["nichts"], -9)
@@ -712,7 +713,7 @@ for k_, (aid, x, y, wd, rot) in enumerate([("st_electra", 420, 420, 360, -5), ("
 # ======================================================================= CHAPTER 5 – Theorie 1: Absturz ins Meer
 T5 = {k: w(k, a - 0.6) for k, a in [("verfehlt", 287), ("Benzin", 289), ("stürzt", 289), ("versinkt", 289), ("Problem", 294),
                               ("tief", 295), ("Flugzeugwrack", 298), ("Stadions", 298), ("Augen", 298),
-                              ("Trotzdem", 307), ("Sonar", 308), ("Anfang", 313), ("Sensation", 313), ("Sonarbild", 316),
+                              ("Trotzdem", 307), ("Expeditionen", 308), ("Sonar", 308), ("Anfang", 313), ("Sensation", 313), ("Sonarbild", 316),
                               ("160", 316), ("Form", 324), ("Atem", 327), ("Tauchroboter", 329), ("Felsen", 333),
                               ("Electra", 335)]}
 T_CH6 = w("Erinnerst", 339)
@@ -750,17 +751,51 @@ S.image("mag5", "st_magnifier", T5["Stadions"] - 0.3, T5["Trotzdem"], [
     {"t": T5["Stadions"] - 0.3, "x": 400, "y": 420, "scale": S.scale_for("st_magnifier", 380), "rot": -20, "opacity": 0.0},
     {"t": T5["Stadions"], "opacity": 0.8}, {"t": T5["Augen"], "x": 1300, "y": 600, "rot": -10, "ease": "inout"},
     {"t": T5["Trotzdem"] - 0.3, "x": 800, "y": 500, "opacity": 0.0, "ease": "inout"}], anchor=list(M["st_magnifier"]["lens"]))
+# the plane sinks next to the depth line
+es = S.scale_for("st_electra", 300)
+S.image("sink5", "st_electra", T5["tief"] - 0.1, T5["Stadions"] + 0.2, [
+    {"t": T5["tief"] - 0.1, "x": 1330, "y": 150, "scale": es, "rot": 38, "opacity": 0.0},
+    {"t": T5["tief"] + 0.2, "opacity": 0.95},
+    {"t": T5["Stadions"] - 0.4, "x": 1360, "y": 880, "scale": es * 0.55, "rot": 62, "opacity": 0.45, "ease": "inout"},
+    {"t": T5["Stadions"] + 0.2, "opacity": 0.0}])
 Z5b = ZP(110)
 cam(T5["Trotzdem"], (HOW[0] - 0.8 * PPD, HOW[1]), Z5b, "inout")
-for k_ in range(6):
-    yy = HOW[1] - 1.0 * PPD + k_ * 0.4 * PPD
-    pts = [(HOW[0] - 2.2 * PPD, yy), (HOW[0] + 0.4 * PPD, yy)] if k_ % 2 == 0 else [(HOW[0] + 0.4 * PPD, yy), (HOW[0] - 2.2 * PPD, yy)]
-    mline(f"sonar{k_}", pts, T5["Sonar"] - 0.2 + 0.35 * k_, T5["Sonar"] + 0.6 + 0.35 * k_, Z5b, t_end=T5["Sonarbild"] - 0.3,
-          color=(246, 240, 226), width=4, dash=10, gap=8)
-L("lsonar", "lbl_sonar", T5["Sonar"], T5["Anfang"] - 0.2, 960, 170, 320, -2)
-S.audio.append({"src": "audio/sfx_prepared/sonar_ping.wav", "start": round(T5["Sonar"], 3), "gain_db": -11})
+
+
+def search_grid(id_, x0, x1, y0, y1, lanes, t0, t1, color, ship_w, t_end):
+    """lawnmower sonar lanes in screen space, drawn while a ship sails them"""
+    pts = []
+    for k_ in range(lanes):
+        yy = y0 + (y1 - y0) * k_ / (lanes - 1)
+        pts += [(x0, yy), (x1, yy)] if k_ % 2 == 0 else [(x1, yy), (x0, yy)]
+    S.layers.append({"id": id_, "type": "dashed_path", "start": t0, "end": t_end + 0.5,
+                     "points": [list(q) for q in pts], "props": {"x": 0, "y": 0}, "width": 5, "dash": 14, "gap": 9,
+                     "color": list(color), "keys": [{"t": t0, "progress": 0.0, "opacity": 1.0}, {"t": t1, "progress": 1.0},
+                                                    {"t": t_end, "opacity": 1.0}, {"t": t_end + 0.5, "opacity": 0.0}]})
+    seg = [math.dist(u, v) for u, v in zip(pts, pts[1:])]
+    tot, d, keys = sum(seg), 0.0, []
+    sc = S.scale_for("st_itasca", ship_w)
+    for (u, v), sl in zip(zip(pts, pts[1:]), seg):
+        ta, tb = t0 + (t1 - t0) * d / tot, t0 + (t1 - t0) * (d + sl) / tot
+        sx = 1 if v[0] > u[0] else -1
+        keys.append({"t": round(ta, 3), "x": u[0], "y": u[1] - 22, "sx": sx})
+        keys.append({"t": round(min(tb, ta + 0.18), 3), "sx": sx})
+        d += sl
+    keys.append({"t": round(t1, 3), "x": pts[-1][0], "y": pts[-1][1] - 22})
+    keys[0].update(scale=sc * 0.2, opacity=0.0, rot=0)
+    keys.insert(1, {"t": round(t0 + 0.12, 3), "scale": sc, "opacity": 1.0})
+    keys += [{"t": t_end, "opacity": 1.0}, {"t": t_end + 0.4, "opacity": 0.0}]
+    S.image(id_ + "_ship", "st_itasca", t0, t_end + 0.5, keys)
+
+
+search_grid("grid_a", 330, 900, 330, 800, 6, T5["Trotzdem"] + 0.5, T5["Anfang"] - 0.1, (246, 240, 226), 190, T5["Anfang"] - 0.1)
+search_grid("grid_b", 1020, 1590, 380, 850, 6, T5["Expeditionen"], T5["Anfang"] - 0.1, (232, 112, 58), 160, T5["Anfang"] - 0.1)
+rec("paper_drop", T5["Trotzdem"] + 0.55, -14)
+rec("paper_drop", T5["Expeditionen"] + 0.05, -15)
+L("lsonar", "lbl_sonar", T5["Sonar"], T5["Anfang"] - 0.2, 960, 120, 320, -2)
+S.audio.append({"src": "audio/sfx_prepared/sonar_ping.wav", "start": round(T5["Sonar"], 3), "gain_db": -15})
 L("l2024", "lbl_2024", T5["Anfang"], T5["Sonarbild"] - 0.2, 600, 200, 300, -3)
-P("news5", "newspaper", T5["Sensation"] - 0.2, T5["Sonarbild"] - 0.2, 1300, 560, 380, 5, sound="newspaper", gain=-8)
+P("news5", "st_news2024", T5["Sensation"] - 0.2, T5["Sonarbild"] - 0.2, 1300, 560, 400, 5, sound="newspaper", gain=-14)
 L("lsens", "lbl_sensation", T5["Sensation"], T5["Sonarbild"] - 0.2, 760, 760, 460, -2)
 TGT = map_xy(-178.0, 1.35)
 cam(T5["Sonarbild"], ((HOW[0] + TGT[0]) / 2, (HOW[1] + TGT[1]) / 2), Z5b, "inout")
@@ -772,16 +807,33 @@ mcity("howland", T5["Sonarbild"], T5["Form"], Z5b)
 L("l160", "lbl_160km", T5["160"], T5["Form"] - 0.2, 960, 870, 360, 2)
 darkness("deep5b", T5["Form"] - 0.3, T_CH6 - 0.3, op=0.62, color=(8, 18, 34))
 rec("underwater", T5["Form"] - 0.2, -16, trim=[0.0, 15.0], fade=2.0)
-rs = S.scale_for("st_rock", 760)
-S.image("rock", "st_rock", T5["Form"], T_CH6 - 0.2, [
-    {"t": T5["Form"], "x": 900, "y": 560, "scale": rs * 0.15, "rot": -4, "opacity": 0.0}, {"t": T5["Form"] + 0.05, "opacity": 0.85},
-    {"t": T5["Form"] + 0.35, "scale": rs, "ease": "out"}, {"t": T5["Felsen"], "opacity": 0.85},
-    {"t": T5["Felsen"] + 0.1, "opacity": 1.0}, {"t": T5["Electra"], "x": 620, "y": 560, "scale": rs * 0.8, "ease": "inout"},
-    {"t": T_CH6 - 0.5, "x": 620, "y": 560}, exit_to(T_CH6 - 0.5, -700, 560)])
-rec("heartbeat_low", T5["Atem"] - 0.2, -10, trim=[0.0, 3.5], fade=0.8)
-P("auv", "st_auv", T5["Tauchroboter"], T5["Felsen"] - 0.2, 1100, 300, 620, -4, how="slide", frm=(2600, 300), sound="paper_slide")
-L("lfels", "lbl_felsen", T5["Felsen"], T_CH6 - 0.4, 960, 170, 520, -2, gain=-5)
-rec("rock_thud", T5["Felsen"] + 0.05, -4)
+# the sonar image: looks like a plane – the rock is only revealed at "Felsen"
+SON = (620, 560)
+ss = S.scale_for("st_sonar", 860)
+S.image("sonar5", "st_sonar", T5["Form"], T5["Felsen"] + 0.15, [
+    {"t": T5["Form"], "x": 960, "y": 540, "scale": ss * 0.15, "rot": -3, "opacity": 0.0}, {"t": T5["Form"] + 0.05, "opacity": 1.0},
+    {"t": T5["Form"] + 0.35, "scale": ss, "ease": "out"}, {"t": T5["Atem"], "scale": ss * 1.05, "ease": "inout"},
+    {"t": T5["Tauchroboter"] - 0.1, "x": 960, "y": 540},
+    {"t": T5["Tauchroboter"] + 0.5, "x": SON[0], "y": SON[1], "scale": ss * 0.75, "ease": "inout"},
+    {"t": T5["Felsen"], "opacity": 1.0}, {"t": T5["Felsen"] + 0.12, "opacity": 0.0}])
+rec("sonar_ping", T5["Form"] + 0.1, -16)
+rec("heartbeat_low", T5["Atem"] - 0.2, -14, trim=[0.0, 3.5], fade=0.8)
+auk = S.scale_for("st_auv", 520)
+S.image("auv", "st_auv", T5["Tauchroboter"], T5["Felsen"] + 0.4, [
+    {"t": T5["Tauchroboter"], "x": 2300, "y": 160, "scale": auk, "rot": 14, "opacity": 1.0},
+    {"t": T5["Tauchroboter"] + 0.9, "x": 1300, "y": 330, "rot": 10, "ease": "out3"},
+    {"t": T5["Felsen"] - 0.1, "x": 1060, "y": 430, "rot": 16, "ease": "inout"},
+    exit_to(T5["Felsen"] + 0.05, 2400, 200, 0.35)])
+rec("paper_slide", T5["Tauchroboter"] + 0.1, -8, peak=0.42)
+rec("underwater", T5["Tauchroboter"] + 0.2, -18, trim=[3.0, 6.0], fade=1.0)
+rs = S.scale_for("st_rock", 640)
+S.image("rock", "st_rock", T5["Felsen"], T_CH6 - 0.2, [
+    {"t": T5["Felsen"], "x": SON[0], "y": SON[1], "scale": rs * 1.25, "rot": -4, "opacity": 0.0},
+    {"t": T5["Felsen"] + 0.08, "opacity": 1.0}, {"t": T5["Felsen"] + 0.3, "scale": rs, "ease": "out"},
+    {"t": T_CH6 - 0.5, "x": SON[0], "y": SON[1]}, exit_to(T_CH6 - 0.5, -700, SON[1])])
+S.flash("fl5", T5["Felsen"], color=(246, 240, 226), peak=0.35)
+L("lfels", "lbl_felsen", T5["Felsen"], T_CH6 - 0.4, 960, 170, 520, -2, gain=-12)
+rec("rock_thud", T5["Felsen"] + 0.05, -10)
 P("electra5", "st_electra", T5["Electra"] - 0.2, T_CH6 - 0.5, 1340, 560, 640, -3)
 
 # ======================================================================= CHAPTER 6 – Theorie 2: Nikumaroro
@@ -1071,9 +1123,37 @@ music("music_mystery", T_CH6 - 1.0, T_CH7 + 2.0, -21, off=0.0)
 music("music_tension", T_CH7 - 1.0, T_CH8 + 2.0, -23, off=60.0)
 music("music_calm", T_CH8 - 1.0, FULL_END, -22, off=40.0, fo=2.0)
 
+# ---------------------------------------------------------------- SFX ceiling (user: some sounds stick out)
+# K-weighted momentary max of every sound after its gain is capped well below the voice (~ -17 LUFS).
+CEIL = {"default": -27.0, "paper_tear": -32.0, "paper_slide": -30.0, "newspaper": -29.0,
+        "rock_thud": -24.0, "suspense_hit": -24.0, "plane_skid": -24.0, "stamp": -25.0, "map_whoosh": -26.0,
+        "underwater": -29.0, "drone_dark": -29.0, "ocean_wind": -30.0, "radio_static_long": -29.0}
+
+
+def _mmax(src, trim):
+    import re
+    import subprocess
+    cmd = ["ffmpeg", "-nostats"] + (["-ss", str(trim[0]), "-t", str(trim[1] - trim[0])] if trim else [])
+    cmd += ["-i", os.path.join(PROJ, src), "-af", "apad=pad_dur=1,ebur128", "-f", "null", "-"]
+    err = subprocess.run(cmd, capture_output=True, text=True).stderr
+    return max(float(v) for v in re.findall(r" M:\s*(-?[\d.]+)", err))
+
+
+_mm = {}
+for a_ in S.audio:
+    if not a_["src"].startswith("audio/sfx_prepared/"):
+        continue
+    k_ = (a_["src"], str(a_.get("trim")))
+    if k_ not in _mm:
+        _mm[k_] = _mmax(a_["src"], a_.get("trim"))
+    name_ = os.path.basename(a_["src"])[:-4]
+    over = _mm[k_] + a_["gain_db"] - CEIL.get(name_, CEIL["default"])
+    if over > 0:
+        a_["gain_db"] = round(a_["gain_db"] - over, 1)
+
 HIDE = [(0.0, T_QEND + 0.3)]
 caps = None                      # no subtitles in the long version (user feedback)
-assets = {name: {"path": f"build/assets/{name}.png", "license": "own"} for name, m in M.items()
+assets = {name: {"path": f"build/assets/{m.get('file', name)}.png", "license": "own"} for name, m in M.items()
           if isinstance(m, dict) and "w" in m}
 timeline = {"meta": {"fps": 30, "width": W, "height": H, "design": [W, H], "duration": round(END, 3)},
             "assets": assets, "layers": S.layers,
