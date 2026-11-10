@@ -1,7 +1,7 @@
 """YouTube thumbnail (1280x720) in the video's collage style, from the built assets."""
 import os, sys
 import numpy as np
-from PIL import Image, ImageFilter
+from PIL import Image, ImageEnhance, ImageFilter
 from shortsfactory.collage.graphics import label
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -34,15 +34,19 @@ canvas = Image.fromarray((np.asarray(bg, np.float32) * vig[..., None]).clip(0, 2
 
 # island glow so it pops against the ocean
 isl = load("isl_nikumaroro")
-put(canvas, isl, 850, 430, width=780, rot=12)
-put(canvas, load("st_bones"), 870, 450, width=560, rot=-10)
-put(canvas, load("st_crab"), 1150, 620, width=250, rot=8)
+put(canvas, isl, 840, 405, width=780, rot=12)
+bones = load("st_bones")
+rgb, a = bones.convert("RGB"), bones.getchannel("A")
+rgb = ImageEnhance.Brightness(ImageEnhance.Contrast(rgb).enhance(1.35)).enhance(1.08)
+bones = rgb.convert("RGBA"); bones.putalpha(a)
+put(canvas, bones, 815, 415, width=650, rot=-10)
+put(canvas, load("st_crab"), 1110, 568, width=325, rot=8)
 put(canvas, load("st_portrait"), 255, 410, height=640, rot=-3)
 
-t1 = Image.fromarray(label("Nur 13 Knochen", "orange", size=150, seed=3))
+t1 = Image.fromarray(label("Endlich eine Spur?", "orange", size=150, seed=3))
 put(canvas, t1, 870, 105, width=760, rot=2)
-t2 = Image.fromarray(label("Wo ist sie?", "black", size=120, seed=5))
-put(canvas, t2, 300, 655, width=430, rot=-3)
+t2 = Image.fromarray(label("Nur 13 Knochen", "black", size=120, seed=5))
+put(canvas, t2, 300, 618, width=500, rot=-3)
 
 canvas.convert("RGB").save(OUT)
 print("thumbnail ->", os.path.normpath(OUT))
