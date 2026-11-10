@@ -43,8 +43,8 @@ put(canvas, bones, 815, 415, width=650, rot=-10)
 put(canvas, load("st_crab"), 1110, 568, width=325, rot=8)
 put(canvas, load("st_portrait"), 255, 410, height=640, rot=-3)
 
-t1 = Image.fromarray(label("Endlich eine Spur?", "orange", size=150, seed=3))
-put(canvas, t1, 870, 105, width=760, rot=2)
+t1 = Image.fromarray(label("Wo ist sie?", "orange", size=170, seed=3))
+put(canvas, t1, 870, 110, width=620, rot=2)
 t2 = Image.fromarray(label("Nur 13 Knochen", "black", size=120, seed=5))
 put(canvas, t2, 300, 618, width=500, rot=-3)
 
