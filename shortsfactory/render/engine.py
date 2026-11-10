@@ -208,6 +208,12 @@ class Renderer:
             img = a.levels[lvl]
             f = 2 ** lvl
             M = M @ scale(f, f)
+            if not layer.get("reveal_map"):
+                # cull layers entirely outside the frame (e.g. wrap-around map copies)
+                h_, w_ = img.shape[:2]
+                cs = M[:2, :2] @ np.array([[0, w_, w_, 0], [0, 0, h_, h_]], np.float64) + M[:2, 2:3]
+                if cs[0].max() < 0 or cs[0].min() > self.W or cs[1].max() < 0 or cs[1].min() > self.H:
+                    return
             warped = self._warp(img, M)
             if layer.get("reveal_map"):
                 # per-pixel reveal: map value v (0..1) becomes visible once the

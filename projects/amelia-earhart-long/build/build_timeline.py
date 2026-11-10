@@ -198,7 +198,11 @@ S.sticker("kap1", "lbl_kap", T["entscheidest"] + 1.9, T_CH1 + 1.1, 960, 430, 260
 S.sticker("kap1t", "lbl_kap_title", T["entscheidest"] + 2.05, T_CH1 + 1.1, 960, 560, 820, 1, exit=(960, 1400), sound=None, how="slide", frm=(960, 1300))
 rec("map_whoosh", T_CH1 - 0.1, -6, peak=0.38)
 
-S.sticker("young", "st_young", T1["1897"] + 0.2, T1["Danach"] - 0.2, 1480, 500, 400, 3, exit=(2400, 500), gain=-5)
+if "st_kid" in M:   # child portrait at the birth, the young woman from her first flight in Los Angeles
+    S.sticker("kid", "st_kid", T1["1897"] + 0.2, T1["Ihren"] + 0.1, 1480, 520, 380, 3, exit=(2400, 520), gain=-5)
+    S.sticker("young", "st_young", T1["Ihren"] + 0.4, T1["Danach"] - 0.2, 1480, 500, 400, -2, exit=(2400, 500), gain=-5)
+else:
+    S.sticker("young", "st_young", T1["1897"] + 0.2, T1["Danach"] - 0.2, 1480, 500, 400, 3, exit=(2400, 500), gain=-5)
 S.sticker("l1897", "lbl_1897", T1["1897"], T1["Ihren"] - 0.3, 520, 170, 300, -3, exit=(520, -250), sound="cardboard_hit", gain=-7)
 S.sticker("lkansas", "lbl_kansas", T1["Kansas"], T1["Ihren"] - 0.3, 760, 640, 320, 2, exit=(760, 1400), sound="cardboard_hit", gain=-9)
 MAP_EXTRA.append({"id": "route_la", "type": "dashed_path", "start": T1["Ihren"], "end": T1["fliegt28"] + 1,
@@ -712,7 +716,8 @@ for k_, (aid, x, y, wd, rot) in enumerate([("st_electra", 420, 420, 360, -5), ("
 
 # ======================================================================= CHAPTER 5 – Theorie 1: Absturz ins Meer
 T5 = {k: w(k, a - 0.6) for k, a in [("verfehlt", 287), ("Benzin", 289), ("stürzt", 289), ("versinkt", 289), ("Problem", 294),
-                              ("tief", 295), ("Flugzeugwrack", 298), ("Stadions", 298), ("Augen", 298),
+                              ("tief", 295), ("fünf", 296), ("Flugzeugwrack", 298), ("als", 299), ("dunklen", 301), ("Stadions", 298),
+                              ("Münze", 302), ("verbundenen", 304), ("Augen", 298),
                               ("Trotzdem", 307), ("Expeditionen", 308), ("Sonar", 308), ("Anfang", 313), ("Sensation", 313), ("Sonarbild", 316),
                               ("160", 316), ("Form", 324), ("Atem", 327), ("Tauchroboter", 329), ("Felsen", 333),
                               ("Electra", 335)]}
@@ -740,24 +745,75 @@ S.image("splash", "burst_orange", T5["stürzt"] + 0.5, T5["Problem"], [
     {"t": T5["stürzt"] + 0.9, "scale": S.scale_for("burst_orange", 520), "ease": "out"},
     {"t": T5["Problem"] - 0.3, "opacity": 0.0}], jitter=False)
 rec("rock_thud", T5["stürzt"] + 0.55, -5)
-darkness("deep5", T5["versinkt"] + 0.4, T5["Trotzdem"] - 0.2, op=0.68, color=(8, 18, 34))
-rec("underwater", T5["versinkt"] + 0.3, -13, trim=[0.0, 12.0], fade=1.5)
-S.layers.append({"id": "depth", "type": "dashed_path", "start": T5["tief"] - 0.2, "end": T5["Stadions"] - 0.2,
-                 "points": [[1500, 120], [1500, 960]], "props": {"x": 0, "y": 0}, "width": 6, "dash": 22, "gap": 14,
-                 "color": [246, 240, 226], "keys": [{"t": T5["tief"] - 0.2, "progress": 0.0}, {"t": T5["tief"] + 0.8, "progress": 1.0},
-                                                    {"t": T5["Stadions"] - 0.6, "opacity": 1.0}, {"t": T5["Stadions"] - 0.2, "opacity": 0.0}]})
-L("l5km", "lbl_5km", T5["tief"], T5["Stadions"] - 0.5, 1200, 540, 420, 2, exit=(2300, 540))
-S.image("mag5", "st_magnifier", T5["Stadions"] - 0.3, T5["Trotzdem"], [
-    {"t": T5["Stadions"] - 0.3, "x": 400, "y": 420, "scale": S.scale_for("st_magnifier", 380), "rot": -20, "opacity": 0.0},
-    {"t": T5["Stadions"], "opacity": 0.8}, {"t": T5["Augen"], "x": 1300, "y": 600, "rot": -10, "ease": "inout"},
-    {"t": T5["Trotzdem"] - 0.3, "x": 800, "y": 500, "opacity": 0.0, "ease": "inout"}], anchor=list(M["st_magnifier"]["lens"]))
-# the plane sinks next to the depth line
-es = S.scale_for("st_electra", 300)
-S.image("sink5", "st_electra", T5["tief"] - 0.1, T5["Stadions"] + 0.2, [
-    {"t": T5["tief"] - 0.1, "x": 1330, "y": 150, "scale": es, "rot": 38, "opacity": 0.0},
-    {"t": T5["tief"] + 0.2, "opacity": 0.95},
-    {"t": T5["Stadions"] - 0.4, "x": 1360, "y": 880, "scale": es * 0.55, "rot": 62, "opacity": 0.45, "ease": "inout"},
-    {"t": T5["Stadions"] + 0.2, "opacity": 0.0}])
+# ---- dive: the camera follows the Electra down to the sea floor, 5 km deep, getting darker and darker
+DS = M["deep_sea"]
+ds_s = W / DS["w"] * 1.0
+T_DIVE0, T_FLOOR = T5["versinkt"] + 0.1, T5["tief"] + 0.2
+SCREEN_FLOOR = 880                                       # where the sea floor ends up on screen
+S.image("deep5", "deep_sea", T_DIVE0, T5["Trotzdem"] + 0.4, [
+    {"t": T_DIVE0, "x": CX, "y": 820, "scale": ds_s, "opacity": 1.0},
+    {"t": T_DIVE0 + 0.9, "y": 300, "ease": "in"},
+    {"t": T_FLOOR, "y": SCREEN_FLOOR - DS["floor"] * ds_s, "ease": "out"},
+    {"t": T5["Trotzdem"] - 0.1, "y": SCREEN_FLOOR - DS["floor"] * ds_s},
+    exit_to(T5["Trotzdem"] - 0.1, CX, H + 600, 0.45)], anchor=[0.5, 0.0], jitter=False)
+es = S.scale_for("st_electra", 360)
+S.image("sink5", "st_electra", T_DIVE0, T5["Trotzdem"] - 0.1, [
+    {"t": T_DIVE0, "x": 1000, "y": 900, "scale": es, "rot": 56, "opacity": 1.0},
+    {"t": T_DIVE0 + 1.2, "x": 930, "y": 470, "rot": 34, "ease": "out"},
+    {"t": T_DIVE0 + 2.6, "x": 990, "y": 520, "rot": 22, "ease": "inout"},
+    {"t": T5["fünf"], "x": 920, "y": 560, "rot": 30, "ease": "inout"},
+    {"t": T_FLOOR + 0.5, "x": 960, "y": SCREEN_FLOOR - 40, "rot": 9, "ease": "out"},
+    {"t": T5["Trotzdem"] - 0.3, "x": 960, "y": SCREEN_FLOOR - 40, "opacity": 1.0},
+    {"t": T5["Trotzdem"] - 0.1, "opacity": 0.0}])
+# air bubbles rising from the wreck while it sinks
+for k_ in range(14):
+    tb = T_DIVE0 + 0.25 + k_ * 0.33 + (0.12 if k_ % 3 == 1 else 0.0)
+    if tb > T_FLOOR + 1.6:
+        break
+    bx = 940 + ((k_ * 53) % 90) - 45
+    sz = 0.35 + 0.25 * ((k_ * 7) % 4) / 3
+    S.image(f"bub5_{k_}", "bubble", tb, tb + 2.2, [
+        {"t": tb, "x": bx, "y": 520, "scale": sz, "opacity": 0.0},
+        {"t": tb + 0.2, "opacity": 0.85},
+        {"t": tb + 1.0, "x": bx + (18 if k_ % 2 else -18), "y": 260},
+        {"t": tb + 2.2, "x": bx, "y": -80, "opacity": 0.3}])
+# landing on the floor: dull thud + puff of sand
+S.image("sand5", "burst_orange", T_FLOOR + 0.45, T_FLOOR + 1.8, [
+    {"t": T_FLOOR + 0.45, "x": 960, "y": SCREEN_FLOOR - 10, "scale": 0.05, "opacity": 0.55, "sx": 1.6},
+    {"t": T_FLOOR + 0.9, "scale": S.scale_for("burst_orange", 300), "ease": "out"},
+    {"t": T_FLOOR + 1.8, "opacity": 0.0}], jitter=False)
+rec("rock_thud", T_FLOOR + 0.5, -14)
+# darker and darker with depth (over the plane too), deepest at „dunklen Stadions"
+S.layers.append({"id": "dark5", "type": "solid", "start": T_DIVE0, "end": T5["Trotzdem"] + 0.4, "color": [4, 9, 16],
+                 "keys": [{"t": T_DIVE0, "opacity": 0.0}, {"t": T5["fünf"], "opacity": 0.3},
+                          {"t": T_FLOOR + 0.5, "opacity": 0.45}, {"t": T5["dunklen"], "opacity": 0.5},
+                          {"t": T5["Stadions"], "opacity": 0.78, "ease": "inout"},
+                          {"t": T5["Trotzdem"] - 0.3, "opacity": 0.78}, {"t": T5["Trotzdem"] + 0.3, "opacity": 0.0}]})
+rec("underwater", T5["versinkt"] - 0.1, -4, trim=[0.0, 14.5], fade=2.0)
+L("l5km", "lbl_5km", T5["fünf"] + 0.1, T5["Stadions"] - 0.5, 640, 300, 420, -2, exit=(-400, 300))
+if "st_stadium" in M:
+    # the comparison: a coin on the floor of a dark stadium – blindfolded
+    P("stad5", "st_stadium", T5["als"] - 0.1, T5["Trotzdem"] - 0.2, 960, 520, 1150, -1, sound="paper_slide", gain=-14)
+    if "st_coin" in M:
+        P("coin5", "st_coin", T5["Münze"] - 0.05, T5["Trotzdem"] - 0.2, 1120, 690, 70, 0, sound=None)
+        S.layers.append({"id": "coin_glint", "type": "glow", "start": T5["Münze"], "end": T5["Münze"] + 0.9,
+                         "radius": 60, "softness": 0.9, "color": [255, 236, 170],
+                         "props": {"x": 1120, "y": 690}, "keys": [{"t": T5["Münze"], "opacity": 0.0},
+                                                                  {"t": T5["Münze"] + 0.25, "opacity": 0.9},
+                                                                  {"t": T5["Münze"] + 0.9, "opacity": 0.0}]})
+        rec("typewriter_bell", T5["Münze"] + 0.05, -24)
+    if "st_blindfold" in M:
+        P("blind5", "st_blindfold", T5["verbundenen"] - 0.1, T5["Trotzdem"] - 0.2, 1460, 260, 420, 6, gain=-14)
+    MAG5 = [(560, 460), (1340, 380), (760, 700), (1180, 720)]
+else:
+    MAG5 = [(420, 760), (1400, 760), (760, 840), (1200, 830)]
+mk5 = [{"t": T5["Stadions"] - 0.3, "x": MAG5[0][0], "y": MAG5[0][1], "scale": S.scale_for("st_magnifier", 360), "rot": -20, "opacity": 0.0},
+       {"t": T5["Stadions"], "opacity": 0.85}]
+for j_, (mx, my) in enumerate(MAG5[1:], 1):
+    mk5.append({"t": T5["Stadions"] + j_ * (T5["Trotzdem"] - 0.6 - T5["Stadions"]) / (len(MAG5) - 1), "x": mx, "y": my,
+                "rot": -20 + 8 * (j_ % 2), "ease": "inout"})
+mk5.append({"t": T5["Trotzdem"] - 0.1, "opacity": 0.0})
+S.image("mag5", "st_magnifier", T5["Stadions"] - 0.3, T5["Trotzdem"], mk5, anchor=list(M["st_magnifier"]["lens"]))
 Z5b = ZP(110)
 cam(T5["Trotzdem"], (HOW[0] - 0.8 * PPD, HOW[1]), Z5b, "inout")
 
@@ -807,7 +863,7 @@ mobj("tgt", "dot", T5["160"] + 0.4, T5["Form"] + 0.6, [
 mcity("howland", T5["Sonarbild"], T5["Form"], Z5b)
 L("l160", "lbl_160km", T5["160"], T5["Form"] - 0.2, 960, 870, 360, 2)
 darkness("deep5b", T5["Form"] - 0.3, T_CH6 - 0.3, op=0.62, color=(8, 18, 34))
-rec("underwater", T5["Form"] - 0.2, -16, trim=[0.0, 15.0], fade=2.0)
+rec("underwater", T5["Form"] - 0.2, -11, trim=[0.0, 15.0], fade=2.0)
 # the sonar image: looks like a plane – the rock is only revealed at "Felsen"
 SON = (620, 560)
 ss = S.scale_for("st_sonar", 860)
@@ -1115,6 +1171,9 @@ for name in ("tile_mid", "tile_n1", "tile_n2", "tile_n3", "tile_h1", "tile_h2", 
 S.layers.insert(0, {"id": "cam", "type": "group", "pivot": [CX, CY], "keys": cam_scale, "children": [
     {"id": "cam_pan", "type": "group", "pivot": [0, 0], "keys": cam_pan, "children": [
         {"id": "map", "type": "image", "asset": "map_pacific", "anchor": [0, 0], "props": {"x": 0, "y": 0}, "keys": []},
+        # the earth is round: continuation west of the map edge so wide shots never show black
+        {"id": "map_wl", "type": "image", "asset": "map_wrap_l", "anchor": [0, 0],
+         "props": {"x": M["map_wrap_l"]["x"], "y": 0}, "keys": []},
         *tiles, *MAP_EXTRA]}]})
 S.layers.append({"id": "page", "type": "multiply_image", "asset": "page", "keys": []})
 
@@ -1137,7 +1196,7 @@ music("music_calm", T_CH8 - 1.0, FULL_END, -22, off=40.0, fo=2.0)
 # K-weighted momentary max of every sound after its gain is capped well below the voice (~ -17 LUFS).
 CEIL = {"default": -27.0, "paper_tear": -32.0, "paper_slide": -30.0, "newspaper": -29.0,
         "rock_thud": -24.0, "suspense_hit": -24.0, "plane_skid": -24.0, "stamp": -25.0, "map_whoosh": -26.0,
-        "underwater": -29.0, "drone_dark": -29.0, "ocean_wind": -30.0, "radio_static_long": -29.0}
+        "underwater": -23.0, "drone_dark": -29.0, "ocean_wind": -30.0, "radio_static_long": -29.0}
 
 
 def _mmax(src, trim):

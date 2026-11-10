@@ -6,6 +6,7 @@ and adds the long version's stickers and labels.
     python3 projects/amelia-earhart-long/build/build_assets.py
 """
 import json
+import numpy as np
 import os
 import sys
 
@@ -41,6 +42,8 @@ OPTIONAL = {
     "news1928": "N1_zeitung_1928.png", "news1932": "N2_zeitung_1932.png",
     "news1937": "N3_zeitung_1937.png", "news2024": "N4_zeitung_2024.png",
     "satplane": "E3_satellitenbild.png", "research": "E2_forschungsschiff.png",
+    "kid": "E4_earhart_kind.png",
+    "stadium": "E5_stadion.png", "coin": "E6_muenze.png", "blindfold": "E7_augenbinde.png",
 }
 NEWS_FALLBACK = {
     "news1928": ("ERSTE FRAU\nÜBER DEN ATLANTIK", "JUNI 1928"), "news1932": ("ALLEIN ÜBER\nDEN OZEAN!", "MAI 1932"),
@@ -48,8 +51,82 @@ NEWS_FALLBACK = {
 }
 
 
+def wrap_strip(meta, before=3000, after=900, ramp=480):
+    """left continuation of the map (the earth is round): the part west of lon_min, taken from the
+    map's own duplicate east end, cross-faded into the original over open Pacific (no label/compass cut)"""
+    proj = meta["map_pacific"]["proj"]
+    turn = int(round(360 * proj["ppd"]))
+    m = np.array(Image.open(os.path.join(OUT, "map_pacific.png")).convert("RGBA"))
+    strip = m[:, turn - before: turn + after].copy()
+    a = np.ones(strip.shape[1], np.float32)
+    a[-ramp:] = np.linspace(1, 0, ramp) ** 1.0
+    strip[..., 3] = (strip[..., 3] * a[None, :]).astype(np.uint8)
+    Image.fromarray(strip, "RGBA").save(os.path.join(OUT, "map_wrap_l.png"))
+    meta["map_wrap_l"] = dict(w=strip.shape[1], h=strip.shape[0], x=-before)
+    print("map wrap strip", strip.shape)
+
+
+DEEP_W, DEEP_H, DEEP_SURF, DEEP_FLOOR = 2000, 4400, 30, 4060
+
+
+def deep_sea(meta, seed=11):
+    """tall cross-section of the ocean for the sinking scene: torn surface on top, petrol halftone that
+    darkens with depth, depth marks 1–5 km on the right and a dark sea floor at the bottom"""
+    import cv2
+    from shortsfactory.collage.graphics import PALETTE, fractal_noise, halftone, torn_mask
+    W_, H_ = DEEP_W, DEEP_H
+    d = np.clip((np.arange(H_, dtype=np.float32) - DEEP_SURF) / (DEEP_FLOOR - DEEP_SURF), 0, 1)[:, None]
+    top = np.array(PALETTE["petrol"], np.float32) / 255
+    deep = np.array([0.04, 0.08, 0.13], np.float32)
+    n = fractal_noise(H_, W_, seed, octaves=(160, 40), weights=(0.6, 0.4))
+    k = d ** 0.7
+    rgb = (top * (1 - k[..., None]) + deep * k[..., None]) * (0.9 + 0.15 * n[..., None])
+    rgb = np.broadcast_to(rgb, (H_, W_, 3)).copy()
+    dens = np.broadcast_to(0.72 * (1 - d) ** 1.6 + 0.04, (H_, W_)).astype(np.float32)
+    dots = halftone(dens, cell=16, color=(240, 236, 222), max_r=0.42, angle=45)[..., 3:4].astype(np.float32) / 255
+    rgb = rgb * (1 - dots * 0.5) + np.array([0.94, 0.93, 0.87]) * dots * 0.5
+    # sea floor: dark sand with dim orange dots and a torn top edge
+    fl = np.zeros((H_, W_), np.float32)
+    fl[DEEP_FLOOR:] = 1
+    fl[DEEP_FLOOR - 40:] = np.maximum(fl[DEEP_FLOOR - 40:], torn_mask(W_, H_ - DEEP_FLOOR + 40, depth=26, seed=seed, sides="t"))
+    sand = np.array([0.16, 0.13, 0.10], np.float32) * (0.85 + 0.3 * n[..., None])
+    sd = halftone(fl * 0.5, cell=14, color="orange", max_r=0.5, angle=20)[..., 3:4].astype(np.float32) / 255
+    sand = sand * (1 - sd * 0.35) + np.array(PALETTE["orange"], np.float32) / 255 * 0.55 * sd * 0.35
+    rgb = rgb * (1 - fl[..., None]) + sand * fl[..., None]
+    a = np.ones((H_, W_), np.float32)
+    a[:DEEP_SURF + 60] = torn_mask(W_, DEEP_SURF + 60, depth=16, seed=seed, sides="t", soft=1.2)
+    er = cv2.erode((a > 0.5).astype(np.uint8), np.ones((9, 9), np.uint8))
+    rim = ((a > 0.5) & (er == 0)).astype(np.float32)
+    rim[DEEP_SURF + 50:] = 0
+    rgb = rgb * (1 - rim[..., None]) + np.array(PALETTE["cream"], np.float32) / 255 * rim[..., None]
+    img = Image.fromarray((np.dstack([np.clip(rgb, 0, 1), a]) * 255).astype(np.uint8), "RGBA")
+    # depth gauge
+    xg = W_ - 330
+    from PIL import ImageDraw
+    dr = ImageDraw.Draw(img)
+    for y in range(DEEP_SURF + 40, DEEP_FLOOR, 40):
+        dr.line([(xg, y), (xg, y + 22)], fill=(200, 204, 196, 255), width=5)
+    for km in range(1, 6):
+        y = int(DEEP_SURF + (DEEP_FLOOR - DEEP_SURF) * km / 5)
+        dr.line([(xg - 30, y), (xg + 30, y)], fill=(246, 240, 226, 255), width=6)
+        lab = Image.fromarray(g.label(f"{km} km", "orange" if km == 5 else "petrol", 64, seed=400 + km), "RGBA")
+        img.alpha_composite(lab, (xg + 40, y - lab.height // 2))
+    img.save(os.path.join(OUT, "deep_sea.png"))
+    meta["deep_sea"] = dict(w=W_, h=H_, surface=DEEP_SURF, floor=DEEP_FLOOR, gauge_x=xg)
+    # air bubble
+    b = Image.new("RGBA", (64, 64))
+    bd = ImageDraw.Draw(b)
+    bd.ellipse([6, 6, 58, 58], outline=(246, 240, 226, 235), width=5)
+    bd.ellipse([18, 16, 28, 26], fill=(246, 240, 226, 220))
+    b.save(os.path.join(OUT, "bubble.png"))
+    meta["bubble"] = dict(w=64, h=64)
+    print("deep sea panel")
+
+
 def optional(meta):
     """(re)build only the optional user images – fast, no map rendering"""
+    wrap_strip(meta)
+    deep_sea(meta)
     for i, (name, src) in enumerate(OPTIONAL.items()):
         path = os.path.join(CUT, src)
         if os.path.exists(path):
@@ -61,7 +138,7 @@ def optional(meta):
             Image.fromarray(arr, "RGBA").save(os.path.join(OUT, f"st_{name}.png"))
             meta[f"st_{name}"] = dict(w=arr.shape[1], h=arr.shape[0])
             print("stand-in", name)
-        elif name in ("satplane", "research"):                # no stand-in: the timeline skips it
+        elif name in ("satplane", "research", "kid", "stadium", "coin", "blindfold"):                # no stand-in: the timeline skips it
             meta.pop(f"st_{name}", None)
             print("missing", name)
         else:                                   # sonar: stand-in = the rock (darkened later in the timeline)
