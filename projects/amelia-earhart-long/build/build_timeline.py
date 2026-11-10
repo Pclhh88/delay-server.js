@@ -1168,13 +1168,17 @@ for name in ("tile_mid", "tile_n1", "tile_n2", "tile_n3", "tile_h1", "tile_h2", 
     tiles.append({"id": name, "type": "image", "asset": name, "anchor": [0, 0],
                   "props": {"x": tm["pos"][0], "y": tm["pos"][1], "scale": tm["design_scale"]},
                   "keys": zoom_fade(cover, cover * 1.3)})
+# the user's aerial island pictures lie exactly on the (painted-out) procedural islands
+ISLANDS = [{"id": n, "type": "image", "asset": n, "anchor": M[n]["anchor"],
+            "props": {k: M[n]["place"][k] for k in ("x", "y", "scale", "rot")}, "keys": []}
+           for n in ("isl_nikumaroro", "isl_howland") if n in M]
 S.layers.insert(0, {"id": "cam", "type": "group", "pivot": [CX, CY], "keys": cam_scale, "children": [
     {"id": "cam_pan", "type": "group", "pivot": [0, 0], "keys": cam_pan, "children": [
         {"id": "map", "type": "image", "asset": "map_pacific", "anchor": [0, 0], "props": {"x": 0, "y": 0}, "keys": []},
         # the earth is round: continuation west of the map edge so wide shots never show black
         {"id": "map_wl", "type": "image", "asset": "map_wrap_l", "anchor": [0, 0],
          "props": {"x": M["map_wrap_l"]["x"], "y": 0}, "keys": []},
-        *tiles, *MAP_EXTRA]}]})
+        *tiles, *ISLANDS, *MAP_EXTRA]}]})
 S.layers.append({"id": "page", "type": "multiply_image", "asset": "page", "keys": []})
 
 # ======================================================================= music

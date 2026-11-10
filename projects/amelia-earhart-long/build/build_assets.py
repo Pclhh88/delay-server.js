@@ -8,6 +8,7 @@ and adds the long version's stickers and labels.
 import json
 import numpy as np
 import os
+import shutil
 import sys
 
 from PIL import Image
@@ -123,10 +124,37 @@ def deep_sea(meta, seed=11):
     print("deep sea panel")
 
 
+ISLAND_PICS = {   # user aerial pictures replacing the procedural islands: (cutout, tiles finest first, map key)
+    "isl_nikumaroro": ("E8_nikumaroro.png", ["tile_n3", "tile_n2", "tile_n1", "tile_h1"], "nikumaroro"),
+    "isl_howland": ("E9_howland.png", ["tile_h3", "tile_h25", "tile_h2", "tile_h1"], "howland"),
+}
+
+
+def islands(meta):
+    import island_fit as IF
+    for name, (src, tiles, key) in ISLAND_PICS.items():
+        path = os.path.join(CUT, src)
+        if not os.path.exists(path):
+            for t in tiles:                      # restore the procedural island
+                o = os.path.join(OUT, t + "_orig.png")
+                if os.path.exists(o):
+                    shutil.copy(o, os.path.join(OUT, t + ".png"))
+            meta.pop(name, None)
+            continue
+        xy = meta["map_pacific"][key]
+        masks = {t: IF.paint_out(OUT, t, meta, xy) for t in tiles}
+        place = IF.fit(meta, tiles[0], masks[tiles[0]], path)
+        shutil.copy(path, os.path.join(OUT, name + ".png"))
+        w_, h_ = Image.open(path).size
+        meta[name] = dict(w=w_, h=h_, place=place, anchor=place["anchor"])
+        print("island", name, {k: round(v, 4) if isinstance(v, float) else v for k, v in place.items()})
+
+
 def optional(meta):
     """(re)build only the optional user images – fast, no map rendering"""
     wrap_strip(meta)
     deep_sea(meta)
+    islands(meta)
     for i, (name, src) in enumerate(OPTIONAL.items()):
         path = os.path.join(CUT, src)
         if os.path.exists(path):

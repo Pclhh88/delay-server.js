@@ -1037,6 +1037,14 @@
   "bubble": {
    "path": "build/assets/bubble.png",
    "license": "own"
+  },
+  "isl_nikumaroro": {
+   "path": "build/assets/isl_nikumaroro.png",
+   "license": "own"
+  },
+  "isl_howland": {
+   "path": "build/assets/isl_howland.png",
+   "license": "own"
   }
  },
  "layers": [
@@ -162741,6 +162749,38 @@
          "opacity": 0
         }
        ]
+      },
+      {
+       "id": "isl_nikumaroro",
+       "type": "image",
+       "asset": "isl_nikumaroro",
+       "anchor": [
+        0.4946839842879073,
+        0.5157944995919022
+       ],
+       "props": {
+        "x": 8171.573102422322,
+        "y": 1840.3979188389385,
+        "scale": 0.0009473843775641871,
+        "rot": 8.470988055655226
+       },
+       "keys": []
+      },
+      {
+       "id": "isl_howland",
+       "type": "image",
+       "asset": "isl_howland",
+       "anchor": [
+        0.4855890254046928,
+        0.5003013509119115
+       ],
+       "props": {
+        "x": 8121.185548341027,
+        "y": 1708.6167074654775,
+        "scale": 0.00042249124902175313,
+        "rot": -3.730346565650038
+       },
+       "keys": []
       },
       {
        "id": "plane0",
