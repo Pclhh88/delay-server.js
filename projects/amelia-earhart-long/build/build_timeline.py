@@ -14,7 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PROJ = os.path.dirname(HERE)
 sys.path.insert(0, os.path.dirname(os.path.dirname(PROJ)))
 
-from shortsfactory.collage.choreo import Show, exit_to, fly_camera, path_keys, phrase_captions, pop_in, slide_in  # noqa
+from shortsfactory.collage.choreo import Show, exit_to, fix_keys, fly_camera, path_keys, phrase_captions, pop_in, slide_in  # noqa
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--end", type=float, default=None)
@@ -226,7 +226,6 @@ MAP_EXTRA.append({"id": "route28", "type": "dashed_path", "start": T1["fliegt28"
                            {"t": T1["fliegt28"] + 2.0, "progress": 1.0, "ease": "inout"},
                            {"t": T1["fliegt32"], "opacity": 1.0}, {"t": T1["fliegt32"] + 0.4, "opacity": 0.0}]})
 rec("pen_scribble", T1["fliegt28"], -13, trim=[0.0, 2.2], fade=0.3)
-S.sticker("news28", "st_news1928", T1["fliegt28"] + 0.4, T1["Das2"] - 0.3, 470, 600, 600, -6, exit=(-400, 600), sound="newspaper", gain=-8)
 S.sticker("lpass", "lbl_passagierin", T1["Passagierin"], T1["Das2"] - 0.3, 1400, 330, 520, 3, exit=(2400, 330), sound="cardboard_hit", gain=-6)
 S.sticker("potatoes", "st_potatoes", T1["Sack"] - 0.15, T1["Das2"] - 0.3, 1420, 700, 340, -5, exit=(2400, 700), sound="paper_drop", gain=-4)
 # 1932 solo
@@ -667,14 +666,15 @@ itk[0]["scale"] = S.scale_for("st_itasca", 150) / ZP(50)
 mobj("itasca_map", "st_itasca", T4["fährt"], T4["halbe"] + 1.5, [dict(k, rot=0) for k in itk])
 CEN4 = ((HON[0] + HOW[0]) / 2, (HON[1] + HOW[1]) / 2)
 cam(T4["halbe"] + 0.4, CEN4, 0.85, "inout")
-for nm, asset, dt, off in [("col", "st_colorado", 0.0, 20), ("lex", "st_lexington", 0.6, -30)]:
-    sk, _ = follow([(HON[0] + off, HON[1]), (HOW[0] + off, HOW[1] - 40)], [(0, T4["halbe"] + dt), (1, T4["Wochen"])], mirror=True)
+for nm, asset, t_s, dy in [("col", "st_colorado", T4["halbe"], -55), ("lex", "st_lexington", T4["halbe"] + 2.2, 55)]:
+    sk, _ = follow([(HON[0], HON[1] + dy), (HOW[0] + 40, HOW[1] + dy)], [(0, t_s), (1, T4["Wochen"])], mirror=True)
     sk = [dict(k, rot=0) for k in sk]
-    sk[0]["scale"] = S.scale_for(asset, 130) / 0.85
-    mobj("ship_" + nm, asset, T4["halbe"] + dt, T4["Wochen"] + 0.3, sk)
+    sk[0].update(scale=S.scale_for(asset, 15) / 0.85, opacity=0.0)
+    sk.insert(1, {"t": round(t_s + 0.3, 3), "scale": S.scale_for(asset, 130) / 0.85, "opacity": 1.0, "ease": "out"})
+    mobj("ship_" + nm, asset, t_s, T4["Wochen"] + 0.3, fix_keys(sk))
+    rec("ship_horn", t_s + 0.1, -15, trim=[0.0, 2.0], fade=0.6)
 mcity("honolulu", T4["halbe"], T4["Wochen"], 0.85)
 mcity("howland", T4["halbe"], T4["Wochen"], 0.85)
-rec("ship_horn", T4["halbe"] + 0.3, -15, trim=[0.0, 2.5], fade=0.8)
 P("colorado4", "st_colorado", T4["Colorado"], T4["Lexington"] - 0.3, 700, 560, 760, -2, how="slide", frm=(-800, 560), sound="paper_slide")
 L("lcol", "lbl_colorado", T4["Colorado"] + 0.2, T4["Lexington"] - 0.3, 700, 220, 440, -2)
 P("float4", "st_floatplane", T4["Wasserflugzeugen"], T4["Lexington"] - 0.3, 1450, 400, 420, 6)
@@ -947,6 +947,14 @@ MAP_EXTRA.append({"id": "satcircle6", "type": "dashed_path", "start": T6["Satell
 L("lsat6", "lbl_satellit", T6["Satellitenbildern"], T6["Team"] - 0.2, 1450, 860, 440, 3)
 S.image("mag6", "st_magnifier", T6["Satellitenbildern"] + 0.4, T6["Baumstämme"], slide_in(T6["Satellitenbildern"] + 0.4, 2300, 1100, 1150, 520, mg_s, -30, -12, 0.45) +
         [{"t": T6["Team"], "x": 1120, "y": 520}, exit_to(T6["Team"] + 0.2, 2400, 1200, 0.35, rot=-40)], anchor=list(M["st_magnifier"]["lens"]))
+if "st_satplane" in M:
+    sp = S.scale_for("st_satplane", 820)
+    S.image("satimg6", "st_satplane", T6["Satellitenbildern"] + 0.2, T6["Baumstämme"] - 0.45, [
+        {"t": T6["Satellitenbildern"] + 0.2, "x": 900, "y": 520, "scale": sp * 0.15, "rot": 2, "opacity": 0.0},
+        {"t": T6["Satellitenbildern"] + 0.25, "opacity": 1.0}, {"t": T6["Satellitenbildern"] + 0.55, "scale": sp, "ease": "out"},
+        {"t": T6["Baumstämme"] - 0.6, "scale": sp * 1.04, "opacity": 1.0}, {"t": T6["Baumstämme"] - 0.48, "opacity": 0.0}])
+    rec("paper_drop", T6["Satellitenbildern"] + 0.25, -8)
+    S.flash("fl6", T6["Baumstämme"] - 0.6, color=(246, 240, 226), peak=0.35)
 P("logs6", "st_logs", T6["Ergebnis"] if "Ergebnis" in T6 else T6["Baumstämme"] - 0.6, T_CH7 - 0.2, 960, 560, 640, -3)
 L("lbaum", "lbl_baeume", T6["Baumstämme"], T_CH7 - 0.2, 960, 880, 460, 2, gain=-6)
 rec("suspense_hit", T6["Baumstämme"], -12)
