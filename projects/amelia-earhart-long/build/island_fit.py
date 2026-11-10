@@ -38,6 +38,29 @@ def island_mask(rgb, near):
     return lab == k
 
 
+def paper_fill(rgb, mm, grow):
+    """remove the masked area but keep the paper: low frequencies from an inpaint,
+    lines/grain/dots copied from a horizontally shifted clean strip (rows stay aligned)"""
+    H, W = mm.shape
+    ys, xs = np.nonzero(mm)
+    x0, x1 = xs.min(), xs.max()
+    soft = cv2.dilate(mm, np.ones((2 * grow + 1,) * 2, np.uint8)).astype(np.float32)
+    soft = cv2.GaussianBlur(soft, (0, 0), max(2.0, grow / 2.0))
+    soft = np.clip(soft * 1.6, 0, 1)[..., None]
+    cover = soft[..., 0] > 0.01
+    span = x1 - x0 + 4 * grow + 8
+    for dx in (span, -span, 2 * span, -2 * span):
+        if 0 <= x0 - 2 * grow + dx and x1 + 2 * grow + dx < W:
+            break
+    src = np.roll(rgb, -dx, axis=1).astype(np.float32)
+    f = rgb.astype(np.float32)
+    sig = 10.0
+    low = cv2.GaussianBlur(cv2.inpaint(rgb, (cover * 255).astype(np.uint8), 9, cv2.INPAINT_TELEA).astype(np.float32), (0, 0), sig)
+    hi = src - cv2.GaussianBlur(src, (0, 0), sig)
+    out = f * (1 - soft) + np.clip(low + hi, 0, 255) * soft
+    return out.astype(np.uint8)
+
+
 def paint_out(out_dir, tile, meta, island_xy):
     """inpaint the island of one tile (from <tile>_orig.png); returns the island mask in tile px"""
     p = os.path.join(out_dir, tile + ".png")
@@ -53,11 +76,7 @@ def paint_out(out_dir, tile, meta, island_xy):
         return None
     grow = max(6, int(0.04 * np.sqrt(m.sum())))
     mm = cv2.dilate(m.astype(np.uint8), np.ones((2 * grow + 1, 2 * grow + 1), np.uint8))
-    rgb = cv2.inpaint(np.ascontiguousarray(im[..., :3]), mm * 255, 9, cv2.INPAINT_TELEA)
-    # bring back fine paper grain: high-pass of a nearby ocean patch would be nicer; noise is enough here
-    rng = np.random.default_rng(0)
-    noise = rng.normal(0, 2.5, rgb.shape[:2])[..., None]
-    rgb = np.where(mm[..., None] > 0, np.clip(rgb + noise, 0, 255), rgb).astype(np.uint8)
+    rgb = paper_fill(np.ascontiguousarray(im[..., :3]), mm, grow)
     im[..., :3] = rgb
     Image.fromarray(im, "RGBA").save(p)
     return m

@@ -260,7 +260,7 @@ S.sticker("book", "st_book", T1["Bücher"], T1["Aber"] - 0.3, 1480, 330, 330, 6,
 rec("page_turn", T1["Bücher"] + 0.2, -10)
 S.sticker("lmode", "lbl_mode", T1["Mode"], T1["Aber"] - 0.3, 1480, 620, 260, -3, exit=(2400, 620), sound="cardboard_hit", gain=-9)
 S.sticker("lchancen", "lbl_chancen", T1["Chancen"], T1["Aber"] - 0.3, 960, 150, 560, 2, exit=(960, -250), sound="cardboard_hit", gain=-7)
-S.sticker("lrekord", "lbl_rekord", T1["Rekord"] - 0.1, T_CH2 + 3.0, 960, 540, 700, -2, exit=(960, -300), sound="cardboard_hit", gain=-5)
+S.sticker("lrekord", "lbl_rekord", T1["Rekord"] - 0.1, T_CH2 + 3.0, 960, 215, 700, -2, exit=(960, -300), sound="cardboard_hit", gain=-5)
 rec("suspense_hit", T1["Rekord"], -10)
 
 # ======================================================================= helpers for chapters 2-9
@@ -581,8 +581,8 @@ MAP_EXTRA.append({"id": "leg_last", "type": "dashed_path", "start": T3["startet"
                   "points": [list(LAE), list(HOW)], "props": {"x": 0, "y": 0}, "width": 6 / 1.2, "dash": 18 / 1.2,
                   "gap": 12 / 1.2, "color": [232, 112, 58],
                   "keys": [k for k in fprog if k["t"] <= T3["Nähe"] + 1.5] + [{"t": T3["Problem"], "opacity": 1.0}, {"t": T3["Problem"] + 0.5, "opacity": 0.0}]})
-cam_follow(fk, 1.2, every=4)
-cam(T3["Nähe"] + 1.0, (HOW[0] - 60, HOW[1] + 15), 1.6, "inout")
+cam_follow([k for k in fk if k["t"] <= T3["Nähe"] + 0.6], 1.2, every=4)
+cam(T3["Nähe"] + 2.0, (HOW[0] - 60, HOW[1] + 15), 1.6, "inout")
 mcity("howland", T3["Stimme"], T_CH4, 1.6)
 rec("plane_distant", T3["startet"], -15, trim=[0.0, T3["Problem"] - T3["startet"]], fade=1.5)
 darkness("night", T3["Nacht"] - 0.2, T3["Sonnenaufgang"] - 0.1, op=0.55)
@@ -924,9 +924,31 @@ rec("map_whoosh", T6["Nikumaroro"] + 0.2, -5, peak=0.38)
 rec("ocean_wind", T6["Nikumaroro"], -20, trim=[0.0, 14.0], fade=2.0)
 L("lniku6", "lbl_nikumaroro", T6["Nikumaroro"] + 0.2, T6["Theorie"] - 0.2, 960, 150, 460, -2)
 L("lgard", "lbl_gardner", T6["Gardner"], T6["Theorie"] - 0.2, 960, 920, 420, 2)
-P("land6", "st_electra", T6["Riff"] - 0.6, T6["Hinweise"] - 0.2, 1420, 760, 420, -8, how="slide", frm=(2500, 640), sound="paper_slide")
+# slow push-in on the atoll (keys < 2.5 s apart so the camera does not hold still)
+Z6a, Z6b = ZP(10000), ZP(12500)
+t6a, t6b = T6["Nikumaroro"] + 0.5, T6["Hinweise"] - 1.4
+for j in range(1, 6):
+    u = j / 5
+    cam(t6a + (t6b - t6a) * u, (NIK[0] + 25 / Z6a * u, NIK[1] + 30 / Z6a * u), Z6a * (Z6b / Z6a) ** u, "linear")
+L("lth6", "lbl_th2", T6["Theorie"], T6["Riff"] - 0.4, 1380, 170, 340, 3, exit=(2400, 170))
+# "folgt der Linie und landet auf dem Riff": the Electra comes in along the 157° line and lands near the wreck
+d6 = (math.sin(math.radians(157)), -math.cos(math.radians(157)))
+E6 = (NIK[0] + (740 - CX) / Z6a, NIK[1] + (450 - CY) / Z6a)
+A6 = (E6[0] - d6[0] * 900 / Z6a, E6[1] - d6[1] * 900 / Z6a)
+B6 = (E6[0] + d6[0] * 70 / Z6a, E6[1] + d6[1] * 70 / Z6a)
+t6f = w("folgt", 361.5)
+lk, lprog = follow([A6, E6, B6], [(0, t6f - 0.3), (1, T6["Riff"] - 0.05), (2, T6["Riff"] + 0.7)])
+lk[0]["scale"] = plane_px(220, Z6a)
+mobj("land6", "st_electra", t6f - 0.3, T6["Hinweise"] + 0.1,
+     lk + [{"t": T6["Hinweise"] - 0.4, "opacity": 1.0}, {"t": T6["Hinweise"], "opacity": 0.0}])
+MAP_EXTRA.append({"id": "line6_lop", "type": "dashed_path", "start": t6f - 0.3, "end": T6["Hinweise"] + 0.1,
+                  "points": [list(A6), list(E6)], "props": {"x": 0, "y": 0}, "width": 6 / Z6a, "dash": 18 / Z6a,
+                  "gap": 12 / Z6a, "color": [232, 112, 58],
+                  "keys": [{"t": t6f - 0.3, "progress": 0.0, "opacity": 1.0}, {"t": T6["Riff"] - 0.05, "progress": 1.0, "ease": "inout"},
+                           {"t": T6["Hinweise"] - 0.4, "opacity": 1.0}, {"t": T6["Hinweise"], "opacity": 0.0}]})
+rec("plane_distant", t6f - 0.3, -16, trim=[0.0, 2.6], fade=0.8)
 rec("plane_skid", T6["Riff"] - 0.1, -14, trim=[0.0, 2.0], fade=0.6)
-L("lriff", "lbl_riff", T6["Riff"], T6["Hinweise"] - 0.2, 960, 170, 520, -2)
+L("lriff", "lbl_riff", T6["Riff"] + 0.2, T6["Hinweise"] - 0.2, 1300, 940, 520, -2)
 cam(T6["Hinweise"], NIK, ZP(4000), "inout")
 P("listener", "st_listener", T6["Notrufe"] - 0.3, T6["Land"] - 0.2, 1350, 560, 640, 3)
 waves("w6_", T6["Notrufe"] - 0.2, T6["Land"] - 0.4, 760, 480, 180, size=360)
