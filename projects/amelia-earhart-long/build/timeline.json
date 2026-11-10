@@ -194006,21 +194006,6 @@
    "gain_db": -5.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 6.556,
-   "gain_db": -10.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 6.906,
-   "gain_db": -11.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 9.146,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/plane_distant.wav",
    "start": 11.337,
    "gain_db": -18.0,
@@ -194066,11 +194051,6 @@
    "gain_db": -7.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 21.648,
-   "gain_db": -6.7
-  },
-  {
    "src": "audio/sfx_prepared/map_whoosh.wav",
    "start": 24.225,
    "gain_db": -12.6
@@ -194089,16 +194069,6 @@
     14.0
    ],
    "fade_out": 2.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 27.166,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 33.01,
-   "gain_db": -9.0
   },
   {
    "src": "audio/sfx_prepared/paper_slide.wav",
@@ -194126,11 +194096,6 @@
    "gain_db": -10.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 42.36,
-   "gain_db": -6.7
-  },
-  {
    "src": "audio/sfx_prepared/suspense_hit.wav",
    "start": 42.36,
    "gain_db": -11.7
@@ -194156,16 +194121,6 @@
    "gain_db": -5.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 46.891,
-   "gain_db": -7.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 48.717,
-   "gain_db": -9.0
-  },
-  {
    "src": "audio/sfx_prepared/pen_scribble.wav",
    "start": 49.91,
    "gain_db": -13.0,
@@ -194174,21 +194129,6 @@
     3.4
    ],
    "fade_out": 0.4
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 51.226,
-   "gain_db": -7.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 52.94,
-   "gain_db": -9.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 54.056,
-   "gain_db": -10.0
   },
   {
    "src": "audio/sfx_prepared/plane_flyby.wav",
@@ -194201,24 +194141,9 @@
    "fade_out": 0.6
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 58.441,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 60.246,
    "gain_db": -5.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 60.646,
-   "gain_db": -9.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 62.15,
-   "gain_db": -6.7
   },
   {
    "src": "audio/sfx_prepared/pen_scribble.wav",
@@ -194231,19 +194156,9 @@
    "fade_out": 0.3
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 67.586,
-   "gain_db": -6.7
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 71.616,
    "gain_db": -4.8
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 75.56,
-   "gain_db": -6.7
   },
   {
    "src": "audio/sfx_prepared/plane_distant.wav",
@@ -194256,19 +194171,9 @@
    "fade_out": 0.8
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 79.03,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 82.908,
    "gain_db": -5.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 83.258,
-   "gain_db": -9.0
   },
   {
    "src": "audio/sfx_prepared/camera_flash.wav",
@@ -194301,11 +194206,6 @@
    "gain_db": -6.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 85.095,
-   "gain_db": -6.7
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 86.15,
    "gain_db": -7.0
@@ -194314,16 +194214,6 @@
    "src": "audio/sfx_prepared/page_turn.wav",
    "start": 86.25,
    "gain_db": -10.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 87.129,
-   "gain_db": -9.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 90.343,
-   "gain_db": -7.0
   },
   {
    "src": "audio/sfx_prepared/cardboard_hit.wav",
@@ -194336,64 +194226,14 @@
    "gain_db": -11.7
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 48.667,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 54.006,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 63.97,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 65.67,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 77.49,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 80.93,
-   "gain_db": -17.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_slide.wav",
    "start": 94.937,
    "gain_db": -20.2
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 101.222,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 99.732,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_slide.wav",
    "start": 106.887,
    "gain_db": -20.2
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 108.376,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 111.849,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/plane_flyby.wav",
@@ -194411,39 +194251,9 @@
    "gain_db": -6.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 114.12,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 113.256,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 114.92,
    "gain_db": -6.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 118.97,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 122.58,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 119.02,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 120.54,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/plane_skid.wav",
@@ -194456,24 +194266,9 @@
    "fade_out": 0.6
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 130.82,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/map_whoosh.wav",
    "start": 131.34,
    "gain_db": -12.6
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 132.882,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 136.537,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/pen_scribble.wav",
@@ -194496,61 +194291,6 @@
    "fade_out": 1.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 136.987,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 137.63,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 140.246,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 141.299,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 142.728,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 143.132,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 143.604,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 144.595,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 147.034,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 148.76,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 152.049,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/suspense_hit.wav",
    "start": 153.239,
    "gain_db": -12.0
@@ -194561,34 +194301,9 @@
    "gain_db": -20.2
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 156.464,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/map_whoosh.wav",
    "start": 157.63,
    "gain_db": -12.6
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 158.91,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 161.76,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 166.28,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 168.831,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/paper_drop.wav",
@@ -194609,16 +194324,6 @@
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 173.497,
    "gain_db": -6.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 175.575,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 178.16,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/pen_scribble.wav",
@@ -194646,24 +194351,9 @@
    "fade_out": 0.8
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 183.212,
-   "gain_db": -8.0
-  },
-  {
    "src": "@sfx/morse_beeps",
    "start": 185.25,
    "gain_db": -22
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 187.307,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 197.575,
-   "gain_db": -17.0
   },
   {
    "src": "audio/sfx_prepared/plane_distant.wav",
@@ -194686,11 +194376,6 @@
    "fade_out": 1.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 202.78,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/drone_dark.wav",
    "start": 202.68,
    "gain_db": -18.3,
@@ -194711,16 +194396,6 @@
    "gain_db": -6.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 205.375,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 206.292,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/suspense_hit.wav",
    "start": 206.192,
    "gain_db": -14.0
@@ -194731,11 +194406,6 @@
    "gain_db": -6.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 211.768,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_slide.wav",
    "start": 213.269,
    "gain_db": -20.2
@@ -194744,11 +194414,6 @@
    "src": "audio/sfx_prepared/paper_tear.wav",
    "start": 217.299,
    "gain_db": -20.2
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 214.289,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/paper_drop.wav",
@@ -194766,19 +194431,9 @@
    "gain_db": -6.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 221.156,
-   "gain_db": -8.0
-  },
-  {
    "src": "@sfx/morse_beeps",
    "start": 220.856,
    "gain_db": -16
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 222.698,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/paper_drop.wav",
@@ -194861,31 +194516,6 @@
    "gain_db": -15.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 229.486,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 231.251,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 236.157,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 241.0,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 242.86,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/radio_cutoff.wav",
    "start": 244.04,
    "gain_db": -15.3,
@@ -194921,24 +194551,9 @@
    "fade_out": 0.6
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 249.024,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 249.024,
-   "gain_db": -17.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_slide.wav",
    "start": 251.052,
    "gain_db": -20.2
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 251.672,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/paper_drop.wav",
@@ -194961,34 +194576,9 @@
    "gain_db": -20.2
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 255.198,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 256.243,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/sonar_ping.wav",
    "start": 258.225,
    "gain_db": -17.4
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 258.325,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 259.657,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 263.535,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/newspaper.wav",
@@ -195006,19 +194596,9 @@
    "gain_db": -11.7
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 270.88,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 271.08,
    "gain_db": -6.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 274.975,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/cardboard_hit.wav",
@@ -195051,11 +194631,6 @@
    "gain_db": -20.2
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 289.182,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/rock_thud.wav",
    "start": 292.732,
    "gain_db": -10.3
@@ -195074,11 +194649,6 @@
     14.5
    ],
    "fade_out": 2.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 297.351,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/paper_slide.wav",
@@ -195106,19 +194676,9 @@
    "gain_db": -15.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 310.667,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/sonar_ping.wav",
    "start": 310.567,
    "gain_db": -17.4
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 313.2,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/newspaper.wav",
@@ -195128,16 +194688,6 @@
   {
    "src": "audio/sfx_prepared/cardboard_hit.wav",
    "start": 315.464,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 318.396,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 320.011,
    "gain_db": -8.0
   },
   {
@@ -195201,21 +194751,6 @@
    "gain_db": -20.2
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 342.288,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 346.62,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 349.879,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/map_whoosh.wav",
    "start": 353.237,
    "gain_db": -12.6
@@ -195229,21 +194764,6 @@
     14.0
    ],
    "fade_out": 2.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 353.717,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 355.046,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 360.06,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/plane_distant.wav",
@@ -195266,11 +194786,6 @@
    "fade_out": 0.6
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 364.422,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 372.583,
    "gain_db": -6.0
@@ -195286,29 +194801,14 @@
    "fade_out": 0.6
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 372.883,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 377.883,
    "gain_db": -6.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 378.083,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 380.02,
    "gain_db": -6.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 383.08,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/paper_drop.wav",
@@ -195361,34 +194861,9 @@
    "fade_out": 0.6
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 398.242,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 401.788,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_slide.wav",
    "start": 407.821,
    "gain_db": -20.2
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 408.341,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 413.191,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 414.191,
-   "gain_db": -17.0
   },
   {
    "src": "audio/sfx_prepared/paper_slide.wav",
@@ -195411,24 +194886,9 @@
    "gain_db": -4.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 417.98,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 421.065,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_slide.wav",
    "start": 421.145,
    "gain_db": -20.2
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 427.498,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/paper_drop.wav",
@@ -195439,11 +194899,6 @@
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 430.753,
    "gain_db": -6.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 434.618,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/box_open.wav",
@@ -195461,34 +194916,14 @@
    "gain_db": -6.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 440.57,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 444.941,
    "gain_db": -6.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 445.541,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/stamp.wav",
    "start": 448.68,
    "gain_db": -4.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 451.704,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 454.481,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/paper_drop.wav",
@@ -195499,11 +194934,6 @@
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 463.801,
    "gain_db": -6.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 464.401,
-   "gain_db": -6.7
   },
   {
    "src": "audio/sfx_prepared/suspense_hit.wav",
@@ -195526,41 +194956,6 @@
    "fade_out": 2.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 471.961,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 472.88,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 475.577,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 480.086,
-   "gain_db": -17.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 478.413,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 482.934,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 489.5,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 492.524,
    "gain_db": -6.0
@@ -195576,21 +194971,6 @@
    "gain_db": -8.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 500.982,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 503.14,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 507.195,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 509.151,
    "gain_db": -6.0
@@ -195601,19 +194981,9 @@
    "gain_db": -9.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 511.52,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 511.72,
    "gain_db": -6.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 513.953,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/stamp.wav",
@@ -195631,11 +195001,6 @@
    "gain_db": -12.6
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 533.29,
-   "gain_db": -17.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 522.558,
    "gain_db": -6.0
@@ -195651,19 +195016,9 @@
    "gain_db": -10.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 527.73,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 531.212,
    "gain_db": -6.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 531.986,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/cardboard_hit.wav",
@@ -195684,11 +195039,6 @@
     3.5
    ],
    "fade_out": 1.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 542.108,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/paper_tear.wav",
@@ -195731,11 +195081,6 @@
    "gain_db": -9.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 566.3,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 568.3,
    "gain_db": -9.0
@@ -195746,11 +195091,6 @@
    "gain_db": -4.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 556.47,
-   "gain_db": -8.0
-  },
-  {
    "src": "audio/sfx_prepared/underwater.wav",
    "start": 572.44,
    "gain_db": -15.0,
@@ -195759,11 +195099,6 @@
     4.5
    ],
    "fade_out": 1.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 572.84,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/ocean_wind.wav",
@@ -195791,11 +195126,6 @@
    "gain_db": -6.0
   },
   {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 583.44,
-   "gain_db": -6.7
-  },
-  {
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 583.64,
    "gain_db": -12.0
@@ -195814,16 +195144,6 @@
    "src": "audio/sfx_prepared/paper_drop.wav",
    "start": 584.09,
    "gain_db": -12.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 585.147,
-   "gain_db": -8.0
-  },
-  {
-   "src": "audio/sfx_prepared/cardboard_hit.wav",
-   "start": 590.066,
-   "gain_db": -8.0
   },
   {
    "src": "audio/sfx_prepared/suspense_hit.wav",

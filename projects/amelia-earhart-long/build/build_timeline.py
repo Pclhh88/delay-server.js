@@ -1218,6 +1218,14 @@ music("music_mystery", T_CH6 - 1.0, T_CH7 + 2.0, -21, off=0.0)
 music("music_tension", T_CH7 - 1.0, T_CH8 + 2.0, -23, off=60.0)
 music("music_calm", T_CH8 - 1.0, FULL_END, -22, off=40.0, fo=2.0)
 
+# ---------------------------------------------------------------- label "click" only at key moments
+# (feedback: the cardboard hit on every label was too much) – keep it for the big reveals only
+KEY_LABELS = {"lbl_kein_flugzeug", "lbl_kein_wrack", "lbl_keine_leiche", "lbl_rekord", "lbl_nichts",
+              "lbl_sensation", "lbl_felsen", "lbl_13", "lbl_beweis", "lbl_unsinn", "lbl_4theorien"}
+_key_t = [L_["start"] for L_ in S.layers if L_.get("type") == "image" and L_.get("asset") in KEY_LABELS]
+S.audio = [a_ for a_ in S.audio if not a_["src"].endswith("/cardboard_hit.wav")
+           or any(abs(a_["start"] - (t_ + 0.1)) < 0.12 for t_ in _key_t)]
+
 # ---------------------------------------------------------------- SFX ceiling (user: some sounds stick out)
 # K-weighted momentary max of every sound after its gain is capped well below the voice (~ -17 LUFS).
 CEIL = {"default": -27.0, "paper_tear": -32.0, "paper_slide": -30.0, "newspaper": -29.0,
