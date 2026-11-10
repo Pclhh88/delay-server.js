@@ -1045,6 +1045,18 @@
   "isl_howland": {
    "path": "build/assets/isl_howland.png",
    "license": "own"
+  },
+  "st_stadium": {
+   "path": "build/assets/st_stadium.png",
+   "license": "own"
+  },
+  "st_coin": {
+   "path": "build/assets/st_coin.png",
+   "license": "own"
+  },
+  "st_blindfold": {
+   "path": "build/assets/st_blindfold.png",
+   "license": "own"
   }
  },
  "layers": [
@@ -185314,7 +185326,7 @@
    "type": "image",
    "asset": "lbl_5km",
    "start": 297.251,
-   "end": 302.886,
+   "end": 300.694,
    "anchor": [
     0.5,
     0.5
@@ -185345,14 +185357,204 @@
      "ease": "inout"
     },
     {
-     "t": 302.536,
+     "t": 300.344,
      "x": 640,
      "y": 300
     },
     {
-     "t": 302.836,
+     "t": 300.644,
      "x": -400,
      "y": 300,
+     "ease": "in"
+    }
+   ],
+   "jitter": {
+    "pos": 1.6,
+    "rot": 0.25,
+    "fps": 12
+   }
+  },
+  {
+   "id": "stad5",
+   "type": "image",
+   "asset": "st_stadium",
+   "start": 300.544,
+   "end": 307.16,
+   "anchor": [
+    0.4904,
+    0.4765
+   ],
+   "keys": [
+    {
+     "t": 300.544,
+     "x": 960,
+     "y": 520,
+     "scale": 0.1063501849568434,
+     "rot": -7,
+     "opacity": 0.0
+    },
+    {
+     "t": 300.584,
+     "opacity": 1.0
+    },
+    {
+     "t": 300.698,
+     "scale": 0.7657213316892726,
+     "rot": 0.5,
+     "ease": "out"
+    },
+    {
+     "t": 300.82399999999996,
+     "scale": 0.7090012330456227,
+     "rot": -1,
+     "ease": "inout"
+    },
+    {
+     "t": 306.81,
+     "x": 960,
+     "y": 520
+    },
+    {
+     "t": 307.11,
+     "x": 2420,
+     "y": 520,
+     "ease": "in"
+    }
+   ],
+   "jitter": {
+    "pos": 1.6,
+    "rot": 0.25,
+    "fps": 12
+   }
+  },
+  {
+   "id": "coin5",
+   "type": "image",
+   "asset": "st_coin",
+   "start": 303.983,
+   "end": 307.16,
+   "anchor": [
+    0.4863,
+    0.4769
+   ],
+   "keys": [
+    {
+     "t": 303.983,
+     "x": 1010,
+     "y": 585,
+     "scale": 0.007513661202185792,
+     "rot": -6,
+     "opacity": 0.0
+    },
+    {
+     "t": 304.023,
+     "opacity": 1.0
+    },
+    {
+     "t": 304.137,
+     "scale": 0.054098360655737705,
+     "rot": 1.5,
+     "ease": "out"
+    },
+    {
+     "t": 304.263,
+     "scale": 0.05009107468123861,
+     "rot": 0,
+     "ease": "inout"
+    },
+    {
+     "t": 306.81,
+     "x": 1010,
+     "y": 585
+    },
+    {
+     "t": 307.11,
+     "x": 2420,
+     "y": 585,
+     "ease": "in"
+    }
+   ],
+   "jitter": {
+    "pos": 1.6,
+    "rot": 0.25,
+    "fps": 12
+   }
+  },
+  {
+   "id": "coin_glint",
+   "type": "glow",
+   "start": 304.033,
+   "end": 304.933,
+   "radius": 60,
+   "softness": 0.9,
+   "color": [
+    255,
+    236,
+    170
+   ],
+   "props": {
+    "x": 1010,
+    "y": 585
+   },
+   "keys": [
+    {
+     "t": 304.033,
+     "opacity": 0.0
+    },
+    {
+     "t": 304.283,
+     "opacity": 0.9
+    },
+    {
+     "t": 304.933,
+     "opacity": 0.0
+    }
+   ]
+  },
+  {
+   "id": "blind5",
+   "type": "image",
+   "asset": "st_blindfold",
+   "start": 305.299,
+   "end": 307.16,
+   "anchor": [
+    0.4904,
+    0.4712
+   ],
+   "keys": [
+    {
+     "t": 305.299,
+     "x": 1460,
+     "y": 260,
+     "scale": 0.037815126050420166,
+     "rot": 0,
+     "opacity": 0.0
+    },
+    {
+     "t": 305.339,
+     "opacity": 1.0
+    },
+    {
+     "t": 305.453,
+     "scale": 0.27226890756302524,
+     "rot": 7.5,
+     "ease": "out"
+    },
+    {
+     "t": 305.57899999999995,
+     "scale": 0.25210084033613445,
+     "rot": 6,
+     "ease": "inout"
+    },
+    {
+     "t": 306.81,
+     "x": 1460,
+     "y": 260
+    },
+    {
+     "t": 307.11,
+     "x": 2420,
+     "y": 260,
      "ease": "in"
     }
    ],
@@ -185375,8 +185577,8 @@
    "keys": [
     {
      "t": 302.736,
-     "x": 420,
-     "y": 760,
+     "x": 640,
+     "y": 470,
      "scale": 0.2827965435978005,
      "rot": -20,
      "opacity": 0.0
@@ -185387,22 +185589,22 @@
     },
     {
      "t": 304.16066666666666,
-     "x": 1400,
-     "y": 760,
+     "x": 1250,
+     "y": 430,
      "rot": -12,
      "ease": "inout"
     },
     {
      "t": 305.2853333333333,
-     "x": 760,
-     "y": 840,
+     "x": 1010,
+     "y": 585,
      "rot": -20,
      "ease": "inout"
     },
     {
      "t": 306.40999999999997,
-     "x": 1200,
-     "y": 830,
+     "x": 820,
+     "y": 640,
      "rot": -12,
      "ease": "inout"
     },
@@ -193540,6 +193742,21 @@
    "src": "audio/sfx_prepared/cardboard_hit.wav",
    "start": 297.351,
    "gain_db": -8.0
+  },
+  {
+   "src": "audio/sfx_prepared/paper_slide.wav",
+   "start": 300.224,
+   "gain_db": -23.0
+  },
+  {
+   "src": "audio/sfx_prepared/typewriter_bell.wav",
+   "start": 304.083,
+   "gain_db": -24.0
+  },
+  {
+   "src": "audio/sfx_prepared/paper_drop.wav",
+   "start": 305.399,
+   "gain_db": -14.0
   },
   {
    "src": "audio/sfx_prepared/paper_drop.wav",

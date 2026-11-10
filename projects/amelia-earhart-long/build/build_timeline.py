@@ -790,21 +790,21 @@ S.layers.append({"id": "dark5", "type": "solid", "start": T_DIVE0, "end": T5["Tr
                           {"t": T5["Stadions"], "opacity": 0.78, "ease": "inout"},
                           {"t": T5["Trotzdem"] - 0.3, "opacity": 0.78}, {"t": T5["Trotzdem"] + 0.3, "opacity": 0.0}]})
 rec("underwater", T5["versinkt"] - 0.1, -4, trim=[0.0, 14.5], fade=2.0)
-L("l5km", "lbl_5km", T5["fünf"] + 0.1, T5["Stadions"] - 0.5, 640, 300, 420, -2, exit=(-400, 300))
+L("l5km", "lbl_5km", T5["fünf"] + 0.1, (T5["als"] - 0.3) if "st_stadium" in M else T5["Stadions"] - 0.5, 640, 300, 420, -2, exit=(-400, 300))
 if "st_stadium" in M:
     # the comparison: a coin on the floor of a dark stadium – blindfolded
     P("stad5", "st_stadium", T5["als"] - 0.1, T5["Trotzdem"] - 0.2, 960, 520, 1150, -1, sound="paper_slide", gain=-14)
     if "st_coin" in M:
-        P("coin5", "st_coin", T5["Münze"] - 0.05, T5["Trotzdem"] - 0.2, 1120, 690, 70, 0, sound=None)
+        P("coin5", "st_coin", T5["Münze"] - 0.05, T5["Trotzdem"] - 0.2, 1010, 585, 55, 0, sound=None)
         S.layers.append({"id": "coin_glint", "type": "glow", "start": T5["Münze"], "end": T5["Münze"] + 0.9,
                          "radius": 60, "softness": 0.9, "color": [255, 236, 170],
-                         "props": {"x": 1120, "y": 690}, "keys": [{"t": T5["Münze"], "opacity": 0.0},
+                         "props": {"x": 1010, "y": 585}, "keys": [{"t": T5["Münze"], "opacity": 0.0},
                                                                   {"t": T5["Münze"] + 0.25, "opacity": 0.9},
                                                                   {"t": T5["Münze"] + 0.9, "opacity": 0.0}]})
         rec("typewriter_bell", T5["Münze"] + 0.05, -24)
     if "st_blindfold" in M:
         P("blind5", "st_blindfold", T5["verbundenen"] - 0.1, T5["Trotzdem"] - 0.2, 1460, 260, 420, 6, gain=-14)
-    MAG5 = [(560, 460), (1340, 380), (760, 700), (1180, 720)]
+    MAG5 = [(640, 470), (1250, 430), (1010, 585), (820, 640)]
 else:
     MAG5 = [(420, 760), (1400, 760), (760, 840), (1200, 830)]
 mk5 = [{"t": T5["Stadions"] - 0.3, "x": MAG5[0][0], "y": MAG5[0][1], "scale": S.scale_for("st_magnifier", 360), "rot": -20, "opacity": 0.0},
