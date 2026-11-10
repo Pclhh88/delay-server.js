@@ -774,22 +774,23 @@ def search_grid(id_, x0, x1, y0, y1, lanes, t0, t1, color, ship_w, t_end):
                                                     {"t": t_end, "opacity": 1.0}, {"t": t_end + 0.5, "opacity": 0.0}]})
     seg = [math.dist(u, v) for u, v in zip(pts, pts[1:])]
     tot, d, keys = sum(seg), 0.0, []
-    sc = S.scale_for("st_itasca", ship_w)
+    ship = "st_research" if "st_research" in M else "st_itasca"
+    sc = S.scale_for(ship, ship_w)
     for (u, v), sl in zip(zip(pts, pts[1:]), seg):
         ta, tb = t0 + (t1 - t0) * d / tot, t0 + (t1 - t0) * (d + sl) / tot
         sx = 1 if v[0] > u[0] else -1
-        keys.append({"t": round(ta, 3), "x": u[0], "y": u[1] - 22, "sx": sx})
+        keys.append({"t": round(ta, 3), "x": u[0], "y": u[1] - 26, "sx": sx})
         keys.append({"t": round(min(tb, ta + 0.18), 3), "sx": sx})
         d += sl
     keys.append({"t": round(t1, 3), "x": pts[-1][0], "y": pts[-1][1] - 22})
     keys[0].update(scale=sc * 0.2, opacity=0.0, rot=0)
     keys.insert(1, {"t": round(t0 + 0.12, 3), "scale": sc, "opacity": 1.0})
     keys += [{"t": t_end, "opacity": 1.0}, {"t": t_end + 0.4, "opacity": 0.0}]
-    S.image(id_ + "_ship", "st_itasca", t0, t_end + 0.5, keys)
+    S.image(id_ + "_ship", ship, t0, t_end + 0.5, keys)
 
 
-search_grid("grid_a", 330, 900, 330, 800, 6, T5["Trotzdem"] + 0.5, T5["Anfang"] - 0.1, (246, 240, 226), 190, T5["Anfang"] - 0.1)
-search_grid("grid_b", 1020, 1590, 380, 850, 6, T5["Expeditionen"], T5["Anfang"] - 0.1, (232, 112, 58), 160, T5["Anfang"] - 0.1)
+search_grid("grid_a", 330, 900, 330, 800, 6, T5["Trotzdem"] + 0.5, T5["Anfang"] - 0.1, (246, 240, 226), 230, T5["Anfang"] - 0.1)
+search_grid("grid_b", 1020, 1590, 380, 850, 6, T5["Expeditionen"], T5["Anfang"] - 0.1, (232, 112, 58), 200, T5["Anfang"] - 0.1)
 rec("paper_drop", T5["Trotzdem"] + 0.55, -14)
 rec("paper_drop", T5["Expeditionen"] + 0.05, -15)
 L("lsonar", "lbl_sonar", T5["Sonar"], T5["Anfang"] - 0.2, 960, 120, 320, -2)
@@ -945,8 +946,7 @@ MAP_EXTRA.append({"id": "satcircle6", "type": "dashed_path", "start": T6["Satell
                            {"t": T6["Satellitenbildern"] + 0.8, "progress": 1.0, "ease": "inout"},
                            {"t": T6["Baumstämme"] + 0.5, "opacity": 1.0}, {"t": T6["Baumstämme"] + 1.0, "opacity": 0.0}]})
 L("lsat6", "lbl_satellit", T6["Satellitenbildern"], T6["Team"] - 0.2, 1450, 860, 440, 3)
-S.image("mag6", "st_magnifier", T6["Satellitenbildern"] + 0.4, T6["Baumstämme"], slide_in(T6["Satellitenbildern"] + 0.4, 2300, 1100, 1150, 520, mg_s, -30, -12, 0.45) +
-        [{"t": T6["Team"], "x": 1120, "y": 520}, exit_to(T6["Team"] + 0.2, 2400, 1200, 0.35, rot=-40)], anchor=list(M["st_magnifier"]["lens"]))
+
 if "st_satplane" in M:
     sp = S.scale_for("st_satplane", 820)
     S.image("satimg6", "st_satplane", T6["Satellitenbildern"] + 0.2, T6["Baumstämme"] - 0.45, [
@@ -955,6 +955,8 @@ if "st_satplane" in M:
         {"t": T6["Baumstämme"] - 0.6, "scale": sp * 1.04, "opacity": 1.0}, {"t": T6["Baumstämme"] - 0.48, "opacity": 0.0}])
     rec("paper_drop", T6["Satellitenbildern"] + 0.25, -8)
     S.flash("fl6", T6["Baumstämme"] - 0.6, color=(246, 240, 226), peak=0.35)
+S.image("mag6", "st_magnifier", T6["Satellitenbildern"] + 0.4, T6["Baumstämme"], slide_in(T6["Satellitenbildern"] + 0.4, 2300, 1100, 990, 500, mg_s, -30, -12, 0.45) +
+        [{"t": T6["Team"], "x": 950, "y": 515}, exit_to(T6["Team"] + 0.2, 2400, 1200, 0.35, rot=-40)], anchor=list(M["st_magnifier"]["lens"]))
 P("logs6", "st_logs", T6["Ergebnis"] if "Ergebnis" in T6 else T6["Baumstämme"] - 0.6, T_CH7 - 0.2, 960, 560, 640, -3)
 L("lbaum", "lbl_baeume", T6["Baumstämme"], T_CH7 - 0.2, 960, 880, 460, 2, gain=-6)
 rec("suspense_hit", T6["Baumstämme"], -12)

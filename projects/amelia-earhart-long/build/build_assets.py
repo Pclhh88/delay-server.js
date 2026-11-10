@@ -40,7 +40,7 @@ OPTIONAL = {
     "sonar": "E1_sonarbild.png",
     "news1928": "N1_zeitung_1928.png", "news1932": "N2_zeitung_1932.png",
     "news1937": "N3_zeitung_1937.png", "news2024": "N4_zeitung_2024.png",
-    "satplane": "E3_satellitenbild.png",
+    "satplane": "E3_satellitenbild.png", "research": "E2_forschungsschiff.png",
 }
 NEWS_FALLBACK = {
     "news1928": ("ERSTE FRAU\nÜBER DEN ATLANTIK", "JUNI 1928"), "news1932": ("ALLEIN ÜBER\nDEN OZEAN!", "MAI 1932"),
@@ -61,8 +61,8 @@ def optional(meta):
             Image.fromarray(arr, "RGBA").save(os.path.join(OUT, f"st_{name}.png"))
             meta[f"st_{name}"] = dict(w=arr.shape[1], h=arr.shape[0])
             print("stand-in", name)
-        elif name == "satplane":                # no stand-in: the timeline skips it
-            meta.pop("st_satplane", None)
+        elif name in ("satplane", "research"):                # no stand-in: the timeline skips it
+            meta.pop(f"st_{name}", None)
             print("missing", name)
         else:                                   # sonar: stand-in = the rock (darkened later in the timeline)
             meta[f"st_{name}"] = dict(meta["st_rock"], file="st_rock")
