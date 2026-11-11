@@ -64,11 +64,11 @@ Das Problem: Brussow selbst rückt später von seinem Bericht ab. Und sein Kolle
 
 Anfang 1945 flüchten Hunderttausende Menschen über die Ostsee aus Ostpreußen. Auf Schiffen. Und auf einem dieser Schiffe, so die Theorie, war auch das Bernsteinzimmer.
 
-Der bekannteste Kandidat: die Wilhelm Gustloff. Am 30. Januar 1945 wird sie von einem sowjetischen U-Boot versenkt. Es ist die größte Schiffskatastrophe der Geschichte. Augenzeugen wollen gesehen haben, wie schwere Kisten an Bord gebracht wurden. Taucher haben das Wrack mehrfach untersucht. Gefunden haben sie nichts.
+Der bekannteste Kandidat: die Wilhelm Gustloff. Am 30. Januar 1945 wird sie von einem sowjetischen U-Boot versenkt. Sie gilt als die größte Schiffskatastrophe der Geschichte. Augenzeugen wollen gesehen haben, wie schwere Kisten an Bord gebracht wurden. Taucher haben das Wrack mehrfach untersucht. Gefunden haben sie nichts.
 
 2020 dann eine neue Spur. Polnische Taucher finden in fast 90 Metern Tiefe das Wrack der Karlsruhe, eines kleinen Dampfers, der im April 1945 aus Königsberg ausgelaufen war. Im Laderaum: Militärfahrzeuge, Porzellan und Kisten, deren Inhalt niemand kennt. Die Schlagzeilen überschlagen sich.
 
-Ein Jahr später tauchen sie wieder hinunter und öffnen die Kisten. Darin: Militärausrüstung und das Gepäck von Passagieren. Kein Bernstein.
+Ein Jahr später tauchen sie wieder hinunter und sehen sich die Kisten genauer an. Darin: Militärausrüstung und das Gepäck von Passagieren. Kein Bernstein.
 
 # KAPITEL 7 – Theorie 3: Versteckt im Bunker
 
