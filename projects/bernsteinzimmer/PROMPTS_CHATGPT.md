@@ -159,3 +159,117 @@ Erstelle ein Bild von zwei Händen eines Handwerkers, die ein Bernsteinstück an
 Wiederverwendet aus Amelia: underwater, sonar_ping, paper_*, stamp, newspaper, suspense_hit, drone_dark,
 typewriter_*, map_whoosh, heartbeat_low, pen_scribble, tv_on, camera_flash, Musik (mystery/tension/calm).
 Optional neue Musik (Eleven Music): „barocke Cembalo-Melodie, geheimnisvoll, langsam" für Kapitel 1–2.
+
+===================================================================================================
+## ERWEITERUNG – zusätzliche Bilder (damit jede Szene 2–4 neue Elemente hat)
+
+### So geht's schneller in ChatGPT
+1. Neuen Chat öffnen und **einmal** die Stil-Anweisung senden.
+2. Danach pro Bild nur noch die kurze Zeile senden (ChatGPT behält den Stil im selben Chat).
+3. Für Farbbilder (Typ F) einen zweiten Chat mit der Farb-Stil-Anweisung.
+
+**Stil-Anweisung Schwarzweiß (einmal senden):**
+```
+Ich brauche gleich viele einzelne Bilder für eine Vintage-Papiercollage in einem Geschichts-Erklärvideo. Für ALLE folgenden Bilder gilt: fotorealistisch wie ein altes Archivfoto oder alter Druck, Schwarzweiß, kräftiger Kontrast, leichte Körnung. Motiv freigestellt auf einfarbig weißem Hintergrund, rundherum ein schmaler, leicht unregelmäßiger weißer Papierrand wie mit der Schere ausgeschnitten. Kein Text, keine Schrift, keine Abzeichen, keine politischen Symbole, keine zusätzlichen Elemente. Motiv vollständig im Bild, hohe Auflösung. Ich schicke dir jetzt nacheinander die Motive, erstelle jeweils ein Bild.
+```
+**Stil-Anweisung Farbe (einmal senden):**
+```
+Ich brauche gleich viele einzelne Bilder für eine Vintage-Papiercollage in einem Geschichts-Erklärvideo. Für ALLE folgenden Bilder gilt: fotorealistisch, warmes goldenes Licht, Bernstein und Gold leuchten in satten Farben, alles andere gedeckte, leicht ausgeblichene Farben, leichte Körnung. Motiv freigestellt auf einfarbig weißem Hintergrund, schmaler, leicht unregelmäßiger weißer Papierrand wie mit der Schere ausgeschnitten. Kein Text, keine zusätzlichen Elemente, hohe Auflösung. Ich schicke dir jetzt nacheinander die Motive, erstelle jeweils ein Bild.
+```
+
+### Typ 1 – weitere Originale (hochladen + Typ-1-Prompt von oben)
+| Datei | Original suchen nach |
+|---|---|
+| A11_stadtschloss_berlin.png | „Berliner Stadtschloss historische Fotografie" |
+| A12_schlueter.png | „Andreas Schlüter Porträt" |
+| A13_rastrelli.png | „Bartolomeo Rastrelli Porträt" |
+| A14_lange_kerls.png | „Lange Kerls Gemälde Grenadier Potsdam" (Gemälde eines einzelnen Riesen-Grenadiers) |
+| A15_erich_koch.png | „Erich Koch Gauleiter Foto" (nur Kopf/Schultern; Bundesarchiv-Bild → Lizenz CC-BY-SA in Beschreibung) |
+| A16_fluechtlinge_hafen.png | „Gotenhafen 1945 Flüchtlinge Schiff" (Bundesarchiv) |
+| A17_karlsruhe_dampfer.png | „SS Karlsruhe 1905 Dampfer" |
+| A18_schloss_sprengung.png | „Königsberger Schloss Ruine 1960er" |
+
+### Typ D – neu, Schwarzweiß (nach der Stil-Anweisung jeweils nur die Zeile senden)
+
+**Einstieg / Grabung 2025**
+- D1_absperrband.png – `Eine Waldlichtung mit rot-weißem Absperrband zwischen Pfählen, von vorne`
+- D2_radarbildschirm.png – `Ein Laptop im Gelände, auf dem Bildschirm ein Bodenradar-Querschnitt mit einer großen dunklen Anomalie`
+- D3_genehmigung.png – `Ein amtliches Schreiben mit rundem Siegelstempel und Unterschrift, leicht schräg von oben, Text unleserlich`
+- D4_lupe_erde.png – `Eine Hand mit Lupe über aufgewühlter Erde mit kleinen Steinen`
+
+**Kapitel 1 – Berlin & Geschenk**
+- D5_bernsteindreher.png – `Ein Handwerker um 1700 mit Schürze an einer Drehbank in einer Werkstatt, ganze Figur, Seitenansicht`
+- D6_puzzleteile.png – `Viele kleine flache, polierte Bernsteinstücke, lose verteilt wie Puzzleteile, von oben`
+- D7_vertrag.png – `Ein alter Vertrag aus Pergament mit zwei roten Wachssiegeln und Bändern, von oben, Schrift unleserlich`
+- D8_haende_barock.png – `Zwei Hände in barocken Spitzenmanschetten beim Handschlag, Nahaufnahme`
+- D9_geschenkkiste.png – `Eine große barocke Holztruhe mit Schleife aus Stoffband, als Geschenk, schräg von vorne`
+- D10_kutsche.png – `Eine barocke Reisekutsche mit vier Pferden, Seitenansicht`
+- D11_riese_mensch.png – `Ein sehr großer Soldat um 1720 neben einem normal großen Mann, beide ganze Figur, nebeneinander, von vorne`
+
+**Kapitel 2 – Weltwunder**
+- D12_spiegel_barock.png – `Ein hoher barocker Wandspiegel mit geschnitztem Rahmen, frontal`
+- D13_putte.png – `Eine vergoldete barocke Putte (Engelsfigur) als Schnitzerei, frontal`
+- D14_besucher_perücke.png – `Zwei staunende Besucher im 18. Jahrhundert mit Perücken und Gehrock, Oberkörper, schauen nach oben`
+- D15_pyramide.png – `Die Cheops-Pyramide von Gizeh, wie ein alter Stich`
+
+**Kapitel 3 – Raub 1941**
+- D16_panzer.png – `Ein Panzer aus dem Zweiten Weltkrieg im Gelände, ohne jede Markierung, Seitenansicht`
+- D17_museumsfrauen.png – `Zwei Frauen in Kitteln der 1940er-Jahre, die Gemälde in Holzkisten verpacken, ganze Figur`
+- D18_tapezierer.png – `Eine Leiter, ein Eimer Kleister und eine Tapezierbürste`
+- D19_bernstein_broeselt.png – `Eine zerbrochene Bernsteinplatte, aus der kleine Stücke herausbröckeln, Nahaufnahme`
+- D20_stoppuhr.png – `Eine alte Stoppuhr, frontal`
+- D21_kistenetikett.png – `Ein altes Frachtetikett aus Karton mit Schnur und Nummernfeld, Schrift unleserlich`
+- D22_eintrittskarte.png – `Eine alte Museums-Eintrittskarte aus Papier, abgerissen, von oben, Schrift unleserlich`
+- D23_besucher_1941.png – `Drei Besucher in Mänteln der 1940er-Jahre von hinten, die in einem Museum eine prunkvolle Wand betrachten`
+
+**Kapitel 4 – Verschwinden 1944/45**
+- D24_brennende_stadt.png – `Silhouette einer brennenden Altstadt mit Kirchtürmen bei Nacht, Rauchwolken`
+- D25_rotarmisten.png – `Drei Soldaten der Roten Armee mit Gewehren, von hinten, ganze Figur, ohne erkennbare Abzeichen`
+- D26_t34.png – `Ein sowjetischer Panzer T-34 aus dem Zweiten Weltkrieg, Seitenansicht, mit einem roten Stern`
+- D27_krankenbett.png – `Ein einfaches Krankenbett aus Metall mit Decke, daneben ein Nachttisch mit Medizinflasche`
+- D28_verhoertisch.png – `Ein leerer Holztisch mit zwei Stühlen und einer Schreibtischlampe, darüber eine Glühbirne`
+- D29_akte_geheim.png – `Ein Stapel alter Akten mit Bindfaden, von oben, Schrift unleserlich`
+- D30_ermittler.png – `Ein Mann im Trenchcoat mit Taschenlampe, Seitenansicht, ganze Figur, geheimnisvoll`
+
+**Theorie 1 – Verbrannt**
+- D31_truemmer.png – `Ein Haufen Trümmer, verkohlte Balken und Ziegel`
+- D32_ermittler_truemmer.png – `Ein Mann mit Notizbuch in einem Trümmerfeld, gebückt, ganze Figur, 1945`
+- D33_buch.png – `Ein dickes gebundenes Sachbuch, geschlossen, schräg von vorne, ohne Titel`
+- D34_sprengung.png – `Eine große Sprengung eines Gebäudes, Staubwolke, aus der Ferne`
+
+**Theorie 2 – Meer**
+- D35_uboot.png – `Ein U-Boot aus dem Zweiten Weltkrieg an der Wasseroberfläche, Seitenansicht, ohne Markierungen`
+- D36_rettungsboot.png – `Ein überfülltes Rettungsboot aus Holz auf rauer See`
+- D37_koffer.png – `Drei alte Lederkoffer, gestapelt`
+- D38_porzellan.png – `Ein Stapel alter Porzellanteller und eine Tasse`
+- D39_kiste_wrack.png – `Eine von Muscheln und Algen bewachsene Holzkiste auf dem Meeresgrund, Nahaufnahme`
+- D40_sonarschirm.png – `Ein alter Sonarbildschirm mit der Umrisslinie eines Schiffswracks`
+
+**Theorie 3 – Bunker, Zug, Bergwerk**
+- D41_bohrturm.png – `Ein kleines Bohrgerät auf Raupen im Wald, Seitenansicht`
+- D42_goldbarren.png – `Ein Stapel Goldbarren ohne Prägung, schräg von oben`
+- D43_geologe.png – `Ein Geologe mit Helm und Messgerät im Gelände, ganze Figur, Seitenansicht`
+- D44_soldat_modern.png – `Ein Soldat in moderner Tarnuniform von hinten, ganze Figur, ohne Abzeichen`
+- D45_bagger.png – `Ein kleiner Bagger, der ein Loch gräbt, Seitenansicht`
+- D46_haeftling.png – `Ein alter Mann in einfacher Gefängniskleidung, sitzend auf einer Pritsche, von der Seite, Gesicht im Schatten`
+- D47_grubenlampe.png – `Eine alte Grubenlampe, frontal`
+
+**Theorie 4 – Verstreut**
+- D48_anwalt.png – `Ein Anwalt im Anzug mit Aktenkoffer, ganze Figur, von vorne, Gesicht neutral`
+- D49_polizist.png – `Ein deutscher Polizist der 1990er-Jahre von hinten, ganze Figur`
+- D50_experte_lupe.png – `Ein Kunstexperte mit weißen Handschuhen und Lupe, Oberkörper, Seitenansicht`
+- D51_wohnzimmer.png – `Eine Wohnzimmerwand mit Tapete, Sofa und einigen gerahmten Bildern`
+- D52_dachboden.png – `Ein Dachboden mit alten Kisten, Tüchern und einem Lichtstrahl`
+
+**Fazit**
+- D53_fotostapel.png – `Ein Stapel alter Schwarzweiß-Fotografien, leicht aufgefächert, von oben`
+- D54_handschlag_modern.png – `Zwei Männer in Anzügen beim Handschlag von hinten, ganze Figur, Gesichter nicht sichtbar`
+- D55_geldkoffer.png – `Ein offener Koffer voller Geldscheine, ohne erkennbare Währung`
+
+### Typ F – neu, in Farbe (nach der Farb-Stil-Anweisung)
+- F1_bernstein_insekt.png – `Ein Stück Bernstein mit einem eingeschlossenen Insekt, Nahaufnahme`
+- F2_ostsee_strand.png – `Ein Ostsee-Strand mit Bernsteinstücken im Sand, rechteckiger Ausschnitt`
+- F3_bernsteinsaal_detail.png – `Eine Ecke eines barocken Saals mit Bernsteinwänden, Vergoldung und Kerzenlicht`
+- F4_goldrahmen.png – `Ein leerer, prunkvoller vergoldeter barocker Bilderrahmen, frontal`
+- F5_kunststoff_nachbau.png – `Eine Wandplatte, die wie Bernstein aussieht, aber erkennbar aus glänzendem Plastik ist, frontal`
+- F6_krone.png – `Eine barocke Königskrone mit Edelsteinen, frontal`
