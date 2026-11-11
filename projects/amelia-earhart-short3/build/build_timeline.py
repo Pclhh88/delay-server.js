@@ -145,7 +145,7 @@ def ph_pt(cx, cy, fx, fy, width=PH_W):
     return cx + (fx - ax_) * PH_W * k, cy + (fy - ay_) * ph_h * k
 
 
-SIT, MAN = (0.52, 0.74), (0.41, 0.45)
+SIT, MAN = (0.545, 0.63), (0.215, 0.31)   # kneeling person, 2nd from the left
 
 # ======================================================================= 0  HOOK: this photo was the proof … debunked in 30 min
 PX, PY = 540, 960
@@ -159,7 +159,7 @@ rec("suspense_hit", 0.05, -12)
 L("lbew0", "lbl_beweis", t_("beweisen") - 0.1, t_("Blogger") - 0.2, 540, 330, 620, -3, sound="cardboard_hit", gain=-8)
 c1 = ph_pt(PX, PY, *SIT)
 c2 = ph_pt(PX, PY, *MAN)
-circle("c0a", c1[0], c1[1], 120, t_("Amelia", 1), t_("1937") - 0.4)
+circle("c0a", c1[0], c1[1], 135, t_("Amelia", 1), t_("1937") - 0.4)
 circle("c0b", c2[0], c2[1], 105, t_("Earhart") + 0.1, t_("1937") - 0.4)
 L("lueb", "lbl_ueberlebt", t_("Amelia", 1) + 0.6, t_("Blogger") - 0.2, 540, 1550, 560, 3)
 L("lblog0", "lbl_blogger", t_("Blogger") - 0.05, t_("1937") - 0.4, 540, 330, 560, -2)
@@ -250,10 +250,10 @@ S.image("ph3", "st_photo2017", t_c, t_("Dann") - 0.1, [
     {"t": t_c + 0.35, "x": PX, "y": PY, "rot": -1, "ease": "out3"},
     {"t": t_("Dann") - 0.45, "x": PX, "y": PY}, exit_to(t_("Dann") - 0.45, -800, PY, 0.3, rot=-15)])
 rec("paper_slide", t_c, -7, peak=0.42)
-circle("c3a", c1[0], c1[1], 120, t_("sitzende") + 0.3, t_("Dann") - 0.45)
+circle("c3a", c1[0], c1[1], 135, t_("sitzende") + 0.3, t_("Dann") - 0.45)
 L("lea3", "lbl_earhart_q", t_("Amelia", 32), t_("Dann") - 0.45, c1[0] + 230, c1[1] + 260, 380, 4)
 circle("c3b", c2[0], c2[1], 105, t_("Mann"), t_("Dann") - 0.45)
-L("lno3", "lbl_noonan_q", t_("Noonan") - 0.2, t_("Dann") - 0.45, c2[0] - 160, c2[1] - 260, 380, -4)
+L("lno3", "lbl_noonan_q", t_("Noonan") - 0.2, t_("Dann") - 0.45, c2[0] + 60, c2[1] - 240, 380, -4)
 for k_, (x, y, rot) in enumerate([(830, 380, 9), (230, 1660, -8)]):
     P(f"news3_{k_}", "newspaper_2017", t_("Schlagzeilen") + 0.25 * k_, t_("Dann") - 0.45, x, y, 420, rot,
       sound="newspaper" if k_ == 0 else None, gain=-10)
