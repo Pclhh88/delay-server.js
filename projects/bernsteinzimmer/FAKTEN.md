@@ -27,3 +27,8 @@ die mit ⚠ markierten Punkte noch einmal gegenprüfen.
 | 1997 will ein Bremer Anwalt ein Florentiner Mosaik verkaufen (Besitzer: Sohn eines Wehrmachtssoldaten, Vater soll es beim Abbau 1941 genommen haben); dazu eine Kommode; 2000 an Russland zurückgegeben | bestätigt; Mosaik ging wohl schon vor Königsberg verloren | https://www.smithsonianmag.com/history/a-brief-history-of-the-amber-room-160940121/ , https://www.rferl.org/a/1084757.html , https://www.historyhit.com/facts-about-the-lost-amber-room/ |
 | Rekonstruktion ab 1979, Ruhrgas spendet 3,5 Mio. $, Eröffnung 31.5.2003 durch Putin und Schröder (300 Jahre St. Petersburg) | bestätigt; Gesamtkosten 8–11 Mio. $ je nach Quelle | https://tass.com/society/1007333/amp , https://www.merian.de/europa/russland/das-bernsteinzimmer-sankt-petersburg |
 | 2015 „Goldzug" bei Wałbrzych (Koper/Richter, Bodenradar), Bernsteinzimmer als möglicher Inhalt spekuliert; Armee vor Ort; AGH-Geologen Dez. 2015: keine Spur; Grabung 2016 ohne Zug | bestätigt; Grabungsergebnis 2016 ⚠ kurz gegenprüfen | https://phys.org/news/2015-12-geology-experts-hidden-nazi.html , https://www.heritagedaily.com/2024/02/what-happened-to-the-nazi-gold-train/150569 |
+
+## Gestaltungsentscheidungen
+* Länderkarte mit Flaggen statt Farben (Nutzerwunsch). Deutschland 1941–45: feldgraue Fläche mit Balkenkreuz
+  (Hoheitszeichen der Wehrmacht) + Schild „DEUTSCHES REICH" – keine Hakenkreuz-/Reichsflagge (YouTube/Werbung).
+* Historische Grenzen: aourednik/historical-basemaps (GPL-3.0) → in der Videobeschreibung nennen.
