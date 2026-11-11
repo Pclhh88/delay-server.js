@@ -76,6 +76,8 @@ Die dritte Theorie ist die, an die die meisten Schatzjäger glauben: Die Nazis h
 
 Eine Schlüsselfigur ist Erich Koch, der Gauleiter von Ostpreußen. Nach dem Krieg sitzt er jahrzehntelang in einem polnischen Gefängnis. Immer wieder gibt er Andeutungen, wo das Zimmer sein könnte. Unter anderem nennt er Mauerwald, das Hauptquartier des Heeres in Masuren. Seit 2016 wird dort gesucht, mit Radar und Bohrungen. Gefunden wurde nichts. Heute steht im Museum dort ein Nachbau des Zimmers. Aus Kunststoff.
 
+2015 sorgt eine andere Geschichte weltweit für Schlagzeilen. Zwei Schatzsucher behaupten, bei Wałbrzych in Niederschlesien liege ein gepanzerter Zug der Nazis in einem verschütteten Tunnel. Voller Gold, vielleicht sogar mit dem Bernsteinzimmer an Bord. Sogar die polnische Armee rückt an. Doch Geologen finden keine Spur von einem Zug, und als 2016 gegraben wird, auch nicht.
+
 Auch in Deutschland wird gegraben. 2008 messen Schatzsucher im Erzgebirge einen Hohlraum, rund 20 Meter unter der Erde. Die Hoffnung ist riesig. Gefunden wird: nichts.
 
 Und dann eben der Sommer 2025. Der Hinweis für die Grabung in Polen stammt von einem ehemaligen Häftling. Er will die Geschichte im Gefängnis gehört haben. Von Erich Koch persönlich.
