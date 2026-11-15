@@ -239,3 +239,11 @@ Bearbeite das hochgeladene Bild zu einem Ausschnitt für eine Vintage-Papiercoll
 Musik (Eleven Music, optional): „barocke Cembalo-Melodie, geheimnisvoll, langsam, 2 Minuten" für Kapitel 1–2.
 Wiederverwendet aus Amelia: underwater, sonar_ping, paper_*, stamp, newspaper, suspense_hit, drone_dark,
 typewriter_*, map_whoosh, heartbeat_low, pen_scribble, camera_flash, Musik mystery/tension/calm.
+
+===================================================================================================
+## Nachträge: historisch korrekte deutsche Fahrzeuge/Soldaten 1941 (ersetzen S09_1, S09_4, S11_1)
+Hinweis: Balkenkreuz ist erlaubt und korrekt; KEIN Hakenkreuz.
+
+N1_panzer_III – `Deutscher Panzer III aus dem Zweiten Weltkrieg, Seitenansicht, feldgrau, mit dem schwarzen Balkenkreuz mit weißem Rand an der Seite des Turms, keine anderen Symbole`
+N2_kradmelder – `Deutscher Kradmelder 1941 mit Stahlhelm auf einem BMW-Motorrad mit Beiwagen, Seitenansicht, ohne Abzeichen`
+N3_soldaten_kiste_1941 – `Zwei deutsche Soldaten 1941 mit Stahlhelm und feldgrauen Mänteln, von hinten, tragen gemeinsam eine große Holzkiste, ohne Abzeichen`
