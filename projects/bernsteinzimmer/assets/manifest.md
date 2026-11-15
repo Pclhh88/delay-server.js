@@ -17,3 +17,7 @@
 | S04_2_handschlag | Handschlag barocke Manschetten | vom Nutzer freigestellt |
 | S04_3_geschenktruhe | Truhe mit Schleife | vom Nutzer freigestellt |
 | S04_4_kutsche | Kutsche mit vier Pferden | vom Nutzer freigestellt |
+| S05_1_grenadier | Langer Kerl mit Grenadiermütze | vom Nutzer freigestellt |
+| S05_2_riese_mensch | Riese neben normalem Mann | vom Nutzer freigestellt |
+| S05_3_trommel | Militärtrommel | vom Nutzer freigestellt |
+| S05_4_schwede | schwedischer Soldat mit Dreispitz | vom Nutzer freigestellt |
