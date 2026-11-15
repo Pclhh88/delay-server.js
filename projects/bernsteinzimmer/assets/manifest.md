@@ -68,3 +68,7 @@
 | S16_2_verhoertisch | Tisch, zwei Stühle, Lampe | vom Nutzer freigestellt |
 | S16_3_akten | Aktenstapel mit Bindfaden | vom Nutzer freigestellt |
 | S16_4_ermittler | Mann im Trenchcoat mit Taschenlampe | vom Nutzer freigestellt |
+| S17_1_scharniere | verkohlte Scharniere in Asche | vom Nutzer freigestellt |
+| S17_2_ermittler_truemmer | Brussow im Trümmerfeld (Symbolbild) | vom Nutzer freigestellt |
+| S17_3_buch | Sachbuch ohne Titel | vom Nutzer freigestellt |
+| S17_4_sprengung | Sprengung (Kuppelbau ähnelt Reichstag → nur kurz/klein) | vom Nutzer freigestellt |
