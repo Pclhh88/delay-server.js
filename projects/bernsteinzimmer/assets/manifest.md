@@ -76,8 +76,9 @@
 | S18_2_schreibmaschine | Schreibmaschine | vom Nutzer freigestellt |
 | S18_3_streichholz | brennendes Streichholz | vom Nutzer freigestellt |
 | S18_4_kanister | Benzinkanister | vom Nutzer freigestellt |
-| S19_1_hafen_fluechtlinge | Menschen mit Koffern am Hafen | vom Nutzer freigestellt |
+| S19_1_hafen_fluechtlinge | v2 vom Nutzer |
 | S19_2_passagierschiff | Passagierschiff (Gustloff-Stand-in) | vom Nutzer freigestellt |
 | S19_3_uboot | → ersetzt durch N4_uboot_sowjet (US-Boot in alt/) |
-| S19_4_rettungsboot | überfülltes Rettungsboot | vom Nutzer freigestellt |
+| S19_4_rettungsboot | v2 vom Nutzer |
 | N4_uboot_sowjet | sowjetisches U-Boot S-Klasse mit rotem Stern | vom Nutzer freigestellt |
+| S19_2b_passagierschiff_3schorn | Ozeandampfer mit 3 Schornsteinen (NICHT als Gustloff, die hatte 1) | v2 vom Nutzer |
