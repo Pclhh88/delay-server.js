@@ -37,3 +37,7 @@
 | S09_2_soldaten_marsch | fünf Soldaten von hinten | vom Nutzer freigestellt |
 | S09_3_feldtelefon | Feldtelefon | vom Nutzer freigestellt |
 | S09_4_kradmelder | Kradmelder mit Beiwagen | vom Nutzer freigestellt |
+| S10_1_museumsfrauen | zwei Frauen verpacken Gemälde | vom Nutzer freigestellt |
+| S10_2_tapezierzeug | Leiter, Kleister, Bürste | vom Nutzer freigestellt |
+| S10_3_tapetenrolle | Tapetenrolle mit Blumen | vom Nutzer freigestellt |
+| S10_4_platte_broeselt | zerbröckelnde Platte | vom Nutzer freigestellt |
