@@ -5,7 +5,7 @@
 | S01_2_radar | Bodenradar-Gerät | v2 vom Nutzer (bereits freigestellt) |
 | S01_3_laptop | Laptop mit Radar-Anomalie | v2 vom Nutzer (bereits freigestellt) |
 | S01_4_schatzsucher | Schatzsucher mit Schaufel | v2 vom Nutzer (bereits freigestellt) |
-| S02_1_schreiben | amtliches Schreiben mit Siegel | ausgeschnitten |
-| S02_2_lupe_erde | Hand mit Lupe über Erde | ausgeschnitten |
-| S02_3_metalldetektor | Metalldetektor | ausgeschnitten |
-| S02_4_bagger | Bagger gräbt Loch | ausgeschnitten |
+| S02_1_schreiben | amtliches Schreiben mit Siegel | v2 vom Nutzer (bereits freigestellt) |
+| S02_2_lupe | Hand mit Lupe (ohne Erde) | v2 vom Nutzer (bereits freigestellt) |
+| S02_3_metalldetektor | Metalldetektor | v2 vom Nutzer (bereits freigestellt) |
+| S02_4_bagger | Bagger gräbt Loch | v2 vom Nutzer (bereits freigestellt) |
