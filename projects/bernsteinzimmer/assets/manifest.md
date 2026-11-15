@@ -64,3 +64,7 @@
 | N1_panzer_III | Panzer III mit Balkenkreuz (1941) | vom Nutzer freigestellt |
 | N2_kradmelder | Kradmelder mit Stahlhelm, BMW-Gespann | vom Nutzer freigestellt |
 | N3_soldaten_kiste_1941 | deutsche Soldaten mit Stahlhelm tragen Kiste | vom Nutzer freigestellt |
+| S16_1_krankenbett | Krankenbett mit Medizinflasche | vom Nutzer freigestellt |
+| S16_2_verhoertisch | Tisch, zwei Stühle, Lampe | vom Nutzer freigestellt |
+| S16_3_akten | Aktenstapel mit Bindfaden | vom Nutzer freigestellt |
+| S16_4_ermittler | Mann im Trenchcoat mit Taschenlampe | vom Nutzer freigestellt |
