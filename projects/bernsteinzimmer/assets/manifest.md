@@ -9,3 +9,7 @@
 | S02_2_lupe | Hand mit Lupe (ohne Erde) | v2 vom Nutzer (bereits freigestellt) |
 | S02_3_metalldetektor | Metalldetektor | v2 vom Nutzer (bereits freigestellt) |
 | S02_4_bagger | Bagger gräbt Loch | v2 vom Nutzer (bereits freigestellt) |
+| S03_1_bernsteindreher | Bernsteindreher an Drehbank | vom Nutzer freigestellt |
+| S03_2_krone | barocke Königskrone | vom Nutzer freigestellt |
+| S03_3_feder | Federkiel im Tintenfass | vom Nutzer freigestellt |
+| S03_4_zepter | barockes Zepter | vom Nutzer freigestellt |
