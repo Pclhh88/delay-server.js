@@ -49,3 +49,7 @@
 | S12_2_waggon_kisten | offener Waggon mit Kisten | vom Nutzer freigestellt |
 | S12_3_frachtetikett | Frachtetikett mit Schnur | vom Nutzer freigestellt |
 | S12_4_schild_rohling | leeres Schild an zwei Pfosten (Text „KÖNIGSBERG" drauf) | vom Nutzer freigestellt |
+| S13_1_besucher_1941 | drei Besucher vor Wand | vom Nutzer freigestellt |
+| S13_2_eintrittskarte | Eintrittskarte | vom Nutzer freigestellt |
+| S13_3_museumsdirektor | Museumsdirektor (Rohde-Stand-in, NICHT echtes Porträt) | vom Nutzer freigestellt |
+| S13_4_absperrkordel | Absperrkordel | vom Nutzer freigestellt |
