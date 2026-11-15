@@ -82,3 +82,7 @@
 | S19_4_rettungsboot | v2 vom Nutzer |
 | N4_uboot_sowjet | sowjetisches U-Boot S-Klasse mit rotem Stern | vom Nutzer freigestellt |
 | S19_2b_passagierschiff_3schorn | Ozeandampfer mit 3 Schornsteinen (NICHT als Gustloff, die hatte 1) | v2 vom Nutzer |
+| S20_1_taucher | Taucher mit Stirnlampe | vom Nutzer freigestellt |
+| S20_2_wrack_kisten | Wrack mit offenem Laderaum (Karlsruhe) | vom Nutzer freigestellt |
+| S20_3_kiste_bewachsen | bewachsene Kiste | vom Nutzer freigestellt |
+| S20_4_sonarschirm | Sonarschirm mit Wrack | vom Nutzer freigestellt |
