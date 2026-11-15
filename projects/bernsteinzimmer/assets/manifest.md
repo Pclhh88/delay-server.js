@@ -53,3 +53,7 @@
 | S13_2_eintrittskarte | Eintrittskarte | vom Nutzer freigestellt |
 | S13_3_museumsdirektor | Museumsdirektor (Rohde-Stand-in, NICHT echtes Porträt) | vom Nutzer freigestellt |
 | S13_4_absperrkordel | Absperrkordel | vom Nutzer freigestellt |
+| S14_1_bomber | Lancaster-Bomber | vom Nutzer freigestellt |
+| S14_2_bomben | drei fallende Bomben | vom Nutzer freigestellt |
+| S14_3_brennende_stadt | brennende Altstadt bei Nacht | vom Nutzer freigestellt |
+| S14_4_suchscheinwerfer | Suchscheinwerfer mit Lichtkegel | vom Nutzer freigestellt |
