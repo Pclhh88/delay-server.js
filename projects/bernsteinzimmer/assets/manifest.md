@@ -33,15 +33,15 @@
 | S08_2_hofdame | Hofdame im Reifrock | vom Nutzer freigestellt |
 | S08_3_bauarbeiter | Bauarbeiter trägt Platte | vom Nutzer freigestellt |
 | S08_4_architekt | Architekt mit Bauplan (Rastrelli) | vom Nutzer freigestellt |
-| S09_1_panzer | Panzer ohne Markierung | vom Nutzer freigestellt |
+| S09_1_panzer | → ersetzt durch N1_panzer_III (Sherman in alt/) |
 | S09_2_soldaten_marsch | fünf Soldaten von hinten | vom Nutzer freigestellt |
 | S09_3_feldtelefon | Feldtelefon | vom Nutzer freigestellt |
-| S09_4_kradmelder | Kradmelder mit Beiwagen | vom Nutzer freigestellt |
+| S09_4_kradmelder | → ersetzt durch N2_kradmelder |
 | S10_1_museumsfrauen | zwei Frauen verpacken Gemälde | vom Nutzer freigestellt |
 | S10_2_tapezierzeug | Leiter, Kleister, Bürste | vom Nutzer freigestellt |
 | S10_3_tapetenrolle | Tapetenrolle mit Blumen | vom Nutzer freigestellt |
 | S10_4_platte_broeselt | zerbröckelnde Platte | vom Nutzer freigestellt |
-| S11_1_soldaten_kiste | zwei Soldaten tragen Kiste (Fellmützen → eher sowjetisch wirkend) | vom Nutzer freigestellt |
+| S11_1_soldaten_kiste | → umbenannt S15_5_sowjets_kiste (für 1945); 1941 = N3 |
 | S11_2_kistenstapel | Stapel aus sechs Kisten | vom Nutzer freigestellt |
 | S11_3_stoppuhr | Stoppuhr | vom Nutzer freigestellt |
 | S11_4_brecheisen_hammer | Brecheisen und Hammer | vom Nutzer freigestellt |
@@ -61,3 +61,6 @@
 | S15_2_t34 | T-34 mit rotem Stern | vom Nutzer freigestellt |
 | S15_3_weisse_fahne | weiße Fahne aus Fenster | vom Nutzer freigestellt |
 | S15_4_truemmer | Trümmerhaufen | vom Nutzer freigestellt |
+| N1_panzer_III | Panzer III mit Balkenkreuz (1941) | vom Nutzer freigestellt |
+| N2_kradmelder | Kradmelder mit Stahlhelm, BMW-Gespann | vom Nutzer freigestellt |
+| N3_soldaten_kiste_1941 | deutsche Soldaten mit Stahlhelm tragen Kiste | vom Nutzer freigestellt |
