@@ -33,3 +33,7 @@
 | S08_2_hofdame | Hofdame im Reifrock | vom Nutzer freigestellt |
 | S08_3_bauarbeiter | Bauarbeiter trägt Platte | vom Nutzer freigestellt |
 | S08_4_architekt | Architekt mit Bauplan (Rastrelli) | vom Nutzer freigestellt |
+| S09_1_panzer | Panzer ohne Markierung | vom Nutzer freigestellt |
+| S09_2_soldaten_marsch | fünf Soldaten von hinten | vom Nutzer freigestellt |
+| S09_3_feldtelefon | Feldtelefon | vom Nutzer freigestellt |
+| S09_4_kradmelder | Kradmelder mit Beiwagen | vom Nutzer freigestellt |
