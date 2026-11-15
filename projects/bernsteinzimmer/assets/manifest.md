@@ -13,3 +13,7 @@
 | S03_2_krone | barocke Königskrone | vom Nutzer freigestellt |
 | S03_3_feder | Federkiel im Tintenfass | vom Nutzer freigestellt |
 | S03_4_zepter | barockes Zepter | vom Nutzer freigestellt |
+| S04_1_vertrag | Vertrag mit zwei Wachssiegeln | vom Nutzer freigestellt |
+| S04_2_handschlag | Handschlag barocke Manschetten | vom Nutzer freigestellt |
+| S04_3_geschenktruhe | Truhe mit Schleife | vom Nutzer freigestellt |
+| S04_4_kutsche | Kutsche mit vier Pferden | vom Nutzer freigestellt |
