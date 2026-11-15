@@ -29,3 +29,7 @@
 | S07_2_putte | Putte | vom Nutzer freigestellt |
 | S07_3_besucher | zwei staunende Besucher | vom Nutzer freigestellt |
 | S07_4_kronleuchter | Kristall-Kronleuchter | vom Nutzer freigestellt |
+| S08_1_pyramide | Cheops-Pyramide | vom Nutzer freigestellt |
+| S08_2_hofdame | Hofdame im Reifrock | vom Nutzer freigestellt |
+| S08_3_bauarbeiter | Bauarbeiter trägt Platte | vom Nutzer freigestellt |
+| S08_4_architekt | Architekt mit Bauplan (Rastrelli) | vom Nutzer freigestellt |
