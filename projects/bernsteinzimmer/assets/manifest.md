@@ -45,3 +45,7 @@
 | S11_2_kistenstapel | Stapel aus sechs Kisten | vom Nutzer freigestellt |
 | S11_3_stoppuhr | Stoppuhr | vom Nutzer freigestellt |
 | S11_4_brecheisen_hammer | Brecheisen und Hammer | vom Nutzer freigestellt |
+| S12_1_gueterzug | Dampflok + 2 Güterwagen | vom Nutzer freigestellt |
+| S12_2_waggon_kisten | offener Waggon mit Kisten | vom Nutzer freigestellt |
+| S12_3_frachtetikett | Frachtetikett mit Schnur | vom Nutzer freigestellt |
+| S12_4_schild_rohling | leeres Schild an zwei Pfosten (Text „KÖNIGSBERG" drauf) | vom Nutzer freigestellt |
