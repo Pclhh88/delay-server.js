@@ -76,3 +76,7 @@
 | S18_2_schreibmaschine | Schreibmaschine | vom Nutzer freigestellt |
 | S18_3_streichholz | brennendes Streichholz | vom Nutzer freigestellt |
 | S18_4_kanister | Benzinkanister | vom Nutzer freigestellt |
+| S19_1_hafen_fluechtlinge | Menschen mit Koffern am Hafen | vom Nutzer freigestellt |
+| S19_2_passagierschiff | Passagierschiff (Gustloff-Stand-in) | vom Nutzer freigestellt |
+| S19_3_uboot | U-Boot (sieht US-Gato-Klasse aus) | vom Nutzer freigestellt |
+| S19_4_rettungsboot | überfülltes Rettungsboot | vom Nutzer freigestellt |
