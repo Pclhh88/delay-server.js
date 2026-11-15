@@ -72,3 +72,7 @@
 | S17_2_ermittler_truemmer | Brussow im Trümmerfeld (Symbolbild) | vom Nutzer freigestellt |
 | S17_3_buch | Sachbuch ohne Titel | vom Nutzer freigestellt |
 | S17_4_sprengung | Sprengung (Kuppelbau ähnelt Reichstag → nur kurz/klein) | vom Nutzer freigestellt |
+| S18_1_offizier_bericht | sowjetischer Offizier schreibt Bericht | vom Nutzer freigestellt |
+| S18_2_schreibmaschine | Schreibmaschine | vom Nutzer freigestellt |
+| S18_3_streichholz | brennendes Streichholz | vom Nutzer freigestellt |
+| S18_4_kanister | Benzinkanister | vom Nutzer freigestellt |
