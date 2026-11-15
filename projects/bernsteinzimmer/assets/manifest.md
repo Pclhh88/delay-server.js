@@ -21,3 +21,7 @@
 | S05_2_riese_mensch | Riese neben normalem Mann | vom Nutzer freigestellt |
 | S05_3_trommel | Militärtrommel | vom Nutzer freigestellt |
 | S05_4_schwede | schwedischer Soldat mit Dreispitz | vom Nutzer freigestellt |
+| S06_1_kanone | barocke Kanone | vom Nutzer freigestellt (Speichenlücken weiß) |
+| S06_2_segelschiff | Segelkriegsschiff | vom Nutzer freigestellt |
+| S06_3_saebel | gekreuzte Säbel | vom Nutzer freigestellt (ohne Papierrand) |
+| S06_4_fernrohr | Fernrohr | vom Nutzer freigestellt |
