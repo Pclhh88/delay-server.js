@@ -25,3 +25,7 @@
 | S06_2_segelschiff | Segelkriegsschiff | vom Nutzer freigestellt |
 | S06_3_saebel | gekreuzte Säbel | vom Nutzer freigestellt (ohne Papierrand) |
 | S06_4_fernrohr | Fernrohr | vom Nutzer freigestellt |
+| S07_1_spiegel | barocker Wandspiegel | vom Nutzer freigestellt |
+| S07_2_putte | Putte | vom Nutzer freigestellt |
+| S07_3_besucher | zwei staunende Besucher | vom Nutzer freigestellt |
+| S07_4_kronleuchter | Kristall-Kronleuchter | vom Nutzer freigestellt |
