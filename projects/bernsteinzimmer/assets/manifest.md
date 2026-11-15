@@ -57,3 +57,7 @@
 | S14_2_bomben | drei fallende Bomben | vom Nutzer freigestellt |
 | S14_3_brennende_stadt | brennende Altstadt bei Nacht | vom Nutzer freigestellt |
 | S14_4_suchscheinwerfer | Suchscheinwerfer mit Lichtkegel | vom Nutzer freigestellt |
+| S15_1_rotarmisten | drei Rotarmisten von hinten | vom Nutzer freigestellt |
+| S15_2_t34 | T-34 mit rotem Stern | vom Nutzer freigestellt |
+| S15_3_weisse_fahne | weiße Fahne aus Fenster | vom Nutzer freigestellt |
+| S15_4_truemmer | Trümmerhaufen | vom Nutzer freigestellt |
