@@ -119,3 +119,6 @@
 | S28_3_geldkoffer | Geldkoffer | vom Nutzer freigestellt |
 | S29_2_mikrofon | Mikrofon | vom Nutzer freigestellt |
 | S28_2_handschlag | zeigt erkennbar Kennedy/Chruschtschow → NICHT verwenden, neu erzeugen | offen |
+| S29_1_tv_kamera | TV-Kamera_auf_Stativ | vom Nutzer freigestellt |
+| S29_3_kompass | Kompass | vom Nutzer freigestellt |
+| S29_4_schatzkarte | Schatzkarte_mit_X | vom Nutzer freigestellt |
