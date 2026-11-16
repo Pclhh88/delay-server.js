@@ -154,3 +154,7 @@
 | A16_gustloff_hafen | Wilhelm Gustloff am Kai mit Flüchtlingen (ersetzt A9 + A16) | ausgeschnitten |
 | A18_schloss_ruine_1960 | Schlossruine Königsberg, echtes Foto mit Bus (rechteckig lassen) | übernommen |
 | A21_schloss_sprengung | Sprengung Königsberger Schloss (ersetzt S17_4) | ausgeschnitten |
+| H7_nachthimmel | Hintergrund für Formen | übernommen |
+| H8_schnee | Hintergrund für Formen | übernommen |
+| H9_erde | Hintergrund für Formen | übernommen |
+| H10_stein | Hintergrund für Formen | übernommen |
