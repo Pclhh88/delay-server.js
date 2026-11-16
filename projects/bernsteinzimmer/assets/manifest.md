@@ -102,3 +102,7 @@
 | S24_1_panzerzug | Panzerzug | vom Nutzer freigestellt |
 | S24_2_tunnel | zugemauerter_Tunnel | vom Nutzer freigestellt |
 | S24_3_barren | Barren_(grau_→_beim_Einbau_golden_tönen) | vom Nutzer freigestellt |
+| S25_1_soldat_modern | Soldat_Tarnuniform | vom Nutzer freigestellt |
+| S25_2_stollen | Stolleneingang | vom Nutzer freigestellt |
+| S25_3_grubenlampe | Grubenlampe | vom Nutzer freigestellt |
+| S25_4_pressefotograf | Pressefotograf_(PRESS-Binde_->_PRESSE?) | vom Nutzer freigestellt |
