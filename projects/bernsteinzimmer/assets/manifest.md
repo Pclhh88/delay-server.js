@@ -122,3 +122,28 @@
 | S29_1_tv_kamera | TV-Kamera_auf_Stativ | vom Nutzer freigestellt |
 | S29_3_kompass | Kompass | vom Nutzer freigestellt |
 | S29_4_schatzkarte | Schatzkarte_mit_X | vom Nutzer freigestellt |
+| F01_1_bernsteinplatte | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F01_2_bernstein_roh | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F01_3_bernstein_insekt | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F01_4_bernstein_puzzle | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F02_1_kerzenleuchter | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F02_2_goldrahmen | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F02_3_krone | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F02_4_bernsteinkette | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F03_1_mosaik | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F03_2_schleifen | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F03_3_plastik_bernstein | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F03_4_goldmuenze | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F04_1_saal_ecke | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F04_2_ostsee_strand | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F04_3_kerze | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| F04_4_schluessel | Farbe, aus Bogen ausgeschnitten | ausgeschnitten |
+| H1_himmel | Hintergrund für Formen | übernommen |
+| H2_feuer | Hintergrund für Formen | übernommen |
+| H3_ostsee_a | Hintergrund für Formen | übernommen |
+| H3_ostsee_b | Hintergrund für Formen | übernommen |
+| H4_unterwasser | Hintergrund für Formen | übernommen |
+| H5_wald_a | Hintergrund für Formen | übernommen |
+| H5_wald_b | Hintergrund für Formen | übernommen |
+| H6_bernstein_a | Hintergrund für Formen | übernommen |
+| H6_bernstein_b | Hintergrund für Formen | übernommen |
