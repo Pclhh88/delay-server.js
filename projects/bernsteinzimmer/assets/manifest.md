@@ -86,3 +86,19 @@
 | S20_2_wrack_kisten | Wrack mit offenem Laderaum (Karlsruhe) | vom Nutzer freigestellt |
 | S20_3_kiste_bewachsen | bewachsene Kiste | vom Nutzer freigestellt |
 | S20_4_sonarschirm | Sonarschirm mit Wrack | vom Nutzer freigestellt |
+| S21_4_anker | Schiffsanker | vom Nutzer freigestellt |
+| S21_2_porzellan | Porzellanteller_und_Tasse | vom Nutzer freigestellt |
+| S21_1_koffer | drei_Lederkoffer | vom Nutzer freigestellt |
+| S21_3_lkw_wrack | bewachsener_LKW_unter_Wasser | vom Nutzer freigestellt |
+| S22_4_brief | Brief_im_Umschlag | vom Nutzer freigestellt |
+| S22_2_haeftling | Häftling_auf_Pritsche_(Erich_Koch-Stand-in) | vom Nutzer freigestellt |
+| S22_3_gefaengnismauer | Mauer_mit_Wachturm | vom Nutzer freigestellt |
+| S22_1_gefaengnistuer | Gefängnistür | vom Nutzer freigestellt |
+| S23_2_bohrgeraet | Bohrgerät_auf_Raupen | vom Nutzer freigestellt |
+| S23_1_bunker | überwachsener_Bunker | vom Nutzer freigestellt |
+| S23_4_taschenlampe | Taschenlampe_mit_Lichtkegel | vom Nutzer freigestellt |
+| S23_3_bunkertuer | Bunkertür_halb_offen | vom Nutzer freigestellt |
+| S24_4_geologe | Geologe_mit_Kompass | vom Nutzer freigestellt |
+| S24_1_panzerzug | Panzerzug | vom Nutzer freigestellt |
+| S24_2_tunnel | zugemauerter_Tunnel | vom Nutzer freigestellt |
+| S24_3_barren | Barren_(grau_→_beim_Einbau_golden_tönen) | vom Nutzer freigestellt |
