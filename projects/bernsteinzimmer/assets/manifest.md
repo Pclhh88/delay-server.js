@@ -106,3 +106,16 @@
 | S25_2_stollen | Stolleneingang | vom Nutzer freigestellt |
 | S25_3_grubenlampe | Grubenlampe | vom Nutzer freigestellt |
 | S25_4_pressefotograf | Pressefotograf_(PRESS-Binde_->_PRESSE?) | vom Nutzer freigestellt |
+| S26_1_anwalt | Anwalt_mit_Aktenkoffer | vom Nutzer freigestellt |
+| S26_2_polizist | Polizist_von_hinten | vom Nutzer freigestellt |
+| S26_3_expertin | Kunstexpertin_mit_Lupe | vom Nutzer freigestellt |
+| S26_4_beweisbeutel | Beweisbeutel | vom Nutzer freigestellt |
+| S27_1_kommode | barocke_Kommode | vom Nutzer freigestellt |
+| S27_2_wohnzimmer | Wohnzimmerwand_mit_Sofa | vom Nutzer freigestellt |
+| S27_3_dachboden | Dachboden | vom Nutzer freigestellt |
+| S27_4_soldat_geht | Soldat_mit_Rucksack_geht_weg | vom Nutzer freigestellt |
+| S28_1_fotostapel | Fotostapel | vom Nutzer freigestellt |
+| S28_4_band_schere | rotes_Band_mit_Schere | vom Nutzer freigestellt |
+| S28_3_geldkoffer | Geldkoffer | vom Nutzer freigestellt |
+| S29_2_mikrofon | Mikrofon | vom Nutzer freigestellt |
+| S28_2_handschlag | zeigt erkennbar Kennedy/Chruschtschow → NICHT verwenden, neu erzeugen | offen |
