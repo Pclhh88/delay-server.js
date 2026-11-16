@@ -71,7 +71,7 @@
 | S17_1_scharniere | verkohlte Scharniere in Asche | vom Nutzer freigestellt |
 | S17_2_ermittler_truemmer | Brussow im Trümmerfeld (Symbolbild) | vom Nutzer freigestellt |
 | S17_3_buch | Sachbuch ohne Titel | vom Nutzer freigestellt |
-| S17_4_sprengung | Sprengung (Kuppelbau ähnelt Reichstag → nur kurz/klein) | vom Nutzer freigestellt |
+| S17_4_sprengung | → ersetzt durch A21_schloss_sprengung (Kuppelbild in alt/) |
 | S18_1_offizier_bericht | sowjetischer Offizier schreibt Bericht | vom Nutzer freigestellt |
 | S18_2_schreibmaschine | Schreibmaschine | vom Nutzer freigestellt |
 | S18_3_streichholz | brennendes Streichholz | vom Nutzer freigestellt |
@@ -147,3 +147,10 @@
 | H5_wald_b | Hintergrund für Formen | übernommen |
 | H6_bernstein_a | Hintergrund für Formen | übernommen |
 | H6_bernstein_b | Hintergrund für Formen | übernommen |
+| A11_stadtschloss_berlin | Berliner Stadtschloss | ausgeschnitten |
+| A12_schlueter | Andreas Schlüter (Stich) | ausgeschnitten |
+| A13_rastrelli | Rastrelli (Gemälde) | ausgeschnitten |
+| A15_erich_koch | Erich Koch (Foto-Vorlage vermutl. Bundesarchiv → Lizenz klären) | ausgeschnitten |
+| A16_gustloff_hafen | Wilhelm Gustloff am Kai mit Flüchtlingen (ersetzt A9 + A16) | ausgeschnitten |
+| A18_schloss_ruine_1960 | Schlossruine Königsberg, echtes Foto mit Bus (rechteckig lassen) | übernommen |
+| A21_schloss_sprengung | Sprengung Königsberger Schloss (ersetzt S17_4) | ausgeschnitten |
