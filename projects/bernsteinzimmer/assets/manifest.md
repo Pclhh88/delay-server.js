@@ -166,4 +166,4 @@
 | A7_koenigsberger_schloss | Königsberger Schloss vor dem Krieg | ausgeschnitten |
 | A8_schloss_ruine_1945 | Schlossruine | ausgeschnitten |
 | A10_rekonstruktion | rekonstruiertes Zimmer heute (Absperrkordeln) | ausgeschnitten |
-| A3_soldatenkoenig | geliefertes Bild zeigt Kronprinz Friedrich II. (Pesne 1739) → in alt/, richtiges Bild fehlt | offen |
+| A3_soldatenkoenig | Friedrich Wilhelm I. (Pesne, Rüstung, Zeigegeste) | ausgeschnitten |

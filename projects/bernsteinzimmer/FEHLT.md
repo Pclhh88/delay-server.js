@@ -5,7 +5,6 @@
 |---|---|---|
 
 
-| A3_soldatenkoenig | „Friedrich Wilhelm I. Antoine Pesne" | hoch |
 
 
 
