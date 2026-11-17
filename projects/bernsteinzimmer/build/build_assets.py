@@ -367,11 +367,108 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     mp = os.path.join(OUT, "meta.json")
     meta = json.load(open(mp)) if os.path.exists(mp) else {}
-    for step, fn in (("map", build_map), ("stage", build_stage), ("stickers", build_stickers)):
+    for step, fn in (("map", build_map), ("stage", build_stage), ("stickers", build_stickers), ("v2", build_v2)):
         if a.only in (None, step):
             fn(meta)
             json.dump(meta, open(mp, "w"), indent=1)
     print("meta ->", mp)
+
+
+# ------------------------------------------------------------------ v2: hero object (collage amber panel), shards, earth section
+def amber_panel(w=640, h=440, seed=4, dark=False):
+    r = np.random.default_rng(seed)
+    img = Image.new("RGB", (w, h), (196, 110, 34))
+    d = ImageDraw.Draw(img)
+    pal = [(222, 140, 40), (204, 112, 30), (236, 168, 60), (186, 92, 26), (228, 128, 36), (244, 186, 84)]
+    # mosaic of irregular amber pieces (grid jitter)
+    cell = 46
+    pts = {}
+    for j in range(-1, h // cell + 2):
+        for i in range(-1, w // cell + 2):
+            pts[i, j] = (i * cell + r.uniform(-14, 14), j * cell + r.uniform(-14, 14))
+    for j in range(-1, h // cell + 1):
+        for i in range(-1, w // cell + 1):
+            poly = [pts[i, j], pts[i + 1, j], pts[i + 1, j + 1], pts[i, j + 1]]
+            d.polygon(poly, fill=pal[r.integers(len(pal))], outline=(150, 74, 20))
+    a = np.asarray(img).astype(np.float32)
+    dots = g.halftone(np.full((h, w), 0.32, np.float32), cell=9, color=(120, 50, 10))[..., 3].astype(np.float32) / 255
+    a = a * (1 - 0.18 * dots[..., None])
+    a *= (0.9 + 0.18 * fractal_noise(h, w, seed)[..., None])
+    img = Image.fromarray(a.clip(0, 255).astype(np.uint8))
+    d = ImageDraw.Draw(img)
+    for k, col in ((0, (204, 160, 70)), (14, (150, 110, 40)), (22, (214, 172, 84))):
+        d.rectangle([k, k, w - 1 - k, h - 1 - k], outline=col, width=14 if k == 0 else 4)
+    arr = np.asarray(img).astype(np.float32)
+    if dark:
+        arr = arr * 0.0 + 30
+    rgba = np.dstack([arr.clip(0, 255), np.full((h, w), 255, np.float32)]).astype(np.uint8)
+    return rgba
+
+
+def shards(panel, n=9, seed=5):
+    """cut the panel into n jagged pieces (voronoi), each with rim+shadow; returns [(rgba, dx, dy)]"""
+    h, w = panel.shape[:2]
+    r = np.random.default_rng(seed)
+    seeds = np.c_[r.uniform(0, w, n), r.uniform(0, h, n)]
+    yy, xx = np.mgrid[0:h, 0:w]
+    lab = np.argmin([(xx - sx) ** 2 + (yy - sy) ** 2 for sx, sy in seeds], axis=0)
+    out = []
+    for k in range(n):
+        m = (lab == k)
+        ys, xs = np.nonzero(m)
+        x0, x1, y0, y1 = xs.min(), xs.max() + 1, ys.min(), ys.max() + 1
+        piece = panel[y0:y1, x0:x1].copy()
+        piece[..., 3] = (m[y0:y1, x0:x1] * 255).astype(np.uint8)
+        st, anc = make_sticker(piece, tone=0.0, seed=k, rim=0.03, force_rim=True)
+        out.append((st, anc, (x0 + x1) / 2 - w / 2, (y0 + y1) / 2 - h / 2))
+    return out
+
+
+def earth_section(w=1920, h=640, seed=6):
+    r = np.random.default_rng(seed)
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    bands = [(0, (70, 92, 52)), (26, (122, 86, 52)), (180, (104, 72, 44)), (360, (86, 60, 38)), (520, (70, 50, 32))]
+    for i, (y, col) in enumerate(bands):
+        xs = np.linspace(0, w, 60)
+        ys = y + 10 * np.sin(xs / 140 + i) + r.uniform(-4, 4, len(xs))
+        d.polygon(list(zip(xs, ys)) + [(w, h), (0, h)], fill=col + (255,))
+    for _ in range(140):
+        x, y, s = r.uniform(0, w), r.uniform(60, h), r.uniform(6, 22)
+        c = int(r.uniform(110, 160))
+        d.ellipse([x - s, y - s * 0.7, x + s, y + s * 0.7], fill=(c, c - 8, c - 20, 255))
+    a = np.asarray(img).astype(np.float32)
+    dots = g.halftone(np.full((h, w), 0.3, np.float32), cell=11, color=(20, 14, 8))[..., 3].astype(np.float32) / 255
+    a[..., :3] *= (1 - 0.2 * dots[..., None]) * (0.88 + 0.2 * fractal_noise(h, w, seed)[..., None])
+    # cream torn top edge like cut paper
+    top = np.zeros((h, w), np.float32)
+    return a.clip(0, 255).astype(np.uint8)
+
+
+def cavity(w=560, h=300, seed=7):
+    r = np.random.default_rng(seed)
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    th = np.linspace(0, 2 * np.pi, 120, endpoint=False)
+    rad = 1 + 0.08 * np.sin(3 * th + 1) + r.uniform(-0.04, 0.04, len(th))
+    pts = list(zip(w / 2 + (w / 2 - 12) * rad * np.cos(th), h / 2 + (h / 2 - 12) * rad * np.sin(th)))
+    ImageDraw.Draw(img).polygon(pts, fill=(22, 16, 12, 255))
+    return g.add_shadow(np.asarray(img), dx=0, dy=0, blur=8, op=0.6)
+
+
+def build_v2(meta):
+    p = amber_panel()
+    st, anc = make_sticker(p, tone=0.0, seed=1, rim=0.02, force_rim=True)
+    save(meta, "amber_panel", st, anchor=[round(anc[0], 4), round(anc[1], 4)])
+    pd = amber_panel(dark=True)
+    st, anc = make_sticker(pd, tone=0.0, seed=1, rim=0.02, force_rim=True, shadow=(0, 0, 0.01, 0.0))
+    save(meta, "amber_panel_dark", st, anchor=[round(anc[0], 4), round(anc[1], 4)])
+    for k, (s_, anc, dx, dy) in enumerate(shards(p)):
+        save(meta, f"shard{k}", s_, anchor=[round(anc[0], 4), round(anc[1], 4)], off=[round(dx, 1), round(dy, 1)])
+    save(meta, "earth", earth_section())
+    save(meta, "cavity", cavity())
+    save(meta, "stamp_genehmigt", g.stamp("GENEHMIGT", color=(40, 110, 60), seed=3))
+    save(meta, "lbl_q", g.label("?", "orange", 200, seed=9))
+    print("v2 assets ok")
 
 
 if __name__ == "__main__":
