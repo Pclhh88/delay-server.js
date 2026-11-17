@@ -118,7 +118,7 @@
 | S28_4_band_schere | rotes_Band_mit_Schere | vom Nutzer freigestellt |
 | S28_3_geldkoffer | Geldkoffer | vom Nutzer freigestellt |
 | S29_2_mikrofon | Mikrofon | vom Nutzer freigestellt |
-| S28_2_handschlag | zeigt erkennbar Kennedy/Chruschtschow → NICHT verwenden, neu erzeugen | offen |
+| S28_2_handschlag | Handschlag Seitenansicht, keine bekannten Personen | ausgeschnitten |
 | S29_1_tv_kamera | TV-Kamera_auf_Stativ | vom Nutzer freigestellt |
 | S29_3_kompass | Kompass | vom Nutzer freigestellt |
 | S29_4_schatzkarte | Schatzkarte_mit_X | vom Nutzer freigestellt |
@@ -158,3 +158,12 @@
 | H8_schnee | Hintergrund für Formen | übernommen |
 | H9_erde | Hintergrund für Formen | übernommen |
 | H10_stein | Hintergrund für Formen | übernommen |
+| A1_bernsteinzimmer_original | Original-Zimmer in Farbe (Reiterstatue) | ausgeschnitten |
+| A2_friedrich_I | Friedrich I. mit Krone und Hermelin | ausgeschnitten |
+| A4_peter_der_grosse | Peter der Große (Delaroche) | ausgeschnitten |
+| A5_zarin_elisabeth | Zarin Elisabeth | ausgeschnitten |
+| A6_katharinenpalast | Katharinenpalast von oben | ausgeschnitten |
+| A7_koenigsberger_schloss | Königsberger Schloss vor dem Krieg | ausgeschnitten |
+| A8_schloss_ruine_1945 | Schlossruine | ausgeschnitten |
+| A10_rekonstruktion | rekonstruiertes Zimmer heute (Absperrkordeln) | ausgeschnitten |
+| A3_soldatenkoenig | geliefertes Bild zeigt Kronprinz Friedrich II. (Pesne 1739) → in alt/, richtiges Bild fehlt | offen |
