@@ -305,7 +305,8 @@ def caption(text, size=86):
 CAPTIONS = {"cap_zimmer": "Nach einem Zimmer.", "cap_wie": "Wie verliert man ein ganzes Zimmer?",
             "cap_wunder": "Das achte Weltwunder", "cap_puzzle": "wie ein riesiges Puzzle",
             "cap_soldatenkoenig": "Der Soldatenkönig", "cap_gold": "wie flüssiges Gold",
-            "cap_krieg": "Dann kommt der Krieg.", "cap_groesser": "viel größer"}
+            "cap_krieg": "Dann kommt der Krieg.", "cap_groesser": "viel größer",
+            "cap_friedrich": "König Friedrich I.", "cap_peter": "Peter der Große", "cap_nichtsuebrig": "nichts übrig"}
 LABELS = [("lbl_2025", "Sommer 2025", "black", 120), ("lbl_genehmigung", "Genehmigung", "petrol", 100),
           ("lbl_ss", "Ehem. SS-Übungsplatz", "black", 100), ("lbl_radar", "Bodenradar", "orange", 110),
           ("lbl_hohlraum", "Hohlraum!", "orange", 130), ("lbl_6t", "6 Tonnen Bernstein", "orange", 110),

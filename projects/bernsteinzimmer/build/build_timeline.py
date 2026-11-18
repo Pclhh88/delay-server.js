@@ -86,6 +86,35 @@ def cap(id_, asset, t0, t1, x, y):
         {"t": t1, "opacity": 1.0}, {"t": t1 + 0.3, "opacity": 0.0}], jitter=False)
 
 
+# ------------------------------------------------------------------ close-ups (reference look) grown out of the map
+def closeup(id_, blob, t0, t1, p, person, height, cap_asset=None, cap_t=None, px=960, py=600, blob_w=1250, rot=-4):
+    """blob grows out of map point p (screen), dark collage fades in around it, person rises out of the blob;
+    at t1 everything shrinks back into p. Returns the person's (x, y, scale)."""
+    sb = sc(blob, blob_w)
+    S.layers.append({"id": id_ + "_bg", "type": "image", "asset": "stage_bg", "anchor": [0.5, 0.5], "start": t0, "end": t1 + 0.4,
+                     "keys": [{"t": t0, "x": CX, "y": CY, "scale": 1.0, "opacity": 0.0}, {"t": t0 + 0.35, "opacity": 1.0},
+                              {"t": t1 - 0.05, "scale": 1.05, "opacity": 1.0, "ease": "linear"}, {"t": t1 + 0.35, "opacity": 0.0}]})
+    S.image(id_ + "_blob", blob, t0, t1 + 0.4, [
+        {"t": t0, "x": p[0], "y": p[1], "scale": sb * 0.02, "rot": rot - 25, "opacity": 1.0},
+        {"t": t0 + 0.45, "x": px, "y": py, "scale": sb * 1.04, "rot": rot + 2, "ease": "out3"},
+        {"t": t0 + 0.65, "scale": sb, "rot": rot, "ease": "inout"},
+        {"t": t1, "x": px, "y": py, "scale": sb * 1.05, "rot": rot + 1.5, "ease": "linear"},
+        {"t": t1 + 0.38, "x": p[0], "y": p[1], "scale": sb * 0.02, "rot": rot - 20, "ease": "in"}], jitter=False)
+    s = height / M[person]["h"]
+    S.image(id_, person, t0 + 0.25, t1 + 0.4, [
+        {"t": t0 + 0.25, "x": px, "y": py + 320, "scale": s * 0.85, "rot": 3, "opacity": 0.0},
+        {"t": t0 + 0.3, "opacity": 1.0},
+        {"t": t0 + 0.7, "x": px, "y": py, "scale": s, "rot": 0, "ease": "out3"},
+        {"t": t1, "x": px, "y": py - 10, "scale": s * 1.07, "ease": "linear"},
+        {"t": t1 + 0.36, "x": p[0], "y": p[1], "scale": s * 0.02, "ease": "in"}], jitter=False)
+    rec("map_whoosh", t0, -11, peak=0.38)
+    rec("paper_slide", t0 + 0.3, -14, peak=0.42)
+    rec("map_whoosh", t1, -15, peak=0.38)
+    if cap_asset:
+        cap(id_ + "_cap", cap_asset, cap_t or t0 + 0.7, t1 - 0.25, 960, 900)
+    return px, py, s
+
+
 # ------------------------------------------------------------------ map-space helpers
 def mimg(lst, id_, asset, t0, t1, keys, anchor=None):
     lst.append({"id": id_, "type": "image", "asset": asset, "start": t0, "end": t1,
@@ -289,8 +318,8 @@ light("1715", "prussia", t_ber - 0.2, w("Doch", 66.5))
 lbl("l1701", "lbl_1701", w("1701", 42.0), w("Der", 44.4) + 2.5, 300, 140, 340, -3)
 mcity("berlin", t_ber, w("1716", 79.7) - 0.2, Z1b)
 t_fr = w("Friedrich", 45.6)
-pop("fr", "st_a2_friedrich_i", t_fr - 0.2, w("Bildhauer", 53.7) - 0.3, 400, 600, 400, -2, out="left")
-lbl("lfr", "lbl_friedrich", t_fr + 0.2, w("Bildhauer", 53.7) - 0.3, 400, 990, 380, 2)
+closeup("fr", "blob_orange", t_fr - 0.5, w("einen", 49.3) - 0.2, scr(BER, C1b, Z1b), "st_a2_friedrich_i", 1180,
+        cap_asset="cap_friedrich", cap_t=t_fr + 0.3, px=900)
 # his wish: an empty frame (dashed outline) appears at Berlin
 t_wd = w("Wände", 50.8)
 bw, bh = 300 / Z1b / 2, 300 * 440 / 640 / Z1b / 2
@@ -334,16 +363,27 @@ hero_panel("hero1", t_pz + 1.6, END + 5, hero_keys)
 
 # ======================================================================= Soldatenkönig: no art, soldiers
 t_fw = w("Friedrich", 67.2)
-pop("fw", "st_a3_soldatenkoenig", t_fw - 0.2, t_1716 - 0.4, 420, 600, 440, -2, out="left")
-lbl("lfw", "lbl_fw", w("Wilhelm", 67.6), w("Soldatenkönig", 72.0) + 0.8, 420, 990, 520, 2)
-lbl("lkk", "lbl_keinekunst", w("keine", 74.2), w("Soldaten", 75.7) - 0.1, 960, 860, 420, -3)
+fx, fy, fs = closeup("fw", "blob_petrol", t_fw - 0.5, t_1716 - 0.35, scr(BER, C1b, Z1b), "st_a3_soldatenkoenig", 1100,
+                     cap_asset=None, px=760, py=620, rot=5)
+cap("cfw", "cap_soldatenkoenig", w("Soldatenkönig", 72.0) - 0.3, w("Er", 73.7) + 0.2, 960, 900)
+t_kk = w("keine", 74.2)
+pop("plate_k", "amber_panel", t_kk - 0.2, w("Soldaten", 75.7) - 0.25, 1450, 470, 360, 6, sound="amber_shimmer", gain=-16)
+S.image("tx_k", "tape_x", t_kk + 0.3, w("Soldaten", 75.7) - 0.05, [
+    {"t": t_kk + 0.3, "x": 1450, "y": 470, "scale": sc("tape_x", 440) * 1.6, "rot": -8, "opacity": 0.0},
+    {"t": t_kk + 0.33, "opacity": 1.0}, {"t": t_kk + 0.42, "scale": sc("tape_x", 380), "ease": "out"},
+    {"t": w("Soldaten", 75.7) - 0.3, "opacity": 1.0}, {"t": w("Soldaten", 75.7) - 0.05, "opacity": 0.0}])
+rec("stamp", t_kk + 0.38, -10)
+cap("ckk", "cap_nichtsuebrig", w("so", 69.2), w("Man", 71.0) - 0.1, 960, 900)
 t_so = w("Soldaten", 75.7)
-s_g = sc("st_s05_1_grenadier", 230)
-S.image("gren", "st_s05_1_grenadier", t_so - 0.1, t_1716 - 0.1,
-        pop_in(t_so - 0.1, 1460, 640, s_g, 2) + [
-            {"t": w("besonders", 77.9), "scale": s_g, "y": 640},
-            {"t": w("große", 78.6) + 0.4, "scale": s_g * 1.7, "y": 560, "ease": "out"},
-            {"t": t_1716 - 0.35, "scale": s_g * 1.7, "opacity": 1.0}, {"t": t_1716 - 0.1, "scale": 0.0, "opacity": 0.0, "ease": "in"}])
+s_g = sc("st_s05_1_grenadier", 260)
+S.image("gren", "st_s05_1_grenadier", t_so - 0.15, t_1716 - 0.35,
+        [{"t": t_so - 0.15, "x": 1480, "y": 1200, "scale": s_g, "rot": 4},
+         {"t": t_so + 0.3, "x": 1480, "y": 640, "rot": 0, "ease": "out3"},
+         {"t": w("besonders", 77.9), "scale": s_g, "y": 640},
+         {"t": w("große", 78.6) + 0.45, "scale": s_g * 1.85, "y": 520, "ease": "out"},
+         {"t": t_1716 - 0.35, "scale": s_g * 1.92, "y": 515, "ease": "linear"},
+         {"t": t_1716 + 0.0, "x": scr(BER, C1b, Z1b)[0], "y": scr(BER, C1b, Z1b)[1], "scale": 0.0, "ease": "in"}], jitter=False)
+lbl("lsol", "lbl_soldaten", t_so + 0.1, w("besonders", 77.9) - 0.1, 1480, 160, 380, 3)
 rec("march", t_so, -14)
 rec("suspense_hit", w("große", 78.6), -17)
 
@@ -357,9 +397,11 @@ lbl("l1716", "lbl_1716", t_1716, w("Und", 87.0) - 0.3, 300, 140, 340, -3)
 mcity("berlin", t_1716 + 0.2, w("In", 103.8) - 0.4, Z2)
 mcity("st_petersburg", w("Zar", 82.6), END + 5, Z2)
 sB, sP = scr(BER, C2, Z2), scr(STP, C2, Z2)
-pop("fw2", "st_a3_soldatenkoenig", w("besucht", 81.3), w("In", 103.8) - 0.4, sB[0] - 230, sB[1] - 20, 300, -3, out="left")
-pop("pe2", "st_a4_peter_der_grosse", w("Zar", 82.6) - 0.2, w("In", 103.8) - 0.4, sP[0] + 180, sP[1] + 250, 320, 3, out="right")
-lbl("lpe", "lbl_peter", w("Peter", 82.7) + 0.3, w("Bündnis", 85.3) - 0.3, sP[0] + 180, sP[1] + 520, 400, 2)
+pop("fw2", "st_a3_soldatenkoenig", w("Die", 84.0), w("In", 103.8) - 0.4, sB[0] - 230, sB[1] - 20, 300, -3, out="left")
+closeup("pe", "blob_red", w("russische", 82.0) - 0.4, w("Die", 84.0) - 0.15, sP, "st_a4_peter_der_grosse", 1080,
+        cap_asset="cap_peter", cap_t=w("Peter", 82.7), px=1000, rot=-3)
+pop("pe2", "st_a4_peter_der_grosse", w("Die", 84.0) + 0.1, w("In", 103.8) - 0.4, sP[0] + 180, sP[1] + 250, 320, 3, out="right")
+lbl("lpe", "lbl_peter", w("Die", 84.0) + 0.3, w("Bündnis", 85.3) - 0.3, sP[0] + 180, sP[1] + 520, 400, 2)
 # alliance: a line ties the two capitals, a handshake on it
 mline(MAPL, "alli", [(BER[0], BER[1]), (STP[0], STP[1])], w("Bündnis", 85.3) - 0.3, w("Bündnis", 85.3) + 0.5, Z2,
       w("Und", 87.0) + 0.8, color=(246, 240, 226))
